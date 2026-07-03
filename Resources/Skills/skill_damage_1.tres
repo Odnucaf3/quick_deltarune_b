@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://dfa1o2oxpnj2m"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_oiliw"]
+
+[resource]
+script = ExtResource("1_oiliw")
+tp_cost = 5
+max_hold = 2
+repeat = 4
+myELEMENT = 2
+value = 7
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

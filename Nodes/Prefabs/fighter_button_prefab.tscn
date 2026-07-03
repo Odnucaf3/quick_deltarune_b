@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://1nomtsf23yj7"]
+
+[ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_auc1d"]
+[ext_resource type="Texture2D" uid="uid://c04up2aujmyel" path="res://Assets/Sprites/player3_idle1.png" id="1_erbc2"]
+[ext_resource type="Script" uid="uid://cxx5pwlrb74iv" path="res://Scripts/Prefabs/fighter_button.gd" id="2_fofx7"]
+[ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="3_xjfi7"]
+
+[node name="fighter_button_prefab" type="Button" unique_id=363646927 node_paths=PackedStringArray("face", "name_label", "title_label", "level_label", "class_label", "hp_label", "status_label", "hp_bar")]
+offset_right = 649.0
+offset_bottom = 149.0
+theme = ExtResource("1_auc1d")
+script = ExtResource("2_fofx7")
+face = NodePath("MarginContainer/HBoxContainer/TextureRect")
+name_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Label")
+title_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/Label")
+level_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Label3")
+class_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Label2")
+hp_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Label3")
+status_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Label2")
+hp_bar = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/ProgressBar")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1368421592]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_behavior_recursive = 1
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=790654732]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1024554581]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_erbc2")
+expand_mode = 3
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer" unique_id=242790922]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/Control" unique_id=504760790]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer" unique_id=499325298]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=651565699]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=436116244]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nombre del Peleador"
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1968684427]
+layout_mode = 2
+text = "[Guerrero]"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=898611603]
+layout_mode = 2
+text = "[Nivel: 5]"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1506333158]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Título del Peleador"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=782692336]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1177916373]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 16
+text = "Estados Alterados: 99"
+vertical_alignment = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1929508869]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1580204792]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme = ExtResource("3_xjfi7")
+step = 1.0
+value = 75.0
+fill_mode = 1
+show_percentage = false

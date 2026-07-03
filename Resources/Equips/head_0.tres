@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://dnqwa4ac4201s"]
+
+[ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="1_01ne6"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_4ejxe"]
+
+[resource]
+script = ExtResource("1_01ne6")
+myEQUIP_TYPE = 1
+physical_presition_rate = 1
+physical_evasion_rate = 2
+magical_presition_rate = -3
+magical_evasion_rate = -4
+critical_presition_rate = -5
+critical_evasion_rate = 6
+metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

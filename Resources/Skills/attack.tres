@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://crf420awv7t56"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_4coga"]
+
+[resource]
+script = ExtResource("1_4coga")
+value = 15
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

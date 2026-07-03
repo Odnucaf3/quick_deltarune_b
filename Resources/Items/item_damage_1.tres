@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://6snkwbnrq70e"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_ta61f"]
+
+[resource]
+script = ExtResource("1_ta61f")
+tp_cost = 100
+max_cooldown = 1
+max_hold = 6
+myELEMENT = 6
+myTARGET = 2
+status_dictionary = Dictionary[StringName, int]({
+&"status_damage_1": 30
+})
+value = 30
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

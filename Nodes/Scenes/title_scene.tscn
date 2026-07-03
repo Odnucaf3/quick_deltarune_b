@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://c3mfcfq1fwjwt"]
+
+[ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_k1vqb"]
+[ext_resource type="Script" uid="uid://bnx2er4h8h2kj" path="res://Scripts/title_scene.gd" id="1_lrmdu"]
+
+[node name="Title_Scene" type="Node" unique_id=2113985453]
+script = ExtResource("1_lrmdu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=733790429]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=2139866153]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k1vqb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1294041926]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=760151262]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 100
+text = "Nombre del Juego"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=530903770]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer" unique_id=1980266917]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=2025980462]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=228218432]
+layout_mode = 2
+text = "  Comenzar  "
+
+[node name="Button2" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=994103283]
+layout_mode = 2
+text = "  Opciones  "
+
+[node name="Button3" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1406552865]
+layout_mode = 2
+text = "  Salir del Juego  "

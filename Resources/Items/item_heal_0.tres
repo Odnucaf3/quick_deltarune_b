@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://b6a7pbtv5mpci"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_a1l4q"]
+
+[resource]
+script = ExtResource("1_a1l4q")
+tp_cost = 8
+max_hold = 14
+myEFFECT = 1
+myTARGET = 3
+value = 50
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

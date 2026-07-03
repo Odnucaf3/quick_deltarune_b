@@ -1,0 +1,186 @@
+key,es-AR,en-US
+option_menu_title_label,Menú de Opciones,Option Menu
+option_menu_idiome_label,Lenguaje,Language
+option_menu_resolution_label,Resolución,Resolution
+option_menu_fullscreen_label,Pantalla Completa,Full Screen
+option_menu_borderless_label,Pantalla Sin Bordes,Borderless Window
+option_menu_vsync_label,Sincronización Vertical,Vertical Synchronization
+option_menu_master_label,Volumen Maestro,Master Volumen
+option_menu_sfx_label,Volumen de Efectos de Sonido,Sound Effects Volume
+option_menu_bgm_label,Volumen de Música de Fondo,Background Music Volume
+option_menu_back_button,Volver,Back
+information_text,Información,Information
+pause_menu_button_title,Menú de Pause,Pause Menu
+pause_menu_button_skill,Habilidades,Habilities
+pause_menu_button_item,Inventario,Inventory
+pause_menu_button_equip,Equipamiento,Equipment
+pause_menu_button_status,Estados Alterados,Status Effects
+pause_menu_button_statistics,Estadísticas,Statistics
+pause_menu_button_options,Opciones,Options
+pause_menu_button_quit,Ir al Título,Go to Title
+pause_menu_fighter_button_title,Miembros del Grupo,Party Members
+item_menu_all_item_button,Todos los Artículos,All Items
+item_menu_consumable_item_button,Artículos Consumibles,Consumable Items
+item_menu_equip_item_button,Artículos Equipables,Equipable Items
+item_menu_key_item_button,Artículos Clave,Key Items
+uses_text,Usos,Uses
+turns_text,Turnos,Turns
+bag_text,Bolsa,Hold
+stored_text,Almacén,Stored
+level_text,Nivel,Level
+experience_text,Experiencia,Experience
+next_text,Siguente,Next
+cost_text,Costo,Cost
+cooldown_text,Espera,Wait
+speed_text,Velocidad,Speed
+presition_text,Presición,Presition
+effect_text,Efecto,Effect
+target_text,Objetivo,Target
+stats_rate_text,Estadísticas,Statistics
+status_rate_text,Tasas de Estados Alterados,Status Effects Rate
+description_text,Descripción,Description
+tp_text,PT,TP
+hp_text,PV,HP
+cd_text,CD,CD
+base_stats,Estadísticas Base,Base Stats
+max_hp,PV Máximo,Maximum HP
+physical_attack,Ataque Físico,Physical Attack
+physical_defense,Defensa Física,Physical Defense
+magical_attack,Ataque Mágico,Magical Attack
+magical_defense,Defensa Mágica,Magical Defense
+luck,Suerte,Luck
+extra_stats,Estadísticas Extra,Extra Stats
+physical_presition_rate,Tasa de Presición Física,Physical Evasion Rate
+physical_evasion_rate,Tasa de Evasión Física,Physical Presition Rate
+magical_presition_rate,Tasa de Presición Mágica,Magical Evasion Rate
+magical_evasion_rate,Tasa de Evasión Mágica,Magical Presition Rate
+critical_presition_rate,Tasa de Presición Crítica,Critical Evasion Rate
+critical_evasion_rate,Tasa de Evasión Crítica,Critical Presition Rate
+special_stats,Estadísticas Especiales,Special Stats
+target_rate,Tasa de Objetico,Target Rate
+guard_effect,Efecto de Guardia,Guard Effect
+recovery_effect,Efecto de Recuperación,Recovery Effect
+pharmacology,Farmacología,Pharmacology
+tp_cost_rate,Tasa de Costo de PT,TP Cost Rate
+tp_charge_rate,Tasa de Carga de PT,TP Charge Rate
+tp_recovery,Recuperación de PT,TP Recovery
+hp_recovery,Recuperación de PV,HP Recovery
+elemental_rate,Tasas Elementales,Elemental Rates
+status_effect_resistances,Resistencias a Estados Alterados,Status Effect Resistances
+fighter_type_text,Clase,Class
+fighter_type_EVERYONE,-,-
+fighter_type_MAGICIAN,Hechicero,Magician
+fighter_type_PRIEST,Sacerdote,Priest
+fighter_type_WARRIOR,Guerrero,Warrior
+name_ally_0,Vanesa,Vanessa
+title_ally_0,La Hacker Más Copada,The Coolest Hacker of Them All
+description_ally_0,¡Nadie puede hackear como Yo!,Nobody can hack like Me!
+name_ally_1,Daniel,Danny
+title_ally_1,El Loco Sacerdote del Culto Cibernético,The Mad Priest of the Cyber Cult
+description_ally_1,¡Atestiguame!,Witness Me!
+name_ally_2,Julieta,Juliet
+title_ally_2,La Chica Policia Estoica,The Stoic Police Girl
+description_ally_2,"¡Alto ahí, escoria criminal!",Stop right there criminal scum!
+name_item_damage_0,Cóctel molotov,Molotov Cocktail
+description_item_damage_0,"Explota en llamas al ser arrojada contra un objeto. Es una de las herramientas de caza más antiguas disponibles en el taller.
+Desde la tragedia que asoló Old Yharnam, el fuego se ha convertido en un elemento fundamental en la caza de bestias y se cree que purifica.
+Ciertos tipos de bestias tienen un miedo irracional al fuego.","Explodes in raging flames when thrown against an object. One of the oldest hunter tools available in the workshop.
+Since the tragedy that struck Old Yharnam, fire has become a staple in beast hunts, and is thought to cleanse impurity.
+Certain types of beasts have an abnormal fear of flame."
+name_item_damage_1,Boogaloo Eléctrico,Electric Boogaloo
+description_item_damage_1,"Objeto fabricable preparado con una vasija agrietada.
+En su interior contiene un cóctel de materiales fulminantes.
+Lánzalo a los enemigos para infligir daño eléctrico.","Craftable item prepared using a cracked pot.
+A cocktail of fulminating materials is sealed inside.
+Throw at enemies to inflict lightning damage."
+name_item_damage_2,Dardo Venenoso,Poison Dartz
+description_item_damage_2,"Cuchillo arrojadizo de hueso animal afilado, con punta envenenada.
+Objeto fabricable.
+Lánzalo a los enemigos para infligir daño y acumular veneno.","Animal bone sharpened into a knife for throwing, with a poison-laced tip.
+Craftable item.
+Throw at enemies to inflict damage and build up poison."
+name_item_heal_0,Frasco de Lágrimas Carmesí,Flask of Crimson Tears
+description_item_heal_0,"Un frasco sagrado inspirado en un cáliz sagrado dorado que una vez estuvo adornado con una lágrima de vida.
+Lleno de lágrimas carmesí, este matraz restaura HP con el uso.
+Descanse en un sitio de gracia para reponer fuerzas.
+El que fue arrastrado hasta la tumba seguramente moriría, hasta que este frasco
+ofreció su regalo de rejuvenecimiento. Para buscar el Anillo de Elden.","A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.
+Filled with crimson tears, this flask restores HP with use.
+Rest at a site of grace to replenish.
+The one washed up on the gravesite was sure to die, until this flask
+offered its gift of rejuvenation. To seek the Elden Ring."
+name_item_heal_1,Gema de Vida,Life Gem
+description_item_heal_1,"Pequeña piedra compuesta de almas cristalizadas. Restaura gradualmente una pequeña cantidad de puntos de vida.
+Se encuentra a menudo cerca de cadáveres abandonados, como si fuera lo que queda del alma.","Small stone made up of crystallized souls. Gradually restores a small amount of HP.
+Often found near abandoned corpses, as if it were what remains of the soul."
+name_item_heal_2,Vendición Divina,Divine Blessing
+description_item_heal_2,"Agua bendita con una bendición divina. Cura los estados alterados y restaura completamente los PV.
+Agua bendecida por una antigua diosa. Su nombre ha caído en el olvido, y la Academia de Magia de Melfia niega incluso su existencia.
+En cualquier época, siempre hay quienes se niegan a ver la razón. Su intromisión distorsiona la verdad.","Holy water endowed with a divine blessing. Cures status effects and fully restores HP.
+Water blessed by an ancient goddess. Her name is long forgotten, and the Magic Academy of Melfia denies even her existence.
+In any age, there are those who refuse to see reason. It is their meddling that distorts the truth."
+action_type_DAMAGE,Daño,Damage
+action_type_HEAL,Curación,Healing
+atribute_type_PHYSICAL,Físico,Physical
+atribute_type_MAGICAL,Mágico,Magical
+target_type_ENEMY_1,1 Enemigo,1 Enemy
+target_type_ENEMY_RANDOM,1 Enemigo al Azar,1 Random Enemy
+target_type_ENEMY_ALL,Todos los Enemigo,All Enemies
+target_type_ALLY_1,1 Aliado,1 Ally
+target_type_ALLY_RANDOM,1 Aliado al Azar,1 Random Ally
+target_type_ALLY_ALL,Todos los Aliados,All Allies
+target_type_USER,Usuario,User
+target_type_ALLY_DOWN_1,1 Aliado Caido,1 Fallen Ally
+target_type_ALLY_DOWN_ALL,Todos los Aliados Caidos,All Fallen Allies
+power_text,Poder,Power
+absortion_text,Absorción,Absorption
+affinity_text,Afinidad,Affinity
+repulsion_text,Repulsión,Repulsion
+resistance_text,Resistencia,Resistance
+element_NORMAL,Normal,Normal
+element_WATER,Agua,Water
+element_FIRE,Fuego,Fire
+element_EARTH,Tierra,Earth
+element_WIND,Aire,Wind
+element_ICE,Hielo,Ice
+element_THUNDER,Electricidad,Thunder
+element_LIGHT,Luz,Light
+element_DARK,Oscuridad,Dark
+name_attack,Atacar,Attack
+description_attack,-,-
+name_guard,Guardia,Guard
+description_guard,-,-
+name_skill_damage_0,Corte en V,V-Slash
+description_skill_damage_0,"Haz un corte doble, tan rápido que sole se ve el destello que deja. Mostrando la letra ""V"" de ""Victoria"".",-
+name_skill_damage_1,Corte en Doble V,Double V-Slash
+description_skill_damage_1,"Haz un doble corte doble, tan rápido que sole se ve el destello que deja. Mostrando la letra ""W"" de ""Wictoria"".",-
+name_skill_damage_2,Corte en Triple Doble V,Triple Double V-Slash
+description_skill_damage_2,"Haz un triple doble corte doble a todos los enemigos, tan rápido que sole se ve el destello que deja. Mostrando las letras ""WWW"" de ""WWWictoria"".",-
+equip_type_text,Tipo,Type
+equip_null,nulo,null
+equip_type_WEAPON,Arma,Weapon
+equip_type_HEAD,Cabeza,Head
+equip_type_BODY,Cuerpo,Body
+equip_type_RING,Anillo,Ring
+name_weapon_0,Cunchillo de Hacker,Hacker Knife
+description_weapon_0,Hasta los que trabajan con ceros y unos necesitas una forma de defenserse en esta ciudad.,-
+name_head_0,Lentes de Hacker,Hacker Glasses
+description_head_0,-,-
+name_body_0,Chaqueta de Hacker,Hacker Jacket
+description_body_0,-,-
+name_ring_0,Chip de Hacker,Hacker Chip
+description_ring_0,-,-
+name_key_0,Llave Cibernética,Cyber Key
+description_key_0,"Llave que se utiliza para abrir ""Puertas Cibernéticas"".","Key used to open ""Cyber ​​Doors""."
+name_status_guard,Guardia,Guard
+description_status_guard,-,-
+name_status_death,Nockeado,Knokdown
+description_status_death,-,-
+name_status_damage_0,Quemado,Burned
+description_status_damage_0,-,
+name_status_damage_1,Electrocutado,Electrified
+description_status_damage_1,-,
+name_status_heal_0,Curación Lenta,Slow Healing
+description_status_heal_0,-,-
+name_status_damage_1,,
+description_status_damage_1,,

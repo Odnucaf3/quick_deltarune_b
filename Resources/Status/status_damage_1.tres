@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Status_Resource" format=3 uid="uid://d32vm1s8fexwl"]
+
+[ext_resource type="Script" uid="uid://bx2u75d4qixuu" path="res://Scripts/Resources/status_resource.gd" id="1_pbm85"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_pj4xj"]
+
+[resource]
+script = ExtResource("1_pbm85")
+max_turns = 5
+physical_presition_rate = -50
+magical_presition_rate = -50
+metadata/_custom_type_script = "uid://bx2u75d4qixuu"

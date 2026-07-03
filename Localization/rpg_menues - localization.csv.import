@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://0ss5w63ybff2"
+
+[deps]
+
+files=["res://Localization/rpg_menues - localization.es_AR.translation", "res://Localization/rpg_menues - localization.en_US.translation"]
+
+source_file="res://Localization/rpg_menues - localization.csv"
+dest_files=["res://Localization/rpg_menues - localization.es_AR.translation", "res://Localization/rpg_menues - localization.en_US.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
