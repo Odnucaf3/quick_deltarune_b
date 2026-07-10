@@ -7,9 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://bw3s6146f6t1k" path="res://Assets/rpg_maker_mv/se/Equip1.ogg" id="5_5vx3t"]
 [ext_resource type="AudioStream" uid="uid://d12xcnufxwb6g" path="res://Assets/rpg_maker_mv/se/Equip2.ogg" id="6_lhprx"]
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="7_7abmt"]
+[ext_resource type="AudioStream" uid="uid://bbh0krwviv8hm" path="res://Assets/rpg_maker_mv/se/Shop1.ogg" id="7_j0hcl"]
 [ext_resource type="Script" uid="uid://bh5dpqwmv2pkq" path="res://Scripts/Scenes/option_menu.gd" id="8_gt3s7"]
 
-[node name="Singleton" type="Node" unique_id=729221882 node_paths=PackedStringArray("audioStreamPlayer_selected", "audioStreamPlayer_submit", "audioStreamPlayer_cancel", "audioStreamPlayer_equip", "audioStreamPlayer_unequip", "fps_label", "option_menu")]
+[node name="Singleton" type="Node" unique_id=729221882 node_paths=PackedStringArray("audioStreamPlayer_selected", "audioStreamPlayer_submit", "audioStreamPlayer_cancel", "audioStreamPlayer_equip", "audioStreamPlayer_unequip", "audioStreamPlayer_shop", "fps_label", "option_menu")]
 process_mode = 3
 script = ExtResource("1_72n7e")
 audioStreamPlayer_selected = NodePath("AudioStreamPlayer_Selected")
@@ -17,8 +18,9 @@ audioStreamPlayer_submit = NodePath("AudioStreamPlayer_Submit")
 audioStreamPlayer_cancel = NodePath("AudioStreamPlayer_Cancel")
 audioStreamPlayer_equip = NodePath("AudioStreamPlayer_Equip")
 audioStreamPlayer_unequip = NodePath("AudioStreamPlayer_Unequip")
+audioStreamPlayer_shop = NodePath("AudioStreamPlayer_Shop")
 fps_label = NodePath("CanvasLayer/fps_menu/Label")
-option_menu = NodePath("CanvasLayer/Option_Menu")
+option_menu = NodePath("CanvasLayer/option_menu")
 
 [node name="AudioStreamPlayer_Selected" type="AudioStreamPlayer" parent="." unique_id=1851059873]
 stream = ExtResource("2_jb8s2")
@@ -38,6 +40,10 @@ bus = &"sfx"
 
 [node name="AudioStreamPlayer_Unequip" type="AudioStreamPlayer" parent="." unique_id=422420835]
 stream = ExtResource("6_lhprx")
+bus = &"sfx"
+
+[node name="AudioStreamPlayer_Shop" type="AudioStreamPlayer" parent="." unique_id=1029578682]
+stream = ExtResource("7_j0hcl")
 bus = &"sfx"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2044553950]
@@ -60,7 +66,8 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "60 fps."
 
-[node name="Option_Menu" type="MarginContainer" parent="CanvasLayer" unique_id=1724359426 node_paths=PackedStringArray("singleton", "title", "idiome_label", "idiome_optionbutton", "resolution_label", "resolution_optionbutton", "fullscreen_label", "fullscreen_checkbutton", "borderless_label", "borderless_checkbutton", "vsync_label", "vsync_checkbutton", "master_label", "master_number", "master_slider", "sfx_label", "sfx_number", "sfx_slider", "bgm_label", "bgm_number", "bgm_slider", "back")]
+[node name="option_menu" type="MarginContainer" parent="CanvasLayer" unique_id=1724359426 node_paths=PackedStringArray("singleton", "title", "idiome_label", "idiome_optionbutton", "resolution_label", "resolution_optionbutton", "fullscreen_label", "fullscreen_checkbutton", "borderless_label", "borderless_checkbutton", "vsync_label", "vsync_checkbutton", "master_label", "master_number", "master_slider", "sfx_label", "sfx_number", "sfx_slider", "bgm_label", "bgm_number", "bgm_slider", "back")]
+visible = false
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
@@ -96,59 +103,59 @@ bgm_number = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContaine
 bgm_slider = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm/HSlider")
 back = NodePath("VBoxContainer/Button")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Option_Menu" unique_id=1272910459]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/option_menu" unique_id=1272910459]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Option_Menu/VBoxContainer" unique_id=1590128711]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/option_menu/VBoxContainer" unique_id=1590128711]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer" unique_id=58774095]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer" unique_id=58774095]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=1398282297]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=1398282297]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1585820108]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1585820108]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "Option Menu"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=319074888]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=319074888]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Lenguage" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1273184208]
+[node name="Lenguage" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1273184208]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Lenguage" unique_id=851780521]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Lenguage" unique_id=851780521]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Lenguage:  "
 
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Lenguage" unique_id=404159839]
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Lenguage" unique_id=404159839]
 layout_mode = 2
 size_flags_horizontal = 3
 allow_reselect = true
 
-[node name="Resolution" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1024631198]
+[node name="Resolution" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1024631198]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Resolution" unique_id=1976759285]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Resolution" unique_id=1976759285]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Resolución:  "
 
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Resolution" unique_id=1006908714]
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Resolution" unique_id=1006908714]
 layout_mode = 2
 size_flags_horizontal = 3
 allow_reselect = true
@@ -156,62 +163,62 @@ item_count = 1
 popup/item_0/text = "Spanish"
 popup/item_0/id = 0
 
-[node name="Full_Screen" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=254394460]
+[node name="Full_Screen" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=254394460]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Full_Screen" unique_id=171775637]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Full_Screen" unique_id=171775637]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Pantalla Completa:  "
 
-[node name="CheckButton" type="CheckButton" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Full_Screen" unique_id=1422293009]
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Full_Screen" unique_id=1422293009]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 
-[node name="Borderless" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1512646248]
+[node name="Borderless" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1512646248]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Borderless" unique_id=1183710498]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Borderless" unique_id=1183710498]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Sin Bordes:  "
 
-[node name="CheckButton" type="CheckButton" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Borderless" unique_id=1531007171]
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Borderless" unique_id=1531007171]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 
-[node name="v_sync" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1325393933]
+[node name="v_sync" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1325393933]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/v_sync" unique_id=2044391217]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/v_sync" unique_id=2044391217]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "V-Sync:  "
 
-[node name="CheckButton" type="CheckButton" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/v_sync" unique_id=1163645325]
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/v_sync" unique_id=1163645325]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 
-[node name="master" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=92628917]
+[node name="master" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=92628917]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/master" unique_id=1074470179]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/master" unique_id=1074470179]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Volumen Maestro:  "
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/master" unique_id=2020955719]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/master" unique_id=2020955719]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -219,24 +226,24 @@ size_flags_vertical = 1
 max_value = 1.0
 step = 0.05
 
-[node name="Label2" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/master" unique_id=648792464]
+[node name="Label2" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/master" unique_id=648792464]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "100%"
 horizontal_alignment = 2
 
-[node name="sfx" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=652005244]
+[node name="sfx" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=652005244]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/sfx" unique_id=1063520067]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/sfx" unique_id=1063520067]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Volumen de los Efectos de Sonido:  "
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/sfx" unique_id=1961288832]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/sfx" unique_id=1961288832]
 custom_minimum_size = Vector2(300, 0)
 custom_maximum_size = Vector2(-1, 400)
 layout_mode = 2
@@ -245,24 +252,24 @@ size_flags_vertical = 1
 max_value = 1.0
 step = 0.05
 
-[node name="Label2" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/sfx" unique_id=344482121]
+[node name="Label2" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/sfx" unique_id=344482121]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "100%"
 horizontal_alignment = 2
 
-[node name="bgm" type="HBoxContainer" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1094454542]
+[node name="bgm" type="HBoxContainer" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1094454542]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm" unique_id=504687371]
+[node name="Label" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm" unique_id=504687371]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Volumen de la Música de Fondo:  "
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm" unique_id=360286527]
+[node name="HSlider" type="HSlider" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm" unique_id=360286527]
 custom_minimum_size = Vector2(300, 0)
 custom_maximum_size = Vector2(-1, 400)
 layout_mode = 2
@@ -271,14 +278,14 @@ size_flags_vertical = 1
 max_value = 1.0
 step = 0.05
 
-[node name="Label2" type="Label" parent="CanvasLayer/Option_Menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm" unique_id=2143452889]
+[node name="Label2" type="Label" parent="CanvasLayer/option_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/bgm" unique_id=2143452889]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "100%"
 horizontal_alignment = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/Option_Menu/VBoxContainer" unique_id=2051582863]
+[node name="Button" type="Button" parent="CanvasLayer/option_menu/VBoxContainer" unique_id=2051582863]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

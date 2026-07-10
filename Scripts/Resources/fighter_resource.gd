@@ -4,7 +4,6 @@ enum FIGHTER_CLASS{EVERYONE, WARRIOR, MAGICIAN, PRIEST}
 #-------------------------------------------------------------------------------
 @export_category("Fighter Stats")
 @export var myFIGHTER_CLASS: FIGHTER_CLASS = FIGHTER_CLASS.WARRIOR
-@export var face: Texture2D
 #-------------------------------------------------------------------------------
 @export_category("Base Stats")
 @export var max_hp: int = 100

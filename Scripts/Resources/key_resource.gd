@@ -1,7 +1,8 @@
 extends Resource
 class_name Key_Resource
 #-------------------------------------------------------------------------------
-@export var max_stored: int
+@export var price: int
+var max_stored: int = 99
 #-------------------------------------------------------------------------------
 func _init():
 	resource_local_to_scene = false

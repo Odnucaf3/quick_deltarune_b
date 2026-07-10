@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Fighter_Resource" format=3 uid="uid://uy6dxv70r723"]
+
+[ext_resource type="Resource" uid="uid://cpbj78ksh3wst" path="res://Resources/Characters/character_ally_1.tres" id="1_hb14b"]
+[ext_resource type="Script" uid="uid://nvm68ow83k0c" path="res://Scripts/Resources/fighter_resource.gd" id="1_ofp85"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_hb14b"]
+[ext_resource type="Resource" uid="uid://dfa1o2oxpnj2m" path="res://Resources/Skills/skill_thunder_damage_1.tres" id="5_hb14b"]
+
+[resource]
+script = ExtResource("1_ofp85")
+myFIGHTER_CLASS = 3
+character_resource = ExtResource("1_hb14b")
+skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("5_hb14b")])
+metadata/_custom_type_script = "uid://nvm68ow83k0c"

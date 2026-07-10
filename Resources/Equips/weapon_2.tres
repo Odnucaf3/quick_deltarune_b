@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://bnw47jxdj602q"]
+
+[ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="1_5brpt"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_3upoe"]
+
+[resource]
+script = ExtResource("1_5brpt")
+myFIGHTER_CLASS = 3
+price = 61
+metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

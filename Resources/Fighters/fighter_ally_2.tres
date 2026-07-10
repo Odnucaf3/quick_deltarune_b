@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Fighter_Resource" format=3 uid="uid://djstdnna2nb34"]
 
 [ext_resource type="Script" uid="uid://nvm68ow83k0c" path="res://Scripts/Resources/fighter_resource.gd" id="1_8pvx1"]
-[ext_resource type="Texture2D" uid="uid://c04up2aujmyel" path="res://Assets/Sprites/player3_idle1.png" id="1_x4tp6"]
+[ext_resource type="Resource" uid="uid://c7r52ys6b7mxd" path="res://Resources/Characters/character_ally_2.tres" id="1_x4tp6"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_lfkaq"]
 
 [resource]
 script = ExtResource("1_8pvx1")
-face = ExtResource("1_x4tp6")
+character_resource = ExtResource("1_x4tp6")
 metadata/_custom_type_script = "uid://nvm68ow83k0c"

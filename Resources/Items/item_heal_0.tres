@@ -4,9 +4,10 @@
 
 [resource]
 script = ExtResource("1_a1l4q")
-tp_cost = 8
 max_hold = 14
+tp_cost = 8
+price = 14
+value = 50
 myEFFECT = 1
 myTARGET = 3
-value = 50
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

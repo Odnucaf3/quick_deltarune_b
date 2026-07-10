@@ -5,13 +5,5 @@
 
 [resource]
 script = ExtResource("1_yufao")
-normal = Vector4i(42, 40, -80, -97)
-water = Vector4i(39, -76, 51, 155)
-fire = Vector4i(198, -301, -125, 102)
-earth = Vector4i(-66, 57, 82, -98)
-wind = Vector4i(44, -72, 0, -77)
-ice = Vector4i(90, 0, 67, -169)
-thunder = Vector4i(0, 113, -118, 192)
-light = Vector4i(-46, 127, -175, 0)
-dark = Vector4i(0, 172, 0, 0)
+price = 59
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

@@ -6,11 +6,5 @@
 [resource]
 script = ExtResource("1_hxx06")
 myEQUIP_TYPE = 2
-myFIGHTER_CLASS = 2
-max_hp = 6
-physical_attack = 5
-physical_defense = 4
-magical_attack = 3
-magical_defense = 2
-luck = 1
+price = 10
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

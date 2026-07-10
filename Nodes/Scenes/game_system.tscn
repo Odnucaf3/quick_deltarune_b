@@ -1,499 +1,590 @@
-[gd_scene format=3 uid="uid://d365limkkajta"]
+[gd_scene format=4 uid="uid://d365limkkajta"]
 
 [ext_resource type="Script" uid="uid://b2cd1gt8aev08" path="res://Scripts/game_system.gd" id="1_jvut7"]
 [ext_resource type="PackedScene" uid="uid://1nomtsf23yj7" path="res://Nodes/Prefabs/fighter_button_prefab.tscn" id="2_0ol08"]
+[ext_resource type="Resource" uid="uid://crf420awv7t56" path="res://Resources/Skills/attack.tres" id="2_pclkw"]
 [ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="3_pclkw"]
-[ext_resource type="Resource" uid="uid://1ittax2epliw" path="res://Resources/Items/item_damage_0.tres" id="4_xkpdv"]
+[ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/guard.tres" id="3_xkpdv"]
 [ext_resource type="Resource" uid="uid://6snkwbnrq70e" path="res://Resources/Items/item_damage_1.tres" id="5_ql07v"]
-[ext_resource type="Resource" uid="uid://b6a7pbtv5mpci" path="res://Resources/Items/item_heal_0.tres" id="6_hf3yd"]
-[ext_resource type="Resource" uid="uid://c82bhq2um2yfn" path="res://Resources/Items/item_heal_1.tres" id="7_p24l3"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="8_r4og7"]
 [ext_resource type="Resource" uid="uid://dnqwa4ac4201s" path="res://Resources/Equips/head_0.tres" id="9_xm4vn"]
 [ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="10_seov8"]
 [ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="11_n53vq"]
-[ext_resource type="Resource" uid="uid://d35ei50cimw18" path="res://Resources/Equips/weapon_0.tres" id="12_gbvte"]
-[ext_resource type="Resource" uid="uid://depglun5duu7e" path="res://Resources/Equips/ring_1.tres" id="13_4sv24"]
+[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_ally_0.tres" id="12_hf3yd"]
+[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter_ally_1.tres" id="12_pclkw"]
+[ext_resource type="Resource" uid="uid://b20slmyq6aoho" path="res://Resources/Characters/character_enemy_0.tres" id="14_5rrxs"]
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="16_0t8i2"]
-[ext_resource type="Texture2D" uid="uid://cyo0es6nqpxpk" path="res://Assets/ansimuz/warped_city_files/SPRITES/player/idle/idle-1.png" id="17_y1dyr"]
-[ext_resource type="Texture2D" uid="uid://c4t4jvkaid4aa" path="res://Assets/ansimuz/sewers_pack_files/Sprites/Player/idle/idle1.png" id="18_f8ljg"]
-[ext_resource type="Texture2D" uid="uid://1yhkxm83pbr4" path="res://Assets/ansimuz/cyberpunk_city_2/Sprites/Player/Idle/Idle1.png" id="19_8m6hh"]
-[ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="20_ngqpa"]
-[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/ally_1.tres" id="21_shqvj"]
-[ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="22_altm3"]
-[ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="23_otuwt"]
-[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/ally_2.tres" id="24_w2ngq"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/ally_0.tres" id="25_hdd08"]
-[ext_resource type="Resource" uid="uid://c526dyvk4potd" path="res://Resources/Status/status_damage_0.tres" id="26_3i786"]
-[ext_resource type="Resource" uid="uid://d32vm1s8fexwl" path="res://Resources/Status/status_damage_1.tres" id="27_bv80u"]
-[ext_resource type="Texture2D" uid="uid://casq1hgjcf12k" path="res://Assets/ansimuz/warped_city_files/SPRITESHEETS/player/idle.png" id="28_b6a3y"]
-[ext_resource type="Texture2D" uid="uid://krjkgc6jcdm7" path="res://Assets/ansimuz/warped_city_files/SPRITESHEETS/player/run.png" id="29_hklgd"]
-[ext_resource type="Texture2D" uid="uid://7e826utbet5c" path="res://Assets/ansimuz/warped_city_files/SPRITESHEETS/player/walk.png" id="30_c6toy"]
+[ext_resource type="Script" uid="uid://dosow2j1xm5y3" path="res://Scripts/Resources/key_serializable.gd" id="16_ql07v"]
+[ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_0.tres" id="17_hf3yd"]
+[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_ally_2.tres" id="17_r4og7"]
+[ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
+[ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="22_0ol08"]
+[ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter_ally_1.tscn" id="22_5rrxs"]
+[ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter_ally_2.tscn" id="23_jvut7"]
+[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_ally_1.tscn" id="24_5rrxs"]
+[ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_ally_2.tscn" id="26_jvut7"]
+[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_ally_0.tscn" id="27_0ol08"]
+[ext_resource type="PackedScene" uid="uid://dwe23u11yf586" path="res://Nodes/Prefabs/Characters/character_enemy_0.tscn" id="28_0ol08"]
+[ext_resource type="PackedScene" uid="uid://4evqnt3jxeef" path="res://Nodes/Prefabs/Fighters/fighter_enemy_0.tscn" id="28_jvut7"]
+[ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="30_okou3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="32_gijw1"]
 [ext_resource type="Texture2D" uid="uid://b2m6og0hbkwjg" path="res://Assets/Sprites/player1_idle.PNG" id="33_6yqg2"]
 [ext_resource type="Theme" uid="uid://drphpbb8kep0x" path="res://Themes/title_label_theme.tres" id="34_206if"]
 [ext_resource type="Theme" uid="uid://cof2v378gb86t" path="res://Themes/tp_bar_theme.tres" id="35_4yjru"]
+[ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_ally_0.tscn" id="35_n53vq"]
 [ext_resource type="Theme" uid="uid://dkaas12c836ew" path="res://Themes/tab_theme.tres" id="36_5668i"]
 [ext_resource type="Texture2D" uid="uid://c04up2aujmyel" path="res://Assets/Sprites/player3_idle1.png" id="37_tk7i7"]
+[ext_resource type="Texture2D" uid="uid://lvxcu5k4g4l3" path="res://Assets/ansimuz/legacy_collection/Warped/Environments/top-down-dungeon-sci-fi/preview-top-down-sci-fi.png" id="45_f8ljg"]
+[ext_resource type="Texture2D" uid="uid://s0dtjdtjpjlj" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/tileset.png" id="46_f8ljg"]
+[ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
+[ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
 
-[sub_resource type="Resource" id="Resource_fe6hf"]
-script = ExtResource("3_pclkw")
-action_resource = ExtResource("4_xkpdv")
-hold = 14
-stored = 5
-metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+[sub_resource type="Resource" id="Resource_6ottl"]
+script = ExtResource("16_ql07v")
+key_resource = ExtResource("17_hf3yd")
+stored = 4000
+metadata/_custom_type_script = "uid://dosow2j1xm5y3"
 
-[sub_resource type="Resource" id="Resource_84k1b"]
-script = ExtResource("3_pclkw")
-action_resource = ExtResource("5_ql07v")
-cooldown = 1
-hold = 4
-stored = 1
-metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aoydg"]
+bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Resource" id="Resource_4ll8b"]
-script = ExtResource("3_pclkw")
-action_resource = ExtResource("6_hf3yd")
-hold = 1
-stored = 3
-metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shqvj"]
+shader = ExtResource("54_8m6hh")
+shader_parameter/speed_x = 0.1
+shader_parameter/speed_y = 0.1
 
-[sub_resource type="Resource" id="Resource_0wgfj"]
-script = ExtResource("3_pclkw")
-action_resource = ExtResource("7_p24l3")
-cooldown = 1
-hold = 9
-stored = 7
-metadata/_custom_type_script = "uid://ck6vbg7epahmp"
-
-[sub_resource type="Resource" id="Resource_nthc8"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("9_xm4vn")
-stored = 15
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_beiy3"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("10_seov8")
-stored = 12
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_8dyq2"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("11_n53vq")
-stored = 35
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_g62xa"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("12_gbvte")
-stored = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_hyno2"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("13_4sv24")
-stored = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_5dha6"]
-script = ExtResource("8_r4og7")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_lb5xn"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_8pkgd"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_ph88x"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_kpcsh"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_kombn"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_25p7l"]
-script = ExtResource("22_altm3")
-fighter_resource = ExtResource("21_shqvj")
-equip_serializable_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_5dha6"), SubResource("Resource_lb5xn"), SubResource("Resource_8pkgd"), SubResource("Resource_ph88x"), SubResource("Resource_kpcsh"), SubResource("Resource_kombn")])
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_0tgis"]
-script = ExtResource("8_r4og7")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_h02ql"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_hi72e"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_l6iag"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_gvk4o"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_g6gf4"]
-script = ExtResource("22_altm3")
-fighter_resource = ExtResource("24_w2ngq")
-experience = 999999
-equip_serializable_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_0tgis"), SubResource("Resource_h02ql"), SubResource("Resource_hi72e"), SubResource("Resource_l6iag"), SubResource("Resource_gvk4o")])
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_rdso0"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("12_gbvte")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_qy1nb"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("9_xm4vn")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_3cpl8"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("10_seov8")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_4g0ri"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("11_n53vq")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_btr66"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-stored = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_erqhb"]
-script = ExtResource("8_r4og7")
-myEQUIP_TYPE = 3
-stored = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_cs78y"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("11_n53vq")
-myEQUIP_TYPE = 3
-stored = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_wffoa"]
-script = ExtResource("23_otuwt")
-status_resource = ExtResource("26_3i786")
-turns = 47
-metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
-
-[sub_resource type="Resource" id="Resource_7e3t8"]
-script = ExtResource("23_otuwt")
-status_resource = ExtResource("27_bv80u")
-turns = 85
-metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
-
-[sub_resource type="Resource" id="Resource_8dgcu"]
-script = ExtResource("22_altm3")
-fighter_resource = ExtResource("25_hdd08")
-level = 15
-experience = 12312
-equip_serializable_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_rdso0"), SubResource("Resource_qy1nb"), SubResource("Resource_3cpl8"), SubResource("Resource_4g0ri"), SubResource("Resource_btr66"), SubResource("Resource_erqhb"), SubResource("Resource_cs78y")])
-status_serializable_array = Array[ExtResource("23_otuwt")]([SubResource("Resource_wffoa"), SubResource("Resource_7e3t8")])
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Animation" id="Animation_3cpl8"]
-resource_name = "Idle"
-length = 0.5714428826883435
-loop_mode = 1
-step = 0.14285715
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Ally_0/pivot/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("28_b6a3y")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Ally_0/pivot/Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Ally_0/pivot/Sprite2D:vframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Ally_0/pivot/Sprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857143),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_4g0ri"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Ally_0/pivot/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("28_b6a3y")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Ally_0/pivot/Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Ally_0/pivot/Sprite2D:vframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Ally_0/pivot/Sprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_erqhb"]
-resource_name = "Run"
-length = 0.5333400278158485
-loop_mode = 1
-step = 0.06666667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Ally_0/pivot/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("29_hklgd")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Ally_0/pivot/Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [8]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Ally_0/pivot/Sprite2D:vframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Ally_0/pivot/Sprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.20000002, 0.26666668, 0.33333334, 0.40000004, 0.4666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_5dha6"]
-resource_name = "Walk"
-length = 1.066673388964683
-loop_mode = 1
-step = 0.06666667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Ally_0/pivot/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("30_c6toy")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Ally_0/pivot/Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [16]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Ally_0/pivot/Sprite2D:vframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Ally_0/pivot/Sprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.4666667, 0.53333336, 0.6, 0.6666667, 0.73333335, 0.8, 0.8666667, 0.9333334, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_btr66"]
-_data = {
-&"Idle": SubResource("Animation_3cpl8"),
-&"RESET": SubResource("Animation_4g0ri"),
-&"Run": SubResource("Animation_erqhb"),
-&"Walk": SubResource("Animation_5dha6")
-}
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_erqhb"]
-animation = &"Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lb5xn"]
-animation = &"Run"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8pkgd"]
-animation = &"Walk"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_lb5xn"]
-allow_transition_to_self = true
-states/Idle/node = SubResource("AnimationNodeAnimation_erqhb")
-states/Idle/position = Vector2(330, 100)
-states/Run/node = SubResource("AnimationNodeAnimation_lb5xn")
-states/Run/position = Vector2(330, -4)
-states/Start/position = Vector2(181, 100)
-states/Walk/node = SubResource("AnimationNodeAnimation_8pkgd")
-states/Walk/position = Vector2(330, 214)
-graph_offset = Vector2(-7, -35)
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-graph_offset = Vector2(-158.57254, -42.942158)
-nodes/base/node = SubResource("AnimationNodeStateMachine_lb5xn")
-nodes/base/position = Vector2(20, 60)
-node_connections = [&"output", 0, &"base"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_altm3"]
+shader = ExtResource("54_8m6hh")
+shader_parameter/speed_x = 0.1
+shader_parameter/speed_y = 0.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3em1u"]
-size = Vector2(16, 8)
+size = Vector2(13, 4)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aoydg"]
+radius = 8.0
+
+[sub_resource type="GDScript" id="GDScript_fuapw"]
+script/source = "extends Room_Script
+#-------------------------------------------------------------------------------
+@export_category(\"Ally 0\")
+@export var ally_0: Interactable_Script
+@export var ally_0_character: Character_Node
+@export var ally_0_fighter_resouce: Fighter_Resource
+@export var ally_0_fighter_prefab: PackedScene
+#-------------------------------------------------------------------------------
+@export_category(\"Ally 1\")
+@export var ally_1: Interactable_Script
+@export var ally_1_character: Character_Node
+@export var ally_1_fighter_resouce: Fighter_Resource
+@export var ally_1_fighter_prefab: PackedScene
+#-------------------------------------------------------------------------------
+@export_category(\"Ally 2\")
+@export var ally_2: Interactable_Script
+@export var ally_2_character: Character_Node
+@export var ally_2_fighter_resouce: Fighter_Resource
+@export var ally_2_fighter_prefab: PackedScene
+#-------------------------------------------------------------------------------
+@export_category(\"NPC 3\")
+@export var npc_3: Interactable_Script
+@export var npc_3_character_resource: Character_Resource
+@export var npc_3_item_consumable_array: Array[Action_Serializable]
+@export var npc_3_item_equip_array: Array[Equip_Serializable]
+@export var npc_3_item_key_array: Array[Key_Serializable]
+#-------------------------------------------------------------------------------
+@export_category(\"NPC 4\")
+@export var npc_4: Interactable_Script
+@export var npc_4_fighter_array: Array[Fighter_Node]
+#-------------------------------------------------------------------------------
+func Set_Room():
+	Set_NPC_1(ally_0, ally_0_character, ally_0_fighter_resouce, ally_0_fighter_prefab)
+	Set_NPC_1(ally_1, ally_1_character, ally_1_fighter_resouce, ally_1_fighter_prefab)
+	Set_NPC_1(ally_2, ally_2_character, ally_2_fighter_resouce, ally_2_fighter_prefab)
+	npc_3.interactable_by_action = func(): NPC_3_Talk()
+	npc_4.interactable_by_action = func(): NPC_4_Talk()
+#-------------------------------------------------------------------------------
+func Set_NPC_1(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
+	var _index: int = singleton.game_system.Get_Fighter_Node_Index(_fighter_resource)
+	#-------------------------------------------------------------------------------
+	if(_index < 0):
+		_character_node.modulate.a = 1.0
+	#-------------------------------------------------------------------------------
+	else:
+		_character_node.modulate.a = 105.0/255.0
+	#-------------------------------------------------------------------------------
+	_imteractable_script.interactable_by_action = func(): NPC_1_Talk(_imteractable_script, _character_node, _fighter_resource, _fighter_prefab)
+#-------------------------------------------------------------------------------
+func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
+	_imteractable_script.collider.disabled = true
+	#-------------------------------------------------------------------------------
+	singleton.game_system.Stop_Moving()
+	singleton.game_system.Dialogue_Open()
+	#-------------------------------------------------------------------------------
+	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_node_array[0].character_node.character_resource
+	#-------------------------------------------------------------------------------
+	var _index: int = singleton.game_system.Get_Fighter_Node_Index(_fighter_resource)
+	#-------------------------------------------------------------------------------
+	if(_index < 0):
+		await singleton.game_system.Dialogue_with_Face_0(_character_node.character_resource, \"* Querés que te acompañe?\")
+		singleton.game_system.Open_Dialogue_Options([\"Si\", \"No\"])
+		await singleton.game_system.next_signal
+		#-------------------------------------------------------------------------------
+		match(singleton.game_system.dialogue_option_index):
+			0:
+				singleton.game_system.Close_Dialogue_Options()
+				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a ir con vos.\")
+				var _fighter_ally_1: Fighter_Node = _fighter_prefab.instantiate() as Fighter_Node
+				singleton.game_system.player_characterbody2d.add_child(_fighter_ally_1)
+				singleton.game_system.ally_node_array.append(_fighter_ally_1)
+				singleton.game_system.Set_Fighter_0()
+				_character_node.modulate.a = 105.0/255.0
+			#-------------------------------------------------------------------------------
+			1:
+				singleton.game_system.Close_Dialogue_Options()
+				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a estar acá si me necesitas.\")
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		singleton.game_system.Dialogue_Close()
+	#-------------------------------------------------------------------------------
+	else:
+		await singleton.game_system.Dialogue_with_Face_0(_character_node.character_resource, \"* Querés que me vaya del grupo?\")
+		singleton.game_system.Open_Dialogue_Options([\"Si\", \"No\"])
+		await singleton.game_system.next_signal
+		#-------------------------------------------------------------------------------
+		match(singleton.game_system.dialogue_option_index):
+			0:
+				#-------------------------------------------------------------------------------
+				if(singleton.game_system.ally_node_array.size() > 1):
+					singleton.game_system.Close_Dialogue_Options()
+					await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a estar acá si me necesitas.\")
+					singleton.game_system.ally_node_array[_index].queue_free()
+					singleton.game_system.ally_node_array.remove_at(_index)
+					singleton.game_system.Set_Fighter_0()
+					_character_node.modulate.a = 1.0
+				#-------------------------------------------------------------------------------
+				else:
+					singleton.game_system.Close_Dialogue_Options()
+					await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* No podés tener cero aliados en tu equipo.\")
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			1:
+				singleton.game_system.Close_Dialogue_Options()
+				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, sigo con vos.\")
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		singleton.game_system.Dialogue_Close()
+	#-------------------------------------------------------------------------------
+	_imteractable_script.collider.disabled = false
+#-------------------------------------------------------------------------------
+func NPC_3_Talk():
+	npc_3.collider.disabled = true
+	#-------------------------------------------------------------------------------
+	var _game_system: Game_System = singleton.game_system
+	var _player_1_character_resource: Character_Resource = _game_system.ally_node_array[0].character_node.character_resource
+	_game_system.Stop_Moving()
+	_game_system.Dialogue_Open()
+	#-------------------------------------------------------------------------------
+	await _game_system.Dialogue_with_Face_0(npc_3_character_resource, \"* Hola Che. Vamos a pelear!\")
+	_game_system.Open_Dialogue_Options([\"Comprar\", \"Hablar\", \"Irse\"])
+	await _game_system.next_signal
+	#-------------------------------------------------------------------------------
+	match(_game_system.dialogue_option_index):
+		0:
+			_game_system.Close_Dialogue_Options()
+			#-------------------------------------------------------------------------------
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Comprar.\")
+			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, te muestro lo que tengo.\")
+			_game_system.Dialogue_Close_0()
+			await _game_system.Open_Market(npc_3.name, npc_3_item_consumable_array, npc_3_item_equip_array, npc_3_item_key_array)
+			#-------------------------------------------------------------------------------
+			_game_system.Dialogue_Open()
+			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Gracias, vuelva Pronto.\")
+		#-------------------------------------------------------------------------------
+		1:
+			_game_system.Close_Dialogue_Options()
+			#-------------------------------------------------------------------------------
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. Bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
+			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
+		#-------------------------------------------------------------------------------
+		2:
+			_game_system.Close_Dialogue_Options()
+			#-------------------------------------------------------------------------------
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. Bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
+			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* No? Ok, para la próxima.\")
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	_game_system.Dialogue_Close()
+	#-------------------------------------------------------------------------------
+	npc_3.collider.disabled = false
+#-------------------------------------------------------------------------------
+func NPC_4_Talk():
+	npc_4.collider.disabled = true
+	#-------------------------------------------------------------------------------
+	var _game_system: Game_System = singleton.game_system
+	var _player_1_character_resource: Character_Resource = _game_system.ally_node_array[0].character_node.character_resource
+	_game_system.Stop_Moving()
+	_game_system.Dialogue_Open()
+	#-------------------------------------------------------------------------------
+	await _game_system.Dialogue_with_Face_0(npc_3_character_resource, \"* Hola Che. Vamos a pelear!\")
+	_game_system.Open_Dialogue_Options([\"Pelear\", \"Irse\"])
+	await _game_system.next_signal
+	#-------------------------------------------------------------------------------
+	match(_game_system.dialogue_option_index):
+		0:
+			_game_system.Close_Dialogue_Options()
+			#-------------------------------------------------------------------------------
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Pelear.\")
+			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, vamos a pelear.\")
+			#-------------------------------------------------------------------------------
+			_game_system.Dialogue_Close()
+			_game_system.enemy_node_array = npc_4_fighter_array
+			_game_system.Enter_Battle()
+			await _game_system.next_signal
+		#-------------------------------------------------------------------------------
+		1:
+			_game_system.Close_Dialogue_Options()
+			#-------------------------------------------------------------------------------
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No.\")
+			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* No? Ok, para la próxima.\")
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	_game_system.Dialogue_Close()
+	#-------------------------------------------------------------------------------
+	npc_4.collider.disabled = false
+#-------------------------------------------------------------------------------
+"
+
+[sub_resource type="Resource" id="Resource_5rrxs"]
+script = ExtResource("3_pclkw")
+action_resource = ExtResource("5_ql07v")
+hold = 5
+stored = 6
+metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+
+[sub_resource type="Resource" id="Resource_pclkw"]
+script = ExtResource("8_r4og7")
+equip_resource = ExtResource("11_n53vq")
+stored = 4
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_0ol08"]
+script = ExtResource("8_r4og7")
+equip_resource = ExtResource("10_seov8")
+stored = 66
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_jvut7"]
+script = ExtResource("8_r4og7")
+equip_resource = ExtResource("9_xm4vn")
+stored = 22
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8m6hh"]
+texture = ExtResource("45_f8ljg")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+0:2/0 = 0
+2:2/0 = 0
+6:2/0 = 0
+9:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+16:2/0 = 0
+0:3/0 = 0
+2:3/0 = 0
+6:3/0 = 0
+12:3/0 = 0
+16:3/0 = 0
+0:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+9:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+16:4/0 = 0
+0:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+9:5/0 = 0
+12:5/0 = 0
+14:5/0 = 0
+16:5/0 = 0
+0:6/0 = 0
+0:7/0 = 0
+2:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+7:7/0 = 0
+9:7/0 = 0
+11:7/0 = 0
+12:7/0 = 0
+13:7/0 = 0
+0:8/0 = 0
+9:8/0 = 0
+11:8/0 = 0
+12:8/0 = 0
+13:8/0 = 0
+0:9/0 = 0
+2:9/0 = 0
+4:9/0 = 0
+11:9/0 = 0
+12:9/0 = 0
+13:9/0 = 0
+0:10/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ngqpa"]
+texture = ExtResource("46_f8ljg")
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:1/0 = 0
+10:1/0 = 0
+12:1/0 = 0
+14:1/0 = 0
+14:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:1/0 = 0
+15:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:1/0 = 0
+16:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+18:1/0 = 0
+19:1/0 = 0
+21:1/0 = 0
+21:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:2/0 = 0
+10:2/0 = 0
+12:2/0 = 0
+14:2/0 = 0
+14:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:2/0 = 0
+15:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:2/0 = 0
+16:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+18:2/0 = 0
+19:2/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:3/0 = 0
+10:3/0 = 0
+12:3/0 = 0
+14:3/0 = 0
+14:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:3/0 = 0
+15:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:3/0 = 0
+16:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+18:3/0 = 0
+19:3/0 = 0
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:4/0 = 0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:4/0 = 0
+10:4/0 = 0
+12:4/0 = 0
+14:4/0 = 0
+14:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:4/0 = 0
+15:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:4/0 = 0
+16:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+18:4/0 = 0
+19:4/0 = 0
+2:6/0 = 0
+4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:6/0 = 0
+10:6/0 = 0
+10:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:6/0 = 0
+11:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:6/0 = 0
+12:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:6/0 = 0
+14:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:6/0 = 0
+15:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:6/0 = 0
+16:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+18:6/0 = 0
+18:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+20:6/0 = 0
+20:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+22:6/0 = 0
+22:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:7/0 = 0
+4:7/0 = 0
+4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:7/0 = 0
+10:7/0 = 0
+10:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:7/0 = 0
+11:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:7/0 = 0
+12:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:7/0 = 0
+14:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:7/0 = 0
+15:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:7/0 = 0
+16:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+18:7/0 = 0
+18:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+20:7/0 = 0
+20:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+22:7/0 = 0
+22:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:8/0 = 0
+4:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:8/0 = 0
+14:8/0 = 0
+14:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:8/0 = 0
+15:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:8/0 = 0
+16:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:9/0 = 0
+7:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:9/0 = 0
+8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:9/0 = 0
+11:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:9/0 = 0
+12:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:9/0 = 0
+14:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:9/0 = 0
+15:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:9/0 = 0
+16:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:10/0 = 0
+4:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:10/0 = 0
+11:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:10/0 = 0
+12:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:11/0 = 0
+4:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:11/0 = 0
+7:11/0 = 0
+7:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:11/0 = 0
+8:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:11/0 = 0
+14:11/0 = 0
+14:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:11/0 = 0
+15:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:11/0 = 0
+16:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:12/0 = 0
+14:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:12/0 = 0
+15:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:12/0 = 0
+16:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:13/0 = 0
+14:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:13/0 = 0
+15:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:13/0 = 0
+16:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:14/0 = 0
+14:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:14/0 = 0
+15:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+16:14/0 = 0
+16:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_3em1u"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_8m6hh")
+sources/1 = SubResource("TileSetAtlasSource_ngqpa")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcbh6"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3em1u"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
+radius = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3em1u"]
-bg_color = Color(0, 0, 0, 0.60784316)
+bg_color = Color(0, 0, 0, 0.8039216)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4g0ri"]
 bg_color = Color(0, 0, 0, 0.8039216)
 
-[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("ally_node_array", "player_characterbody2d", "tp_bar", "tp_bar_name", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "debug_label")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcbh6"]
+bg_color = Color(0, 0, 0, 0.8039216)
+
+[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("ally_node_array", "player_characterbody2d", "player_interactable_by_action_area2d", "camera", "current_room", "tp_bar", "tp_bar_name", "battle_background", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "money_menu", "money_menu_label", "debug_label")]
 script = ExtResource("1_jvut7")
+attack_resource = ExtResource("2_pclkw")
+guard_resource = ExtResource("3_xkpdv")
 fighter_button_prefab = ExtResource("2_0ol08")
-ally_node_array = [NodePath("World_2D/player_characterbody2d/Ally_0"), NodePath("World_2D/Ally_1"), NodePath("World_2D/Ally_2")]
-item_consumable_serializable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_fe6hf"), SubResource("Resource_84k1b"), SubResource("Resource_4ll8b"), SubResource("Resource_0wgfj")])
-item_equip_serializable_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_nthc8"), SubResource("Resource_beiy3"), SubResource("Resource_8dyq2"), SubResource("Resource_g62xa"), SubResource("Resource_hyno2")])
+money_serializable = SubResource("Resource_6ottl")
+ally_node_array = [NodePath("World_2D/player_characterbody2d/fighter_ally_0"), NodePath("World_2D/player_characterbody2d/fighter_ally_1"), NodePath("World_2D/player_characterbody2d/fighter_ally_2")]
 player_characterbody2d = NodePath("World_2D/player_characterbody2d")
+player_interactable_by_action_area2d = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d")
+camera = NodePath("Camera2D")
+current_room = NodePath("World_2D/room_00")
 tp_bar = NodePath("CanvasLayer/tp_bar")
 tp_bar_name = NodePath("CanvasLayer/tp_bar/VBoxContainer/tp_bar_name")
+battle_background = NodePath("World_2D/Panel2")
 go_to_title_menu = NodePath("CanvasLayer/go_to_title_menu")
-go_to_title_menu_button_yes = NodePath("CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_yes")
-go_to_title_menu_button_no = NodePath("CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_no")
+go_to_title_menu_button_yes = NodePath("CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_yes")
+go_to_title_menu_button_no = NodePath("CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_no")
 pause_menu = NodePath("CanvasLayer/pause_menu")
+pause_menu_panel = NodePath("CanvasLayer/pause_menu_panel")
 pause_menu_button_title = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/pause_menu_button_title")
 pause_menu_button_skill = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/pause_menu_button_skill")
 pause_menu_button_item = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/pause_menu_button_item")
@@ -502,6 +593,7 @@ pause_menu_button_statistics = NodePath("CanvasLayer/pause_menu/VBoxContainer/HB
 pause_menu_button_status = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/pause_menu_button_status")
 pause_menu_button_options = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/pause_menu_button_options")
 pause_menu_button_quit = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/pause_menu_button_quit")
+pause_menu_money_label = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/Control/PanelContainer3/MarginContainer/pause_menu_money_label")
 pause_menu_button_mouse_blocker = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/pause_menu_button_mouse_blocker")
 pause_menu_fighter_button_title = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer/pause_menu_fighter_button_title")
 pause_menu_fighter_button_content = NodePath("CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/pause_menu_fighter_button_content")
@@ -668,13 +760,76 @@ status_menu_information_statistics_name = NodePath("CanvasLayer/status_menu/VBox
 status_menu_information_statistics_value = NodePath("CanvasLayer/status_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/status_menu_information_root/MarginContainer/VBoxContainer/status_menu_information_statistics_name/status_menu_information_statistics_value")
 status_menu_information_description_title = NodePath("CanvasLayer/status_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/status_menu_information_root/MarginContainer/VBoxContainer/status_menu_information_description_title")
 status_menu_information_description_value = NodePath("CanvasLayer/status_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/status_menu_information_root/MarginContainer/VBoxContainer/status_menu_information_description_value")
+dialogue_menu = NodePath("CanvasLayer/dialogue_menu")
+dialogue_menu_face = NodePath("CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/dialogue_menu_face")
+dialogue_menu_name = NodePath("CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/dialogue_menu_name")
+dialogue_menu_value = NodePath("CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/dialogue_menu_value")
+dialogue_menu_button_content = NodePath("CanvasLayer/dialogue_menu/VBoxContainer/VBoxContainer")
+dialogue_menu_audio = NodePath("CanvasLayer/dialogue_menu/dialogue_menu_audio")
+button_next = NodePath("CanvasLayer/button_next")
+confirm_buy_menu = NodePath("CanvasLayer/confirm_buy_menu")
+confirm_buy_menu_item_name = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label2")
+confirm_buy_menu_button = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button")
+confirm_buy_menu_item_price = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Label2")
+money_menu = NodePath("CanvasLayer/money_menu")
+money_menu_label = NodePath("CanvasLayer/money_menu/PanelContainer/MarginContainer/money_menu_label")
 debug_label = NodePath("CanvasLayer/debug_menu/debug_label")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1925114159]
-position = Vector2(0, -27)
 zoom = Vector2(3.5, 3.5)
 
 [node name="World_2D" type="Node2D" parent="." unique_id=1813968239]
+y_sort_enabled = true
+
+[node name="Panel2" type="Panel" parent="World_2D" unique_id=1055272901]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -587.4126
+offset_top = -335.66437
+offset_right = 587.4126
+offset_bottom = 335.66437
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.286, 0.286)
+theme_override_styles/panel = SubResource("StyleBoxFlat_aoydg")
+
+[node name="TextureRect" type="TextureRect" parent="World_2D/Panel2" unique_id=1453810583]
+self_modulate = Color(1, 0, 1, 0.21568628)
+material = SubResource("ShaderMaterial_shqvj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1198.6895
+offset_bottom = 668.98145
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("55_ngqpa")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="World_2D/Panel2" unique_id=534830673]
+self_modulate = Color(0, 1, 0, 0.21568628)
+material = SubResource("ShaderMaterial_altm3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1198.6895
+offset_bottom = 668.98145
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("55_ngqpa")
+expand_mode = 1
+stretch_mode = 1
+flip_h = true
+flip_v = true
 
 [node name="Panel" type="Panel" parent="World_2D" unique_id=1091550278]
 visible = false
@@ -683,71 +838,200 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = -252.0
-offset_right = 225.0
-offset_bottom = 198.0
+offset_left = -159.99998
+offset_top = -255.99997
+offset_right = 290.0
+offset_bottom = 194.00003
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.286, 0.286)
 pivot_offset = Vector2(225, 225)
 theme = ExtResource("16_0t8i2")
 
-[node name="Icon" type="Sprite2D" parent="World_2D" unique_id=1448344094]
-visible = false
-position = Vector2(-100, -66)
-texture = ExtResource("17_y1dyr")
-offset = Vector2(-2, -33)
+[node name="TextureRect" type="TextureRect" parent="World_2D/Panel" unique_id=1699119715]
+self_modulate = Color(1, 0, 1, 1)
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_ngqpa")
+expand_mode = 1
 
-[node name="Icon2" type="Sprite2D" parent="World_2D" unique_id=1247096195]
-visible = false
-position = Vector2(-100, -30)
-texture = ExtResource("18_f8ljg")
-offset = Vector2(-2, -38)
-
-[node name="Icon3" type="Sprite2D" parent="World_2D" unique_id=1222808859]
-visible = false
-position = Vector2(-100, 7)
-texture = ExtResource("19_8m6hh")
-offset = Vector2(1, -40)
-
-[node name="Ally_1" type="Node2D" parent="World_2D" unique_id=805940624 node_paths=PackedStringArray("fighter_button")]
-script = ExtResource("20_ngqpa")
-fighter_serializable = SubResource("Resource_25p7l")
-fighter_button = NodePath("../../CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/pause_menu_fighter_button_content/Fighter_Button2")
-
-[node name="Ally_2" type="Node2D" parent="World_2D" unique_id=493900746 node_paths=PackedStringArray("fighter_button")]
-script = ExtResource("20_ngqpa")
-fighter_serializable = SubResource("Resource_g6gf4")
-fighter_button = NodePath("../../CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/pause_menu_fighter_button_content/Fighter_Button3")
+[node name="TextureRect" type="TextureRect" parent="World_2D/Panel/TextureRect" unique_id=681833552]
+self_modulate = Color(1, 1, 1, 0.60784316)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_ngqpa")
+expand_mode = 1
 
 [node name="player_characterbody2d" type="CharacterBody2D" parent="World_2D" unique_id=412323299]
-
-[node name="Ally_0" type="Node2D" parent="World_2D/player_characterbody2d" unique_id=2008547918 node_paths=PackedStringArray("fighter_button", "animation_tree", "pivot")]
-script = ExtResource("20_ngqpa")
-fighter_serializable = SubResource("Resource_8dgcu")
-fighter_button = NodePath("../../../CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/pause_menu_fighter_button_content/Fighter_Button")
-animation_tree = NodePath("pivot/AnimationTree")
-pivot = NodePath("pivot")
-
-[node name="pivot" type="Node2D" parent="World_2D/player_characterbody2d/Ally_0" unique_id=966584624]
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/player_characterbody2d/Ally_0/pivot" unique_id=1418622747]
-position = Vector2(-2, -32)
-texture = ExtResource("28_b6a3y")
-hframes = 4
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/player_characterbody2d/Ally_0/pivot" unique_id=1288749684]
-root_node = NodePath("../../..")
-libraries/ = SubResource("AnimationLibrary_btr66")
-
-[node name="AnimationTree" type="AnimationTree" parent="World_2D/player_characterbody2d/Ally_0/pivot" unique_id=1162893300]
-root_node = NodePath("../../..")
-tree_root = SubResource("AnimationNodeBlendTree_3em1u")
-anim_player = NodePath("../AnimationPlayer")
+y_sort_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d" unique_id=579708302]
 shape = SubResource("RectangleShape2D_3em1u")
+
+[node name="player_interactable_by_action_area2d" type="Area2D" parent="World_2D/player_characterbody2d" unique_id=1318832158]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d/player_interactable_by_action_area2d" unique_id=1893623121]
+shape = SubResource("CircleShape2D_aoydg")
+
+[node name="fighter_ally_0" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
+
+[node name="fighter_ally_1" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
+visible = false
+
+[node name="fighter_ally_2" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
+visible = false
+
+[node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "npc_3", "npc_4", "npc_4_fighter_array", "room_limits")]
+y_sort_enabled = true
+script = SubResource("GDScript_fuapw")
+ally_0 = NodePath("ally_0")
+ally_0_character = NodePath("ally_0/character_ally_0")
+ally_0_fighter_resouce = ExtResource("12_hf3yd")
+ally_0_fighter_prefab = ExtResource("35_n53vq")
+ally_1 = NodePath("ally_1")
+ally_1_character = NodePath("ally_1/character_ally_1")
+ally_1_fighter_resouce = ExtResource("12_pclkw")
+ally_1_fighter_prefab = ExtResource("22_5rrxs")
+ally_2 = NodePath("ally_2")
+ally_2_character = NodePath("ally_2/character_ally_2")
+ally_2_fighter_resouce = ExtResource("17_r4og7")
+ally_2_fighter_prefab = ExtResource("23_jvut7")
+npc_3 = NodePath("npc_3")
+npc_3_character_resource = ExtResource("14_5rrxs")
+npc_3_item_consumable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_5rrxs")])
+npc_3_item_equip_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_pclkw"), SubResource("Resource_0ol08"), SubResource("Resource_jvut7")])
+npc_4 = NodePath("npc_4")
+npc_4_fighter_array = [NodePath("npc_4/fighter_enemy_0")]
+room_limits = NodePath("room_limits")
+
+[node name="room_limits" type="Control" parent="World_2D/room_00" unique_id=1014785272]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -96.0
+offset_top = -448.0
+offset_right = 864.0
+offset_bottom = 224.0
+
+[node name="Label" type="Label" parent="World_2D/room_00" unique_id=386820662]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -135.99998
+offset_right = 468.0
+offset_bottom = -36.999985
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.286, 0.286)
+theme_override_font_sizes/font_size = 72
+text = "Party Members"
+
+[node name="Label2" type="Label" parent="World_2D/room_00" unique_id=1073696420]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 303.99997
+offset_top = -424.0
+offset_right = 554.0
+offset_bottom = -325.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.286, 0.286)
+theme_override_font_sizes/font_size = 72
+text = "Market"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="World_2D/room_00" unique_id=992122150]
+z_index = -1
+tile_map_data = PackedByteArray("AAD7//z/AAAHAAcAAAD8//z/AAAHAAcAAAD9//z/AAAHAAcAAAD9//3/AAAHAAcAAAD+//3/AAAHAAcAAAD///3/AAAHAAcAAAAAAP3/AAAHAAcAAAABAP3/AAAHAAcAAAACAP3/AAAHAAcAAAD7//3/AAAHAAcAAAD7//7/AAAHAAcAAAD7////AAAHAAcAAAD7/wAAAAAHAAcAAAD7/wEAAAAHAAcAAAD7/wIAAAAHAAcAAAD8//3/AAAHAAcAAAD8//7/AAAHAAcAAAD8////AAAHAAcAAAD8/wAAAAAHAAcAAAD8/wEAAAAHAAcAAAD8/wIAAAAHAAcAAAD9//7/AAAHAAcAAAD9////AAAHAAcAAAD9/wAAAAAHAAcAAAD9/wEAAAAHAAcAAAD9/wIAAAAHAAcAAAD+//z/AAAHAAcAAAD+//7/AAAHAAcAAAD+////AAAHAAcAAAD+/wAAAAAHAAcAAAD+/wEAAAAHAAcAAAD+/wIAAAAHAAcAAAD///z/AAAHAAcAAAD///7/AAAHAAcAAAD/////AAAHAAcAAAD//wAAAAAHAAcAAAD//wEAAAAHAAcAAAD//wIAAAAHAAcAAAAAAPz/AAAHAAcAAAAAAP7/AAAHAAcAAAAAAP//AAAHAAcAAAAAAAAAAAAHAAcAAAAAAAEAAAAHAAcAAAAAAAIAAAAHAAcAAAABAPz/AAAHAAcAAAABAP7/AAAHAAcAAAABAP//AAAHAAcAAAABAAAAAAAHAAcAAAABAAEAAAAHAAcAAAABAAIAAAAHAAcAAAACAPz/AAAHAAcAAAACAP7/AAAHAAcAAAACAP//AAAHAAcAAAACAAAAAAAHAAcAAAACAAEAAAAHAAcAAAACAAIAAAAHAAcAAAADAPz/AAAHAAcAAAADAP3/AAAHAAcAAAADAP7/AAAHAAcAAAADAP//AAAHAAcAAAADAAAAAAAHAAcAAAADAAEAAAAHAAcAAAADAAIAAAAHAAcAAAAEAPz/AAAHAAcAAAAEAP3/AAAHAAcAAAAEAP7/AAAHAAcAAAAEAP//AAAHAAcAAAAEAAAAAAAHAAcAAAAEAAEAAAAHAAcAAAAEAAIAAAAHAAcAAAAFAPz/AAAHAAcAAAAFAP3/AAAHAAcAAAAFAP7/AAAHAAcAAAAFAP//AAAHAAcAAAAFAAAAAAAHAAcAAAAFAAEAAAAHAAcAAAAFAAIAAAAHAAcAAAAGAPz/AAAHAAcAAAAGAP3/AAAHAAcAAAAGAP7/AAAHAAcAAAAGAP//AAAHAAcAAAAGAAAAAAAHAAcAAAAGAAEAAAAHAAcAAAAGAAIAAAAHAAcAAAAHAP7/AAAHAAcAAAAHAP//AAAHAAcAAAAIAP7/AAAHAAcAAAAIAP//AAAHAAcAAAAJAP7/AAAHAAcAAAAJAP//AAAHAAcAAAAKAP7/AAAHAAcAAAAKAP//AAAHAAcAAAALAP7/AAAHAAcAAAALAP//AAAHAAcAAAAMAP7/AAAHAAcAAAAMAP//AAAHAAcAAAANAP7/AAAHAAcAAAANAP//AAAHAAcAAAAOAP7/AAAHAAcAAAAOAP//AAAHAAcAAAAPAP7/AAAHAAcAAAAPAP//AAAHAAcAAAAQAP7/AAAHAAcAAAAQAP//AAAHAAcAAAARAP7/AAAHAAcAAAARAP//AAAHAAcAAAASAP7/AAAHAAcAAAASAP//AAAHAAcAAAATAP7/AAAHAAcAAAATAP//AAAHAAcAAAAUAPL/AAAHAAcAAAAUAPP/AAAHAAcAAAAUAPT/AAAHAAcAAAAUAPX/AAAHAAcAAAAUAPb/AAAHAAcAAAAUAPf/AAAHAAcAAAAUAPj/AAAHAAcAAAAUAPn/AAAHAAcAAAAUAPr/AAAHAAcAAAAUAPv/AAAHAAcAAAAUAPz/AAAHAAcAAAAUAP3/AAAHAAcAAAAUAP7/AAAHAAcAAAAUAP//AAAHAAcAAAAVAPL/AAAHAAcAAAAVAPP/AAAHAAcAAAAVAPT/AAAHAAcAAAAVAPX/AAAHAAcAAAAVAPb/AAAHAAcAAAAVAPf/AAAHAAcAAAAVAPj/AAAHAAcAAAAVAPn/AAAHAAcAAAAVAPr/AAAHAAcAAAAVAPv/AAAHAAcAAAAVAPz/AAAHAAcAAAAVAP3/AAAHAAcAAAAVAP7/AAAHAAcAAAAVAP//AAAHAAcAAAD7//v/AAAHAAcAAAD8//v/AAAHAAcAAAD9//v/AAAHAAcAAAD+//v/AAAHAAcAAAD///v/AAAHAAcAAAAAAPv/AAAHAAcAAAABAPv/AAAHAAcAAAACAPv/AAAHAAcAAAADAPv/AAAHAAcAAAAEAPv/AAAHAAcAAAAFAPv/AAAHAAcAAAAGAPv/AAAHAAcAAAARAOn/AAAHAAcAAAARAOr/AAAHAAcAAAARAOv/AAAHAAcAAAARAOz/AAAHAAcAAAARAO3/AAAHAAcAAAARAO7/AAAHAAcAAAARAO//AAAHAAcAAAARAPD/AAAHAAcAAAARAPH/AAAHAAcAAAASAOn/AAAHAAcAAAASAOr/AAAHAAcAAAASAOv/AAAHAAcAAAASAOz/AAAHAAcAAAASAO3/AAAHAAcAAAASAO7/AAAHAAcAAAASAO//AAAHAAcAAAASAPD/AAAHAAcAAAASAPH/AAAHAAcAAAATAOn/AAAHAAcAAAATAOr/AAAHAAcAAAATAOv/AAAHAAcAAAATAOz/AAAHAAcAAAATAO3/AAAHAAcAAAATAO7/AAAHAAcAAAATAO//AAAHAAcAAAATAPD/AAAHAAcAAAATAPH/AAAHAAcAAAAUAOn/AAAHAAcAAAAUAOr/AAAHAAcAAAAUAOv/AAAHAAcAAAAUAOz/AAAHAAcAAAAUAO3/AAAHAAcAAAAUAO7/AAAHAAcAAAAUAO//AAAHAAcAAAAUAPD/AAAHAAcAAAAUAPH/AAAHAAcAAAAVAOn/AAAHAAcAAAAVAOr/AAAHAAcAAAAVAOv/AAAHAAcAAAAVAOz/AAAHAAcAAAAVAO3/AAAHAAcAAAAVAO7/AAAHAAcAAAAVAO//AAAHAAcAAAAVAPD/AAAHAAcAAAAVAPH/AAAHAAcAAAAWAOn/AAAHAAcAAAAWAOr/AAAHAAcAAAAWAOv/AAAHAAcAAAAWAOz/AAAHAAcAAAAWAO3/AAAHAAcAAAAWAO7/AAAHAAcAAAAWAO//AAAHAAcAAAAWAPD/AAAHAAcAAAAWAPH/AAAHAAcAAAAXAOn/AAAHAAcAAAAXAOr/AAAHAAcAAAAXAOv/AAAHAAcAAAAXAOz/AAAHAAcAAAAXAO3/AAAHAAcAAAAXAO7/AAAHAAcAAAAXAO//AAAHAAcAAAAXAPD/AAAHAAcAAAAXAPH/AAAHAAcAAAAYAOn/AAAHAAcAAAAYAOr/AAAHAAcAAAAYAOv/AAAHAAcAAAAYAOz/AAAHAAcAAAAYAO3/AAAHAAcAAAAYAO7/AAAHAAcAAAAYAO//AAAHAAcAAAAYAPD/AAAHAAcAAAAYAPH/AAAHAAcAAAAZAOz/AAAHAAcAAAAZAO3/AAAHAAcAAAAaAOz/AAAHAAcAAAAaAO3/AAAHAAcAAAAbAOz/AAAHAAcAAAAbAO3/AAAHAAcAAAAcAOz/AAAHAAcAAAAcAO3/AAAHAAcAAAAdAOz/AAAHAAcAAAAdAO3/AAAHAAcAAAAeAOz/AAAHAAcAAAAeAO3/AAAHAAcAAAAfAOz/AAAHAAcAAAAfAO3/AAAHAAcAAAAgAOz/AAAHAAcAAAAgAO3/AAAHAAcAAAAhAOz/AAAHAAcAAAAhAO3/AAAHAAcAAAAiAOz/AAAHAAcAAAAiAO3/AAAHAAcAAAAjAOz/AAAHAAcAAAAjAO3/AAAHAAcAAAAkAOz/AAAHAAcAAAAkAO3/AAAHAAcAAAAlAOz/AAAHAAcAAAAlAO3/AAAHAAcAAAAmAOz/AAAHAAcAAAAmAO3/AAAHAAcAAAAnAOz/AAAHAAcAAAAnAO3/AAAHAAcAAAAoAOz/AAAHAAcAAAAoAO3/AAAHAAcAAAApAOz/AAAHAAcAAAApAO3/AAAHAAcAAAAqAOz/AAAHAAcAAAAqAO3/AAAHAAcAAAArAOj/AAAHAAcAAAArAOn/AAAHAAcAAAArAOr/AAAHAAcAAAArAOv/AAAHAAcAAAArAOz/AAAHAAcAAAArAO3/AAAHAAcAAAArAO7/AAAHAAcAAAArAO//AAAHAAcAAAArAPD/AAAHAAcAAAArAPH/AAAHAAcAAAAsAOj/AAAHAAcAAAAsAOn/AAAHAAcAAAAsAOr/AAAHAAcAAAAsAOv/AAAHAAcAAAAsAOz/AAAHAAcAAAAsAO3/AAAHAAcAAAAsAO7/AAAHAAcAAAAsAO//AAAHAAcAAAAsAPD/AAAHAAcAAAAsAPH/AAAHAAcAAAAtAOj/AAAHAAcAAAAtAOn/AAAHAAcAAAAtAOr/AAAHAAcAAAAtAOv/AAAHAAcAAAAtAOz/AAAHAAcAAAAtAO3/AAAHAAcAAAAtAO7/AAAHAAcAAAAtAO//AAAHAAcAAAAtAPD/AAAHAAcAAAAtAPH/AAAHAAcAAAAuAOj/AAAHAAcAAAAuAOn/AAAHAAcAAAAuAOr/AAAHAAcAAAAuAOv/AAAHAAcAAAAuAOz/AAAHAAcAAAAuAO3/AAAHAAcAAAAuAO7/AAAHAAcAAAAuAO//AAAHAAcAAAAuAPD/AAAHAAcAAAAuAPH/AAAHAAcAAAAvAOj/AAAHAAcAAAAvAOn/AAAHAAcAAAAvAOr/AAAHAAcAAAAvAOv/AAAHAAcAAAAvAOz/AAAHAAcAAAAvAO3/AAAHAAcAAAAvAO7/AAAHAAcAAAAvAO//AAAHAAcAAAAvAPD/AAAHAAcAAAAvAPH/AAAHAAcAAAAwAOj/AAAHAAcAAAAwAOn/AAAHAAcAAAAwAOr/AAAHAAcAAAAwAOv/AAAHAAcAAAAwAOz/AAAHAAcAAAAwAO3/AAAHAAcAAAAwAO7/AAAHAAcAAAAwAO//AAAHAAcAAAAwAPD/AAAHAAcAAAAwAPH/AAAHAAcAAAAxAOj/AAAHAAcAAAAxAOn/AAAHAAcAAAAxAOr/AAAHAAcAAAAxAOv/AAAHAAcAAAAxAOz/AAAHAAcAAAAxAO3/AAAHAAcAAAAxAO7/AAAHAAcAAAAxAO//AAAHAAcAAAAxAPD/AAAHAAcAAAAxAPH/AAAHAAcAAAAyAOj/AAAHAAcAAAAyAOn/AAAHAAcAAAAyAOr/AAAHAAcAAAAyAOv/AAAHAAcAAAAyAOz/AAAHAAcAAAAyAO3/AAAHAAcAAAAyAO7/AAAHAAcAAAAyAO//AAAHAAcAAAAyAPD/AAAHAAcAAAAyAPH/AAAHAAcAAAAzAOj/AAAHAAcAAAAzAOn/AAAHAAcAAAAzAOr/AAAHAAcAAAAzAOv/AAAHAAcAAAAzAOz/AAAHAAcAAAAzAO3/AAAHAAcAAAAzAO7/AAAHAAcAAAAzAO//AAAHAAcAAAAzAPD/AAAHAAcAAAAzAPH/AAAHAAcAAAA0AOj/AAAHAAcAAAA0AOn/AAAHAAcAAAA0AOr/AAAHAAcAAAA0AOv/AAAHAAcAAAA0AOz/AAAHAAcAAAA0AO3/AAAHAAcAAAA0AO7/AAAHAAcAAAA0AO//AAAHAAcAAAA0APD/AAAHAAcAAAA0APH/AAAHAAcAAAAvAPL/AAAHAAcAAAAvAPP/AAAHAAcAAAAvAPT/AAAHAAcAAAAvAPX/AAAHAAcAAAAvAPb/AAAHAAcAAAAvAPf/AAAHAAcAAAAvAPj/AAAHAAcAAAAvAPn/AAAHAAcAAAAvAPr/AAAHAAcAAAAvAPv/AAAHAAcAAAAvAPz/AAAHAAcAAAAvAP3/AAAHAAcAAAAvAP7/AAAHAAcAAAAvAP//AAAHAAcAAAAvAAAAAAAHAAcAAAAwAPL/AAAHAAcAAAAwAPP/AAAHAAcAAAAwAPT/AAAHAAcAAAAwAPX/AAAHAAcAAAAwAPb/AAAHAAcAAAAwAPf/AAAHAAcAAAAwAPj/AAAHAAcAAAAwAPn/AAAHAAcAAAAwAPr/AAAHAAcAAAAwAPv/AAAHAAcAAAAwAPz/AAAHAAcAAAAwAP3/AAAHAAcAAAAwAP7/AAAHAAcAAAAwAP//AAAHAAcAAAAwAAAAAAAHAAcAAAAsAAEAAAAHAAcAAAAsAAIAAAAHAAcAAAAsAAMAAAAHAAcAAAAsAAQAAAAHAAcAAAAsAAUAAAAHAAcAAAAsAAYAAAAHAAcAAAAsAAcAAAAHAAcAAAAsAAgAAAAHAAcAAAAsAAkAAAAHAAcAAAAsAAoAAAAHAAcAAAAtAAEAAAAHAAcAAAAtAAIAAAAHAAcAAAAtAAMAAAAHAAcAAAAtAAQAAAAHAAcAAAAtAAUAAAAHAAcAAAAtAAYAAAAHAAcAAAAtAAcAAAAHAAcAAAAtAAgAAAAHAAcAAAAtAAkAAAAHAAcAAAAtAAoAAAAHAAcAAAAuAAEAAAAHAAcAAAAuAAIAAAAHAAcAAAAuAAMAAAAHAAcAAAAuAAQAAAAHAAcAAAAuAAUAAAAHAAcAAAAuAAYAAAAHAAcAAAAuAAcAAAAHAAcAAAAuAAgAAAAHAAcAAAAuAAkAAAAHAAcAAAAuAAoAAAAHAAcAAAAvAAEAAAAHAAcAAAAvAAIAAAAHAAcAAAAvAAMAAAAHAAcAAAAvAAQAAAAHAAcAAAAvAAUAAAAHAAcAAAAvAAYAAAAHAAcAAAAvAAcAAAAHAAcAAAAvAAgAAAAHAAcAAAAvAAkAAAAHAAcAAAAvAAoAAAAHAAcAAAAwAAEAAAAHAAcAAAAwAAIAAAAHAAcAAAAwAAMAAAAHAAcAAAAwAAQAAAAHAAcAAAAwAAUAAAAHAAcAAAAwAAYAAAAHAAcAAAAwAAcAAAAHAAcAAAAwAAgAAAAHAAcAAAAwAAkAAAAHAAcAAAAwAAoAAAAHAAcAAAAxAAEAAAAHAAcAAAAxAAIAAAAHAAcAAAAxAAMAAAAHAAcAAAAxAAQAAAAHAAcAAAAxAAUAAAAHAAcAAAAxAAYAAAAHAAcAAAAxAAcAAAAHAAcAAAAxAAgAAAAHAAcAAAAxAAkAAAAHAAcAAAAxAAoAAAAHAAcAAAAyAAEAAAAHAAcAAAAyAAIAAAAHAAcAAAAyAAMAAAAHAAcAAAAyAAQAAAAHAAcAAAAyAAUAAAAHAAcAAAAyAAYAAAAHAAcAAAAyAAcAAAAHAAcAAAAyAAgAAAAHAAcAAAAyAAkAAAAHAAcAAAAyAAoAAAAHAAcAAAAzAAEAAAAHAAcAAAAzAAIAAAAHAAcAAAAzAAMAAAAHAAcAAAAzAAQAAAAHAAcAAAAzAAUAAAAHAAcAAAAzAAYAAAAHAAcAAAAzAAcAAAAHAAcAAAAzAAgAAAAHAAcAAAAzAAkAAAAHAAcAAAAzAAoAAAAHAAcAAAArAAEAAAAHAAcAAAArAAIAAAAHAAcAAAArAAMAAAAHAAcAAAArAAQAAAAHAAcAAAArAAUAAAAHAAcAAAArAAYAAAAHAAcAAAArAAcAAAAHAAcAAAArAAgAAAAHAAcAAAArAAkAAAAHAAcAAAArAAoAAAAHAAcAAAArAAsAAAAHAAcAAAArAAwAAAAHAAcAAAAsAAsAAAAHAAcAAAAsAAwAAAAHAAcAAAAtAAsAAAAHAAcAAAAtAAwAAAAHAAcAAAAuAAsAAAAHAAcAAAAuAAwAAAAHAAcAAAAvAAsAAAAHAAcAAAAvAAwAAAAHAAcAAAAwAAsAAAAHAAcAAAAwAAwAAAAHAAcAAAAxAAsAAAAHAAcAAAAxAAwAAAAHAAcAAAAyAAsAAAAHAAcAAAAyAAwAAAAHAAcAAAAzAAsAAAAHAAcAAAAzAAwAAAAHAAcAAAA0AAEAAAAHAAcAAAA0AAIAAAAHAAcAAAA0AAMAAAAHAAcAAAA0AAQAAAAHAAcAAAA0AAUAAAAHAAcAAAA0AAYAAAAHAAcAAAA0AAcAAAAHAAcAAAA0AAgAAAAHAAcAAAA0AAkAAAAHAAcAAAA0AAoAAAAHAAcAAAA0AAsAAAAHAAcAAAA0AAwAAAAHAAcAAAD6/wMAAQAEAAQAAAD7/wMAAQAEAAQAAAD8/wMAAQAEAAQAAAD9/wMAAQAEAAQAAAD+/wMAAQAEAAQAAAD//wMAAQAEAAQAAAAAAAMAAAAHAAcAAAABAAMAAAAHAAcAAAACAAMAAQAEAAQAAAADAAMAAQAEAAQAAAAEAAMAAQAEAAQAAAAFAAMAAQAEAAQAAAAGAAMAAQAEAAQAAAAHAAMAAQAEAAQAAAD6//r/AQAEAAQAAAD6//v/AQAEAAQAAAD6//z/AQAEAAQAAAD6//3/AQAEAAQAAAD6//7/AQAEAAQAAAD6////AQAEAAQAAAD6/wAAAQAEAAQAAAD6/wEAAQAEAAQAAAD6/wIAAQAEAAQAAAD7//r/AQAEAAQAAAD8//r/AQAEAAQAAAD9//r/AQAEAAQAAAD+//r/AQAEAAQAAAD///r/AQAEAAQAAAAAAPr/AQAEAAQAAAABAPr/AQAEAAQAAAACAPr/AQAEAAQAAAADAPr/AQAEAAQAAAAEAPr/AQAEAAQAAAAFAPr/AQAEAAQAAAAGAPr/AQAEAAQAAAAHAPr/AQAEAAQAAAAHAPv/AQAEAAQAAAAHAPz/AQAEAAQAAAAHAP3/AQAEAAQAAAAHAAAAAQAEAAQAAAAHAAEAAQAEAAQAAAAHAAIAAQAEAAQAAAAIAAAAAQAEAAQAAAAJAAAAAQAEAAQAAAAKAAAAAQAEAAQAAAALAAAAAQAEAAQAAAAMAAAAAQAEAAQAAAANAAAAAQAEAAQAAAAOAAAAAQAEAAQAAAAPAAAAAQAEAAQAAAAQAAAAAQAEAAQAAAARAAAAAQAEAAQAAAASAAAAAQAEAAQAAAATAAAAAQAEAAQAAAAUAAAAAQAEAAQAAAAVAAAAAQAEAAQAAAAWAAAAAQAEAAQAAAAWAPL/AQAEAAQAAAAWAPP/AQAEAAQAAAAWAPT/AQAEAAQAAAAWAPX/AQAEAAQAAAAWAPb/AQAEAAQAAAAWAPf/AQAEAAQAAAAWAPj/AQAEAAQAAAAWAPn/AQAEAAQAAAAWAPr/AQAEAAQAAAAWAPv/AQAEAAQAAAAWAPz/AQAEAAQAAAAWAP3/AQAEAAQAAAAWAP7/AQAEAAQAAAAWAP//AQAEAAQAAAAXAPL/AQAEAAQAAAAYAPL/AQAEAAQAAAAZAPL/AQAEAAQAAAAZAO7/AQAEAAQAAAAZAO//AQAEAAQAAAAZAPD/AQAEAAQAAAAZAPH/AQAEAAQAAAAaAO7/AQAEAAQAAAAbAO7/AQAEAAQAAAAcAO7/AQAEAAQAAAAdAO7/AQAEAAQAAAAeAO7/AQAEAAQAAAAfAO7/AQAEAAQAAAAgAO7/AQAEAAQAAAAhAO7/AQAEAAQAAAAiAO7/AQAEAAQAAAAjAO7/AQAEAAQAAAAkAO7/AQAEAAQAAAAlAO7/AQAEAAQAAAAmAO7/AQAEAAQAAAAnAO7/AQAEAAQAAAAoAO7/AQAEAAQAAAApAO7/AQAEAAQAAAAqAO7/AQAEAAQAAAAqAO//AQAEAAQAAAAqAPD/AQAEAAQAAAAqAPH/AQAEAAQAAAAqAPL/AQAEAAQAAAArAPL/AQAEAAQAAAAsAPL/AQAEAAQAAAAtAPL/AQAEAAQAAAAuAPL/AQAEAAQAAAAuAPP/AQAEAAQAAAAuAPT/AQAEAAQAAAAuAPX/AQAEAAQAAAAuAPb/AQAEAAQAAAAuAPf/AQAEAAQAAAAuAPj/AQAEAAQAAAAuAPn/AQAEAAQAAAAuAPr/AQAEAAQAAAAuAPv/AQAEAAQAAAAuAPz/AQAEAAQAAAAuAP3/AQAEAAQAAAAuAP7/AQAEAAQAAAAuAP//AQAEAAQAAAAuAAAAAQAEAAQAAAAqAAAAAQAEAAQAAAArAAAAAQAOAAQAAAAsAAAAAQAPAAQAAAAtAAAAAQAQAAQAAAAqAAEAAQAEAAQAAAAqAAIAAQAEAAQAAAAqAAMAAQAEAAQAAAAqAAQAAQAEAAQAAAAqAAUAAQAEAAQAAAAqAAYAAQAEAAQAAAAqAAcAAQAEAAQAAAAqAAgAAQAEAAQAAAAqAAkAAQAEAAQAAAAqAAoAAAAHAAcAAAAqAAsAAAAHAAcAAAAqAAwAAQAEAAQAAAAqAA0AAQAEAAQAAAArAA0AAQAEAAQAAAAsAA0AAQAEAAQAAAAtAA0AAQAEAAQAAAAuAA0AAQAEAAQAAAAvAA0AAQAEAAQAAAAwAA0AAQAEAAQAAAAxAA0AAQAEAAQAAAAyAA0AAQAEAAQAAAAzAA0AAQAEAAQAAAA0AA0AAQAEAAQAAAA1AA0AAQAEAAQAAAA1AAQAAQAEAAQAAAA1AAUAAQAEAAQAAAA1AAYAAQAEAAQAAAA1AAcAAQAEAAQAAAA1AAgAAQAEAAQAAAA1AAkAAQAEAAQAAAA1AAoAAQAEAAQAAAA1AAsAAQAEAAQAAAA1AAwAAQAEAAQAAAA1AAAAAQAEAAQAAAA1AAEAAQAEAAQAAAA1AAIAAQAEAAQAAAA1AAMAAQAEAAQAAAAxAAAAAQAEAAQAAAAyAAAAAQAOAAQAAAAzAAAAAQAPAAQAAAA0AAAAAQAQAAQAAAAxAPL/AQAEAAQAAAAxAPP/AQAEAAQAAAAxAPT/AQAEAAQAAAAxAPX/AQAEAAQAAAAxAPb/AQAEAAQAAAAxAPf/AQAEAAQAAAAxAPj/AQAEAAQAAAAxAPn/AQAEAAQAAAAxAPr/AQAEAAQAAAAxAPv/AQAEAAQAAAAxAPz/AQAEAAQAAAAxAP3/AQAEAAQAAAAxAP7/AQAEAAQAAAAxAP//AQAEAAQAAAAyAPL/AQAEAAQAAAAzAPL/AQAEAAQAAAA0APL/AQAEAAQAAAA1APL/AQAEAAQAAAA1AOf/AQAEAAQAAAA1AOj/AQAEAAQAAAA1AOn/AQAEAAQAAAA1AOr/AQAEAAQAAAA1AOv/AQAEAAQAAAA1AOz/AQAEAAQAAAA1AO3/AQAEAAQAAAA1AO7/AQAEAAQAAAA1AO//AQAEAAQAAAA1APD/AQAEAAQAAAA1APH/AQAEAAQAAAAqAOf/AQAEAAQAAAArAOf/AQAEAAQAAAAsAOf/AQAOAAkAAAAtAOf/AQAPAAkAAAAuAOf/AQAQAAkAAAAvAOf/AQAEAAQAAAAwAOf/AQAEAAQAAAAxAOf/AQAOAAkAAAAyAOf/AQAPAAkAAAAzAOf/AQAQAAkAAAA0AOf/AQAEAAQAAAAqAOj/AQAEAAQAAAAqAOn/AQAEAAQAAAAqAOr/AQAEAAQAAAAqAOv/AQAEAAQAAAAZAOv/AQAEAAQAAAAaAOv/AQAEAAQAAAAbAOv/AQAEAAQAAAAcAOv/AQAOAA4AAAAdAOv/AQAPAA4AAAAeAOv/AQAQAA4AAAAfAOv/AQAEAAQAAAAgAOv/AQAOAA4AAAAhAOv/AQAPAA4AAAAiAOv/AQAQAA4AAAAjAOv/AQAEAAQAAAAkAOv/AQAEAAQAAAAlAOv/AQAOAA4AAAAmAOv/AQAPAA4AAAAnAOv/AQAQAA4AAAAoAOv/AQAEAAQAAAApAOv/AQAEAAQAAAAZAOj/AQAEAAQAAAAZAOn/AQAEAAQAAAAZAOr/AQAEAAQAAAAQAOj/AQAEAAQAAAARAOj/AQAEAAQAAAASAOj/AQAEAAQAAAATAOj/AQAEAAQAAAAUAOj/AQAEAAQAAAAVAOj/AQAEAAQAAAAWAOj/AQAEAAQAAAAXAOj/AQAEAAQAAAAYAOj/AQAEAAQAAAAQAOn/AQAEAAQAAAAQAOr/AQAEAAQAAAAQAOv/AQAEAAQAAAAQAOz/AQAEAAQAAAAQAO3/AQAEAAQAAAAQAO7/AQAEAAQAAAAQAO//AQAEAAQAAAAQAPD/AQAEAAQAAAAQAPH/AQAEAAQAAAAQAPL/AQAEAAQAAAARAPL/AQAEAAQAAAASAPL/AQAEAAQAAAATAPL/AQAEAAQAAAATAPP/AQAEAAQAAAATAPT/AQAEAAQAAAATAPX/AQAEAAQAAAATAPb/AQAEAAQAAAATAPf/AQAEAAQAAAATAPj/AQAEAAQAAAATAPn/AQAEAAQAAAATAPr/AQAEAAQAAAATAPv/AQAEAAQAAAATAPz/AQAEAAQAAAATAP3/AQAEAAQAAAAIAP3/AQAEAAQAAAAJAP3/AQADAAQAAAAKAP3/AQAEAAQAAAALAP3/AQAFAAQAAAAMAP3/AQAEAAQAAAANAP3/AQAEAAQAAAAOAP3/AQAEAAQAAAAPAP3/AQADAAQAAAAQAP3/AQAEAAQAAAARAP3/AQAFAAQAAAASAP3/AQAEAAQAAAD6//f/AQAEAAQAAAD6//j/AQAEAAQAAAD6//n/AQAEAAQAAAD7//f/AQAEAAQAAAD7//j/AQAEAAQAAAD7//n/AQAEAAQAAAD8//f/AQAEAAQAAAD8//j/AQAEAAQAAAD8//n/AQAEAAQAAAD9//f/AQAEAAQAAAD9//j/AQAEAAQAAAD9//n/AQAEAAQAAAD+//f/AQAEAAQAAAD+//j/AQAEAAQAAAD+//n/AQAEAAQAAAD///f/AQAEAAQAAAD///j/AQAEAAQAAAD///n/AQAEAAQAAAAAAPf/AQAEAAQAAAAAAPj/AQAEAAQAAAAAAPn/AQAEAAQAAAABAPf/AQAEAAQAAAABAPj/AQAEAAQAAAABAPn/AQAEAAQAAAACAPf/AQAEAAQAAAACAPj/AQAEAAQAAAACAPn/AQAEAAQAAAADAPf/AQAEAAQAAAADAPj/AQAEAAQAAAADAPn/AQAEAAQAAAAEAPf/AQAEAAQAAAAEAPj/AQAEAAQAAAAEAPn/AQAEAAQAAAAFAPf/AQAEAAQAAAAFAPj/AQAEAAQAAAAFAPn/AQAEAAQAAAAGAPf/AQAEAAQAAAAGAPj/AQAEAAQAAAAGAPn/AQAEAAQAAAAHAPf/AQAEAAQAAAAHAPj/AQAEAAQAAAAHAPn/AQAEAAQAAAAIAPr/AQAEAAQAAAAIAPv/AQAEAAQAAAAIAPz/AQAEAAQAAAAJAPr/AQADAAEAAAAJAPv/AQADAAIAAAAJAPz/AQADAAMAAAAKAPr/AQAEAAEAAAAKAPv/AQAEAAIAAAAKAPz/AQAEAAMAAAALAPr/AQAFAAEAAAALAPv/AQAFAAIAAAALAPz/AQAFAAMAAAAMAPr/AQAEAAQAAAAMAPv/AQAEAAQAAAAMAPz/AQAEAAQAAAANAPr/AQAEAAQAAAANAPv/AQAEAAQAAAANAPz/AQAEAAQAAAAOAPr/AQAEAAQAAAAOAPv/AQAEAAQAAAAOAPz/AQAEAAQAAAAPAPr/AQADAAEAAAAPAPv/AQADAAIAAAAPAPz/AQADAAMAAAAQAPr/AQAEAAEAAAAQAPv/AQAEAAIAAAAQAPz/AQAEAAMAAAARAPr/AQAFAAEAAAARAPv/AQAFAAIAAAARAPz/AQAFAAMAAAASAPr/AQAEAAQAAAASAPv/AQAEAAQAAAASAPz/AQAEAAQAAAAQAOX/AQAEAAQAAAAQAOb/AQAEAAQAAAAQAOf/AQAEAAQAAAARAOX/AQAEAAQAAAARAOb/AQAEAAQAAAARAOf/AQAEAAQAAAASAOX/AQAEAAQAAAASAOb/AQAEAAQAAAASAOf/AQAEAAQAAAATAOX/AQAEAAQAAAATAOb/AQAEAAQAAAATAOf/AQAEAAQAAAAUAOX/AQAEAAQAAAAUAOb/AQAEAAQAAAAUAOf/AQAEAAQAAAAVAOX/AQAEAAQAAAAVAOb/AQAEAAQAAAAVAOf/AQAEAAQAAAAWAOX/AQAEAAQAAAAWAOb/AQAEAAQAAAAWAOf/AQAEAAQAAAAXAOX/AQAEAAQAAAAXAOb/AQAEAAQAAAAXAOf/AQAEAAQAAAAYAOX/AQAEAAQAAAAYAOb/AQAEAAQAAAAYAOf/AQAEAAQAAAAZAOX/AQAEAAQAAAAZAOb/AQAEAAQAAAAZAOf/AQAEAAQAAAAaAOj/AQAEAAQAAAAaAOn/AQAEAAQAAAAaAOr/AQAEAAQAAAAbAOj/AQAEAAQAAAAbAOn/AQAEAAQAAAAbAOr/AQAEAAQAAAAcAOj/AQAOAAsAAAAcAOn/AQAOAAwAAAAcAOr/AQAOAA0AAAAdAOj/AQAPAAsAAAAdAOn/AQAPAAwAAAAdAOr/AQAPAA0AAAAeAOj/AQAQAAsAAAAeAOn/AQAQAAwAAAAeAOr/AQAQAA0AAAAfAOj/AQAEAAQAAAAfAOn/AQAEAAQAAAAfAOr/AQAEAAQAAAAgAOj/AQAOAAsAAAAgAOn/AQAOAAwAAAAgAOr/AQAOAA0AAAAhAOj/AQAPAAsAAAAhAOn/AQAPAAwAAAAhAOr/AQAPAA0AAAAiAOj/AQAQAAsAAAAiAOn/AQAQAAwAAAAiAOr/AQAQAA0AAAAjAOj/AQAEAAQAAAAjAOn/AQAEAAQAAAAjAOr/AQAEAAQAAAAkAOj/AQAEAAQAAAAkAOn/AQAEAAQAAAAkAOr/AQAEAAQAAAAlAOj/AQAOAAsAAAAlAOn/AQAOAAwAAAAlAOr/AQAOAA0AAAAmAOj/AQAPAAsAAAAmAOn/AQAPAAwAAAAmAOr/AQAPAA0AAAAnAOj/AQAQAAsAAAAnAOn/AQAQAAwAAAAnAOr/AQAQAA0AAAAoAOj/AQAEAAQAAAAoAOn/AQAEAAQAAAAoAOr/AQAEAAQAAAApAOj/AQAEAAQAAAApAOn/AQAEAAQAAAApAOr/AQAEAAQAAAAqAOT/AQAEAAQAAAAqAOX/AQAEAAQAAAAqAOb/AQAEAAQAAAArAOT/AQAEAAQAAAArAOX/AQAEAAQAAAArAOb/AQAEAAQAAAAsAOT/AQAOAAYAAAAsAOX/AQAOAAcAAAAsAOb/AQAOAAgAAAAtAOT/AQAPAAYAAAAtAOX/AQAPAAcAAAAtAOb/AQAPAAgAAAAuAOT/AQAQAAYAAAAuAOX/AQAQAAcAAAAuAOb/AQAQAAgAAAAvAOT/AQAEAAQAAAAvAOX/AQAEAAQAAAAvAOb/AQAEAAQAAAAwAOT/AQAEAAQAAAAwAOX/AQAEAAQAAAAwAOb/AQAEAAQAAAAxAOT/AQAOAAYAAAAxAOX/AQAOAAcAAAAxAOb/AQAOAAgAAAAyAOT/AQAPAAYAAAAyAOX/AQAPAAcAAAAyAOb/AQAPAAgAAAAzAOT/AQAQAAYAAAAzAOX/AQAQAAcAAAAzAOb/AQAQAAgAAAA0AOT/AQAEAAQAAAA0AOX/AQAEAAQAAAA0AOb/AQAEAAQAAAA1AOT/AQAEAAQAAAA1AOX/AQAEAAQAAAA1AOb/AQAEAAQAAAAqAP3/AQAEAAQAAAAqAP7/AQAEAAQAAAAqAP//AQAEAAQAAAArAP3/AQAOAAEAAAArAP7/AQAOAAIAAAArAP//AQAOAAMAAAAsAP3/AQAPAAEAAAAsAP7/AQAPAAIAAAAsAP//AQAPAAMAAAAtAP3/AQAQAAEAAAAtAP7/AQAQAAIAAAAtAP//AQAQAAMAAAAyAP3/AQAOAAEAAAAyAP7/AQAOAAIAAAAyAP//AQAOAAMAAAAzAP3/AQAPAAEAAAAzAP7/AQAPAAIAAAAzAP//AQAPAAMAAAA0AP3/AQAQAAEAAAA0AP7/AQAQAAIAAAA0AP//AQAQAAMAAAA1AP3/AQAEAAQAAAA1AP7/AQAEAAQAAAA1AP//AQAEAAQAAAAAAAoAAAAHAAcAAAAAAAsAAAAHAAcAAAABAAoAAAAHAAcAAAABAAsAAAAHAAcAAAACAAoAAAAHAAcAAAACAAsAAAAHAAcAAAADAAoAAAAHAAcAAAADAAsAAAAHAAcAAAAEAAoAAAAHAAcAAAAEAAsAAAAHAAcAAAAFAAoAAAAHAAcAAAAFAAsAAAAHAAcAAAAGAAoAAAAHAAcAAAAGAAsAAAAHAAcAAAAHAAoAAAAHAAcAAAAHAAsAAAAHAAcAAAAIAAoAAAAHAAcAAAAIAAsAAAAHAAcAAAAJAAoAAAAHAAcAAAAJAAsAAAAHAAcAAAAKAAoAAAAHAAcAAAAKAAsAAAAHAAcAAAALAAoAAAAHAAcAAAALAAsAAAAHAAcAAAAMAAoAAAAHAAcAAAAMAAsAAAAHAAcAAAANAAoAAAAHAAcAAAANAAsAAAAHAAcAAAAOAAoAAAAHAAcAAAAOAAsAAAAHAAcAAAAPAAoAAAAHAAcAAAAPAAsAAAAHAAcAAAAQAAoAAAAHAAcAAAAQAAsAAAAHAAcAAAARAAoAAAAHAAcAAAARAAsAAAAHAAcAAAASAAoAAAAHAAcAAAASAAsAAAAHAAcAAAATAAoAAAAHAAcAAAATAAsAAAAHAAcAAAAUAAoAAAAHAAcAAAAUAAsAAAAHAAcAAAAVAAoAAAAHAAcAAAAVAAsAAAAHAAcAAAAWAAoAAAAHAAcAAAAWAAsAAAAHAAcAAAAXAAoAAAAHAAcAAAAXAAsAAAAHAAcAAAAYAAoAAAAHAAcAAAAYAAsAAAAHAAcAAAAZAAoAAAAHAAcAAAAZAAsAAAAHAAcAAAAaAAoAAAAHAAcAAAAaAAsAAAAHAAcAAAAbAAoAAAAHAAcAAAAbAAsAAAAHAAcAAAAcAAoAAAAHAAcAAAAcAAsAAAAHAAcAAAAdAAoAAAAHAAcAAAAdAAsAAAAHAAcAAAAeAAoAAAAHAAcAAAAeAAsAAAAHAAcAAAAfAAoAAAAHAAcAAAAfAAsAAAAHAAcAAAAgAAoAAAAHAAcAAAAgAAsAAAAHAAcAAAAhAAoAAAAHAAcAAAAhAAsAAAAHAAcAAAAiAAoAAAAHAAcAAAAiAAsAAAAHAAcAAAAjAAoAAAAHAAcAAAAjAAsAAAAHAAcAAAAkAAoAAAAHAAcAAAAkAAsAAAAHAAcAAAAlAAoAAAAHAAcAAAAlAAsAAAAHAAcAAAAmAAoAAAAHAAcAAAAmAAsAAAAHAAcAAAAnAAoAAAAHAAcAAAAnAAsAAAAHAAcAAAAoAAoAAAAHAAcAAAAoAAsAAAAHAAcAAAApAAoAAAAHAAcAAAApAAsAAAAHAAcAAAAAAAQAAAAHAAcAAAAAAAUAAAAHAAcAAAAAAAYAAAAHAAcAAAAAAAcAAAAHAAcAAAAAAAgAAAAHAAcAAAAAAAkAAAAHAAcAAAABAAQAAAAHAAcAAAABAAUAAAAHAAcAAAABAAYAAAAHAAcAAAABAAcAAAAHAAcAAAABAAgAAAAHAAcAAAABAAkAAAAHAAcAAAACAAQAAQAEAAQAAAACAAUAAQAEAAQAAAACAAYAAQAEAAQAAAACAAcAAQAEAAQAAAACAAgAAQAEAAQAAAACAAkAAQAEAAQAAAD//wQAAQAEAAQAAAD//wUAAQAEAAQAAAD//wYAAQAEAAQAAAD//wcAAQAEAAQAAAD//wgAAQAEAAQAAAD//wkAAQAEAAQAAAD//woAAQAEAAQAAAD//wsAAQAEAAQAAAD//wwAAQAEAAQAAAAAAAwAAQAEAAQAAAABAAwAAQAEAAQAAAACAAwAAQAEAAQAAAADAAwAAQAEAAQAAAAEAAwAAQAEAAQAAAAFAAwAAQAEAAQAAAAGAAwAAQAEAAQAAAAHAAwAAQAEAAQAAAAIAAwAAQAEAAQAAAAJAAwAAQAEAAQAAAAKAAwAAQAEAAQAAAALAAwAAQAEAAQAAAAMAAwAAQAEAAQAAAANAAwAAQAEAAQAAAAOAAwAAQAEAAQAAAAPAAwAAQAEAAQAAAAQAAwAAQAEAAQAAAARAAwAAQAEAAQAAAASAAwAAQAEAAQAAAATAAwAAQAEAAQAAAAUAAwAAQAEAAQAAAAVAAwAAQAEAAQAAAAWAAwAAQAEAAQAAAAXAAwAAQAEAAQAAAAYAAwAAQAEAAQAAAAZAAwAAQAEAAQAAAAaAAwAAQAEAAQAAAAbAAwAAQAEAAQAAAAcAAwAAQAEAAQAAAAdAAwAAQAEAAQAAAAeAAwAAQAEAAQAAAAfAAwAAQAEAAQAAAAgAAwAAQAEAAQAAAAhAAwAAQAEAAQAAAAiAAwAAQAEAAQAAAAjAAwAAQAEAAQAAAAkAAwAAQAEAAQAAAAlAAwAAQAEAAQAAAAmAAwAAQAEAAQAAAAnAAwAAQAEAAQAAAAoAAwAAQAEAAQAAAApAAwAAQAEAAQAAAADAAYAAQAEAAQAAAADAAcAAQAEAAQAAAADAAgAAQAEAAQAAAADAAkAAQAEAAQAAAAEAAYAAQAEAAQAAAAEAAcAAQAEAAQAAAAEAAgAAQAEAAQAAAAEAAkAAQAEAAQAAAAFAAYAAQAEAAQAAAAFAAcAAQAEAAQAAAAFAAgAAQAEAAQAAAAFAAkAAQAEAAQAAAAGAAYAAQAEAAQAAAAGAAcAAQAEAAQAAAAGAAgAAQAEAAQAAAAGAAkAAQAEAAQAAAAHAAYAAQAEAAQAAAAHAAcAAQAEAAQAAAAHAAgAAQAEAAQAAAAHAAkAAQAEAAQAAAAIAAYAAQAEAAQAAAAIAAcAAQAEAAQAAAAIAAgAAQAEAAQAAAAIAAkAAQAEAAQAAAAJAAYAAQAEAAQAAAAJAAcAAQAEAAQAAAAJAAgAAQAEAAQAAAAJAAkAAQAEAAQAAAAKAAYAAQAEAAQAAAAKAAcAAQAEAAQAAAAKAAgAAQAEAAQAAAAKAAkAAQAEAAQAAAALAAYAAQAEAAQAAAALAAcAAQAEAAQAAAALAAgAAQAEAAQAAAALAAkAAQAEAAQAAAAMAAYAAQAEAAQAAAAMAAcAAQAEAAQAAAAMAAgAAQAEAAQAAAAMAAkAAQAEAAQAAAANAAYAAQAEAAQAAAANAAcAAQAEAAQAAAANAAgAAQAEAAQAAAANAAkAAQAEAAQAAAAOAAYAAQAEAAQAAAAOAAcAAQAEAAQAAAAOAAgAAQAEAAQAAAAOAAkAAQAEAAQAAAAPAAYAAQAEAAQAAAAPAAcAAQAEAAQAAAAPAAgAAQAEAAQAAAAPAAkAAQAEAAQAAAAQAAYAAQAEAAQAAAAQAAcAAQAEAAQAAAAQAAgAAQAEAAQAAAAQAAkAAQAEAAQAAAARAAYAAQAEAAQAAAARAAcAAQAEAAQAAAARAAgAAQAEAAQAAAARAAkAAQAEAAQAAAASAAYAAQAEAAQAAAASAAcAAQAEAAQAAAASAAgAAQAEAAQAAAASAAkAAQAEAAQAAAATAAYAAQAEAAQAAAATAAcAAQAEAAQAAAATAAgAAQAEAAQAAAATAAkAAQAEAAQAAAAUAAYAAQAEAAQAAAAUAAcAAQAEAAQAAAAUAAgAAQAEAAQAAAAUAAkAAQAEAAQAAAAVAAYAAQAEAAQAAAAVAAcAAQAEAAQAAAAVAAgAAQAEAAQAAAAVAAkAAQAEAAQAAAAWAAYAAQAEAAQAAAAWAAcAAQAEAAQAAAAWAAgAAQAEAAQAAAAWAAkAAQAEAAQAAAAXAAYAAQAEAAQAAAAXAAcAAQAEAAQAAAAXAAgAAQAEAAQAAAAXAAkAAQAEAAQAAAAYAAYAAQAEAAQAAAAYAAcAAQAEAAQAAAAYAAgAAQAEAAQAAAAYAAkAAQAEAAQAAAAZAAYAAQAEAAQAAAAZAAcAAQAEAAQAAAAZAAgAAQAEAAQAAAAZAAkAAQAEAAQAAAAaAAYAAQAEAAQAAAAaAAcAAQAEAAQAAAAaAAgAAQAEAAQAAAAaAAkAAQAEAAQAAAAbAAYAAQAEAAQAAAAbAAcAAQAEAAQAAAAbAAgAAQAEAAQAAAAbAAkAAQAEAAQAAAAcAAYAAQAEAAQAAAAcAAcAAQAEAAQAAAAcAAgAAQAEAAQAAAAcAAkAAQAEAAQAAAAdAAYAAQAEAAQAAAAdAAcAAQAEAAQAAAAdAAgAAQAEAAQAAAAdAAkAAQAEAAQAAAAeAAYAAQAEAAQAAAAeAAcAAQAEAAQAAAAeAAgAAQAEAAQAAAAeAAkAAQAEAAQAAAAfAAYAAQAEAAQAAAAfAAcAAQAEAAQAAAAfAAgAAQAEAAQAAAAfAAkAAQAEAAQAAAAgAAYAAQAEAAQAAAAgAAcAAQAEAAQAAAAgAAgAAQAEAAQAAAAgAAkAAQAEAAQAAAAhAAYAAQAEAAQAAAAhAAcAAQAEAAQAAAAhAAgAAQAEAAQAAAAhAAkAAQAEAAQAAAAiAAYAAQAEAAQAAAAiAAcAAQAEAAQAAAAiAAgAAQAEAAQAAAAiAAkAAQAEAAQAAAAjAAYAAQAEAAQAAAAjAAcAAQAEAAQAAAAjAAgAAQAEAAQAAAAjAAkAAQAEAAQAAAAkAAYAAQAEAAQAAAAkAAcAAQAEAAQAAAAkAAgAAQAEAAQAAAAkAAkAAQAEAAQAAAAlAAYAAQAEAAQAAAAlAAcAAQAEAAQAAAAlAAgAAQAEAAQAAAAlAAkAAQAEAAQAAAAmAAYAAQAEAAQAAAAmAAcAAQAEAAQAAAAmAAgAAQAEAAQAAAAmAAkAAQAEAAQAAAAnAAYAAQAEAAQAAAAnAAcAAQAEAAQAAAAnAAgAAQAEAAQAAAAnAAkAAQAEAAQAAAAoAAYAAQAEAAQAAAAoAAcAAQAEAAQAAAAoAAgAAQAEAAQAAAAoAAkAAQAEAAQAAAApAAYAAQAEAAQAAAApAAcAAQAEAAQAAAApAAgAAQAEAAQAAAApAAkAAQAEAAQAAAA=")
+tile_set = SubResource("TileSet_3em1u")
+
+[node name="ally_0" type="Area2D" parent="World_2D/room_00" unique_id=1227329894 node_paths=PackedStringArray("collider")]
+position = Vector2(-32, -64)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_0" unique_id=1611377659]
+shape = SubResource("CircleShape2D_lcbh6")
+
+[node name="character_ally_0" parent="World_2D/room_00/ally_0" unique_id=1234637241 instance=ExtResource("27_0ol08")]
+
+[node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=899666073 node_paths=PackedStringArray("collider")]
+position = Vector2(16, -64)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1" unique_id=257041145]
+shape = SubResource("CircleShape2D_lcbh6")
+
+[node name="character_ally_1" parent="World_2D/room_00/ally_1" unique_id=957001427 instance=ExtResource("24_5rrxs")]
+
+[node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
+position = Vector2(64, -64)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2" unique_id=451903423]
+shape = SubResource("CircleShape2D_3em1u")
+
+[node name="character_ally_2" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
+
+[node name="npc_3" type="Area2D" parent="World_2D/room_00" unique_id=1896668672 node_paths=PackedStringArray("collider")]
+position = Vector2(336, -360)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3" unique_id=839204334]
+shape = SubResource("CircleShape2D_5t6d6")
+
+[node name="character_enemy_0" parent="World_2D/room_00/npc_3" unique_id=1440330506 instance=ExtResource("28_0ol08")]
+
+[node name="npc_4" type="Area2D" parent="World_2D/room_00" unique_id=303175137 node_paths=PackedStringArray("collider")]
+position = Vector2(712, -368)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_4" unique_id=849842313]
+shape = SubResource("CircleShape2D_5t6d6")
+
+[node name="fighter_enemy_0" parent="World_2D/room_00/npc_4" unique_id=1370430890 instance=ExtResource("28_jvut7")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1994462941 node_paths=PackedStringArray("game_scene")]
 process_mode = 3
@@ -799,25 +1083,48 @@ step = 1.0
 value = 75.0
 show_percentage = false
 
-[node name="Dialogue_Box" type="MarginContainer" parent="CanvasLayer" unique_id=226866622]
+[node name="dialogue_menu" type="MarginContainer" parent="CanvasLayer" unique_id=226866622]
 visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -234.0
+offset_top = -322.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_vertical = 8
 theme = ExtResource("16_0t8i2")
-theme_override_constants/margin_left = 120
+theme_override_constants/margin_left = 150
 theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 120
+theme_override_constants/margin_right = 150
 theme_override_constants/margin_bottom = 30
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Dialogue_Box" unique_id=2041582794]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/dialogue_menu" unique_id=489445369]
 layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Dialogue_Box/Panel" unique_id=1221465287]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/dialogue_menu/VBoxContainer" unique_id=2045885254]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Button" type="Button" parent="CanvasLayer/dialogue_menu/VBoxContainer/VBoxContainer" unique_id=1891317768]
+layout_mode = 2
+text = "  Si "
+alignment = 0
+
+[node name="Button2" type="Button" parent="CanvasLayer/dialogue_menu/VBoxContainer/VBoxContainer" unique_id=1728026747]
+layout_mode = 2
+text = "  No  "
+alignment = 0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/dialogue_menu/VBoxContainer" unique_id=2041582794]
+custom_minimum_size = Vector2(0, 174)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel" unique_id=1221465287]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -829,38 +1136,45 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Dialogue_Box/Panel/MarginContainer" unique_id=563938501]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer" unique_id=563938501]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Dialogue_Box/Panel/MarginContainer/HBoxContainer" unique_id=690196325]
+[node name="dialogue_menu_face" type="TextureRect" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=690196325]
 layout_mode = 2
 texture = ExtResource("33_6yqg2")
 expand_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Dialogue_Box/Panel/MarginContainer/HBoxContainer" unique_id=1706126499]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=1706126499]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Dialogue_Box/Panel/MarginContainer/HBoxContainer/MarginContainer" unique_id=367779803]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer" unique_id=367779803]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Dialogue_Box/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=488168465]
+[node name="dialogue_menu_name" type="RichTextLabel" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=488168465]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
 text = "[Name of the Speaker]"
 fit_content = true
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/Dialogue_Box/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=717406984]
+[node name="dialogue_menu_value" type="RichTextLabel" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=717406984]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
 text = "Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla."
 
-[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1894982537]
+[node name="dialogue_menu_audio" type="AudioStreamPlayer" parent="CanvasLayer/dialogue_menu" unique_id=1671670082]
+stream = ExtResource("30_okou3")
+bus = &"sfx"
+
+[node name="pause_menu_panel" type="Panel" parent="CanvasLayer" unique_id=1894982537]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -1041,11 +1355,11 @@ size_flags_vertical = 8
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/Control/PanelContainer3" unique_id=211986844]
 layout_mode = 2
 theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/Control/PanelContainer3/MarginContainer" unique_id=1547810728]
+[node name="pause_menu_money_label" type="Label" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/Control/PanelContainer3/MarginContainer" unique_id=1547810728]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "999.999.999 G"
@@ -1084,6 +1398,7 @@ layout_mode = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer" unique_id=1377639631]
 layout_mode = 2
 size_flags_vertical = 3
+follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
@@ -1110,6 +1425,85 @@ size_flags_vertical = 3
 
 [node name="pause_menu_fighter_button_mouse_blocker" type="Control" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2" unique_id=1806914593]
 layout_mode = 2
+
+[node name="battle_menu" type="Control" parent="CanvasLayer" unique_id=531457308]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -132.0
+offset_right = -320.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_0t8i2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_menu" unique_id=1227264853]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -126.0
+offset_right = 375.0
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="skill_menu_button_x" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer" unique_id=1997718613]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  X  "
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/battle_menu/VBoxContainer" unique_id=796616216]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer" unique_id=2035201869]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=2125259765]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1945310048]
+visible = false
+layout_mode = 2
+text = "Battle Menu"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=911702133]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1318792161]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1905214686]
+layout_mode = 2
+text = "  Habilities  "
+
+[node name="Button2" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=886415627]
+layout_mode = 2
+text = "  Inventory  "
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=596553659]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=136522799]
+layout_mode = 2
+text = "  Statistics  "
+
+[node name="Button2" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1741977542]
+layout_mode = 2
+text = "  Status Effects  "
 
 [node name="skill_menu" type="MarginContainer" parent="CanvasLayer" unique_id=2011766193]
 visible = false
@@ -2887,6 +3281,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="statistics_menu" type="MarginContainer" parent="CanvasLayer" unique_id=1643418800]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3536,7 +3931,7 @@ grow_vertical = 2
 theme = ExtResource("16_0t8i2")
 theme_override_styles/panel = SubResource("StyleBoxFlat_4g0ri")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/go_to_title_menu" unique_id=1795314670]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/go_to_title_menu" unique_id=2147185965]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3544,36 +3939,162 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -63.0
+offset_top = -78.5
 offset_right = 200.0
-offset_bottom = 63.0
+offset_bottom = 78.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/go_to_title_menu/PanelContainer" unique_id=1450464300]
+[node name="skill_menu_button_x" type="Button" parent="CanvasLayer/go_to_title_menu/VBoxContainer" unique_id=1857531340]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  X  "
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/go_to_title_menu/VBoxContainer" unique_id=1795314670]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer" unique_id=1450464300]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer" unique_id=2012940635]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=2012940635]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=995543729]
+[node name="Label" type="Label" parent="CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=995543729]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "¿Quieres volver al Título?"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=1381585272]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1381585272]
 layout_mode = 2
 
-[node name="go_to_title_menu_button_yes" type="Button" parent="CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=561683794]
+[node name="go_to_title_menu_button_yes" type="Button" parent="CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=561683794]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Si"
 
-[node name="go_to_title_menu_button_no" type="Button" parent="CanvasLayer/go_to_title_menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=913824741]
+[node name="go_to_title_menu_button_no" type="Button" parent="CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=913824741]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "No"
+
+[node name="button_next" type="Button" parent="CanvasLayer" unique_id=959158716]
+offset_left = 552.0
+offset_top = 760.0
+offset_right = 640.0
+offset_bottom = 802.0
+theme = ExtResource("16_0t8i2")
+text = "  Next  "
+
+[node name="money_menu" type="MarginContainer" parent="CanvasLayer" unique_id=1794139411]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme = ExtResource("16_0t8i2")
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 19
+theme_override_constants/margin_right = 90
+theme_override_constants/margin_bottom = 15
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/money_menu" unique_id=1096050419]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/money_menu/PanelContainer" unique_id=1489085504]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 5
+
+[node name="money_menu_label" type="Label" parent="CanvasLayer/money_menu/PanelContainer/MarginContainer" unique_id=1863266937]
+layout_mode = 2
+text = "999.999.999 G"
+
+[node name="confirm_buy_menu" type="Panel" parent="CanvasLayer" unique_id=1770860910]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lcbh6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/confirm_buy_menu" unique_id=221747004]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -222.75
+offset_top = -85.0
+offset_right = 222.75
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_0t8i2")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer" unique_id=1328584547]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer" unique_id=1645359912]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=959206419]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2007600935]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "¿Quieres Comprar?"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1441606136]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Super Poción"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=29898743]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=397468195]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "* Bolsa:"
+
+[node name="Button" type="Button" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1984281022]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "  [99]  "
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1055875240]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=76574746]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "* Precio:"
+
+[node name="Label2" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1740477053]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "$500  "
+horizontal_alignment = 1

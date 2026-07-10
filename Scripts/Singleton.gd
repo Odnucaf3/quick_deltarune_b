@@ -11,6 +11,7 @@ const cancelInput: String = "ui_cancel"
 @export var audioStreamPlayer_cancel: AudioStreamPlayer
 @export var audioStreamPlayer_equip: AudioStreamPlayer
 @export var audioStreamPlayer_unequip: AudioStreamPlayer
+@export var audioStreamPlayer_shop: AudioStreamPlayer
 @export var fps_label: Label
 @export var option_menu: Option_Menu
 #-------------------------------------------------------------------------------
@@ -23,10 +24,30 @@ func _ready() -> void:
 	pass # Replace with function body.
 #-------------------------------------------------------------------------------
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
+	#Set_FullScreen()
+	#Set_Vsync()
+	#Set_MouseMode()
+	ResetGame()
 	Show_fps()
 #-------------------------------------------------------------------------------
 #region BUTTON FUNCTIONS (WITH MOUSE CONTROL)
+#-------------------------------------------------------------------------------
+func Set_Dialogue_Button(_b:Button, _submit:Callable):
+	Disconnect_Button(_b)
+	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
+	_b.mouse_exited.connect(func():Mouse_Keep_Focus_When_Ext())
+	#-------------------------------------------------------------------------------
+	_b.gui_input.connect(
+		#-------------------------------------------------------------------------------
+		func(_event:InputEvent):
+			#-------------------------------------------------------------------------------
+			if(_event.is_action_pressed("ui_accept")):
+				_submit.call()
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	)
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Button(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable) -> void:
 	Disconnect_Button(_b)
@@ -238,6 +259,36 @@ func Set_Button_WSAD_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Set_Button_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _up:Callable, _down:Callable, _left:Callable, _right:Callable) -> void:
+	Disconnect_Button(_b)
+	_b.focus_entered.connect(_selected)
+	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
+	_b.mouse_exited.connect(func():Mouse_Keep_Focus_When_Ext())
+	_b.pressed.connect(func():Mouse_Grab_Button_and_Submit(_b, _submited))
+	#-------------------------------------------------------------------------------
+	_b.gui_input.connect(
+		#-------------------------------------------------------------------------------
+		func(_event:InputEvent):
+			#-------------------------------------------------------------------------------
+			if(_event.is_action_pressed(cancelInput)):
+				_canceled.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("ui_up")):
+				_up.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("ui_down")):
+				_down.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("ui_left")):
+				_left.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("ui_right")):
+				_right.call()
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 func Disconnect_Button(_b:Button) -> void:
 	Disconnect_All(_b.focus_entered)
 	Disconnect_All(_b.mouse_entered)
@@ -356,6 +407,9 @@ func Common_Submited() -> void:
 func Common_Canceled() -> void:
 	audioStreamPlayer_cancel.play()
 	audioStreamPlayer_selected.stop()
+#-------------------------------------------------------------------------------
+func Play_SFX_Shop() -> void:
+	audioStreamPlayer_shop.play()
 #-------------------------------------------------------------------------------
 func Move_to_Button(_b:Button) -> void:
 	_b.grab_focus()
@@ -482,4 +536,51 @@ func format_number_with_dots(_number: int) -> String:
 #-------------------------------------------------------------------------------
 func Show_fps():
 	fps_label.text = str(Engine.get_frames_per_second()) + " fps."
+#-------------------------------------------------------------------------------
+#region DEBUG INPUTS
+func Set_FullScreen() -> void:
+	#-------------------------------------------------------------------------------
+	if(Input.is_action_just_pressed("Debug_FullScreen")):
+		var _wm: DisplayServer.WindowMode = DisplayServer.window_get_mode()
+		#-------------------------------------------------------------------------------
+		if(_wm == DisplayServer.WINDOW_MODE_FULLSCREEN):
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		#-------------------------------------------------------------------------------
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Vsync() -> void:
+	#-------------------------------------------------------------------------------
+	if(Input.is_action_just_pressed("Debug_Vsync")):
+		var _vs: DisplayServer.VSyncMode = DisplayServer.window_get_vsync_mode()
+		#-------------------------------------------------------------------------------
+		if(_vs == DisplayServer.VSYNC_DISABLED):
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		#-------------------------------------------------------------------------------
+		elif(_vs == DisplayServer.VSYNC_ENABLED):
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_MouseMode() -> void:
+	#-------------------------------------------------------------------------------
+	if(Input.is_action_just_pressed("Debug_Mouse")):
+		var _mm: Input.MouseMode = Input.mouse_mode
+		#-------------------------------------------------------------------------------
+		if(_mm == Input.MOUSE_MODE_VISIBLE):
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		#-------------------------------------------------------------------------------
+		elif(_mm == Input.MOUSE_MODE_CAPTURED):
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func ResetGame() -> void:
+	#-------------------------------------------------------------------------------
+	if(Input.is_action_just_pressed("Debug_Reset")):
+		get_tree().reload_current_scene()
+	#-------------------------------------------------------------------------------
+#endregion
 #-------------------------------------------------------------------------------

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Character_Resource" format=3 uid="uid://3nxji4d0bf43"]
+
+[ext_resource type="Texture2D" uid="uid://b2m6og0hbkwjg" path="res://Assets/Sprites/player1_idle.PNG" id="1_5jo4l"]
+[ext_resource type="Script" uid="uid://bhx63qkff2khj" path="res://Scripts/Resources/character_resource.gd" id="1_v13no"]
+[ext_resource type="AudioStream" uid="uid://dbvp7708tegam" path="res://Assets/ralsei-talk.mp3" id="3_5jo4l"]
+
+[resource]
+script = ExtResource("1_v13no")
+face = ExtResource("1_5jo4l")
+voice = ExtResource("3_5jo4l")
+metadata/_custom_type_script = "uid://bhx63qkff2khj"

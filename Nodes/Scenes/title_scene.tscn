@@ -2,13 +2,63 @@
 
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_k1vqb"]
 [ext_resource type="Script" uid="uid://bnx2er4h8h2kj" path="res://Scripts/title_scene.gd" id="1_lrmdu"]
+[ext_resource type="Texture2D" uid="uid://yy565t01ec72" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/background/skyline-a.png" id="2_ywsiu"]
+[ext_resource type="Texture2D" uid="uid://kks30ip1l7ww" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/background/buildings-bg.png" id="3_vmviq"]
+[ext_resource type="Texture2D" uid="uid://brtov6l66gycm" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/background/near-buildings-bg.png" id="4_f2pgg"]
 
-[node name="Title_Scene" type="Node" unique_id=2113985453]
+[node name="Title_Scene" type="Node" unique_id=2113985453 node_paths=PackedStringArray("title_menu", "title_menu_label", "title_menu_button_start", "title_menu_button_options", "title_menu_button_credits", "title_menu_button_quit", "credits_menu", "credits_menu_root", "credits_menu_richtext", "credits_menu_button_0")]
 script = ExtResource("1_lrmdu")
+title_menu = NodePath("CanvasLayer/title_menu")
+title_menu_label = NodePath("CanvasLayer/title_menu/VBoxContainer/title_menu_label")
+title_menu_button_start = NodePath("CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/title_menu_button_start")
+title_menu_button_options = NodePath("CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/title_menu_button_options")
+title_menu_button_credits = NodePath("CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/title_menu_button_credits")
+title_menu_button_quit = NodePath("CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/title_menu_button_quit")
+credits_menu = NodePath("CanvasLayer2/credits_menu")
+credits_menu_root = NodePath("CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer/credits_menu_root")
+credits_menu_richtext = NodePath("CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer/credits_menu_root/MarginContainer/credits_menu_richtext")
+credits_menu_button_0 = NodePath("CanvasLayer2/credits_menu/VBoxContainer/HBoxContainer/credits_menu_button_0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=733790429]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=2139866153]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=2087874410]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ywsiu")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer" unique_id=825039404]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -124.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2.935, 2.935)
+pivot_offset = Vector2(576, 124)
+texture = ExtResource("3_vmviq")
+stretch_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer" unique_id=1384139496]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -209.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.875, 1.875)
+pivot_offset = Vector2(576, 209)
+texture = ExtResource("4_f2pgg")
+stretch_mode = 1
+
+[node name="title_menu" type="MarginContainer" parent="CanvasLayer" unique_id=2139866153]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -16,40 +66,156 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_k1vqb")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=1294041926]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/title_menu" unique_id=1294041926]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=760151262]
+[node name="title_menu_label" type="Label" parent="CanvasLayer/title_menu/VBoxContainer" unique_id=760151262]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 100
 text = "Nombre del Juego"
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=530903770]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/title_menu/VBoxContainer" unique_id=530903770]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer" unique_id=1980266917]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/title_menu/VBoxContainer/PanelContainer" unique_id=1980266917]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=2025980462]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=2025980462]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=228218432]
+[node name="title_menu_button_start" type="Button" parent="CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=228218432]
 layout_mode = 2
 text = "  Comenzar  "
 
-[node name="Button2" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=994103283]
+[node name="title_menu_button_options" type="Button" parent="CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=994103283]
 layout_mode = 2
 text = "  Opciones  "
 
-[node name="Button3" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1406552865]
+[node name="title_menu_button_credits" type="Button" parent="CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1406552865]
+layout_mode = 2
+text = "  Credits  "
+
+[node name="title_menu_button_quit" type="Button" parent="CanvasLayer/title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=310646513]
 layout_mode = 2
 text = "  Salir del Juego  "
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=386907147]
+layer = 99
+
+[node name="credits_menu" type="MarginContainer" parent="CanvasLayer2" unique_id=951413567]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k1vqb")
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/credits_menu" unique_id=1262963661]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer2/credits_menu/VBoxContainer" unique_id=1695684972]
+layout_mode = 2
+
+[node name="credits_menu_button_0" type="Button" parent="CanvasLayer2/credits_menu/VBoxContainer/HBoxContainer" unique_id=198534537]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "  Credits  "
+
+[node name="Control" type="Control" parent="CanvasLayer2/credits_menu/VBoxContainer/HBoxContainer" unique_id=398119463]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CanvasLayer2/credits_menu/VBoxContainer/HBoxContainer/Control" unique_id=328322038]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  X  "
+
+[node name="Panel" type="Panel" parent="CanvasLayer2/credits_menu/VBoxContainer" unique_id=862424522]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/credits_menu/VBoxContainer/Panel" unique_id=1458529825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="credits_menu_root" type="ScrollContainer" parent="CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer" unique_id=790353339]
+layout_mode = 2
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer/credits_menu_root" unique_id=1865674021]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_right = 15
+
+[node name="credits_menu_richtext" type="RichTextLabel" parent="CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer/credits_menu_root/MarginContainer" unique_id=453127189]
+layout_mode = 2
+bbcode_enabled = true
+text = "* \"Sewer Pack Files\" (de Ansimuz).
+([url]https://ansimuz.itch.io/sewers-action-pack[/url])
+
+* \"Starfighter Files\" (de Ansimuz).
+([url]https://ansimuz.itch.io/star-fighter[/url])
+
+* \"Warped City Files\" (de Ansimuz).
+([url]https://ansimuz.itch.io/warped-city[/url])
+
+* \"Pattern Pack 2\" (de Kenney-Assets).
+([url]https://kenney-assets.itch.io/pattern-pack-2[/url])
+
+* Recursos de RPG Maker MV (de Gotcha Gotcha Games, KADOKAWA y Yoji Ojima).
+([url]https://rpgmakerofficial.com/en/support/rule/[/url])
+
+*Programación y Diseño (a cargo de Facundo Flores).
+([url]https://facuflores.itch.io/[/url])
+
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla Bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+Bla bla bla bla bla bla bla bla bla bla bla bla bla.
+[center]El fin[/center]"
+fit_content = true

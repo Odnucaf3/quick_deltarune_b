@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Character_Resource" format=3 uid="uid://b20slmyq6aoho"]
+
+[ext_resource type="Texture2D" uid="uid://daqsaesl1wkxj" path="res://Assets/Sprites/soldier_idle.PNG" id="1_p8j8j"]
+[ext_resource type="Script" uid="uid://bhx63qkff2khj" path="res://Scripts/Resources/character_resource.gd" id="1_qdkwf"]
+[ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="3_hkwme"]
+
+[resource]
+script = ExtResource("1_qdkwf")
+face = ExtResource("1_p8j8j")
+voice = ExtResource("3_hkwme")
+metadata/_custom_type_script = "uid://bhx63qkff2khj"

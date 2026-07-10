@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://c6s1jg5yqrohq"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_n8jvf"]
+
+[resource]
+script = ExtResource("1_n8jvf")
+max_cooldown = 3
+value = 15
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://blqgcpcafrvkc"]
+
+[ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_nbjdn"]
+[ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_fnmow"]
+[ext_resource type="Resource" uid="uid://bnw47jxdj602q" path="res://Resources/Equips/weapon_2.tres" id="3_a0ps3"]
+[ext_resource type="Resource" uid="uid://dm0biwixci8ld" path="res://Resources/Equips/head_2.tres" id="4_nbthl"]
+[ext_resource type="Resource" uid="uid://bjkiw85wiedy4" path="res://Resources/Equips/body_2.tres" id="5_8hgup"]
+[ext_resource type="Resource" uid="uid://drt5t03gqef2" path="res://Resources/Equips/ring_2.tres" id="6_o0fwv"]
+[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter_ally_1.tres" id="7_c3bqr"]
+[ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_urbvg"]
+[ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_ih5rp"]
+[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_ally_1.tscn" id="10_nrq7x"]
+
+[sub_resource type="Resource" id="Resource_5dha6"]
+script = ExtResource("2_fnmow")
+equip_resource = ExtResource("3_a0ps3")
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_lb5xn"]
+script = ExtResource("2_fnmow")
+equip_resource = ExtResource("4_nbthl")
+myEQUIP_TYPE = 1
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_8pkgd"]
+script = ExtResource("2_fnmow")
+equip_resource = ExtResource("5_8hgup")
+myEQUIP_TYPE = 2
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_ph88x"]
+script = ExtResource("2_fnmow")
+equip_resource = ExtResource("6_o0fwv")
+myEQUIP_TYPE = 3
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_kpcsh"]
+script = ExtResource("2_fnmow")
+myEQUIP_TYPE = 3
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_kombn"]
+script = ExtResource("2_fnmow")
+myEQUIP_TYPE = 3
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_25p7l"]
+script = ExtResource("8_urbvg")
+fighter_resource = ExtResource("7_c3bqr")
+equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_5dha6"), SubResource("Resource_lb5xn"), SubResource("Resource_8pkgd"), SubResource("Resource_ph88x"), SubResource("Resource_kpcsh"), SubResource("Resource_kombn")])
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[node name="fighter_ally_1" type="Node2D" unique_id=1861804174 node_paths=PackedStringArray("character_node")]
+script = ExtResource("1_nbjdn")
+fighter_serializable = SubResource("Resource_25p7l")
+character_node = NodePath("character_ally_1")
+
+[node name="character_ally_1" parent="." unique_id=957001427 instance=ExtResource("10_nrq7x")]

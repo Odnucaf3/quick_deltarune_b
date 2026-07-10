@@ -4,13 +4,14 @@
 
 [resource]
 script = ExtResource("1_liqc5")
+max_hold = 2
 tp_cost = 99
 max_cooldown = 2
-max_hold = 2
+price = 15
+value = 10
 myEFFECT = 1
 myTARGET = 3
 status_dictionary = Dictionary[StringName, int]({
 &"status_heal_0": 100
 })
-value = 10
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

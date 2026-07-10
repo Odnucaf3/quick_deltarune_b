@@ -1,0 +1,202 @@
+[gd_scene format=3 uid="uid://dwe23u11yf586"]
+
+[ext_resource type="Script" uid="uid://cll6ilrja3wgu" path="res://Scripts/Prefabs/character_node.gd" id="1_4hwi3"]
+[ext_resource type="Texture2D" uid="uid://dgh3ifcjawfl3" path="res://Assets/ansimuz/sewers_pack_files/Spritesheets/soldier.png" id="2_h0aay"]
+[ext_resource type="Resource" uid="uid://b20slmyq6aoho" path="res://Resources/Characters/character_enemy_0.tres" id="2_tj3ka"]
+
+[sub_resource type="Animation" id="Animation_vvw1b"]
+resource_name = "Idle"
+length = 1.0000125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_h0aay")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pivot/Sprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, -0.033332825)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pivot/Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(1, 1), Vector2(1, 1.0333333)]
+}
+
+[sub_resource type="Animation" id="Animation_tj3ka"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_h0aay")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pivot/Sprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pivot/Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0th7x"]
+_data = {
+&"Idle": SubResource("Animation_vvw1b"),
+&"RESET": SubResource("Animation_tj3ka")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v0to2"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wrfer"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_mt6ha"]
+states/Idle/node = SubResource("AnimationNodeAnimation_v0to2")
+states/Idle/position = Vector2(364, 93)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wrfer")]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aoydg"]
+graph_offset = Vector2(-328, 22)
+nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_mt6ha")
+nodes/base_StateMachine/position = Vector2(-240, 140)
+node_connections = [&"output", 0, &"base_StateMachine"]
+
+[node name="character_enemy_0" type="Node2D" unique_id=1440330506 node_paths=PackedStringArray("animation_tree", "pivot")]
+script = ExtResource("1_4hwi3")
+character_resource = ExtResource("2_tj3ka")
+animation_tree = NodePath("AnimationTree")
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node2D" parent="." unique_id=481931981]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot" unique_id=1405065072]
+texture = ExtResource("2_h0aay")
+offset = Vector2(0, -29)
+hframes = 6
+vframes = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=273232296]
+libraries/ = SubResource("AnimationLibrary_0th7x")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=178826518]
+tree_root = SubResource("AnimationNodeBlendTree_aoydg")
+anim_player = NodePath("../AnimationPlayer")

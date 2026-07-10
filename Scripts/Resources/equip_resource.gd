@@ -7,7 +7,8 @@ enum EQUIP_TYPE{WEAPON, HEAD, BODY, RING}
 @export var myEQUIP_TYPE: EQUIP_TYPE
 @export var myFIGHTER_CLASS: Fighter_Resource.FIGHTER_CLASS = Fighter_Resource.FIGHTER_CLASS.EVERYONE
 @export var level_required: int
-@export var max_stored: int = 99
+var max_stored: int = 99
+@export var price: int
 #-------------------------------------------------------------------------------
 @export_category("Base Stats")
 @export var max_hp: int = 0

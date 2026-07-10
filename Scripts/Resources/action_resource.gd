@@ -8,9 +8,10 @@ enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USE
 #-------------------------------------------------------------------------------
 @export_category("Action Stats")
 @export var max_hold: int
-@export var max_stored: int = 99
+var max_stored: int = 99
 @export_range(0, 100) var tp_cost: int
 @export var max_cooldown: int
+@export var price: int
 #-------------------------------------------------------------------------------
 @export_category("Action Effect")
 @export var speed: int = 0

@@ -4,13 +4,14 @@
 
 [resource]
 script = ExtResource("1_ta61f")
+max_hold = 6
 tp_cost = 100
 max_cooldown = 1
-max_hold = 6
+price = 13
+value = 30
 myELEMENT = 6
 myTARGET = 2
 status_dictionary = Dictionary[StringName, int]({
 &"status_damage_1": 30
 })
-value = 30
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Character_Resource" format=3 uid="uid://c7r52ys6b7mxd"]
+
+[ext_resource type="Script" uid="uid://bhx63qkff2khj" path="res://Scripts/Resources/character_resource.gd" id="1_mogf4"]
+[ext_resource type="Texture2D" uid="uid://c04up2aujmyel" path="res://Assets/Sprites/player3_idle1.png" id="1_r622q"]
+[ext_resource type="AudioStream" uid="uid://5eskf2fbrcpl" path="res://Assets/susie-dialogue.mp3" id="3_r622q"]
+
+[resource]
+script = ExtResource("1_mogf4")
+face = ExtResource("1_r622q")
+voice = ExtResource("3_r622q")
+metadata/_custom_type_script = "uid://bhx63qkff2khj"

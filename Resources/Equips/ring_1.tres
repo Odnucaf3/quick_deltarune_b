@@ -2,23 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="1_13ifl"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_1sibi"]
-[ext_resource type="Resource" uid="uid://dfa1o2oxpnj2m" path="res://Resources/Skills/skill_damage_1.tres" id="3_c0x15"]
-[ext_resource type="Resource" uid="uid://bqym1v4saijs6" path="res://Resources/Skills/skill_damage_2.tres" id="4_ya7wt"]
 
 [resource]
 script = ExtResource("1_13ifl")
 myEQUIP_TYPE = 3
 myFIGHTER_CLASS = 2
-target_rate = 3
-guard_effect = 4
-recovery_effect = 5
-pharmacology = -3
-tp_cost_rate = -6
-tp_charge_rate = -8
-tp_recovery = 10
-hp_recovery = 7
-status_resistance_dictionary = Dictionary[StringName, int]({
-&"status_damage_0": 7
-})
-skill_resource_array = Array[ExtResource("2_1sibi")]([ExtResource("3_c0x15"), ExtResource("4_ya7wt")])
+price = 56
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

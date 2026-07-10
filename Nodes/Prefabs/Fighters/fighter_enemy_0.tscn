@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://4evqnt3jxeef"]
+
+[ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_qyvlv"]
+[ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_u17gx"]
+[ext_resource type="Resource" uid="uid://dc7emsl383hgl" path="res://Resources/Fighters/fighter_enemy_0.tres" id="3_pjqid"]
+[ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="4_0b4gc"]
+[ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="5_cm745"]
+[ext_resource type="PackedScene" uid="uid://dwe23u11yf586" path="res://Nodes/Prefabs/Characters/character_enemy_0.tscn" id="6_ou4p7"]
+
+[sub_resource type="Resource" id="Resource_3em1u"]
+script = ExtResource("4_0b4gc")
+fighter_resource = ExtResource("3_pjqid")
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[node name="fighter_enemy_0" type="Node2D" unique_id=1370430890 node_paths=PackedStringArray("character_node")]
+script = ExtResource("1_qyvlv")
+fighter_serializable = SubResource("Resource_3em1u")
+character_node = NodePath("character_enemy_0")
+
+[node name="character_enemy_0" parent="." unique_id=1440330506 instance=ExtResource("6_ou4p7")]

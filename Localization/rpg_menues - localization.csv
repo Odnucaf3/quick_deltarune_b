@@ -1,4 +1,10 @@
 key,es-AR,en-US
+title_menu_title,Título del Juego,Title of the Game
+title_menu_start_button,Comenzar,Start
+title_menu_options_button,Opciones,Options
+title_menu_credits_button,Crétidos,Credits
+title_menu_quit_button,Salir del Juego,Quit Game
+options_button,Opciones,Options
 option_menu_title_label,Menú de Opciones,Option Menu
 option_menu_idiome_label,Lenguaje,Language
 option_menu_resolution_label,Resolución,Resolution
@@ -16,7 +22,6 @@ pause_menu_button_item,Inventario,Inventory
 pause_menu_button_equip,Equipamiento,Equipment
 pause_menu_button_status,Estados Alterados,Status Effects
 pause_menu_button_statistics,Estadísticas,Statistics
-pause_menu_button_options,Opciones,Options
 pause_menu_button_quit,Ir al Título,Go to Title
 pause_menu_fighter_button_title,Miembros del Grupo,Party Members
 item_menu_all_item_button,Todos los Artículos,All Items
@@ -150,12 +155,18 @@ name_attack,Atacar,Attack
 description_attack,-,-
 name_guard,Guardia,Guard
 description_guard,-,-
-name_skill_damage_0,Corte en V,V-Slash
-description_skill_damage_0,"Haz un corte doble, tan rápido que sole se ve el destello que deja. Mostrando la letra ""V"" de ""Victoria"".",-
-name_skill_damage_1,Corte en Doble V,Double V-Slash
-description_skill_damage_1,"Haz un doble corte doble, tan rápido que sole se ve el destello que deja. Mostrando la letra ""W"" de ""Wictoria"".",-
-name_skill_damage_2,Corte en Triple Doble V,Triple Double V-Slash
-description_skill_damage_2,"Haz un triple doble corte doble a todos los enemigos, tan rápido que sole se ve el destello que deja. Mostrando las letras ""WWW"" de ""WWWictoria"".",-
+name_skill_heal_0,Guardia Real,Royal Guard
+description_skill_heal_0,-,-
+name_skill_normal_damage_0,Ataque Guardia,Guard Attack
+description_skill_normal_damage_0,"Gana ""Guardia"" en el intento.","Add ""Guard"" during ""Attack""."
+name_skill_normal_damage_1,Ataque Real,Royal Attack
+description_skill_normal_damage_1,-,-
+name_skill_thunder_damage_0,Corte en V,V-Slash
+description_skill_thunder_damage_0,"Haz un corte doble, tan rápido que sole se ve el destello que deja. Mostrando la letra ""V"" de ""Victoria"".",-
+name_skill_thunder_damage_1,Corte en Doble V,Double V-Slash
+description_skill_thunder_damage_1,"Haz un doble corte doble, tan rápido que sole se ve el destello que deja. Mostrando la letra ""W"" de ""Wictoria"".",-
+name_skill_thunder_damage_2,Corte en Triple Doble V,Triple Double V-Slash
+description_skill_thunder_damage_2,"Haz un triple doble corte doble a todos los enemigos, tan rápido que sole se ve el destello que deja. Mostrando las letras ""WWW"" de ""WWWictoria"".",-
 equip_type_text,Tipo,Type
 equip_null,nulo,null
 equip_type_WEAPON,Arma,Weapon
@@ -164,12 +175,36 @@ equip_type_BODY,Cuerpo,Body
 equip_type_RING,Anillo,Ring
 name_weapon_0,Cunchillo de Hacker,Hacker Knife
 description_weapon_0,Hasta los que trabajan con ceros y unos necesitas una forma de defenserse en esta ciudad.,-
+name_weapon_1,Báculo de Mago Básico,Basic Magician Staff
+description_weapon_1,-,-
+name_weapon_2,Maza de Sacerdote Básico,Basic Preist Mace
+description_weapon_2,-,-
+name_weapon_3,Espada de Guerrero Básico,Basic Warrior Sword
+description_weapon_3,-,-
 name_head_0,Lentes de Hacker,Hacker Glasses
 description_head_0,-,-
+name_head_1,Sombrero de Mago Básico,Basic Magician Hat
+description_head_1,-,-
+name_head_2,Rosario de Sacerdote Básico,Basic Priest Rosary
+description_head_2,-,-
+name_head_3,Casco de Guerrero Básico,Basic Warrior Helmet
+description_head_3,-,-
 name_body_0,Chaqueta de Hacker,Hacker Jacket
 description_body_0,-,-
+name_body_1,Túnica de Mago Básico,Basic Wizard Robe
+description_body_1,-,-
+name_body_2,Túnica de Sacerdote Básico,Basic Priest Robe
+description_body_2,-,-
+name_body_3,Armadura de Guerrero Básico,Basic Warrior Armor
+description_body_3,-,-
 name_ring_0,Chip de Hacker,Hacker Chip
 description_ring_0,-,-
+name_ring_1,Anillo de Mago Básico,Basic Wizard Ring
+description_ring_1,-,-
+name_ring_2,Anillo de Sacerdote Básico,Basic Priest Ring
+description_ring_2,-,-
+name_ring_3,Anillo de Guerrero Básico,Basic Warrior Ring
+description_ring_3,-,-
 name_key_0,Llave Cibernética,Cyber Key
 description_key_0,"Llave que se utiliza para abrir ""Puertas Cibernéticas"".","Key used to open ""Cyber ​​Doors""."
 name_status_guard,Guardia,Guard
