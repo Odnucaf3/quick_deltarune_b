@@ -77,15 +77,15 @@ fighter_type_EVERYONE,-,-
 fighter_type_MAGICIAN,Hechicero,Magician
 fighter_type_PRIEST,Sacerdote,Priest
 fighter_type_WARRIOR,Guerrero,Warrior
-name_ally_0,Vanesa,Vanessa
-title_ally_0,La Hacker Más Copada,The Coolest Hacker of Them All
-description_ally_0,¡Nadie puede hackear como Yo!,Nobody can hack like Me!
-name_ally_1,Daniel,Danny
-title_ally_1,El Loco Sacerdote del Culto Cibernético,The Mad Priest of the Cyber Cult
-description_ally_1,¡Atestiguame!,Witness Me!
-name_ally_2,Julieta,Juliet
-title_ally_2,La Chica Policia Estoica,The Stoic Police Girl
-description_ally_2,"¡Alto ahí, escoria criminal!",Stop right there criminal scum!
+name_character_ally_0,Vanesa,Vanessa
+title_character_ally_0,La Hacker Más Copada,The Coolest Hacker of Them All
+description_character_ally_0,¡Nadie puede hackear como Yo!,Nobody can hack like Me!
+name_character_ally_1,Daniel,Danny
+title_character_ally_1,El Loco Sacerdote del Culto Cibernético,The Mad Priest of the Cyber Cult
+description_character_ally_1,¡Atestiguame!,Witness Me!
+name_character_ally_2,Julieta,Juliet
+title_character_ally_2,La Chica Policia Estoica,The Stoic Police Girl
+description_character_ally_2,"¡Alto ahí, escoria criminal!",Stop right there criminal scum!
 name_item_damage_0,Cóctel molotov,Molotov Cocktail
 description_item_damage_0,"Explota en llamas al ser arrojada contra un objeto. Es una de las herramientas de caza más antiguas disponibles en el taller.
 Desde la tragedia que asoló Old Yharnam, el fuego se ha convertido en un elemento fundamental en la caza de bestias y se cree que purifica.

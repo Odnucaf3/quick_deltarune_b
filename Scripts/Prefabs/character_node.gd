@@ -5,5 +5,6 @@ class_name Character_Node
 @export var animation_tree: AnimationTree
 @export var pivot: Node2D
 #-------------------------------------------------------------------------------
-var is_Facing_Left: bool = false
-var is_Moving: bool = false
+var is_facing_left: bool = false
+var is_moving: bool = false
+var is_running: bool = false

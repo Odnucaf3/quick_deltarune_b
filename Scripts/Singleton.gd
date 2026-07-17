@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 #-------------------------------------------------------------------------------
 #region BUTTON FUNCTIONS (WITH MOUSE CONTROL)
 #-------------------------------------------------------------------------------
-func Set_Dialogue_Button(_b:Button, _submit:Callable):
+func Set_Dialogue_Button(_b:Button, _submit:Callable, _w:Callable, _s:Callable):
 	Disconnect_Button(_b)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
 	_b.mouse_exited.connect(func():Mouse_Keep_Focus_When_Ext())
@@ -44,6 +44,18 @@ func Set_Dialogue_Button(_b:Button, _submit:Callable):
 			#-------------------------------------------------------------------------------
 			if(_event.is_action_pressed("ui_accept")):
 				_submit.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("Input_W")):
+				_w.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("Input_S")):
+				_s.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("ui_up")):
+				_w.call()
+			#-------------------------------------------------------------------------------
+			elif(Input.is_action_pressed("ui_down")):
+				_s.call()
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	)
@@ -431,6 +443,22 @@ func Move_to_Button_by_Unequip(_b:Button):
 func Move_to_Button_by_Cancel(_b:Button):
 	Move_to_Button(_b)
 	Common_Canceled()
+#-------------------------------------------------------------------------------
+func Scroll_Richtext_Down(_richtext:RichTextLabel):
+	var _old_value: float = _richtext.get_v_scroll_bar().value
+	_richtext.get_v_scroll_bar().value += int(float(_richtext.get_theme_font_size("normal_font_size"))*17/12)	#NOTA: 17/12 es como una relacion par que quede más bonito.
+	#-------------------------------------------------------------------------------
+	if(_richtext.get_v_scroll_bar().value > _old_value):
+		Common_Selected()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Scroll_Richtext_Up(_richtext:RichTextLabel):
+	var _old_value: float = _richtext.get_v_scroll_bar().value
+	_richtext.get_v_scroll_bar().value -= int(float(_richtext.get_theme_font_size("normal_font_size"))*17/12)
+	#-------------------------------------------------------------------------------
+	if(_richtext.get_v_scroll_bar().value < _old_value):
+		Common_Selected()
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func ScrollContainer_Down(_scroll_container:ScrollContainer):
 	var _old_value: float = _scroll_container.get_v_scroll_bar().value

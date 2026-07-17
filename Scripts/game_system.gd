@@ -8,10 +8,17 @@ enum BATTLE_STATE{STILL_FIGHTING, YOU_WIN, YOU_LOSE, YOU_ESCAPE, YOU_RETRY}
 #-------------------------------------------------------------------------------
 var key_dictionary: Dictionary[String, int]
 #-------------------------------------------------------------------------------
+@export var world_2d: Node2D
+@export var battle_box: Control
+@export var battle_ui: Control
+@export var black_screen_override: Panel
+#-------------------------------------------------------------------------------
 @export_category("Prefabs & Resources")
 @export var attack_resource: Action_Resource
 @export var guard_resource: Action_Resource
 @export var fighter_button_prefab: PackedScene
+@export var fighter_ally_ui_prefab: PackedScene
+@export var fighter_enemy_ui_prefab: PackedScene
 #-------------------------------------------------------------------------------
 @export_category("Serializables")
 @export var money_serializable: Key_Serializable
@@ -30,12 +37,12 @@ var ally_button_array: Array[Fighter_Button]
 @export var enemy_node_array: Array[Fighter_Node]
 @export var player_characterbody2d: CharacterBody2D
 @export var player_interactable_by_action_area2d: Area2D
+@export var player_interactable_by_action_collider: CollisionShape2D
 var isSlowMotion: bool = false
 var deltaTimeScale: float = 1.0
 var input_dir: Vector2
 var input_dir_normal: Vector2
 var dead_zone: float = 0.001
-var is_Running: bool = false
 const state_machine_layer_1: String = "base"
 #-------------------------------------------------------------------------------
 const damage_scaling: int = 100
@@ -59,6 +66,11 @@ var viewport_center: Vector2
 #-------------------------------------------------------------------------------
 @export_category("Battle Menu")
 @export var battle_background: Control
+@export var battle_menu: Control
+@export var battle_menu_skills_button: Button
+@export var battle_menu_items_button: Button
+@export var battle_menu_statistics_button: Button
+@export var battle_menu_status_button: Button
 #-------------------------------------------------------------------------------
 @export_category("Go to Title Menu")
 @export var go_to_title_menu: Control
@@ -313,6 +325,8 @@ var is_in_dialogue: bool = false
 @export var confirm_buy_menu_item_name: Label
 @export var confirm_buy_menu_button: Button
 @export var confirm_buy_menu_item_price: Label
+@export var confirm_buy_menu_hold_value: Label
+@export var confirm_buy_menu_stored_value: Label
 #-------------------------------------------------------------------------------
 @export_category("Money Menu")
 @export var money_menu: Control
@@ -342,11 +356,15 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	Pause_Off()
 	#-------------------------------------------------------------------------------
+	black_screen_override.show()
+	battle_box.hide()
+	black_screen_override.self_modulate = Color.TRANSPARENT
 	Set_Camera_Parameters()
 	Set_Room(current_room)
 	camera.global_position = Camera_Set_Target_Position()
 	#-------------------------------------------------------------------------------
 	battle_background.hide()
+	battle_menu.hide()
 	dialogue_menu.hide()
 	button_next.hide()
 	pause_menu.hide()
@@ -421,6 +439,7 @@ func _physics_process(_delta: float) -> void:
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			Player_Movement()
+			Followers_Movement()
 		#-------------------------------------------------------------------------------
 		GAME_STATE.IN_BATTLE:
 			pass
@@ -444,36 +463,36 @@ func Player_Movement():
 	if(abs(input_dir.y) < dead_zone):
 		input_dir.y = 0
 	#-------------------------------------------------------------------------------
-	if(ally_node_array[0].character_node.is_Moving):
+	if(ally_node_array[0].character_node.is_moving):
 		#-------------------------------------------------------------------------------
 		if(input_dir == Vector2.ZERO):
 			Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Idle")
-			ally_node_array[0].character_node.is_Moving = false
+			ally_node_array[0].character_node.is_moving = false
 			input_dir_normal = Vector2.ZERO
 			return
 		#-------------------------------------------------------------------------------
 		else:
 			input_dir_normal = input_dir.normalized()
 			#-------------------------------------------------------------------------------
-			if(is_Running):
+			if(ally_node_array[0].character_node.is_running):
 				var _new_velocity: Vector2 = input_dir_normal * 200.0 * deltaTimeScale
 				player_characterbody2d.velocity = _new_velocity
 				#-------------------------------------------------------------------------------
 				if(!_run_flag):
 					Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Walk")
-					is_Running = false
+					ally_node_array[0].character_node.is_running = false
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			else:
-				var _new_velocity: Vector2 = input_dir_normal * 75.0 * deltaTimeScale
+				var _new_velocity: Vector2 = input_dir_normal * 70.0 * deltaTimeScale
 				player_characterbody2d.velocity = _new_velocity
 				#-------------------------------------------------------------------------------
 				if(_run_flag):
 					Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Run")
-					is_Running = true
+					ally_node_array[0].character_node.is_running = true
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			if(ally_node_array[0].character_node.is_Facing_Left):
+			if(ally_node_array[0].character_node.is_facing_left):
 				if(input_dir_normal.x > 0):
 					Face_Left(ally_node_array[0].character_node, false)
 					return
@@ -486,6 +505,7 @@ func Player_Movement():
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		Set_Fighter_Position_History(ally_node_array[0])
 	#-------------------------------------------------------------------------------
 	else:
 		#-------------------------------------------------------------------------------
@@ -493,13 +513,13 @@ func Player_Movement():
 			#-------------------------------------------------------------------------------
 			if(_run_flag):
 				Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Run")
-				is_Running = true
+				ally_node_array[0].character_node.is_running = true
 			#-------------------------------------------------------------------------------
 			else:
 				Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Walk")
-				is_Running = false
+				ally_node_array[0].character_node.is_running = false
 			#-------------------------------------------------------------------------------
-			ally_node_array[0].character_node.is_Moving = true
+			ally_node_array[0].character_node.is_moving = true
 			#-------------------------------------------------------------------------------
 			if(input_dir.x > 0):
 				Face_Left(ally_node_array[0].character_node, false)
@@ -515,6 +535,82 @@ func Player_Movement():
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	player_characterbody2d.move_and_slide()
+#-------------------------------------------------------------------------------
+func Set_Fighter_Position_History(_fighter_node:Fighter_Node):
+	_fighter_node.position_history.push_front(_fighter_node.global_position)
+	#-------------------------------------------------------------------------------
+	if(_fighter_node.position_history.size() > 300):
+		_fighter_node.position_history.pop_back()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Followers_Movement():
+	var _run_flag: bool = Input.is_action_pressed("Input_Run")
+	#-------------------------------------------------------------------------------
+	for _i in range(1, ally_node_array.size()):
+		var _distance: float = 20
+		#-------------------------------------------------------------------------------
+		if(ally_node_array[_i].global_position.distance_to(ally_node_array[_i-1].global_position) > _distance):
+			var _x: float = ally_node_array[_i].global_position.x - ally_node_array[_i-1].global_position.x
+			var _y: float = ally_node_array[_i].global_position.y - ally_node_array[_i-1].global_position.y
+			var _dir: float = atan2(_y, _x)
+			var _x2: float = _distance * cos(_dir)
+			var _y2: float = _distance * sin(_dir)
+			var _new_position: Vector2 = ally_node_array[_i-1].global_position + Vector2(_x2, _y2)
+			#-------------------------------------------------------------------------------
+			if(ally_node_array[_i].character_node.is_moving):
+				ally_node_array[_i].global_position = lerp(ally_node_array[_i].global_position, _new_position, 0.1*deltaTimeScale)
+				#-------------------------------------------------------------------------------
+				if(ally_node_array[_i].global_position.distance_to(_new_position) < 5):
+					Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
+					ally_node_array[_i].character_node.is_moving = false
+				#-------------------------------------------------------------------------------
+				else:
+					if(ally_node_array[_i].character_node.is_running):
+						#-------------------------------------------------------------------------------
+						if(!_run_flag):
+							Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Walk")
+							ally_node_array[_i].character_node.is_running = false
+						#-------------------------------------------------------------------------------
+					#-------------------------------------------------------------------------------
+					else:
+						#-------------------------------------------------------------------------------
+						if(_run_flag):
+							Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Run")
+							ally_node_array[_i].character_node.is_running = true
+						#-------------------------------------------------------------------------------
+					#-------------------------------------------------------------------------------
+					Set_Fighter_Position_History(ally_node_array[_i])
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			else:
+				#-------------------------------------------------------------------------------
+				if(ally_node_array[_i].global_position.distance_to(_new_position) > 10):
+					#-------------------------------------------------------------------------------
+					if(_run_flag):
+						Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Run")
+						ally_node_array[_i].character_node.is_running = true
+					#-------------------------------------------------------------------------------
+					else:
+						Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Walk")
+						ally_node_array[_i].character_node.is_running = false
+					#-------------------------------------------------------------------------------
+					ally_node_array[_i].character_node.is_moving = true
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		if(ally_node_array[_i].character_node.is_facing_left):
+			#-------------------------------------------------------------------------------
+			if(ally_node_array[_i].global_position < ally_node_array[_i-1].global_position):
+				Face_Left(ally_node_array[_i].character_node, false)
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		else:
+			#-------------------------------------------------------------------------------
+			if(ally_node_array[_i].global_position > ally_node_array[_i-1].global_position):
+				Face_Left(ally_node_array[_i].character_node, true)
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -612,7 +708,7 @@ func PauseMenu_Open():
 	#-------------------------------------------------------------------------------
 	for _i in ally_node_array.size():
 		var _party_button: Fighter_Button = Create_Fighter_Button(ally_node_array[_i])
-		_party_button.custom_minimum_size.y = 155.0
+		_party_button.custom_minimum_size.y = 170.0
 		pause_menu_fighter_button_content.add_child(_party_button)
 		ally_button_array.append(_party_button)
 		_button_array.append(_party_button as Button)
@@ -643,7 +739,7 @@ func Create_Fighter_Button(_fighter_node:Fighter_Node) -> Fighter_Button:
 	var _party_button: Fighter_Button = fighter_button_prefab.instantiate() as Fighter_Button
 	#-------------------------------------------------------------------------------
 	_party_button.face.texture = _fighter_node.character_node.character_resource.face
-	Fighter_Button_Set_Information_and_Idiome(_party_button, _fighter_node.fighter_serializable)
+	Fighter_Button_Set_Information_and_Idiome(_party_button, _fighter_node.character_node.character_resource, _fighter_node.fighter_serializable)
 	Fighter_Button_Set_HP(_party_button, _fighter_node.fighter_serializable)
 	#-------------------------------------------------------------------------------
 	return _party_button
@@ -2002,7 +2098,7 @@ func Pause_Statistics_Menu_Set(_fighter_index:int):
 	#-------------------------------------------------------------------------------
 	statistics_menu_information_fighter_face.texture = _fighter_node.character_node.character_resource.face
 	#-------------------------------------------------------------------------------
-	var _fighter_id: String = singleton.get_resource_filename(_fighter_serializable.fighter_resource)
+	var _fighter_id: String = singleton.get_resource_filename(_fighter_node.character_node.character_resource)
 	statistics_menu_information_fighter_name.text = tr("name_"+_fighter_id)
 	statistics_menu_information_fighter_title.text = tr("title_"+_fighter_id)
 	#-------------------------------------------------------------------------------
@@ -3037,12 +3133,12 @@ func Set_Idiome():
 	for _i in ally_button_array.size():
 		#-------------------------------------------------------------------------------
 		if(ally_button_array[_i] != null):
-			Fighter_Button_Set_Information_and_Idiome(ally_button_array[_i], ally_node_array[_i].fighter_serializable)
+			Fighter_Button_Set_Information_and_Idiome(ally_button_array[_i], ally_node_array[_i].character_node.character_resource, ally_node_array[_i].fighter_serializable)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Fighter_Button_Set_Information_and_Idiome(_fighter_button:Fighter_Button, _fighter_serializable:Fighter_Serializable):
-	var _fighter_id: String = singleton.get_resource_filename(_fighter_serializable.fighter_resource)
+func Fighter_Button_Set_Information_and_Idiome(_fighter_button:Fighter_Button, _character_resource:Character_Resource, _fighter_serializable:Fighter_Serializable):
+	var _fighter_id: String = singleton.get_resource_filename(_character_resource)
 	_fighter_button.name_label.text = tr("name_"+_fighter_id)
 	_fighter_button.title_label.text = tr("title_"+_fighter_id)
 	_fighter_button.class_label.text = "["+Get_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"]"
@@ -3126,7 +3222,7 @@ func Face_Left(_user:Character_Node, _b:bool):
 	else:
 		_user.pivot.scale.x = 1
 	#-------------------------------------------------------------------------------
-	_user.is_Facing_Left = _b
+	_user.is_facing_left = _b
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -3182,25 +3278,48 @@ func Set_DebugInfo() -> void:
 #-------------------------------------------------------------------------------
 func Next_Button_Set():
 	#-------------------------------------------------------------------------------
+	var _w: Callable = func():
+		singleton.Scroll_Richtext_Up(dialogue_menu_value)
+	#-------------------------------------------------------------------------------
+	var _s: Callable = func():
+		singleton.Scroll_Richtext_Down(dialogue_menu_value)
+	#-------------------------------------------------------------------------------
 	var _submit:Callable = func():
 		next_signal.emit()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Dialogue_Button(button_next, _submit)
+	singleton.Set_Dialogue_Button(button_next, _submit, _w, _s)
 	singleton.Move_to_Button(button_next)
 	await next_signal
 #-------------------------------------------------------------------------------
 func Skip_Dialogue_Button_Set():
 	#-------------------------------------------------------------------------------
+	var _w: Callable = func(): pass
+	#-------------------------------------------------------------------------------
+	var _s: Callable = func(): pass
+	#-------------------------------------------------------------------------------
 	var _submit:Callable = func():
 		is_dialogue_skipped = true
 	#-------------------------------------------------------------------------------
-	singleton.Set_Dialogue_Button(button_next, _submit)
+	singleton.Set_Dialogue_Button(button_next, _submit, _w, _s)
 	singleton.Move_to_Button(button_next)
 #-------------------------------------------------------------------------------
-func Dialogue(_name:String, _value:String):
+func Dialogue(_value:String):
+	await Dialogue_0(_value)
+	await Next_Button_Set()
+#-------------------------------------------------------------------------------
+func Dialogue_0(_value:String):
+	player_interactable_by_action_collider.disabled = true
 	dialogue_menu_face.hide()
+	dialogue_menu_audio.stream = ally_node_array[0].character_node.character_resource.voice
+	dialogue_menu_name.text = ""
 	dialogue_menu_name.hide()
-	dialogue_menu_value.text = _value
+	dialogue_menu_value.visible_characters = 0
+	dialogue_index = 0
+	is_dialogue_skipped = false
+	#-------------------------------------------------------------------------------
+	Skip_Dialogue_Button_Set()
+	await Dialogue_Effect_Puntiation(_value)
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Dialogue_with_Face(_character_resource:Character_Resource, _value:String):
 	await Dialogue_with_Face_0(_character_resource, _value)
@@ -3208,6 +3327,7 @@ func Dialogue_with_Face(_character_resource:Character_Resource, _value:String):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Dialogue_with_Face_0(_character_resource:Character_Resource, _value:String):
+	player_interactable_by_action_collider.disabled = true
 	dialogue_menu_face.show()
 	dialogue_menu_face.texture = _character_resource.face
 	dialogue_menu_audio.stream = _character_resource.voice
@@ -3317,16 +3437,20 @@ func Dialogue_Open():
 	dialogue_menu.show()
 #-------------------------------------------------------------------------------
 func Dialogue_Close():
-	is_in_dialogue = false
 	Dialogue_Close_0()
+	player_interactable_by_action_collider.disabled = false
+	is_in_dialogue = false
 #-------------------------------------------------------------------------------
 func Dialogue_Close_0():
 	button_next.hide()
 	dialogue_menu.hide()
 #-------------------------------------------------------------------------------
 func Stop_Moving():
-	Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Idle")
-	ally_node_array[0].character_node.is_Moving = false
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
+		ally_node_array[_i].character_node.is_moving = false
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Open_Dialogue_Options(_array_string:Array[String]):
 	#-------------------------------------------------------------------------------
@@ -3627,6 +3751,7 @@ func BuyMenu_ItemConsumable_Submit(_button:Button, _merchant_name: String, _item
 			Set_Max_Items_You_Can_Buy(99, _price, _final_price)
 			SetMoney_Label()
 			Print_How_Many_Do_You_Buy(_price, false, 99)
+			Print_How_Many_Do_You_Hold_and_Stored(_inventory_item_serializable)
 			#-------------------------------------------------------------------------------
 			singleton.Play_SFX_Shop()
 		#-------------------------------------------------------------------------------
@@ -3649,6 +3774,8 @@ func BuyMenu_ItemConsumable_Submit(_button:Button, _merchant_name: String, _item
 	confirm_buy_menu_item_name.text = tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))
 	how_many_would_you_buy = 1
 	Print_How_Many_Do_You_Buy(_price, false, 99)
+	var _item_in_inventory: Action_Serializable = Get_ConsumableItem_in_Inventory(_item_serializable.action_resource)
+	Print_How_Many_Do_You_Hold_and_Stored(_item_in_inventory)
 	Confirm_Buy_Menu_Submit(_submit, _button, _up, _down, _left, _right)
 #-------------------------------------------------------------------------------
 func BuyMenu_EquipItem_Selected(_equip_serializable: Equip_Serializable):
@@ -3694,6 +3821,7 @@ func BuyMenu_EquipItem_Submit(_button:Button, _merchant_name: String, _equip_ser
 			Set_Max_Items_You_Can_Buy(_equip_serializable.stored, _price, _final_price)
 			SetMoney_Label()
 			Print_How_Many_Do_You_Buy(_price, true, _equip_serializable.stored)
+			Print_How_Many_Do_You_Stored(_inventory_equip_serializable.stored)
 			#-------------------------------------------------------------------------------
 			singleton.Play_SFX_Shop()
 		#-------------------------------------------------------------------------------
@@ -3715,7 +3843,9 @@ func BuyMenu_EquipItem_Submit(_button:Button, _merchant_name: String, _equip_ser
 	#-------------------------------------------------------------------------------
 	confirm_buy_menu_item_name.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))
 	how_many_would_you_buy = 1
-	Print_How_Many_Do_You_Buy(_price, true, _equip_serializable.stored, )
+	Print_How_Many_Do_You_Buy(_price, true, _equip_serializable.stored)
+	var _equip_in_inventory: Equip_Serializable = Get_EquipItem_in_Inventory(_equip_serializable.equip_resource)
+	Print_How_Many_Do_You_Stored(_equip_in_inventory.stored)
 	Confirm_Buy_Menu_Submit(_submit, _button, _up, _down, _left, _right)
 #-------------------------------------------------------------------------------
 func BuyMenu_KeyItem_Selected(_key_serializable: Key_Serializable):
@@ -3761,6 +3891,7 @@ func BuyMenu_KeyItem_Submit(_button:Button, _merchant_name: String, _key_seriali
 			Set_Max_Items_You_Can_Buy(_key_serializable.stored, _price, _final_price)
 			SetMoney_Label()
 			Print_How_Many_Do_You_Buy(_price, true, _key_serializable.stored)
+			Print_How_Many_Do_You_Stored(_inventory_keyitem_serializable.stored)
 			#-------------------------------------------------------------------------------
 			singleton.Play_SFX_Shop()
 		#-------------------------------------------------------------------------------
@@ -3783,6 +3914,8 @@ func BuyMenu_KeyItem_Submit(_button:Button, _merchant_name: String, _key_seriali
 	confirm_buy_menu_item_name.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))
 	how_many_would_you_buy = 1
 	Print_How_Many_Do_You_Buy(_price, true, _key_serializable.stored)
+	var _key_in_inventory: Key_Serializable = Get_KeyItem_in_Inventory(_key_serializable.key_resource)
+	Print_How_Many_Do_You_Stored(_key_in_inventory.stored)
 	Confirm_Buy_Menu_Submit(_submit, _button, _up, _down, _left, _right)
 #-------------------------------------------------------------------------------
 func Increase_How_Many_Do_Want_to_Buy(_price:int, _int:int, _has_limited_stored:bool, _stored:int):
@@ -3918,13 +4051,21 @@ func Confirm_Buy_Menu_Submit(_submit:Callable, _button:Button, _up:Callable, _do
 func Print_How_Many_Do_You_Buy(_price:int, _has_limited_stored:bool, _stored:int):
 	#-------------------------------------------------------------------------------
 	if(_has_limited_stored):
-		confirm_buy_menu_button.text = "  ["+str(how_many_would_you_buy)+"/"+str(_stored)+"]  "
+		confirm_buy_menu_button.text = "["+str(how_many_would_you_buy)+"/"+str(_stored)+"]"
 	#-------------------------------------------------------------------------------
 	else:
-		confirm_buy_menu_button.text = "  ["+str(how_many_would_you_buy)+"]  "
+		confirm_buy_menu_button.text = "["+str(how_many_would_you_buy)+"]"
 	#-------------------------------------------------------------------------------
 	confirm_buy_menu_item_price.text = Get_Money_Label(_price * how_many_would_you_buy)
 	confirm_buy_menu_item_price.text += "  /  "+Get_Money_Label(money_serializable.stored)
+#-------------------------------------------------------------------------------
+func Print_How_Many_Do_You_Hold_and_Stored(_action_serializable:Action_Serializable):
+	confirm_buy_menu_hold_value.text = "["+str(_action_serializable.hold)+"/"+str(_action_serializable.action_resource.max_hold)+"]"
+	confirm_buy_menu_stored_value.text = "["+str(_action_serializable.stored)+"]"
+#-------------------------------------------------------------------------------
+func Print_How_Many_Do_You_Stored(_stored:int):
+	confirm_buy_menu_hold_value.text = "-"
+	confirm_buy_menu_stored_value.text = "["+str(_stored)+"]"
 #-------------------------------------------------------------------------------
 #region GET ID FUNCTIONS
 #-------------------------------------------------------------------------------
@@ -3989,8 +4130,38 @@ func Add_ConsumableItem_to_Inventory(_item_serializable: Action_Serializable, _h
 		return _new_item
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Get_ConsumableItem_in_Inventory(_item_resource: Action_Resource) -> Action_Serializable:
+	#-------------------------------------------------------------------------------
+	for _i in item_consumable_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(item_consumable_serializable_array[_i].action_resource == _item_resource):
+			return item_consumable_serializable_array[_i]
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	var _new_item: Action_Serializable = Action_Serializable.new()
+	_new_item.action_resource = _item_resource
+	_new_item.hold = 0
+	_new_item.stored = 0
+	_new_item.cooldown = 0
+	#-------------------------------------------------------------------------------
+	return _new_item
+#-------------------------------------------------------------------------------
 func Add_EquipItem_to_Inventory(_equip_serializable: Equip_Serializable, _hold:int) -> Equip_Serializable:
 	return Add_Equip_Serializable_to_Array(item_equip_serializable_array, _equip_serializable.equip_resource, _hold)
+#-------------------------------------------------------------------------------
+func Get_EquipItem_in_Inventory(_equip_resource:Equip_Resource) -> Equip_Serializable:
+	#-------------------------------------------------------------------------------
+	for _i in item_equip_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(item_equip_serializable_array[_i].equip_resource == _equip_resource):
+			return item_equip_serializable_array[_i]
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	var _equip_serializable: Equip_Serializable = Equip_Serializable.new()
+	_equip_serializable.equip_resource = _equip_resource
+	_equip_serializable.stored = 0
+	#-------------------------------------------------------------------------------
+	return _equip_serializable
 #-------------------------------------------------------------------------------
 func Add_Equip_Serializable_to_Array(_equip_array:Array[Equip_Serializable], _equip_resource:Equip_Resource, _hold: int) -> Equip_Serializable:
 	#-------------------------------------------------------------------------------
@@ -4035,37 +4206,134 @@ func Add_KeyItem_to_Inventory(_key_serializable: Key_Serializable, _hold:int) ->
 		return _new_key_serializable
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Get_KeyItem_in_Inventory(_key_resource:Key_Resource) -> Key_Serializable:
+	#-------------------------------------------------------------------------------
+	if(_key_resource == money_serializable.key_resource):
+		return money_serializable
+	#-------------------------------------------------------------------------------
+	else:
+		#-------------------------------------------------------------------------------
+		for _i in item_key_serializable_array.size():
+			#-------------------------------------------------------------------------------
+			if(item_key_serializable_array[_i].key_resource == _key_resource):
+				return item_key_serializable_array[_i]
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		var _new_key_serializable: Key_Serializable = Key_Serializable.new()
+		_new_key_serializable.key_resource = _key_resource
+		_new_key_serializable.stored = 0
+		#-------------------------------------------------------------------------------
+		return _new_key_serializable
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 func Enter_Battle():
 	myGAME_STATE = GAME_STATE.IN_BATTLE
-	tp_bar.show()
-	dialogue_menu.show()
+	await Fade_Out_Override()
 	battle_background.show()
-	Set_All_Fighters_Position()
+	tp_bar.show()
+	#-------------------------------------------------------------------------------
+	if(true == true):
+		Set_All_Fighters_Position_1()
+		dialogue_menu.show()
+		#battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
+		#battle_box.show()
+		await Seconds(0.1)
+		await Fade_In_Override()
+		await Seconds(0.1)
+		battle_menu.show()
+	#-------------------------------------------------------------------------------
+	else:
+		Set_All_Fighters_Position_2()
+		battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
+		battle_box.show()
+		dialogue_menu.hide()
+		await Seconds(0.1)
+		await Fade_In_Override()
+		await Seconds(0.1)
+		battle_menu.hide()
+	#-------------------------------------------------------------------------------
+	singleton.Move_to_Button(battle_menu_skills_button)
 #-------------------------------------------------------------------------------
-func Set_All_Fighters_Position():
+func Set_All_Fighters_Position_1():
 	var _camera_center: Vector2 = camera.global_position
 	battle_background.global_position = _camera_center - camera_size*0.5
 	#-------------------------------------------------------------------------------
-	var _y1: float = -0.42
-	var _y2: float = 0.37
-	#var _y1: float = -0.5
-	#var _y2: float = 0.75
+	var _x1: float = 0.1
+	var _x2: float = 0.35
+	var _y1: float = -0.15
+	var _y2: float = 0.25
 	#-------------------------------------------------------------------------------
-	var _ally_dy: float = (_y2-_y1)/ (ally_node_array.size()+1)
+	var _ally_dx: float = (_x2-_x1) / (ally_node_array.size()+1)
+	var _ally_dy: float = (_y2-_y1) / (ally_node_array.size()+1)
 	#-------------------------------------------------------------------------------
 	for _i in ally_node_array.size():
-		var _y: float = camera_size.y*(_y1+(_i+1)*_ally_dy)
-		ally_node_array[_i].global_position = _camera_center + Vector2(-100, _y)
+		var _x: float = camera_size.x * (-_x1 - (_i+1) * _ally_dx)
+		var _y: float = camera_size.y * (_y1 + (_i+1) * _ally_dy)
+		ally_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
 		Face_Left(ally_node_array[_i].character_node, false)
+		#-------------------------------------------------------------------------------
+		var _ally_ui: Fighter_UI = fighter_ally_ui_prefab.instantiate() as Fighter_UI
+		battle_ui.add_child(_ally_ui)
+		_ally_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
+		#-------------------------------------------------------------------------------
 		ally_node_array[_i].z_index = 2
 		ally_node_array[_i].show()
 	#-------------------------------------------------------------------------------
-	var _enemy_dy: float = (_y2-_y1)/ (enemy_node_array.size()+1)
+	var _enemy_dx: float = (_x2-_x1) / (enemy_node_array.size()+1)
+	var _enemy_dy: float = (_y2-_y1) / (enemy_node_array.size()+1)
 	#-------------------------------------------------------------------------------
 	for _i in enemy_node_array.size():
-		var _y: float = camera_size.y*(_y1+(_i+1)*_enemy_dy)
-		enemy_node_array[_i].global_position = _camera_center + Vector2(100, _y)
+		var _x: float = camera_size.x * (_x1 + (_i+1) * _enemy_dx)
+		var _y: float = camera_size.y * (_y1 + (_i+1) * _enemy_dy)
+		enemy_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
 		Face_Left(enemy_node_array[_i].character_node, true)
+		#-------------------------------------------------------------------------------
+		var _enemy_ui: Fighter_UI = fighter_enemy_ui_prefab.instantiate() as Fighter_UI
+		battle_ui.add_child(_enemy_ui)
+		_enemy_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
+		#-------------------------------------------------------------------------------
+		enemy_node_array[_i].z_index = 2
+		enemy_node_array[_i].show()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_All_Fighters_Position_2():
+	var _camera_center: Vector2 = camera.global_position
+	battle_background.global_position = _camera_center - camera_size*0.5
+	#-------------------------------------------------------------------------------
+	var _x1: float = 0.3
+	var _x2: float = 0.3
+	var _y1: float = -0.28
+	var _y2: float = 0.63
+	#-------------------------------------------------------------------------------
+	var _ally_dx: float = (_x2-_x1) / (ally_node_array.size()+1)
+	var _ally_dy: float = (_y2-_y1) / (ally_node_array.size()+1)
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		var _x: float = camera_size.x * (-_x1 - (_i+1) * _ally_dx)
+		var _y: float = camera_size.y * (_y1 + (_i+1) * _ally_dy)
+		ally_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
+		Face_Left(ally_node_array[_i].character_node, false)
+		#-------------------------------------------------------------------------------
+		var _ally_ui: Fighter_UI = fighter_ally_ui_prefab.instantiate() as Fighter_UI
+		battle_ui.add_child(_ally_ui)
+		_ally_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
+		#-------------------------------------------------------------------------------
+		ally_node_array[_i].z_index = 2
+		ally_node_array[_i].show()
+	#-------------------------------------------------------------------------------
+	var _enemy_dx: float = (_x2-_x1) / (enemy_node_array.size()+1)
+	var _enemy_dy: float = (_y2-_y1) / (enemy_node_array.size()+1)
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		var _x: float = camera_size.x * (_x1 + (_i+1) * _enemy_dx)
+		var _y: float = camera_size.y * (_y1 + (_i+1) * _enemy_dy)
+		enemy_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
+		Face_Left(enemy_node_array[_i].character_node, true)
+		#-------------------------------------------------------------------------------
+		var _enemy_ui: Fighter_UI = fighter_enemy_ui_prefab.instantiate() as Fighter_UI
+		battle_ui.add_child(_enemy_ui)
+		_enemy_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
+		#-------------------------------------------------------------------------------
 		enemy_node_array[_i].z_index = 2
 		enemy_node_array[_i].show()
 	#-------------------------------------------------------------------------------
@@ -4075,9 +4343,13 @@ func Seconds(_timer:float):
 #-------------------------------------------------------------------------------
 func Set_Fighter_0():
 	ally_node_array[0].show()
+	ally_node_array[0].reparent(player_characterbody2d)
+	ally_node_array[0].position = Vector2.ZERO
 	#-------------------------------------------------------------------------------
 	for _i in range(1, ally_node_array.size()):
-		ally_node_array[_i].hide()
+		ally_node_array[_i].show()
+		ally_node_array[_i].reparent(world_2d)
+		#ally_node_array[_i].global_position = player_characterbody2d.global_position
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_Ally_Fighter_Resource_Array() -> Array[Fighter_Resource]:
@@ -4096,4 +4368,23 @@ func Get_Fighter_Node_Index(_fighter_resource:Fighter_Resource) -> int:
 	#-------------------------------------------------------------------------------
 	return -1
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Fade_Out_Override():
+	var _tween: Tween = create_tween()
+	var _color_black: Color = Color.BLACK
+	_tween.tween_property(black_screen_override, "self_modulate",_color_black, 0.2)
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Fade_In_Override():
+	var _tween: Tween = create_tween()
+	var _color_transparte: Color = Color.TRANSPARENT
+	_tween.tween_property(black_screen_override, "self_modulate",_color_transparte, 0.2)
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Get_Position_in_Canvas_Layer(_global_position:Vector2) -> Vector2:
+	var _new_position: Vector2 = _global_position - camera.global_position
+	_new_position *= camera.zoom
+	_new_position += Vector2(width, height)/2
+	#-------------------------------------------------------------------------------
+	return _new_position
 #-------------------------------------------------------------------------------

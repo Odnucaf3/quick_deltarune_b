@@ -1,0 +1,250 @@
+[gd_scene format=3 uid="uid://opymv7weatpj"]
+
+[ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_lw6pq"]
+[ext_resource type="Script" uid="uid://bcrucc2wrc473" path="res://Scripts/Prefabs/fighter_ui.gd" id="2_re4ip"]
+[ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="3_3v8lk"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_aoydg"]
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_3em1u"]
+color = Color(1, 1, 1, 1)
+
+[node name="ally_fighter_ui" type="Control" unique_id=271527618]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lw6pq")
+script = ExtResource("2_re4ip")
+
+[node name="Control" type="Control" parent="." unique_id=1107437097]
+anchors_preset = 0
+offset_left = -40.0
+offset_top = -180.0
+offset_right = -40.0
+offset_bottom = -180.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1845980260]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=331277765]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Control/VBoxContainer" unique_id=1701838106]
+layout_mode = 2
+theme = ExtResource("3_3v8lk")
+value = 75.0
+show_percentage = false
+
+[node name="Control5" type="Control" parent="." unique_id=698625385]
+visible = false
+anchors_preset = 0
+offset_left = -40.0
+offset_top = -180.0
+offset_right = -40.0
+offset_bottom = -180.0
+
+[node name="ProgressBar" type="ProgressBar" parent="Control5" unique_id=398457182]
+layout_mode = 0
+offset_left = -96.0
+offset_top = -8.0
+theme = ExtResource("3_3v8lk")
+value = 75.0
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control5/ProgressBar" unique_id=1581237145]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -40.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control5/ProgressBar/HBoxContainer" unique_id=662193581]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Control5/ProgressBar/HBoxContainer/VBoxContainer" unique_id=815744168]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "2200"
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="Control5/ProgressBar/HBoxContainer/VBoxContainer" unique_id=1202599947]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_aoydg")
+
+[node name="Label2" type="Label" parent="Control5/ProgressBar/HBoxContainer/VBoxContainer" unique_id=2143164233]
+layout_mode = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "3000"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="Control5/ProgressBar/HBoxContainer" unique_id=1567963901]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "HP"
+vertical_alignment = 1
+
+[node name="Control3" type="Control" parent="." unique_id=1681640463]
+visible = false
+anchors_preset = 0
+offset_left = -72.0
+offset_top = -116.0
+offset_right = -72.0
+offset_bottom = -116.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control3" unique_id=112908268]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -103.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control3/VBoxContainer2" unique_id=1115474492]
+layout_mode = 2
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control3/VBoxContainer2/HBoxContainer" unique_id=444490824]
+layout_mode = 2
+theme_override_constants/separation = -15
+
+[node name="Label2" type="Label" parent="Control3/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=625441379]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300"
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="Control3/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1770118564]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_3em1u")
+
+[node name="Label" type="Label" parent="Control3/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1697624320]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300"
+horizontal_alignment = 2
+
+[node name="ProgressBar2" type="ProgressBar" parent="Control3/VBoxContainer2" unique_id=1158323753]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_3v8lk")
+value = 75.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="Control3/VBoxContainer2" unique_id=922346632]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "HP"
+horizontal_alignment = 2
+
+[node name="Control4" type="Control" parent="." unique_id=574263880]
+visible = false
+anchors_preset = 0
+offset_left = -72.0
+offset_top = -100.0
+offset_right = -72.0
+offset_bottom = -100.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control4" unique_id=1809092273]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -103.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="Label" type="Label" parent="Control4/VBoxContainer2" unique_id=676919647]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "HP"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control4/VBoxContainer2" unique_id=967944467]
+layout_mode = 2
+
+[node name="ProgressBar2" type="ProgressBar" parent="Control4/VBoxContainer2/MarginContainer" unique_id=1204620035]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("3_3v8lk")
+value = 75.0
+fill_mode = 3
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control4/VBoxContainer2/MarginContainer" unique_id=1618088282]
+layout_mode = 2
+theme_override_constants/separation = -15
+
+[node name="Label2" type="Label" parent="Control4/VBoxContainer2/MarginContainer/VBoxContainer" unique_id=557361333]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "30000"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control4/VBoxContainer2/MarginContainer/VBoxContainer" unique_id=714079409]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_3em1u")
+
+[node name="Label" type="Label" parent="Control4/VBoxContainer2/MarginContainer/VBoxContainer" unique_id=1866239477]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "30000"
+horizontal_alignment = 1
+
+[node name="Control2" type="Control" parent="." unique_id=1707289858]
+anchors_preset = 0
+
+[node name="Button" type="Button" parent="Control2" unique_id=1050430004]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 153.0
+grow_vertical = 0
+text = "  Name of the Ally  "

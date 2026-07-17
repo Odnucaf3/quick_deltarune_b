@@ -6,8 +6,12 @@
 [ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="3_pclkw"]
 [ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/guard.tres" id="3_xkpdv"]
 [ext_resource type="Resource" uid="uid://6snkwbnrq70e" path="res://Resources/Items/item_damage_1.tres" id="5_ql07v"]
+[ext_resource type="PackedScene" uid="uid://opymv7weatpj" path="res://Nodes/Prefabs/ui/ally_fighter_ui.tscn" id="5_r4og7"]
+[ext_resource type="PackedScene" uid="uid://cwyf6jru36e8y" path="res://Nodes/Prefabs/ui/enemy_fighter_ui.tscn" id="6_xm4vn"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="8_r4og7"]
+[ext_resource type="Texture2D" uid="uid://qa217pocdfaw" path="res://Assets/rpg_maker_mv/img/battlebacks1/DemonCastle1.png" id="9_hf3yd"]
 [ext_resource type="Resource" uid="uid://dnqwa4ac4201s" path="res://Resources/Equips/head_0.tres" id="9_xm4vn"]
+[ext_resource type="Texture2D" uid="uid://f7qt8brfst0n" path="res://Assets/rpg_maker_mv/img/battlebacks2/DemonCastle3.png" id="10_p24l3"]
 [ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="10_seov8"]
 [ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="11_n53vq"]
 [ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_ally_0.tres" id="12_hf3yd"]
@@ -18,19 +22,21 @@
 [ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_0.tres" id="17_hf3yd"]
 [ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_ally_2.tres" id="17_r4og7"]
 [ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
+[ext_resource type="Resource" uid="uid://13mkeix0571g" path="res://Resources/Characters/character_enemy_1.tres" id="21_r4og7"]
 [ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="22_0ol08"]
 [ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter_ally_1.tscn" id="22_5rrxs"]
 [ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter_ally_2.tscn" id="23_jvut7"]
 [ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_ally_1.tscn" id="24_5rrxs"]
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_ally_2.tscn" id="26_jvut7"]
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_ally_0.tscn" id="27_0ol08"]
-[ext_resource type="PackedScene" uid="uid://dwe23u11yf586" path="res://Nodes/Prefabs/Characters/character_enemy_0.tscn" id="28_0ol08"]
 [ext_resource type="PackedScene" uid="uid://4evqnt3jxeef" path="res://Nodes/Prefabs/Fighters/fighter_enemy_0.tscn" id="28_jvut7"]
 [ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="30_okou3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="32_gijw1"]
+[ext_resource type="Texture2D" uid="uid://qxrbt23fnn7b" path="res://Assets/ansimuz/sewers_pack_files/Spritesheets/hit.png" id="32_xkpdv"]
 [ext_resource type="Texture2D" uid="uid://b2m6og0hbkwjg" path="res://Assets/Sprites/player1_idle.PNG" id="33_6yqg2"]
 [ext_resource type="Theme" uid="uid://drphpbb8kep0x" path="res://Themes/title_label_theme.tres" id="34_206if"]
+[ext_resource type="Texture2D" uid="uid://bv0it6x33yuw1" path="res://Assets/ansimuz/legacy_collection/Gothicvania/Characters/Dancing Girl Files/spritesheets/balancing.png" id="34_r4og7"]
 [ext_resource type="Theme" uid="uid://cof2v378gb86t" path="res://Themes/tp_bar_theme.tres" id="35_4yjru"]
 [ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_ally_0.tscn" id="35_n53vq"]
 [ext_resource type="Theme" uid="uid://dkaas12c836ew" path="res://Themes/tab_theme.tres" id="36_5668i"]
@@ -58,6 +64,9 @@ shader_parameter/speed_y = 0.1
 shader = ExtResource("54_8m6hh")
 shader_parameter/speed_x = 0.1
 shader_parameter/speed_y = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qeicn"]
+bg_color = Color(0, 0, 0, 0.4117647)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3em1u"]
 size = Vector2(13, 4)
@@ -95,7 +104,11 @@ script/source = "extends Room_Script
 #-------------------------------------------------------------------------------
 @export_category(\"NPC 4\")
 @export var npc_4: Interactable_Script
+@export var npc_4_character_resource: Character_Resource
 @export var npc_4_fighter_array: Array[Fighter_Node]
+#-------------------------------------------------------------------------------
+@export_category(\"Interactable\")
+@export var interactable: Interactable_Script
 #-------------------------------------------------------------------------------
 func Set_Room():
 	Set_NPC_1(ally_0, ally_0_character, ally_0_fighter_resouce, ally_0_fighter_prefab)
@@ -103,6 +116,7 @@ func Set_Room():
 	Set_NPC_1(ally_2, ally_2_character, ally_2_fighter_resouce, ally_2_fighter_prefab)
 	npc_3.interactable_by_action = func(): NPC_3_Talk()
 	npc_4.interactable_by_action = func(): NPC_4_Talk()
+	interactable.interactable_by_action = func(): Interactable_Action()
 #-------------------------------------------------------------------------------
 func Set_NPC_1(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
 	var _index: int = singleton.game_system.Get_Fighter_Node_Index(_fighter_resource)
@@ -116,7 +130,6 @@ func Set_NPC_1(_imteractable_script:Interactable_Script, _character_node:Charact
 	_imteractable_script.interactable_by_action = func(): NPC_1_Talk(_imteractable_script, _character_node, _fighter_resource, _fighter_prefab)
 #-------------------------------------------------------------------------------
 func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
-	_imteractable_script.collider.disabled = true
 	#-------------------------------------------------------------------------------
 	singleton.game_system.Stop_Moving()
 	singleton.game_system.Dialogue_Open()
@@ -145,7 +158,7 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a estar acá si me necesitas.\")
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		singleton.game_system.Dialogue_Close()
+		await singleton.game_system.Dialogue_Close()
 	#-------------------------------------------------------------------------------
 	else:
 		await singleton.game_system.Dialogue_with_Face_0(_character_node.character_resource, \"* Querés que me vaya del grupo?\")
@@ -173,12 +186,10 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, sigo con vos.\")
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		singleton.game_system.Dialogue_Close()
+		await singleton.game_system.Dialogue_Close()
 	#-------------------------------------------------------------------------------
-	_imteractable_script.collider.disabled = false
 #-------------------------------------------------------------------------------
 func NPC_3_Talk():
-	npc_3.collider.disabled = true
 	#-------------------------------------------------------------------------------
 	var _game_system: Game_System = singleton.game_system
 	var _player_1_character_resource: Character_Resource = _game_system.ally_node_array[0].character_node.character_resource
@@ -204,29 +215,27 @@ func NPC_3_Talk():
 		1:
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. Bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
 			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
 		#-------------------------------------------------------------------------------
 		2:
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. Bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
+			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
 			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* No? Ok, para la próxima.\")
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	_game_system.Dialogue_Close()
+	await _game_system.Dialogue_Close()
 	#-------------------------------------------------------------------------------
-	npc_3.collider.disabled = false
 #-------------------------------------------------------------------------------
 func NPC_4_Talk():
-	npc_4.collider.disabled = true
 	#-------------------------------------------------------------------------------
 	var _game_system: Game_System = singleton.game_system
 	var _player_1_character_resource: Character_Resource = _game_system.ally_node_array[0].character_node.character_resource
 	_game_system.Stop_Moving()
 	_game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_with_Face_0(npc_3_character_resource, \"* Hola Che. Vamos a pelear!\")
+	await _game_system.Dialogue_with_Face_0(npc_4_character_resource, \"* Hola Che. Vamos a pelear!\")
 	_game_system.Open_Dialogue_Options([\"Pelear\", \"Irse\"])
 	await _game_system.next_signal
 	#-------------------------------------------------------------------------------
@@ -235,23 +244,34 @@ func NPC_4_Talk():
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
 			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Pelear.\")
-			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, vamos a pelear.\")
+			await _game_system.Dialogue_with_Face(npc_4_character_resource, \"* Ok, vamos a pelear.\")
 			#-------------------------------------------------------------------------------
-			_game_system.Dialogue_Close()
+			await _game_system.Dialogue_Close()
 			_game_system.enemy_node_array = npc_4_fighter_array
-			_game_system.Enter_Battle()
+			_game_system.Dialogue_0(\"* The Battle Began!\")
+			await _game_system.Enter_Battle()
 			await _game_system.next_signal
 		#-------------------------------------------------------------------------------
 		1:
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
 			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No.\")
-			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* No? Ok, para la próxima.\")
+			await _game_system.Dialogue_with_Face(npc_4_character_resource, \"* No? Ok, para la próxima.\")
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	_game_system.Dialogue_Close()
+	await _game_system.Dialogue_Close()
 	#-------------------------------------------------------------------------------
-	npc_4.collider.disabled = false
+#-------------------------------------------------------------------------------
+func Interactable_Action():
+	#-------------------------------------------------------------------------------
+	var _game_system: Game_System = singleton.game_system
+	_game_system.Stop_Moving()
+	_game_system.Dialogue_Open()
+	#-------------------------------------------------------------------------------
+	await _game_system.Dialogue(\"* Una luz extraña en la esquina de la habitación.\")
+	#-------------------------------------------------------------------------------
+	await _game_system.Dialogue_Close()
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 "
 
@@ -557,6 +577,182 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
 radius = 16.0
 
+[sub_resource type="Animation" id="Animation_xm4vn"]
+resource_name = "Idle"
+length = 1.1428714796617627
+loop_mode = 1
+step = 0.14285715
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("34_r4og7")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857146, 0.5714286, 0.71428573, 0.8571429, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_seov8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("34_r4og7")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n53vq"]
+_data = {
+&"Idle": SubResource("Animation_xm4vn"),
+&"RESET": SubResource("Animation_seov8")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gbvte"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4sv24"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_nc528"]
+states/Idle/node = SubResource("AnimationNodeAnimation_gbvte")
+states/Idle/position = Vector2(346, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_4sv24")]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_acn20"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
+graph_offset = Vector2(-346, 40)
+nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_nc528")
+nodes/base_StateMachine/position = Vector2(-180, 40)
+nodes/base_TimeScale/node = SubResource("AnimationNodeTimeScale_acn20")
+nodes/base_TimeScale/position = Vector2(80, 100)
+node_connections = [&"output", 0, &"base_TimeScale", &"base_TimeScale", 0, &"base_StateMachine"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qeicn"]
+
+[sub_resource type="Animation" id="Animation_ql07v"]
+resource_name = "Idle"
+length = 0.8571571811750531
+loop_mode = 1
+step = 0.14285715
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.42857143),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_hf3yd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p24l3"]
+_data = {
+&"Idle": SubResource("Animation_ql07v"),
+&"RESET": SubResource("Animation_hf3yd")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3em1u"]
+animation = &"Idle"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3em1u"]
 bg_color = Color(0, 0, 0, 0.8039216)
 
@@ -566,20 +762,35 @@ bg_color = Color(0, 0, 0, 0.8039216)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcbh6"]
 bg_color = Color(0, 0, 0, 0.8039216)
 
-[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("ally_node_array", "player_characterbody2d", "player_interactable_by_action_area2d", "camera", "current_room", "tp_bar", "tp_bar_name", "battle_background", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "money_menu", "money_menu_label", "debug_label")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5t6d6"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("world_2d", "battle_box", "battle_ui", "black_screen_override", "ally_node_array", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_name", "battle_background", "battle_menu", "battle_menu_skills_button", "battle_menu_items_button", "battle_menu_statistics_button", "battle_menu_status_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
 script = ExtResource("1_jvut7")
+world_2d = NodePath("World_2D")
+battle_box = NodePath("World_2D/battle_box")
+battle_ui = NodePath("CanvasLayer/battle_ui")
+black_screen_override = NodePath("CanvasLayer/black_screen_override")
 attack_resource = ExtResource("2_pclkw")
 guard_resource = ExtResource("3_xkpdv")
 fighter_button_prefab = ExtResource("2_0ol08")
+fighter_ally_ui_prefab = ExtResource("5_r4og7")
+fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
 money_serializable = SubResource("Resource_6ottl")
 ally_node_array = [NodePath("World_2D/player_characterbody2d/fighter_ally_0"), NodePath("World_2D/player_characterbody2d/fighter_ally_1"), NodePath("World_2D/player_characterbody2d/fighter_ally_2")]
 player_characterbody2d = NodePath("World_2D/player_characterbody2d")
 player_interactable_by_action_area2d = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d")
+player_interactable_by_action_collider = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d/CollisionShape2D")
 camera = NodePath("Camera2D")
 current_room = NodePath("World_2D/room_00")
 tp_bar = NodePath("CanvasLayer/tp_bar")
 tp_bar_name = NodePath("CanvasLayer/tp_bar/VBoxContainer/tp_bar_name")
 battle_background = NodePath("World_2D/Panel2")
+battle_menu = NodePath("CanvasLayer/battle_menu")
+battle_menu_skills_button = NodePath("CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Button")
+battle_menu_items_button = NodePath("CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Button2")
+battle_menu_statistics_button = NodePath("CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Button3")
+battle_menu_status_button = NodePath("CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Button4")
 go_to_title_menu = NodePath("CanvasLayer/go_to_title_menu")
 go_to_title_menu_button_yes = NodePath("CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_yes")
 go_to_title_menu_button_no = NodePath("CanvasLayer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_no")
@@ -771,6 +982,8 @@ confirm_buy_menu = NodePath("CanvasLayer/confirm_buy_menu")
 confirm_buy_menu_item_name = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label2")
 confirm_buy_menu_button = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button")
 confirm_buy_menu_item_price = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/Label2")
+confirm_buy_menu_hold_value = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label4/Label2")
+confirm_buy_menu_stored_value = NodePath("CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label5/Label2")
 money_menu = NodePath("CanvasLayer/money_menu")
 money_menu_label = NodePath("CanvasLayer/money_menu/PanelContainer/MarginContainer/money_menu_label")
 debug_label = NodePath("CanvasLayer/debug_menu/debug_label")
@@ -798,6 +1011,7 @@ scale = Vector2(0.286, 0.286)
 theme_override_styles/panel = SubResource("StyleBoxFlat_aoydg")
 
 [node name="TextureRect" type="TextureRect" parent="World_2D/Panel2" unique_id=1453810583]
+visible = false
 self_modulate = Color(1, 0, 1, 0.21568628)
 material = SubResource("ShaderMaterial_shqvj")
 layout_mode = 1
@@ -814,6 +1028,7 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="TextureRect2" type="TextureRect" parent="World_2D/Panel2" unique_id=534830673]
+visible = false
 self_modulate = Color(0, 1, 0, 0.21568628)
 material = SubResource("ShaderMaterial_altm3")
 layout_mode = 1
@@ -831,24 +1046,50 @@ stretch_mode = 1
 flip_h = true
 flip_v = true
 
-[node name="Panel" type="Panel" parent="World_2D" unique_id=1091550278]
-visible = false
+[node name="TextureRect3" type="TextureRect" parent="World_2D/Panel2" unique_id=852941241]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_hf3yd")
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="World_2D/Panel2" unique_id=926773992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_p24l3")
+expand_mode = 1
+
+[node name="Panel" type="Panel" parent="World_2D/Panel2" unique_id=615616082]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qeicn")
+
+[node name="battle_box" type="Panel" parent="World_2D" unique_id=1091550278]
+z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -159.99998
-offset_top = -255.99997
-offset_right = 290.0
-offset_bottom = 194.00003
+offset_right = 450.0
+offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.286, 0.286)
-pivot_offset = Vector2(225, 225)
 theme = ExtResource("16_0t8i2")
 
-[node name="TextureRect" type="TextureRect" parent="World_2D/Panel" unique_id=1699119715]
+[node name="TextureRect" type="TextureRect" parent="World_2D/battle_box" unique_id=1699119715]
 self_modulate = Color(1, 0, 1, 1)
 z_index = 1
 layout_mode = 1
@@ -866,7 +1107,7 @@ grow_vertical = 2
 texture = ExtResource("18_ngqpa")
 expand_mode = 1
 
-[node name="TextureRect" type="TextureRect" parent="World_2D/Panel/TextureRect" unique_id=681833552]
+[node name="TextureRect" type="TextureRect" parent="World_2D/battle_box/TextureRect" unique_id=681833552]
 self_modulate = Color(1, 1, 1, 0.60784316)
 show_behind_parent = true
 layout_mode = 1
@@ -905,7 +1146,7 @@ visible = false
 [node name="fighter_ally_2" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
 visible = false
 
-[node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "npc_3", "npc_4", "npc_4_fighter_array", "room_limits")]
+[node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "npc_3", "npc_4", "npc_4_fighter_array", "interactable", "room_limits")]
 y_sort_enabled = true
 script = SubResource("GDScript_fuapw")
 ally_0 = NodePath("ally_0")
@@ -921,20 +1162,22 @@ ally_2_character = NodePath("ally_2/character_ally_2")
 ally_2_fighter_resouce = ExtResource("17_r4og7")
 ally_2_fighter_prefab = ExtResource("23_jvut7")
 npc_3 = NodePath("npc_3")
-npc_3_character_resource = ExtResource("14_5rrxs")
+npc_3_character_resource = ExtResource("21_r4og7")
 npc_3_item_consumable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_5rrxs")])
 npc_3_item_equip_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_pclkw"), SubResource("Resource_0ol08"), SubResource("Resource_jvut7")])
 npc_4 = NodePath("npc_4")
-npc_4_fighter_array = [NodePath("npc_4/fighter_enemy_0")]
+npc_4_character_resource = ExtResource("14_5rrxs")
+npc_4_fighter_array = [NodePath("npc_4/fighter_enemy_0"), NodePath("npc_4/fighter_ally_0"), NodePath("npc_4/fighter_enemy_1"), NodePath("npc_4/fighter_ally_1")]
+interactable = NodePath("Interactable")
 room_limits = NodePath("room_limits")
 
 [node name="room_limits" type="Control" parent="World_2D/room_00" unique_id=1014785272]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -96.0
-offset_top = -448.0
-offset_right = 864.0
-offset_bottom = 224.0
+offset_left = -64.0
+offset_top = -288.0
+offset_right = 288.0
+offset_bottom = 48.0
 
 [node name="Label" type="Label" parent="World_2D/room_00" unique_id=386820662]
 anchors_preset = 7
@@ -942,15 +1185,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -135.99998
-offset_right = 468.0
-offset_bottom = -36.999985
+offset_left = -31.999996
+offset_top = -136.0
+offset_right = 300.0
+offset_bottom = -73.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
-theme_override_font_sizes/font_size = 72
+theme_override_font_sizes/font_size = 45
 text = "Party Members"
+horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="World_2D/room_00" unique_id=1073696420]
 anchors_preset = 7
@@ -958,23 +1202,40 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 303.99997
-offset_top = -424.0
-offset_right = 554.0
-offset_bottom = -325.0
+offset_left = 208.0
+offset_top = -120.0
+offset_right = 365.0
+offset_bottom = -57.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
-theme_override_font_sizes/font_size = 72
+theme_override_font_sizes/font_size = 45
 text = "Market"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="World_2D/room_00" unique_id=726497253]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 119.99999
+offset_top = -287.99997
+offset_right = 272.0
+offset_bottom = -224.99997
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.286, 0.286)
+theme_override_font_sizes/font_size = 45
+text = "Battles"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="World_2D/room_00" unique_id=992122150]
 z_index = -1
-tile_map_data = PackedByteArray("AAD7//z/AAAHAAcAAAD8//z/AAAHAAcAAAD9//z/AAAHAAcAAAD9//3/AAAHAAcAAAD+//3/AAAHAAcAAAD///3/AAAHAAcAAAAAAP3/AAAHAAcAAAABAP3/AAAHAAcAAAACAP3/AAAHAAcAAAD7//3/AAAHAAcAAAD7//7/AAAHAAcAAAD7////AAAHAAcAAAD7/wAAAAAHAAcAAAD7/wEAAAAHAAcAAAD7/wIAAAAHAAcAAAD8//3/AAAHAAcAAAD8//7/AAAHAAcAAAD8////AAAHAAcAAAD8/wAAAAAHAAcAAAD8/wEAAAAHAAcAAAD8/wIAAAAHAAcAAAD9//7/AAAHAAcAAAD9////AAAHAAcAAAD9/wAAAAAHAAcAAAD9/wEAAAAHAAcAAAD9/wIAAAAHAAcAAAD+//z/AAAHAAcAAAD+//7/AAAHAAcAAAD+////AAAHAAcAAAD+/wAAAAAHAAcAAAD+/wEAAAAHAAcAAAD+/wIAAAAHAAcAAAD///z/AAAHAAcAAAD///7/AAAHAAcAAAD/////AAAHAAcAAAD//wAAAAAHAAcAAAD//wEAAAAHAAcAAAD//wIAAAAHAAcAAAAAAPz/AAAHAAcAAAAAAP7/AAAHAAcAAAAAAP//AAAHAAcAAAAAAAAAAAAHAAcAAAAAAAEAAAAHAAcAAAAAAAIAAAAHAAcAAAABAPz/AAAHAAcAAAABAP7/AAAHAAcAAAABAP//AAAHAAcAAAABAAAAAAAHAAcAAAABAAEAAAAHAAcAAAABAAIAAAAHAAcAAAACAPz/AAAHAAcAAAACAP7/AAAHAAcAAAACAP//AAAHAAcAAAACAAAAAAAHAAcAAAACAAEAAAAHAAcAAAACAAIAAAAHAAcAAAADAPz/AAAHAAcAAAADAP3/AAAHAAcAAAADAP7/AAAHAAcAAAADAP//AAAHAAcAAAADAAAAAAAHAAcAAAADAAEAAAAHAAcAAAADAAIAAAAHAAcAAAAEAPz/AAAHAAcAAAAEAP3/AAAHAAcAAAAEAP7/AAAHAAcAAAAEAP//AAAHAAcAAAAEAAAAAAAHAAcAAAAEAAEAAAAHAAcAAAAEAAIAAAAHAAcAAAAFAPz/AAAHAAcAAAAFAP3/AAAHAAcAAAAFAP7/AAAHAAcAAAAFAP//AAAHAAcAAAAFAAAAAAAHAAcAAAAFAAEAAAAHAAcAAAAFAAIAAAAHAAcAAAAGAPz/AAAHAAcAAAAGAP3/AAAHAAcAAAAGAP7/AAAHAAcAAAAGAP//AAAHAAcAAAAGAAAAAAAHAAcAAAAGAAEAAAAHAAcAAAAGAAIAAAAHAAcAAAAHAP7/AAAHAAcAAAAHAP//AAAHAAcAAAAIAP7/AAAHAAcAAAAIAP//AAAHAAcAAAAJAP7/AAAHAAcAAAAJAP//AAAHAAcAAAAKAP7/AAAHAAcAAAAKAP//AAAHAAcAAAALAP7/AAAHAAcAAAALAP//AAAHAAcAAAAMAP7/AAAHAAcAAAAMAP//AAAHAAcAAAANAP7/AAAHAAcAAAANAP//AAAHAAcAAAAOAP7/AAAHAAcAAAAOAP//AAAHAAcAAAAPAP7/AAAHAAcAAAAPAP//AAAHAAcAAAAQAP7/AAAHAAcAAAAQAP//AAAHAAcAAAARAP7/AAAHAAcAAAARAP//AAAHAAcAAAASAP7/AAAHAAcAAAASAP//AAAHAAcAAAATAP7/AAAHAAcAAAATAP//AAAHAAcAAAAUAPL/AAAHAAcAAAAUAPP/AAAHAAcAAAAUAPT/AAAHAAcAAAAUAPX/AAAHAAcAAAAUAPb/AAAHAAcAAAAUAPf/AAAHAAcAAAAUAPj/AAAHAAcAAAAUAPn/AAAHAAcAAAAUAPr/AAAHAAcAAAAUAPv/AAAHAAcAAAAUAPz/AAAHAAcAAAAUAP3/AAAHAAcAAAAUAP7/AAAHAAcAAAAUAP//AAAHAAcAAAAVAPL/AAAHAAcAAAAVAPP/AAAHAAcAAAAVAPT/AAAHAAcAAAAVAPX/AAAHAAcAAAAVAPb/AAAHAAcAAAAVAPf/AAAHAAcAAAAVAPj/AAAHAAcAAAAVAPn/AAAHAAcAAAAVAPr/AAAHAAcAAAAVAPv/AAAHAAcAAAAVAPz/AAAHAAcAAAAVAP3/AAAHAAcAAAAVAP7/AAAHAAcAAAAVAP//AAAHAAcAAAD7//v/AAAHAAcAAAD8//v/AAAHAAcAAAD9//v/AAAHAAcAAAD+//v/AAAHAAcAAAD///v/AAAHAAcAAAAAAPv/AAAHAAcAAAABAPv/AAAHAAcAAAACAPv/AAAHAAcAAAADAPv/AAAHAAcAAAAEAPv/AAAHAAcAAAAFAPv/AAAHAAcAAAAGAPv/AAAHAAcAAAARAOn/AAAHAAcAAAARAOr/AAAHAAcAAAARAOv/AAAHAAcAAAARAOz/AAAHAAcAAAARAO3/AAAHAAcAAAARAO7/AAAHAAcAAAARAO//AAAHAAcAAAARAPD/AAAHAAcAAAARAPH/AAAHAAcAAAASAOn/AAAHAAcAAAASAOr/AAAHAAcAAAASAOv/AAAHAAcAAAASAOz/AAAHAAcAAAASAO3/AAAHAAcAAAASAO7/AAAHAAcAAAASAO//AAAHAAcAAAASAPD/AAAHAAcAAAASAPH/AAAHAAcAAAATAOn/AAAHAAcAAAATAOr/AAAHAAcAAAATAOv/AAAHAAcAAAATAOz/AAAHAAcAAAATAO3/AAAHAAcAAAATAO7/AAAHAAcAAAATAO//AAAHAAcAAAATAPD/AAAHAAcAAAATAPH/AAAHAAcAAAAUAOn/AAAHAAcAAAAUAOr/AAAHAAcAAAAUAOv/AAAHAAcAAAAUAOz/AAAHAAcAAAAUAO3/AAAHAAcAAAAUAO7/AAAHAAcAAAAUAO//AAAHAAcAAAAUAPD/AAAHAAcAAAAUAPH/AAAHAAcAAAAVAOn/AAAHAAcAAAAVAOr/AAAHAAcAAAAVAOv/AAAHAAcAAAAVAOz/AAAHAAcAAAAVAO3/AAAHAAcAAAAVAO7/AAAHAAcAAAAVAO//AAAHAAcAAAAVAPD/AAAHAAcAAAAVAPH/AAAHAAcAAAAWAOn/AAAHAAcAAAAWAOr/AAAHAAcAAAAWAOv/AAAHAAcAAAAWAOz/AAAHAAcAAAAWAO3/AAAHAAcAAAAWAO7/AAAHAAcAAAAWAO//AAAHAAcAAAAWAPD/AAAHAAcAAAAWAPH/AAAHAAcAAAAXAOn/AAAHAAcAAAAXAOr/AAAHAAcAAAAXAOv/AAAHAAcAAAAXAOz/AAAHAAcAAAAXAO3/AAAHAAcAAAAXAO7/AAAHAAcAAAAXAO//AAAHAAcAAAAXAPD/AAAHAAcAAAAXAPH/AAAHAAcAAAAYAOn/AAAHAAcAAAAYAOr/AAAHAAcAAAAYAOv/AAAHAAcAAAAYAOz/AAAHAAcAAAAYAO3/AAAHAAcAAAAYAO7/AAAHAAcAAAAYAO//AAAHAAcAAAAYAPD/AAAHAAcAAAAYAPH/AAAHAAcAAAAZAOz/AAAHAAcAAAAZAO3/AAAHAAcAAAAaAOz/AAAHAAcAAAAaAO3/AAAHAAcAAAAbAOz/AAAHAAcAAAAbAO3/AAAHAAcAAAAcAOz/AAAHAAcAAAAcAO3/AAAHAAcAAAAdAOz/AAAHAAcAAAAdAO3/AAAHAAcAAAAeAOz/AAAHAAcAAAAeAO3/AAAHAAcAAAAfAOz/AAAHAAcAAAAfAO3/AAAHAAcAAAAgAOz/AAAHAAcAAAAgAO3/AAAHAAcAAAAhAOz/AAAHAAcAAAAhAO3/AAAHAAcAAAAiAOz/AAAHAAcAAAAiAO3/AAAHAAcAAAAjAOz/AAAHAAcAAAAjAO3/AAAHAAcAAAAkAOz/AAAHAAcAAAAkAO3/AAAHAAcAAAAlAOz/AAAHAAcAAAAlAO3/AAAHAAcAAAAmAOz/AAAHAAcAAAAmAO3/AAAHAAcAAAAnAOz/AAAHAAcAAAAnAO3/AAAHAAcAAAAoAOz/AAAHAAcAAAAoAO3/AAAHAAcAAAApAOz/AAAHAAcAAAApAO3/AAAHAAcAAAAqAOz/AAAHAAcAAAAqAO3/AAAHAAcAAAArAOj/AAAHAAcAAAArAOn/AAAHAAcAAAArAOr/AAAHAAcAAAArAOv/AAAHAAcAAAArAOz/AAAHAAcAAAArAO3/AAAHAAcAAAArAO7/AAAHAAcAAAArAO//AAAHAAcAAAArAPD/AAAHAAcAAAArAPH/AAAHAAcAAAAsAOj/AAAHAAcAAAAsAOn/AAAHAAcAAAAsAOr/AAAHAAcAAAAsAOv/AAAHAAcAAAAsAOz/AAAHAAcAAAAsAO3/AAAHAAcAAAAsAO7/AAAHAAcAAAAsAO//AAAHAAcAAAAsAPD/AAAHAAcAAAAsAPH/AAAHAAcAAAAtAOj/AAAHAAcAAAAtAOn/AAAHAAcAAAAtAOr/AAAHAAcAAAAtAOv/AAAHAAcAAAAtAOz/AAAHAAcAAAAtAO3/AAAHAAcAAAAtAO7/AAAHAAcAAAAtAO//AAAHAAcAAAAtAPD/AAAHAAcAAAAtAPH/AAAHAAcAAAAuAOj/AAAHAAcAAAAuAOn/AAAHAAcAAAAuAOr/AAAHAAcAAAAuAOv/AAAHAAcAAAAuAOz/AAAHAAcAAAAuAO3/AAAHAAcAAAAuAO7/AAAHAAcAAAAuAO//AAAHAAcAAAAuAPD/AAAHAAcAAAAuAPH/AAAHAAcAAAAvAOj/AAAHAAcAAAAvAOn/AAAHAAcAAAAvAOr/AAAHAAcAAAAvAOv/AAAHAAcAAAAvAOz/AAAHAAcAAAAvAO3/AAAHAAcAAAAvAO7/AAAHAAcAAAAvAO//AAAHAAcAAAAvAPD/AAAHAAcAAAAvAPH/AAAHAAcAAAAwAOj/AAAHAAcAAAAwAOn/AAAHAAcAAAAwAOr/AAAHAAcAAAAwAOv/AAAHAAcAAAAwAOz/AAAHAAcAAAAwAO3/AAAHAAcAAAAwAO7/AAAHAAcAAAAwAO//AAAHAAcAAAAwAPD/AAAHAAcAAAAwAPH/AAAHAAcAAAAxAOj/AAAHAAcAAAAxAOn/AAAHAAcAAAAxAOr/AAAHAAcAAAAxAOv/AAAHAAcAAAAxAOz/AAAHAAcAAAAxAO3/AAAHAAcAAAAxAO7/AAAHAAcAAAAxAO//AAAHAAcAAAAxAPD/AAAHAAcAAAAxAPH/AAAHAAcAAAAyAOj/AAAHAAcAAAAyAOn/AAAHAAcAAAAyAOr/AAAHAAcAAAAyAOv/AAAHAAcAAAAyAOz/AAAHAAcAAAAyAO3/AAAHAAcAAAAyAO7/AAAHAAcAAAAyAO//AAAHAAcAAAAyAPD/AAAHAAcAAAAyAPH/AAAHAAcAAAAzAOj/AAAHAAcAAAAzAOn/AAAHAAcAAAAzAOr/AAAHAAcAAAAzAOv/AAAHAAcAAAAzAOz/AAAHAAcAAAAzAO3/AAAHAAcAAAAzAO7/AAAHAAcAAAAzAO//AAAHAAcAAAAzAPD/AAAHAAcAAAAzAPH/AAAHAAcAAAA0AOj/AAAHAAcAAAA0AOn/AAAHAAcAAAA0AOr/AAAHAAcAAAA0AOv/AAAHAAcAAAA0AOz/AAAHAAcAAAA0AO3/AAAHAAcAAAA0AO7/AAAHAAcAAAA0AO//AAAHAAcAAAA0APD/AAAHAAcAAAA0APH/AAAHAAcAAAAvAPL/AAAHAAcAAAAvAPP/AAAHAAcAAAAvAPT/AAAHAAcAAAAvAPX/AAAHAAcAAAAvAPb/AAAHAAcAAAAvAPf/AAAHAAcAAAAvAPj/AAAHAAcAAAAvAPn/AAAHAAcAAAAvAPr/AAAHAAcAAAAvAPv/AAAHAAcAAAAvAPz/AAAHAAcAAAAvAP3/AAAHAAcAAAAvAP7/AAAHAAcAAAAvAP//AAAHAAcAAAAvAAAAAAAHAAcAAAAwAPL/AAAHAAcAAAAwAPP/AAAHAAcAAAAwAPT/AAAHAAcAAAAwAPX/AAAHAAcAAAAwAPb/AAAHAAcAAAAwAPf/AAAHAAcAAAAwAPj/AAAHAAcAAAAwAPn/AAAHAAcAAAAwAPr/AAAHAAcAAAAwAPv/AAAHAAcAAAAwAPz/AAAHAAcAAAAwAP3/AAAHAAcAAAAwAP7/AAAHAAcAAAAwAP//AAAHAAcAAAAwAAAAAAAHAAcAAAAsAAEAAAAHAAcAAAAsAAIAAAAHAAcAAAAsAAMAAAAHAAcAAAAsAAQAAAAHAAcAAAAsAAUAAAAHAAcAAAAsAAYAAAAHAAcAAAAsAAcAAAAHAAcAAAAsAAgAAAAHAAcAAAAsAAkAAAAHAAcAAAAsAAoAAAAHAAcAAAAtAAEAAAAHAAcAAAAtAAIAAAAHAAcAAAAtAAMAAAAHAAcAAAAtAAQAAAAHAAcAAAAtAAUAAAAHAAcAAAAtAAYAAAAHAAcAAAAtAAcAAAAHAAcAAAAtAAgAAAAHAAcAAAAtAAkAAAAHAAcAAAAtAAoAAAAHAAcAAAAuAAEAAAAHAAcAAAAuAAIAAAAHAAcAAAAuAAMAAAAHAAcAAAAuAAQAAAAHAAcAAAAuAAUAAAAHAAcAAAAuAAYAAAAHAAcAAAAuAAcAAAAHAAcAAAAuAAgAAAAHAAcAAAAuAAkAAAAHAAcAAAAuAAoAAAAHAAcAAAAvAAEAAAAHAAcAAAAvAAIAAAAHAAcAAAAvAAMAAAAHAAcAAAAvAAQAAAAHAAcAAAAvAAUAAAAHAAcAAAAvAAYAAAAHAAcAAAAvAAcAAAAHAAcAAAAvAAgAAAAHAAcAAAAvAAkAAAAHAAcAAAAvAAoAAAAHAAcAAAAwAAEAAAAHAAcAAAAwAAIAAAAHAAcAAAAwAAMAAAAHAAcAAAAwAAQAAAAHAAcAAAAwAAUAAAAHAAcAAAAwAAYAAAAHAAcAAAAwAAcAAAAHAAcAAAAwAAgAAAAHAAcAAAAwAAkAAAAHAAcAAAAwAAoAAAAHAAcAAAAxAAEAAAAHAAcAAAAxAAIAAAAHAAcAAAAxAAMAAAAHAAcAAAAxAAQAAAAHAAcAAAAxAAUAAAAHAAcAAAAxAAYAAAAHAAcAAAAxAAcAAAAHAAcAAAAxAAgAAAAHAAcAAAAxAAkAAAAHAAcAAAAxAAoAAAAHAAcAAAAyAAEAAAAHAAcAAAAyAAIAAAAHAAcAAAAyAAMAAAAHAAcAAAAyAAQAAAAHAAcAAAAyAAUAAAAHAAcAAAAyAAYAAAAHAAcAAAAyAAcAAAAHAAcAAAAyAAgAAAAHAAcAAAAyAAkAAAAHAAcAAAAyAAoAAAAHAAcAAAAzAAEAAAAHAAcAAAAzAAIAAAAHAAcAAAAzAAMAAAAHAAcAAAAzAAQAAAAHAAcAAAAzAAUAAAAHAAcAAAAzAAYAAAAHAAcAAAAzAAcAAAAHAAcAAAAzAAgAAAAHAAcAAAAzAAkAAAAHAAcAAAAzAAoAAAAHAAcAAAArAAEAAAAHAAcAAAArAAIAAAAHAAcAAAArAAMAAAAHAAcAAAArAAQAAAAHAAcAAAArAAUAAAAHAAcAAAArAAYAAAAHAAcAAAArAAcAAAAHAAcAAAArAAgAAAAHAAcAAAArAAkAAAAHAAcAAAArAAoAAAAHAAcAAAArAAsAAAAHAAcAAAArAAwAAAAHAAcAAAAsAAsAAAAHAAcAAAAsAAwAAAAHAAcAAAAtAAsAAAAHAAcAAAAtAAwAAAAHAAcAAAAuAAsAAAAHAAcAAAAuAAwAAAAHAAcAAAAvAAsAAAAHAAcAAAAvAAwAAAAHAAcAAAAwAAsAAAAHAAcAAAAwAAwAAAAHAAcAAAAxAAsAAAAHAAcAAAAxAAwAAAAHAAcAAAAyAAsAAAAHAAcAAAAyAAwAAAAHAAcAAAAzAAsAAAAHAAcAAAAzAAwAAAAHAAcAAAA0AAEAAAAHAAcAAAA0AAIAAAAHAAcAAAA0AAMAAAAHAAcAAAA0AAQAAAAHAAcAAAA0AAUAAAAHAAcAAAA0AAYAAAAHAAcAAAA0AAcAAAAHAAcAAAA0AAgAAAAHAAcAAAA0AAkAAAAHAAcAAAA0AAoAAAAHAAcAAAA0AAsAAAAHAAcAAAA0AAwAAAAHAAcAAAD6/wMAAQAEAAQAAAD7/wMAAQAEAAQAAAD8/wMAAQAEAAQAAAD9/wMAAQAEAAQAAAD+/wMAAQAEAAQAAAD//wMAAQAEAAQAAAAAAAMAAAAHAAcAAAABAAMAAAAHAAcAAAACAAMAAQAEAAQAAAADAAMAAQAEAAQAAAAEAAMAAQAEAAQAAAAFAAMAAQAEAAQAAAAGAAMAAQAEAAQAAAAHAAMAAQAEAAQAAAD6//r/AQAEAAQAAAD6//v/AQAEAAQAAAD6//z/AQAEAAQAAAD6//3/AQAEAAQAAAD6//7/AQAEAAQAAAD6////AQAEAAQAAAD6/wAAAQAEAAQAAAD6/wEAAQAEAAQAAAD6/wIAAQAEAAQAAAD7//r/AQAEAAQAAAD8//r/AQAEAAQAAAD9//r/AQAEAAQAAAD+//r/AQAEAAQAAAD///r/AQAEAAQAAAAAAPr/AQAEAAQAAAABAPr/AQAEAAQAAAACAPr/AQAEAAQAAAADAPr/AQAEAAQAAAAEAPr/AQAEAAQAAAAFAPr/AQAEAAQAAAAGAPr/AQAEAAQAAAAHAPr/AQAEAAQAAAAHAPv/AQAEAAQAAAAHAPz/AQAEAAQAAAAHAP3/AQAEAAQAAAAHAAAAAQAEAAQAAAAHAAEAAQAEAAQAAAAHAAIAAQAEAAQAAAAIAAAAAQAEAAQAAAAJAAAAAQAEAAQAAAAKAAAAAQAEAAQAAAALAAAAAQAEAAQAAAAMAAAAAQAEAAQAAAANAAAAAQAEAAQAAAAOAAAAAQAEAAQAAAAPAAAAAQAEAAQAAAAQAAAAAQAEAAQAAAARAAAAAQAEAAQAAAASAAAAAQAEAAQAAAATAAAAAQAEAAQAAAAUAAAAAQAEAAQAAAAVAAAAAQAEAAQAAAAWAAAAAQAEAAQAAAAWAPL/AQAEAAQAAAAWAPP/AQAEAAQAAAAWAPT/AQAEAAQAAAAWAPX/AQAEAAQAAAAWAPb/AQAEAAQAAAAWAPf/AQAEAAQAAAAWAPj/AQAEAAQAAAAWAPn/AQAEAAQAAAAWAPr/AQAEAAQAAAAWAPv/AQAEAAQAAAAWAPz/AQAEAAQAAAAWAP3/AQAEAAQAAAAWAP7/AQAEAAQAAAAWAP//AQAEAAQAAAAXAPL/AQAEAAQAAAAYAPL/AQAEAAQAAAAZAPL/AQAEAAQAAAAZAO7/AQAEAAQAAAAZAO//AQAEAAQAAAAZAPD/AQAEAAQAAAAZAPH/AQAEAAQAAAAaAO7/AQAEAAQAAAAbAO7/AQAEAAQAAAAcAO7/AQAEAAQAAAAdAO7/AQAEAAQAAAAeAO7/AQAEAAQAAAAfAO7/AQAEAAQAAAAgAO7/AQAEAAQAAAAhAO7/AQAEAAQAAAAiAO7/AQAEAAQAAAAjAO7/AQAEAAQAAAAkAO7/AQAEAAQAAAAlAO7/AQAEAAQAAAAmAO7/AQAEAAQAAAAnAO7/AQAEAAQAAAAoAO7/AQAEAAQAAAApAO7/AQAEAAQAAAAqAO7/AQAEAAQAAAAqAO//AQAEAAQAAAAqAPD/AQAEAAQAAAAqAPH/AQAEAAQAAAAqAPL/AQAEAAQAAAArAPL/AQAEAAQAAAAsAPL/AQAEAAQAAAAtAPL/AQAEAAQAAAAuAPL/AQAEAAQAAAAuAPP/AQAEAAQAAAAuAPT/AQAEAAQAAAAuAPX/AQAEAAQAAAAuAPb/AQAEAAQAAAAuAPf/AQAEAAQAAAAuAPj/AQAEAAQAAAAuAPn/AQAEAAQAAAAuAPr/AQAEAAQAAAAuAPv/AQAEAAQAAAAuAPz/AQAEAAQAAAAuAP3/AQAEAAQAAAAuAP7/AQAEAAQAAAAuAP//AQAEAAQAAAAuAAAAAQAEAAQAAAAqAAAAAQAEAAQAAAArAAAAAQAOAAQAAAAsAAAAAQAPAAQAAAAtAAAAAQAQAAQAAAAqAAEAAQAEAAQAAAAqAAIAAQAEAAQAAAAqAAMAAQAEAAQAAAAqAAQAAQAEAAQAAAAqAAUAAQAEAAQAAAAqAAYAAQAEAAQAAAAqAAcAAQAEAAQAAAAqAAgAAQAEAAQAAAAqAAkAAQAEAAQAAAAqAAoAAAAHAAcAAAAqAAsAAAAHAAcAAAAqAAwAAQAEAAQAAAAqAA0AAQAEAAQAAAArAA0AAQAEAAQAAAAsAA0AAQAEAAQAAAAtAA0AAQAEAAQAAAAuAA0AAQAEAAQAAAAvAA0AAQAEAAQAAAAwAA0AAQAEAAQAAAAxAA0AAQAEAAQAAAAyAA0AAQAEAAQAAAAzAA0AAQAEAAQAAAA0AA0AAQAEAAQAAAA1AA0AAQAEAAQAAAA1AAQAAQAEAAQAAAA1AAUAAQAEAAQAAAA1AAYAAQAEAAQAAAA1AAcAAQAEAAQAAAA1AAgAAQAEAAQAAAA1AAkAAQAEAAQAAAA1AAoAAQAEAAQAAAA1AAsAAQAEAAQAAAA1AAwAAQAEAAQAAAA1AAAAAQAEAAQAAAA1AAEAAQAEAAQAAAA1AAIAAQAEAAQAAAA1AAMAAQAEAAQAAAAxAAAAAQAEAAQAAAAyAAAAAQAOAAQAAAAzAAAAAQAPAAQAAAA0AAAAAQAQAAQAAAAxAPL/AQAEAAQAAAAxAPP/AQAEAAQAAAAxAPT/AQAEAAQAAAAxAPX/AQAEAAQAAAAxAPb/AQAEAAQAAAAxAPf/AQAEAAQAAAAxAPj/AQAEAAQAAAAxAPn/AQAEAAQAAAAxAPr/AQAEAAQAAAAxAPv/AQAEAAQAAAAxAPz/AQAEAAQAAAAxAP3/AQAEAAQAAAAxAP7/AQAEAAQAAAAxAP//AQAEAAQAAAAyAPL/AQAEAAQAAAAzAPL/AQAEAAQAAAA0APL/AQAEAAQAAAA1APL/AQAEAAQAAAA1AOf/AQAEAAQAAAA1AOj/AQAEAAQAAAA1AOn/AQAEAAQAAAA1AOr/AQAEAAQAAAA1AOv/AQAEAAQAAAA1AOz/AQAEAAQAAAA1AO3/AQAEAAQAAAA1AO7/AQAEAAQAAAA1AO//AQAEAAQAAAA1APD/AQAEAAQAAAA1APH/AQAEAAQAAAAqAOf/AQAEAAQAAAArAOf/AQAEAAQAAAAsAOf/AQAOAAkAAAAtAOf/AQAPAAkAAAAuAOf/AQAQAAkAAAAvAOf/AQAEAAQAAAAwAOf/AQAEAAQAAAAxAOf/AQAOAAkAAAAyAOf/AQAPAAkAAAAzAOf/AQAQAAkAAAA0AOf/AQAEAAQAAAAqAOj/AQAEAAQAAAAqAOn/AQAEAAQAAAAqAOr/AQAEAAQAAAAqAOv/AQAEAAQAAAAZAOv/AQAEAAQAAAAaAOv/AQAEAAQAAAAbAOv/AQAEAAQAAAAcAOv/AQAOAA4AAAAdAOv/AQAPAA4AAAAeAOv/AQAQAA4AAAAfAOv/AQAEAAQAAAAgAOv/AQAOAA4AAAAhAOv/AQAPAA4AAAAiAOv/AQAQAA4AAAAjAOv/AQAEAAQAAAAkAOv/AQAEAAQAAAAlAOv/AQAOAA4AAAAmAOv/AQAPAA4AAAAnAOv/AQAQAA4AAAAoAOv/AQAEAAQAAAApAOv/AQAEAAQAAAAZAOj/AQAEAAQAAAAZAOn/AQAEAAQAAAAZAOr/AQAEAAQAAAAQAOj/AQAEAAQAAAARAOj/AQAEAAQAAAASAOj/AQAEAAQAAAATAOj/AQAEAAQAAAAUAOj/AQAEAAQAAAAVAOj/AQAEAAQAAAAWAOj/AQAEAAQAAAAXAOj/AQAEAAQAAAAYAOj/AQAEAAQAAAAQAOn/AQAEAAQAAAAQAOr/AQAEAAQAAAAQAOv/AQAEAAQAAAAQAOz/AQAEAAQAAAAQAO3/AQAEAAQAAAAQAO7/AQAEAAQAAAAQAO//AQAEAAQAAAAQAPD/AQAEAAQAAAAQAPH/AQAEAAQAAAAQAPL/AQAEAAQAAAARAPL/AQAEAAQAAAASAPL/AQAEAAQAAAATAPL/AQAEAAQAAAATAPP/AQAEAAQAAAATAPT/AQAEAAQAAAATAPX/AQAEAAQAAAATAPb/AQAEAAQAAAATAPf/AQAEAAQAAAATAPj/AQAEAAQAAAATAPn/AQAEAAQAAAATAPr/AQAEAAQAAAATAPv/AQAEAAQAAAATAPz/AQAEAAQAAAATAP3/AQAEAAQAAAAIAP3/AQAEAAQAAAAJAP3/AQADAAQAAAAKAP3/AQAEAAQAAAALAP3/AQAFAAQAAAAMAP3/AQAEAAQAAAANAP3/AQAEAAQAAAAOAP3/AQAEAAQAAAAPAP3/AQADAAQAAAAQAP3/AQAEAAQAAAARAP3/AQAFAAQAAAASAP3/AQAEAAQAAAD6//f/AQAEAAQAAAD6//j/AQAEAAQAAAD6//n/AQAEAAQAAAD7//f/AQAEAAQAAAD7//j/AQAEAAQAAAD7//n/AQAEAAQAAAD8//f/AQAEAAQAAAD8//j/AQAEAAQAAAD8//n/AQAEAAQAAAD9//f/AQAEAAQAAAD9//j/AQAEAAQAAAD9//n/AQAEAAQAAAD+//f/AQAEAAQAAAD+//j/AQAEAAQAAAD+//n/AQAEAAQAAAD///f/AQAEAAQAAAD///j/AQAEAAQAAAD///n/AQAEAAQAAAAAAPf/AQAEAAQAAAAAAPj/AQAEAAQAAAAAAPn/AQAEAAQAAAABAPf/AQAEAAQAAAABAPj/AQAEAAQAAAABAPn/AQAEAAQAAAACAPf/AQAEAAQAAAACAPj/AQAEAAQAAAACAPn/AQAEAAQAAAADAPf/AQAEAAQAAAADAPj/AQAEAAQAAAADAPn/AQAEAAQAAAAEAPf/AQAEAAQAAAAEAPj/AQAEAAQAAAAEAPn/AQAEAAQAAAAFAPf/AQAEAAQAAAAFAPj/AQAEAAQAAAAFAPn/AQAEAAQAAAAGAPf/AQAEAAQAAAAGAPj/AQAEAAQAAAAGAPn/AQAEAAQAAAAHAPf/AQAEAAQAAAAHAPj/AQAEAAQAAAAHAPn/AQAEAAQAAAAIAPr/AQAEAAQAAAAIAPv/AQAEAAQAAAAIAPz/AQAEAAQAAAAJAPr/AQADAAEAAAAJAPv/AQADAAIAAAAJAPz/AQADAAMAAAAKAPr/AQAEAAEAAAAKAPv/AQAEAAIAAAAKAPz/AQAEAAMAAAALAPr/AQAFAAEAAAALAPv/AQAFAAIAAAALAPz/AQAFAAMAAAAMAPr/AQAEAAQAAAAMAPv/AQAEAAQAAAAMAPz/AQAEAAQAAAANAPr/AQAEAAQAAAANAPv/AQAEAAQAAAANAPz/AQAEAAQAAAAOAPr/AQAEAAQAAAAOAPv/AQAEAAQAAAAOAPz/AQAEAAQAAAAPAPr/AQADAAEAAAAPAPv/AQADAAIAAAAPAPz/AQADAAMAAAAQAPr/AQAEAAEAAAAQAPv/AQAEAAIAAAAQAPz/AQAEAAMAAAARAPr/AQAFAAEAAAARAPv/AQAFAAIAAAARAPz/AQAFAAMAAAASAPr/AQAEAAQAAAASAPv/AQAEAAQAAAASAPz/AQAEAAQAAAAQAOX/AQAEAAQAAAAQAOb/AQAEAAQAAAAQAOf/AQAEAAQAAAARAOX/AQAEAAQAAAARAOb/AQAEAAQAAAARAOf/AQAEAAQAAAASAOX/AQAEAAQAAAASAOb/AQAEAAQAAAASAOf/AQAEAAQAAAATAOX/AQAEAAQAAAATAOb/AQAEAAQAAAATAOf/AQAEAAQAAAAUAOX/AQAEAAQAAAAUAOb/AQAEAAQAAAAUAOf/AQAEAAQAAAAVAOX/AQAEAAQAAAAVAOb/AQAEAAQAAAAVAOf/AQAEAAQAAAAWAOX/AQAEAAQAAAAWAOb/AQAEAAQAAAAWAOf/AQAEAAQAAAAXAOX/AQAEAAQAAAAXAOb/AQAEAAQAAAAXAOf/AQAEAAQAAAAYAOX/AQAEAAQAAAAYAOb/AQAEAAQAAAAYAOf/AQAEAAQAAAAZAOX/AQAEAAQAAAAZAOb/AQAEAAQAAAAZAOf/AQAEAAQAAAAaAOj/AQAEAAQAAAAaAOn/AQAEAAQAAAAaAOr/AQAEAAQAAAAbAOj/AQAEAAQAAAAbAOn/AQAEAAQAAAAbAOr/AQAEAAQAAAAcAOj/AQAOAAsAAAAcAOn/AQAOAAwAAAAcAOr/AQAOAA0AAAAdAOj/AQAPAAsAAAAdAOn/AQAPAAwAAAAdAOr/AQAPAA0AAAAeAOj/AQAQAAsAAAAeAOn/AQAQAAwAAAAeAOr/AQAQAA0AAAAfAOj/AQAEAAQAAAAfAOn/AQAEAAQAAAAfAOr/AQAEAAQAAAAgAOj/AQAOAAsAAAAgAOn/AQAOAAwAAAAgAOr/AQAOAA0AAAAhAOj/AQAPAAsAAAAhAOn/AQAPAAwAAAAhAOr/AQAPAA0AAAAiAOj/AQAQAAsAAAAiAOn/AQAQAAwAAAAiAOr/AQAQAA0AAAAjAOj/AQAEAAQAAAAjAOn/AQAEAAQAAAAjAOr/AQAEAAQAAAAkAOj/AQAEAAQAAAAkAOn/AQAEAAQAAAAkAOr/AQAEAAQAAAAlAOj/AQAOAAsAAAAlAOn/AQAOAAwAAAAlAOr/AQAOAA0AAAAmAOj/AQAPAAsAAAAmAOn/AQAPAAwAAAAmAOr/AQAPAA0AAAAnAOj/AQAQAAsAAAAnAOn/AQAQAAwAAAAnAOr/AQAQAA0AAAAoAOj/AQAEAAQAAAAoAOn/AQAEAAQAAAAoAOr/AQAEAAQAAAApAOj/AQAEAAQAAAApAOn/AQAEAAQAAAApAOr/AQAEAAQAAAAqAOT/AQAEAAQAAAAqAOX/AQAEAAQAAAAqAOb/AQAEAAQAAAArAOT/AQAEAAQAAAArAOX/AQAEAAQAAAArAOb/AQAEAAQAAAAsAOT/AQAOAAYAAAAsAOX/AQAOAAcAAAAsAOb/AQAOAAgAAAAtAOT/AQAPAAYAAAAtAOX/AQAPAAcAAAAtAOb/AQAPAAgAAAAuAOT/AQAQAAYAAAAuAOX/AQAQAAcAAAAuAOb/AQAQAAgAAAAvAOT/AQAEAAQAAAAvAOX/AQAEAAQAAAAvAOb/AQAEAAQAAAAwAOT/AQAEAAQAAAAwAOX/AQAEAAQAAAAwAOb/AQAEAAQAAAAxAOT/AQAOAAYAAAAxAOX/AQAOAAcAAAAxAOb/AQAOAAgAAAAyAOT/AQAPAAYAAAAyAOX/AQAPAAcAAAAyAOb/AQAPAAgAAAAzAOT/AQAQAAYAAAAzAOX/AQAQAAcAAAAzAOb/AQAQAAgAAAA0AOT/AQAEAAQAAAA0AOX/AQAEAAQAAAA0AOb/AQAEAAQAAAA1AOT/AQAEAAQAAAA1AOX/AQAEAAQAAAA1AOb/AQAEAAQAAAAqAP3/AQAEAAQAAAAqAP7/AQAEAAQAAAAqAP//AQAEAAQAAAArAP3/AQAOAAEAAAArAP7/AQAOAAIAAAArAP//AQAOAAMAAAAsAP3/AQAPAAEAAAAsAP7/AQAPAAIAAAAsAP//AQAPAAMAAAAtAP3/AQAQAAEAAAAtAP7/AQAQAAIAAAAtAP//AQAQAAMAAAAyAP3/AQAOAAEAAAAyAP7/AQAOAAIAAAAyAP//AQAOAAMAAAAzAP3/AQAPAAEAAAAzAP7/AQAPAAIAAAAzAP//AQAPAAMAAAA0AP3/AQAQAAEAAAA0AP7/AQAQAAIAAAA0AP//AQAQAAMAAAA1AP3/AQAEAAQAAAA1AP7/AQAEAAQAAAA1AP//AQAEAAQAAAAAAAoAAAAHAAcAAAAAAAsAAAAHAAcAAAABAAoAAAAHAAcAAAABAAsAAAAHAAcAAAACAAoAAAAHAAcAAAACAAsAAAAHAAcAAAADAAoAAAAHAAcAAAADAAsAAAAHAAcAAAAEAAoAAAAHAAcAAAAEAAsAAAAHAAcAAAAFAAoAAAAHAAcAAAAFAAsAAAAHAAcAAAAGAAoAAAAHAAcAAAAGAAsAAAAHAAcAAAAHAAoAAAAHAAcAAAAHAAsAAAAHAAcAAAAIAAoAAAAHAAcAAAAIAAsAAAAHAAcAAAAJAAoAAAAHAAcAAAAJAAsAAAAHAAcAAAAKAAoAAAAHAAcAAAAKAAsAAAAHAAcAAAALAAoAAAAHAAcAAAALAAsAAAAHAAcAAAAMAAoAAAAHAAcAAAAMAAsAAAAHAAcAAAANAAoAAAAHAAcAAAANAAsAAAAHAAcAAAAOAAoAAAAHAAcAAAAOAAsAAAAHAAcAAAAPAAoAAAAHAAcAAAAPAAsAAAAHAAcAAAAQAAoAAAAHAAcAAAAQAAsAAAAHAAcAAAARAAoAAAAHAAcAAAARAAsAAAAHAAcAAAASAAoAAAAHAAcAAAASAAsAAAAHAAcAAAATAAoAAAAHAAcAAAATAAsAAAAHAAcAAAAUAAoAAAAHAAcAAAAUAAsAAAAHAAcAAAAVAAoAAAAHAAcAAAAVAAsAAAAHAAcAAAAWAAoAAAAHAAcAAAAWAAsAAAAHAAcAAAAXAAoAAAAHAAcAAAAXAAsAAAAHAAcAAAAYAAoAAAAHAAcAAAAYAAsAAAAHAAcAAAAZAAoAAAAHAAcAAAAZAAsAAAAHAAcAAAAaAAoAAAAHAAcAAAAaAAsAAAAHAAcAAAAbAAoAAAAHAAcAAAAbAAsAAAAHAAcAAAAcAAoAAAAHAAcAAAAcAAsAAAAHAAcAAAAdAAoAAAAHAAcAAAAdAAsAAAAHAAcAAAAeAAoAAAAHAAcAAAAeAAsAAAAHAAcAAAAfAAoAAAAHAAcAAAAfAAsAAAAHAAcAAAAgAAoAAAAHAAcAAAAgAAsAAAAHAAcAAAAhAAoAAAAHAAcAAAAhAAsAAAAHAAcAAAAiAAoAAAAHAAcAAAAiAAsAAAAHAAcAAAAjAAoAAAAHAAcAAAAjAAsAAAAHAAcAAAAkAAoAAAAHAAcAAAAkAAsAAAAHAAcAAAAlAAoAAAAHAAcAAAAlAAsAAAAHAAcAAAAmAAoAAAAHAAcAAAAmAAsAAAAHAAcAAAAnAAoAAAAHAAcAAAAnAAsAAAAHAAcAAAAoAAoAAAAHAAcAAAAoAAsAAAAHAAcAAAApAAoAAAAHAAcAAAApAAsAAAAHAAcAAAAAAAQAAAAHAAcAAAAAAAUAAAAHAAcAAAAAAAYAAAAHAAcAAAAAAAcAAAAHAAcAAAAAAAgAAAAHAAcAAAAAAAkAAAAHAAcAAAABAAQAAAAHAAcAAAABAAUAAAAHAAcAAAABAAYAAAAHAAcAAAABAAcAAAAHAAcAAAABAAgAAAAHAAcAAAABAAkAAAAHAAcAAAACAAQAAQAEAAQAAAACAAUAAQAEAAQAAAACAAYAAQAEAAQAAAACAAcAAQAEAAQAAAACAAgAAQAEAAQAAAACAAkAAQAEAAQAAAD//wQAAQAEAAQAAAD//wUAAQAEAAQAAAD//wYAAQAEAAQAAAD//wcAAQAEAAQAAAD//wgAAQAEAAQAAAD//wkAAQAEAAQAAAD//woAAQAEAAQAAAD//wsAAQAEAAQAAAD//wwAAQAEAAQAAAAAAAwAAQAEAAQAAAABAAwAAQAEAAQAAAACAAwAAQAEAAQAAAADAAwAAQAEAAQAAAAEAAwAAQAEAAQAAAAFAAwAAQAEAAQAAAAGAAwAAQAEAAQAAAAHAAwAAQAEAAQAAAAIAAwAAQAEAAQAAAAJAAwAAQAEAAQAAAAKAAwAAQAEAAQAAAALAAwAAQAEAAQAAAAMAAwAAQAEAAQAAAANAAwAAQAEAAQAAAAOAAwAAQAEAAQAAAAPAAwAAQAEAAQAAAAQAAwAAQAEAAQAAAARAAwAAQAEAAQAAAASAAwAAQAEAAQAAAATAAwAAQAEAAQAAAAUAAwAAQAEAAQAAAAVAAwAAQAEAAQAAAAWAAwAAQAEAAQAAAAXAAwAAQAEAAQAAAAYAAwAAQAEAAQAAAAZAAwAAQAEAAQAAAAaAAwAAQAEAAQAAAAbAAwAAQAEAAQAAAAcAAwAAQAEAAQAAAAdAAwAAQAEAAQAAAAeAAwAAQAEAAQAAAAfAAwAAQAEAAQAAAAgAAwAAQAEAAQAAAAhAAwAAQAEAAQAAAAiAAwAAQAEAAQAAAAjAAwAAQAEAAQAAAAkAAwAAQAEAAQAAAAlAAwAAQAEAAQAAAAmAAwAAQAEAAQAAAAnAAwAAQAEAAQAAAAoAAwAAQAEAAQAAAApAAwAAQAEAAQAAAADAAYAAQAEAAQAAAADAAcAAQAEAAQAAAADAAgAAQAEAAQAAAADAAkAAQAEAAQAAAAEAAYAAQAEAAQAAAAEAAcAAQAEAAQAAAAEAAgAAQAEAAQAAAAEAAkAAQAEAAQAAAAFAAYAAQAEAAQAAAAFAAcAAQAEAAQAAAAFAAgAAQAEAAQAAAAFAAkAAQAEAAQAAAAGAAYAAQAEAAQAAAAGAAcAAQAEAAQAAAAGAAgAAQAEAAQAAAAGAAkAAQAEAAQAAAAHAAYAAQAEAAQAAAAHAAcAAQAEAAQAAAAHAAgAAQAEAAQAAAAHAAkAAQAEAAQAAAAIAAYAAQAEAAQAAAAIAAcAAQAEAAQAAAAIAAgAAQAEAAQAAAAIAAkAAQAEAAQAAAAJAAYAAQAEAAQAAAAJAAcAAQAEAAQAAAAJAAgAAQAEAAQAAAAJAAkAAQAEAAQAAAAKAAYAAQAEAAQAAAAKAAcAAQAEAAQAAAAKAAgAAQAEAAQAAAAKAAkAAQAEAAQAAAALAAYAAQAEAAQAAAALAAcAAQAEAAQAAAALAAgAAQAEAAQAAAALAAkAAQAEAAQAAAAMAAYAAQAEAAQAAAAMAAcAAQAEAAQAAAAMAAgAAQAEAAQAAAAMAAkAAQAEAAQAAAANAAYAAQAEAAQAAAANAAcAAQAEAAQAAAANAAgAAQAEAAQAAAANAAkAAQAEAAQAAAAOAAYAAQAEAAQAAAAOAAcAAQAEAAQAAAAOAAgAAQAEAAQAAAAOAAkAAQAEAAQAAAAPAAYAAQAEAAQAAAAPAAcAAQAEAAQAAAAPAAgAAQAEAAQAAAAPAAkAAQAEAAQAAAAQAAYAAQAEAAQAAAAQAAcAAQAEAAQAAAAQAAgAAQAEAAQAAAAQAAkAAQAEAAQAAAARAAYAAQAEAAQAAAARAAcAAQAEAAQAAAARAAgAAQAEAAQAAAARAAkAAQAEAAQAAAASAAYAAQAEAAQAAAASAAcAAQAEAAQAAAASAAgAAQAEAAQAAAASAAkAAQAEAAQAAAATAAYAAQAEAAQAAAATAAcAAQAEAAQAAAATAAgAAQAEAAQAAAATAAkAAQAEAAQAAAAUAAYAAQAEAAQAAAAUAAcAAQAEAAQAAAAUAAgAAQAEAAQAAAAUAAkAAQAEAAQAAAAVAAYAAQAEAAQAAAAVAAcAAQAEAAQAAAAVAAgAAQAEAAQAAAAVAAkAAQAEAAQAAAAWAAYAAQAEAAQAAAAWAAcAAQAEAAQAAAAWAAgAAQAEAAQAAAAWAAkAAQAEAAQAAAAXAAYAAQAEAAQAAAAXAAcAAQAEAAQAAAAXAAgAAQAEAAQAAAAXAAkAAQAEAAQAAAAYAAYAAQAEAAQAAAAYAAcAAQAEAAQAAAAYAAgAAQAEAAQAAAAYAAkAAQAEAAQAAAAZAAYAAQAEAAQAAAAZAAcAAQAEAAQAAAAZAAgAAQAEAAQAAAAZAAkAAQAEAAQAAAAaAAYAAQAEAAQAAAAaAAcAAQAEAAQAAAAaAAgAAQAEAAQAAAAaAAkAAQAEAAQAAAAbAAYAAQAEAAQAAAAbAAcAAQAEAAQAAAAbAAgAAQAEAAQAAAAbAAkAAQAEAAQAAAAcAAYAAQAEAAQAAAAcAAcAAQAEAAQAAAAcAAgAAQAEAAQAAAAcAAkAAQAEAAQAAAAdAAYAAQAEAAQAAAAdAAcAAQAEAAQAAAAdAAgAAQAEAAQAAAAdAAkAAQAEAAQAAAAeAAYAAQAEAAQAAAAeAAcAAQAEAAQAAAAeAAgAAQAEAAQAAAAeAAkAAQAEAAQAAAAfAAYAAQAEAAQAAAAfAAcAAQAEAAQAAAAfAAgAAQAEAAQAAAAfAAkAAQAEAAQAAAAgAAYAAQAEAAQAAAAgAAcAAQAEAAQAAAAgAAgAAQAEAAQAAAAgAAkAAQAEAAQAAAAhAAYAAQAEAAQAAAAhAAcAAQAEAAQAAAAhAAgAAQAEAAQAAAAhAAkAAQAEAAQAAAAiAAYAAQAEAAQAAAAiAAcAAQAEAAQAAAAiAAgAAQAEAAQAAAAiAAkAAQAEAAQAAAAjAAYAAQAEAAQAAAAjAAcAAQAEAAQAAAAjAAgAAQAEAAQAAAAjAAkAAQAEAAQAAAAkAAYAAQAEAAQAAAAkAAcAAQAEAAQAAAAkAAgAAQAEAAQAAAAkAAkAAQAEAAQAAAAlAAYAAQAEAAQAAAAlAAcAAQAEAAQAAAAlAAgAAQAEAAQAAAAlAAkAAQAEAAQAAAAmAAYAAQAEAAQAAAAmAAcAAQAEAAQAAAAmAAgAAQAEAAQAAAAmAAkAAQAEAAQAAAAnAAYAAQAEAAQAAAAnAAcAAQAEAAQAAAAnAAgAAQAEAAQAAAAnAAkAAQAEAAQAAAAoAAYAAQAEAAQAAAAoAAcAAQAEAAQAAAAoAAgAAQAEAAQAAAAoAAkAAQAEAAQAAAApAAYAAQAEAAQAAAApAAcAAQAEAAQAAAApAAgAAQAEAAQAAAApAAkAAQAEAAQAAAA=")
+tile_map_data = PackedByteArray("AAD9//v/AAAHAAcAAAD9//z/AAAHAAcAAAD9//3/AAAHAAcAAAD9//7/AAAHAAcAAAD9////AAAHAAcAAAD9/wAAAAAHAAcAAAD+//v/AAAHAAcAAAD+//z/AAAHAAcAAAD+//3/AAAHAAcAAAD+//7/AAAHAAcAAAD+////AAAHAAcAAAD+/wAAAAAHAAcAAAD///v/AAAHAAcAAAD///z/AAAHAAcAAAD///3/AAAHAAcAAAD///7/AAAHAAcAAAD/////AAAHAAcAAAD//wAAAAAHAAcAAAAAAPv/AAAHAAcAAAAAAPz/AAAHAAcAAAAAAP3/AAAHAAcAAAAAAP7/AAAHAAcAAAAAAP//AAAHAAcAAAAAAAAAAAAHAAcAAAABAPv/AAAHAAcAAAABAPz/AAAHAAcAAAABAP3/AAAHAAcAAAABAP7/AAAHAAcAAAABAP//AAAHAAcAAAABAAAAAAAHAAcAAAACAPv/AAAHAAcAAAACAPz/AAAHAAcAAAACAP3/AAAHAAcAAAACAP7/AAAHAAcAAAACAP//AAAHAAcAAAACAAAAAAAHAAcAAAADAPv/AAAHAAcAAAADAPz/AAAHAAcAAAADAP3/AAAHAAcAAAADAP7/AAAHAAcAAAADAP//AAAHAAcAAAADAAAAAAAHAAcAAAAEAPv/AAAHAAcAAAAEAPz/AAAHAAcAAAAEAP3/AAAHAAcAAAAEAP7/AAAHAAcAAAAEAP//AAAHAAcAAAAEAAAAAAAHAAcAAAD9/wEAAAAHAAcAAAD+/wEAAAAHAAcAAAD//wEAAAAHAAcAAAAAAAEAAAAHAAcAAAABAAEAAAAHAAcAAAACAAEAAAAHAAcAAAADAAEAAAAHAAcAAAAEAAEAAAAHAAcAAAAFAP7/AAAHAAcAAAAFAP//AAAHAAcAAAAGAP7/AAAHAAcAAAAGAP//AAAHAAcAAAAHAP7/AAAHAAcAAAAHAP//AAAHAAcAAAAIAP7/AAAHAAcAAAAIAP//AAAHAAcAAAAJAP7/AAAHAAcAAAAJAP//AAAHAAcAAAAKAP7/AAAHAAcAAAAKAP//AAAHAAcAAAALAP7/AAAHAAcAAAALAP//AAAHAAcAAAAMAPz/AAAHAAcAAAAMAP3/AAAHAAcAAAAMAP7/AAAHAAcAAAAMAP//AAAHAAcAAAAMAAAAAAAHAAcAAAANAPz/AAAHAAcAAAANAP3/AAAHAAcAAAANAP7/AAAHAAcAAAANAP//AAAHAAcAAAANAAAAAAAHAAcAAAAOAPz/AAAHAAcAAAAOAP3/AAAHAAcAAAAOAP7/AAAHAAcAAAAOAP//AAAHAAcAAAAOAAAAAAAHAAcAAAAPAPz/AAAHAAcAAAAPAP3/AAAHAAcAAAAPAP7/AAAHAAcAAAAPAP//AAAHAAcAAAAPAAAAAAAHAAcAAAAQAPz/AAAHAAcAAAAQAP3/AAAHAAcAAAAQAP7/AAAHAAcAAAAQAP//AAAHAAcAAAAQAAAAAAAHAAcAAAAIAPf/AAAHAAcAAAAIAPj/AAAHAAcAAAAIAPn/AAAHAAcAAAAIAPr/AAAHAAcAAAAIAPv/AAAHAAcAAAAIAPz/AAAHAAcAAAAIAP3/AAAHAAcAAAAJAPf/AAAHAAcAAAAJAPj/AAAHAAcAAAAJAPn/AAAHAAcAAAAJAPr/AAAHAAcAAAAJAPv/AAAHAAcAAAAJAPz/AAAHAAcAAAAJAP3/AAAHAAcAAAAGAPT/AAAHAAcAAAAGAPX/AAAHAAcAAAAGAPb/AAAHAAcAAAAGAPf/AAAHAAcAAAAHAPT/AAAHAAcAAAAHAPX/AAAHAAcAAAAHAPb/AAAHAAcAAAAHAPf/AAAHAAcAAAAIAPT/AAAHAAcAAAAIAPX/AAAHAAcAAAAIAPb/AAAHAAcAAAAJAPT/AAAHAAcAAAAJAPX/AAAHAAcAAAAJAPb/AAAHAAcAAAAKAPT/AAAHAAcAAAAKAPX/AAAHAAcAAAAKAPb/AAAHAAcAAAAKAPf/AAAHAAcAAAAGAPL/AAAHAAcAAAAGAPP/AAAHAAcAAAAHAPL/AAAHAAcAAAAHAPP/AAAHAAcAAAAIAPL/AAAHAAcAAAAIAPP/AAAHAAcAAAAJAPL/AAAHAAcAAAAJAPP/AAAHAAcAAAAKAPL/AAAHAAcAAAAKAPP/AAAHAAcAAAALAPL/AAAHAAcAAAALAPP/AAAHAAcAAAALAPT/AAAHAAcAAAALAPX/AAAHAAcAAAALAPb/AAAHAAcAAAALAPf/AAAHAAcAAAD8/wIAAQAEAAQAAAD9/wIAAQAEAAQAAAD+/wIAAQAEAAQAAAD//wIAAQAEAAQAAAAAAAIAAQAEAAQAAAABAAIAAQAEAAQAAAACAAIAAQAEAAQAAAADAAIAAQAEAAQAAAAEAAIAAQAEAAQAAAAFAAIAAQAEAAQAAAAFAAAAAQAEAAQAAAAFAAEAAQAEAAQAAAAGAAAAAQAEAAQAAAAHAAAAAQAEAAQAAAAIAAAAAQAEAAQAAAAJAAAAAQAEAAQAAAAKAAAAAQAEAAQAAAALAAAAAQAEAAQAAAALAAEAAQAEAAQAAAAMAAEAAQAEAAQAAAANAAEAAQAEAAQAAAAOAAEAAQAEAAQAAAAPAAEAAQAEAAQAAAAQAAEAAQAEAAQAAAARAAEAAQAEAAQAAAARAPv/AQAEAAQAAAARAPz/AQAEAAQAAAARAP3/AQAEAAQAAAARAP7/AQAEAAQAAAARAP//AQAEAAQAAAARAAAAAQAEAAQAAAALAPv/AQAEAAQAAAAMAPv/AQAEAAQAAAANAPv/AQAEAAQAAAAOAPv/AQAEAAQAAAAPAPv/AQAEAAQAAAAQAPv/AQAEAAQAAAALAPz/AQAEAAQAAAALAP3/AQAEAAQAAAAKAPj/AQAEAAQAAAAKAPn/AQAEAAQAAAAKAPr/AQAEAAQAAAAKAPv/AQAEAAQAAAAKAPz/AQAEAAQAAAAKAP3/AQAEAAQAAAALAPj/AQAEAAQAAAAMAPj/AQAEAAQAAAALAPn/AQAEAAQAAAALAPr/AQAEAAQAAAAMAPn/AQAEAAQAAAAMAPr/AQAEAAQAAAANAPj/AQAEAAQAAAANAPn/AQAEAAQAAAANAPr/AQAEAAQAAAAOAPj/AQAEAAQAAAAOAPn/AQAEAAQAAAAOAPr/AQAEAAQAAAAPAPj/AQAEAAQAAAAPAPn/AQAEAAQAAAAPAPr/AQAEAAQAAAAQAPj/AQAEAAQAAAAQAPn/AQAEAAQAAAAQAPr/AQAEAAQAAAARAPj/AQAEAAQAAAARAPn/AQAEAAQAAAARAPr/AQAEAAQAAAAMAPH/AQAEAAQAAAAMAPL/AQAEAAQAAAAMAPP/AQAEAAQAAAAMAPT/AQAEAAQAAAAMAPX/AQAEAAQAAAAMAPb/AQAEAAQAAAAMAPf/AQAEAAQAAAAFAPH/AQAEAAQAAAAGAPH/AQAEAAQAAAAHAPH/AQAEAAQAAAAIAPH/AQAEAAQAAAAJAPH/AQAEAAQAAAAKAPH/AQAEAAQAAAALAPH/AQAEAAQAAAAFAPL/AQAEAAQAAAAFAPP/AQAEAAQAAAAFAPT/AQAEAAQAAAAFAPX/AQAEAAQAAAAFAPb/AQAEAAQAAAAFAPf/AQAEAAQAAAAFAPj/AQAEAAQAAAAGAPj/AQAEAAQAAAAHAPj/AQAEAAQAAAAHAPn/AQAEAAQAAAAHAPr/AQAEAAQAAAAHAPv/AQAEAAQAAAAHAPz/AQAEAAQAAAAHAP3/AQAEAAQAAAAFAP3/AQAEAAQAAAAGAP3/AQAEAAQAAAAFAPn/AQAEAAQAAAAFAPr/AQAEAAQAAAAFAPv/AQAEAAQAAAAFAPz/AQAEAAQAAAAGAPn/AQAEAAQAAAAGAPr/AQAEAAQAAAAGAPv/AQAEAAQAAAAGAPz/AQAEAAQAAAD8//f/AQAEAAQAAAD8//j/AQAEAAQAAAD8//n/AQAEAAQAAAD8//r/AQAEAAQAAAD9//f/AQAEAAQAAAD9//j/AQAEAAQAAAD9//n/AQAEAAQAAAD9//r/AQAEAAQAAAD+//f/AQAEAAQAAAD+//j/AQAEAAQAAAD+//n/AQAEAAQAAAD+//r/AQAEAAQAAAD///f/AQAEAAQAAAD///j/AQAEAAQAAAD///n/AQAEAAQAAAD///r/AQAEAAQAAAAAAPf/AQAEAAQAAAAAAPj/AQAEAAQAAAAAAPn/AQAEAAQAAAAAAPr/AQAEAAQAAAABAPf/AQAEAAQAAAABAPj/AQAEAAQAAAABAPn/AQAEAAQAAAABAPr/AQAEAAQAAAACAPf/AQAEAAQAAAACAPj/AQAEAAQAAAACAPn/AQAEAAQAAAACAPr/AQAEAAQAAAADAPf/AQAEAAQAAAADAPj/AQAEAAQAAAADAPn/AQAEAAQAAAADAPr/AQAEAAQAAAAEAPf/AQAEAAQAAAAEAPj/AQAEAAQAAAAEAPn/AQAEAAQAAAAEAPr/AQAEAAQAAAD8//v/AQAEAAQAAAD8//z/AQAEAAQAAAD8//3/AQAEAAQAAAD8//7/AQAEAAQAAAD8////AQAEAAQAAAD8/wAAAQAEAAQAAAD8/wEAAQAEAAQAAAAFAO7/AQAEAAQAAAAFAO//AQAEAAQAAAAFAPD/AQAEAAQAAAAGAO7/AQAEAAQAAAAGAO//AQAEAAQAAAAGAPD/AQAEAAQAAAAHAO7/AQAEAAQAAAAHAO//AQAEAAQAAAAHAPD/AQAEAAQAAAAIAO7/AQAEAAQAAAAIAO//AQAEAAQAAAAIAPD/AQAEAAQAAAAJAO7/AQAEAAQAAAAJAO//AQAEAAQAAAAJAPD/AQAEAAQAAAAKAO7/AQAEAAQAAAAKAO//AQAEAAQAAAAKAPD/AQAEAAQAAAALAO7/AQAEAAQAAAALAO//AQAEAAQAAAALAPD/AQAEAAQAAAAMAO7/AQAEAAQAAAAMAO//AQAEAAQAAAAMAPD/AQAEAAQAAAA=")
 tile_set = SubResource("TileSet_3em1u")
 
 [node name="ally_0" type="Area2D" parent="World_2D/room_00" unique_id=1227329894 node_paths=PackedStringArray("collider")]
-position = Vector2(-32, -64)
+position = Vector2(-24, -64)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -998,7 +1259,7 @@ shape = SubResource("CircleShape2D_lcbh6")
 [node name="character_ally_1" parent="World_2D/room_00/ally_1" unique_id=957001427 instance=ExtResource("24_5rrxs")]
 
 [node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
-position = Vector2(64, -64)
+position = Vector2(56, -64)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1010,7 +1271,7 @@ shape = SubResource("CircleShape2D_3em1u")
 [node name="character_ally_2" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
 
 [node name="npc_3" type="Area2D" parent="World_2D/room_00" unique_id=1896668672 node_paths=PackedStringArray("collider")]
-position = Vector2(336, -360)
+position = Vector2(232, -48)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1019,10 +1280,25 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3" unique_id=839204334]
 shape = SubResource("CircleShape2D_5t6d6")
 
-[node name="character_enemy_0" parent="World_2D/room_00/npc_3" unique_id=1440330506 instance=ExtResource("28_0ol08")]
+[node name="character_enemy_1" type="Node2D" parent="World_2D/room_00/npc_3" unique_id=256094377]
+
+[node name="pivot" type="Node2D" parent="World_2D/room_00/npc_3/character_enemy_1" unique_id=1124174354]
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/npc_3/character_enemy_1/pivot" unique_id=1158731447]
+texture = ExtResource("34_r4og7")
+offset = Vector2(-1, -26)
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/room_00/npc_3/character_enemy_1" unique_id=653059733]
+libraries/ = SubResource("AnimationLibrary_n53vq")
+
+[node name="AnimationTree" type="AnimationTree" parent="World_2D/room_00/npc_3/character_enemy_1" unique_id=512058777]
+tree_root = SubResource("AnimationNodeBlendTree_3em1u")
+anim_player = NodePath("../AnimationPlayer")
+parameters/base_TimeScale/scale = 1.0
 
 [node name="npc_4" type="Area2D" parent="World_2D/room_00" unique_id=303175137 node_paths=PackedStringArray("collider")]
-position = Vector2(712, -368)
+position = Vector2(144, -216)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1032,6 +1308,37 @@ collider = NodePath("CollisionShape2D")
 shape = SubResource("CircleShape2D_5t6d6")
 
 [node name="fighter_enemy_0" parent="World_2D/room_00/npc_4" unique_id=1370430890 instance=ExtResource("28_jvut7")]
+
+[node name="fighter_ally_0" parent="World_2D/room_00/npc_4" unique_id=561626387 instance=ExtResource("35_n53vq")]
+visible = false
+
+[node name="fighter_enemy_1" parent="World_2D/room_00/npc_4" unique_id=1637077777 instance=ExtResource("28_jvut7")]
+visible = false
+
+[node name="fighter_ally_1" parent="World_2D/room_00/npc_4" unique_id=2112397877 instance=ExtResource("35_n53vq")]
+visible = false
+
+[node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
+position = Vector2(-32, 16)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/Interactable" unique_id=916547599]
+shape = SubResource("CircleShape2D_qeicn")
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/Interactable" unique_id=1155672549]
+texture = ExtResource("32_xkpdv")
+offset = Vector2(0, -8)
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/room_00/Interactable" unique_id=1750575943]
+libraries/ = SubResource("AnimationLibrary_p24l3")
+
+[node name="AnimationTree" type="AnimationTree" parent="World_2D/room_00/Interactable" unique_id=2090549667]
+tree_root = SubResource("AnimationNodeAnimation_3em1u")
+anim_player = NodePath("../AnimationPlayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1994462941 node_paths=PackedStringArray("game_scene")]
 process_mode = 3
@@ -1084,7 +1391,6 @@ value = 75.0
 show_percentage = false
 
 [node name="dialogue_menu" type="MarginContainer" parent="CanvasLayer" unique_id=226866622]
-visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1094,9 +1400,9 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 theme = ExtResource("16_0t8i2")
-theme_override_constants/margin_left = 150
+theme_override_constants/margin_left = 120
 theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 150
+theme_override_constants/margin_right = 120
 theme_override_constants/margin_bottom = 30
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/dialogue_menu" unique_id=489445369]
@@ -1158,7 +1464,7 @@ theme_override_constants/separation = 0
 
 [node name="dialogue_menu_name" type="RichTextLabel" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=488168465]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
 text = "[Name of the Speaker]"
 fit_content = true
@@ -1166,9 +1472,12 @@ fit_content = true
 [node name="dialogue_menu_value" type="RichTextLabel" parent="CanvasLayer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=717406984]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla."
+text = "Bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla. "
+scroll_following = true
+scroll_following_visible_characters = true
+visible_characters_behavior = 1
 
 [node name="dialogue_menu_audio" type="AudioStreamPlayer" parent="CanvasLayer/dialogue_menu" unique_id=1671670082]
 stream = ExtResource("30_okou3")
@@ -1184,7 +1493,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3em1u")
 
 [node name="tp_bar" type="Control" parent="CanvasLayer" unique_id=1379307174]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 60.0
@@ -1244,7 +1552,6 @@ text = "PT"
 horizontal_alignment = 1
 
 [node name="pause_menu" type="MarginContainer" parent="CanvasLayer" unique_id=1277621130]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1292,6 +1599,7 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 
 [node name="pause_menu_button_title" type="Label" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=18731726]
+visible = false
 layout_mode = 2
 theme = ExtResource("34_206if")
 text = "Pause Menu"
@@ -1386,6 +1694,7 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 
 [node name="pause_menu_fighter_button_title" type="Label" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer" unique_id=788259039]
+visible = false
 layout_mode = 2
 theme = ExtResource("34_206if")
 text = "Party Members"
@@ -1426,30 +1735,163 @@ size_flags_vertical = 3
 [node name="pause_menu_fighter_button_mouse_blocker" type="Control" parent="CanvasLayer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2" unique_id=1806914593]
 layout_mode = 2
 
-[node name="battle_menu" type="Control" parent="CanvasLayer" unique_id=531457308]
-visible = false
+[node name="battle_ui" type="Control" parent="CanvasLayer" unique_id=1173258026]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -132.0
-offset_right = -320.0
-offset_bottom = -132.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/battle_ui" unique_id=757258544]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer" unique_id=1524465526]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer" unique_id=1542730571]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=1285861014]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=923507398]
+layout_mode = 2
+theme = ExtResource("32_gijw1")
+value = 75.0
+show_percentage = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer" unique_id=1173121532]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=2062079394]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1133354797]
+layout_mode = 2
+theme = ExtResource("32_gijw1")
+value = 75.0
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer" unique_id=456791761]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer" unique_id=69963269]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2036022142]
+layout_mode = 2
+theme = ExtResource("32_gijw1")
+value = 75.0
+show_percentage = false
+
+[node name="Control" type="Control" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer" unique_id=1219298138]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer" unique_id=1406864204]
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer" unique_id=319882731]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer" unique_id=1846549624]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2" unique_id=1057238319]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer3" unique_id=125194122]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer3" unique_id=625152902]
+layout_mode = 2
+theme = ExtResource("32_gijw1")
+value = 75.0
+show_percentage = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2" unique_id=1070012024]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer2" unique_id=670466714]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer2" unique_id=1508678719]
+layout_mode = 2
+theme = ExtResource("32_gijw1")
+value = 75.0
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2" unique_id=562101251]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=1719431018]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "300 / 300 HP"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=1693161577]
+layout_mode = 2
+theme = ExtResource("32_gijw1")
+value = 75.0
+show_percentage = false
+
+[node name="Control" type="Control" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2" unique_id=126437898]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2" unique_id=489088709]
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="CanvasLayer/battle_ui/MarginContainer/VBoxContainer2" unique_id=531930970]
+layout_mode = 2
+
+[node name="battle_menu" type="MarginContainer" parent="CanvasLayer" unique_id=259250482]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("16_0t8i2")
+theme_override_constants/margin_bottom = 60
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_menu" unique_id=1227264853]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -126.0
-offset_right = 375.0
-grow_vertical = 0
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/separation = 0
 alignment = 2
 
@@ -1473,17 +1915,23 @@ theme_override_constants/margin_bottom = 15
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=2125259765]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1945310048]
-visible = false
-layout_mode = 2
-text = "Battle Menu"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=911702133]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1318792161]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=714878963]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Battle Menu"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=72343048]
+visible = false
+layout_mode = 2
 
 [node name="Button" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1905214686]
 layout_mode = 2
@@ -1493,17 +1941,18 @@ text = "  Habilities  "
 layout_mode = 2
 text = "  Inventory  "
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=596553659]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Button" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=136522799]
+[node name="Button3" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=136522799]
 layout_mode = 2
 text = "  Statistics  "
 
-[node name="Button2" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1741977542]
+[node name="Button4" type="Button" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1741977542]
 layout_mode = 2
 text = "  Status Effects  "
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=596553659]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="skill_menu" type="MarginContainer" parent="CanvasLayer" unique_id=2011766193]
 visible = false
@@ -4049,10 +4498,10 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer" unique_id=1645359912]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=959206419]
 layout_mode = 2
@@ -4069,6 +4518,9 @@ theme_override_font_sizes/font_size = 24
 text = "Super Poción"
 horizontal_alignment = 1
 
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=280757159]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=29898743]
 layout_mode = 2
 
@@ -4076,7 +4528,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
-text = "* Bolsa:"
+text = "* Cantidad:"
 
 [node name="Button" type="Button" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1984281022]
 layout_mode = 2
@@ -4086,7 +4538,7 @@ text = "  [99]  "
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1055875240]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=76574746]
+[node name="Label3" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=76574746]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
@@ -4098,3 +4550,49 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "$500  "
 horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2027515077]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1007568277]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "* Bolsa:"
+
+[node name="Label2" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label4" unique_id=1924733268]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 34.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "[5/5]"
+horizontal_alignment = 2
+
+[node name="Label5" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1680385058]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "* Almacén:"
+
+[node name="Label2" type="Label" parent="CanvasLayer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label5" unique_id=139287801]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 34.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "[99]"
+horizontal_alignment = 2
+
+[node name="black_screen_override" type="Panel" parent="CanvasLayer" unique_id=1874082317]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5t6d6")
