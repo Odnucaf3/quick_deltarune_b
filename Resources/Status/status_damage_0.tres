@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="Status_Resource" format=3 uid="uid://c526dyvk4potd"]
 
+[ext_resource type="Texture2D" uid="uid://cbbev3fha2j4p" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_6.png" id="1_5cnnj"]
 [ext_resource type="Script" uid="uid://bx2u75d4qixuu" path="res://Scripts/Resources/status_resource.gd" id="1_kgrun"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_5cnnj"]
 
 [resource]
 script = ExtResource("1_kgrun")
+icon = ExtResource("1_5cnnj")
 max_turns = 3
 hp_recovery = -10
 metadata/_custom_type_script = "uid://bx2u75d4qixuu"

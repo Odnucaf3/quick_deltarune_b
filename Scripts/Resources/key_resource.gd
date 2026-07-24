@@ -1,6 +1,7 @@
 extends Resource
 class_name Key_Resource
 #-------------------------------------------------------------------------------
+@export var icon: Texture2D
 @export var price: int
 var max_stored: int = 99
 #-------------------------------------------------------------------------------

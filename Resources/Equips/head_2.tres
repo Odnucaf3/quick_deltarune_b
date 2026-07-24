@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://dm0biwixci8ld"]
 
+[ext_resource type="Texture2D" uid="uid://b0d0bvq3y8tji" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_131.png" id="1_ael6q"]
 [ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="1_icmr2"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_ael6q"]
 
 [resource]
 script = ExtResource("1_icmr2")
+icon = ExtResource("1_ael6q")
 myEQUIP_TYPE = 1
 myFIGHTER_CLASS = 3
 price = 33

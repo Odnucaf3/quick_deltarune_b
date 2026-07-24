@@ -4,6 +4,7 @@ class_name Equip_Resource
 enum EQUIP_TYPE{WEAPON, HEAD, BODY, RING}
 #-------------------------------------------------------------------------------
 @export_category("Equip Stats")
+@export var icon: Texture2D
 @export var myEQUIP_TYPE: EQUIP_TYPE
 @export var myFIGHTER_CLASS: Fighter_Resource.FIGHTER_CLASS = Fighter_Resource.FIGHTER_CLASS.EVERYONE
 @export var level_required: int

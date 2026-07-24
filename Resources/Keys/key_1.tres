@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="Key_Resource" format=3 uid="uid://blm178xewop8y"]
 
+[ext_resource type="Texture2D" uid="uid://b816kdwjyshvw" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_196.png" id="1_6ottl"]
 [ext_resource type="Script" uid="uid://y4krdtuqas4a" path="res://Scripts/Resources/key_resource.gd" id="1_lx0pp"]
 
 [resource]
 script = ExtResource("1_lx0pp")
+icon = ExtResource("1_6ottl")
 price = 100
 metadata/_custom_type_script = "uid://y4krdtuqas4a"

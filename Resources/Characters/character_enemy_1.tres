@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Character_Resource" format=3 uid="uid://13mkeix0571g"]
 
-[ext_resource type="Texture2D" uid="uid://cwkhurvct01gv" path="res://Assets/Sprites/enemy1_idle1.png" id="1_7nbq7"]
+[ext_resource type="Texture2D" uid="uid://crf4y4biav4f8" path="res://Assets/rpg_maker_mv/img/faces/Actor1_4.png" id="1_7nbq7"]
 [ext_resource type="Script" uid="uid://bhx63qkff2khj" path="res://Scripts/Resources/character_resource.gd" id="2_n4qlm"]
 [ext_resource type="AudioStream" uid="uid://5eskf2fbrcpl" path="res://Assets/susie-dialogue.mp3" id="3_7nbq7"]
 

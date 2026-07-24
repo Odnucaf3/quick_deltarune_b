@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://1ittax2epliw"]
 
+[ext_resource type="Texture2D" uid="uid://dpkykahnn77fx" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_125.png" id="1_0hwnx"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_fspwd"]
 
 [resource]
 script = ExtResource("1_fspwd")
+icon = ExtResource("1_0hwnx")
 max_hold = 5
 tp_cost = 2
 price = 12

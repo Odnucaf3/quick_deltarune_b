@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter_ally_1.tres" id="7_c3bqr"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_urbvg"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_ih5rp"]
+[ext_resource type="Resource" uid="uid://cp3wtney3ld27" path="res://Resources/Status/status_heal_0.tres" id="10_m5fk7"]
 [ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_ally_1.tscn" id="10_nrq7x"]
 
 [sub_resource type="Resource" id="Resource_5dha6"]
@@ -44,10 +45,16 @@ script = ExtResource("2_fnmow")
 myEQUIP_TYPE = 3
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
+[sub_resource type="Resource" id="Resource_2i5i2"]
+script = ExtResource("9_ih5rp")
+status_resource = ExtResource("10_m5fk7")
+metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
+
 [sub_resource type="Resource" id="Resource_25p7l"]
 script = ExtResource("8_urbvg")
 fighter_resource = ExtResource("7_c3bqr")
 equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_5dha6"), SubResource("Resource_lb5xn"), SubResource("Resource_8pkgd"), SubResource("Resource_ph88x"), SubResource("Resource_kpcsh"), SubResource("Resource_kombn")])
+status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [node name="fighter_ally_1" type="Node2D" unique_id=1861804174 node_paths=PackedStringArray("character_node")]

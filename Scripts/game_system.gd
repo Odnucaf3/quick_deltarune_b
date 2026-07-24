@@ -8,6 +8,7 @@ enum BATTLE_STATE{STILL_FIGHTING, YOU_WIN, YOU_LOSE, YOU_ESCAPE, YOU_RETRY}
 #-------------------------------------------------------------------------------
 var key_dictionary: Dictionary[String, int]
 #-------------------------------------------------------------------------------
+@export var canvas_layer: CanvasLayer
 @export var world_2d: Node2D
 @export var battle_box: Control
 @export var battle_ui: Control
@@ -355,6 +356,7 @@ func _enter_tree() -> void:
 #-------------------------------------------------------------------------------
 func _ready() -> void:
 	Pause_Off()
+	canvas_layer.show()
 	#-------------------------------------------------------------------------------
 	black_screen_override.show()
 	battle_box.hide()
@@ -756,8 +758,8 @@ func Pause_Menu_Set():
 	var _skill_submit: Callable = func(): Pause_Menu_Skill_Button_Submit()
 	var _item_submit: Callable = func(): Pause_Menu_Item_Button_Submit()
 	var _equip_submit: Callable = func(): Pause_Menu_Equip_Button_Submit()
-	var _statistics_submit: Callable = func(): Pause_Menu_Statistics_Button_Submit()
 	var _status_submit: Callable = func(): Pause_Menu_Status_Button_Submit()
+	var _statistics_submit: Callable = func(): Pause_Menu_Statistics_Button_Submit()
 	var _options_submit: Callable = func(): PauseMenu_OptionButton_Submit()
 	var _quit_submit: Callable = func(): PauseMenu_QuitButton_Submit()
 	#-------------------------------------------------------------------------------
@@ -766,8 +768,8 @@ func Pause_Menu_Set():
 	singleton.Set_Button(pause_menu_button_skill, _selected, _skill_submit, _cancel)
 	singleton.Set_Button(pause_menu_button_item, _selected, _item_submit, _cancel)
 	singleton.Set_Button(pause_menu_button_equip, _selected, _equip_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_statistics, _selected, _statistics_submit, _cancel)
 	singleton.Set_Button(pause_menu_button_status, _selected, _status_submit, _cancel)
+	singleton.Set_Button(pause_menu_button_statistics, _selected, _statistics_submit, _cancel)
 	singleton.Set_Button(pause_menu_button_options, _selected, _options_submit, _cancel)
 	singleton.Set_Button(pause_menu_button_quit, _selected, _quit_submit, _cancel)
 	#-------------------------------------------------------------------------------
@@ -965,10 +967,11 @@ func Create_Skill_Button(_skill_serializable:Action_Serializable):
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
 	var _name: String = tr("name_"+singleton.get_resource_filename(_skill_serializable.action_resource))
-	_button.text = "  "+_name+"  "
+	_button.text = _name+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _skill_serializable.action_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: Label = Label.new()
 	_label2.add_theme_font_size_override("font_size", 16)
@@ -1762,13 +1765,14 @@ func Pause_Item_Menu_Main_Button_Cancel():
 	item_menu.hide()
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_item)
 #-------------------------------------------------------------------------------
-func Create_ConsumableItem_Button(_action_serializable: Action_Serializable, _hold:int, _cooldown:int) -> Button:
+func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold:int, _cooldown:int) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_action_serializable.action_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _item_serializable.action_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: RichTextLabel = RichTextLabel.new()
 	_label2.bbcode_enabled = true
@@ -1778,17 +1782,17 @@ func Create_ConsumableItem_Button(_action_serializable: Action_Serializable, _ho
 	_label2.mouse_filter = Control.MOUSE_FILTER_PASS
 	_label2.text = ""
 	#-------------------------------------------------------------------------------
-	if(_cooldown <= 0 or _action_serializable.action_resource.max_cooldown <= 0):
+	if(_cooldown <= 0 or _item_serializable.action_resource.max_cooldown <= 0):
 		#-------------------------------------------------------------------------------
-		if(_action_serializable.action_resource.tp_cost > 0):
-			_label2.text += "[font_size=16]"+Get_TP_Cost_Text(_action_serializable.action_resource.tp_cost)+"  "+"[/font_size]"
+		if(_item_serializable.action_resource.tp_cost > 0):
+			_label2.text += "[font_size=16]"+Get_TP_Cost_Text(_item_serializable.action_resource.tp_cost)+"  "+"[/font_size]"
 		#-------------------------------------------------------------------------------
-		var _max_hold: int = _action_serializable.action_resource.max_hold
+		var _max_hold: int = _item_serializable.action_resource.max_hold
 		#-------------------------------------------------------------------------------
 		if(_max_hold > 0):
 			var _s: String = "[font_size=16]"+"[lb]"+str(_hold)+"/"+str(_max_hold)+"[rb]"+"  "+"[/font_size]"
 			#-------------------------------------------------------------------------------
-			if(_hold < _action_serializable.hold):
+			if(_hold < _item_serializable.hold):
 				_label2.text += "[color="+hex_color_yellow+"]"+_s+"[/color]"
 			#-------------------------------------------------------------------------------
 			else:
@@ -1799,7 +1803,7 @@ func Create_ConsumableItem_Button(_action_serializable: Action_Serializable, _ho
 	else:
 		var _s: String = Get_CD_Text(_cooldown)+"  "
 		#-------------------------------------------------------------------------------
-		if(_cooldown > _action_serializable.cooldown):
+		if(_cooldown > _item_serializable.cooldown):
 			_label2.text = "[color="+hex_color_yellow+"]"+_s+"[/color]"
 		#-------------------------------------------------------------------------------
 		else:
@@ -1813,10 +1817,11 @@ func Create_ConsumableItem_Button(_action_serializable: Action_Serializable, _ho
 func Create_EquipItem_Button(_equip_serializable: Equip_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _equip_serializable.equip_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: Label = Label.new()
 	_label2.add_theme_font_size_override("font_size", 16)
@@ -1831,10 +1836,11 @@ func Create_EquipItem_Button(_equip_serializable: Equip_Serializable) -> Button:
 func Create_KeyItem_Button(_key_serializable: Key_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _key_serializable.key_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: Label = Label.new()
 	_label2.add_theme_font_size_override("font_size", 16)
@@ -2070,10 +2076,11 @@ func Create_EquipSlot_Button(_equip_serializable: Equip_Serializable) -> Button:
 	else:
 		_button = Button.new()
 		#-------------------------------------------------------------------------------
-		_button.text = "  "+tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
+		_button.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
 		_button.add_theme_font_size_override("font_size", button_array_font_size)
 		_button.custom_minimum_size.y = button_array_minimum_size_y
 		_button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_button.icon = _equip_serializable.equip_resource.icon
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return _button
@@ -2317,10 +2324,11 @@ func Pause_Status_Menu_Set(_fighter_index:int):
 func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_status_serializable.status_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_status_serializable.status_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _status_serializable.status_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: Label = Label.new()
 	_label2.add_theme_font_size_override("font_size", 16)
@@ -3974,10 +3982,11 @@ func Change_KeyItem_Hold_Label(_key_serializable: Key_Serializable, _button:Butt
 func Create_ConsumableItem_InMarket_Button(_item_serializable: Action_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _item_serializable.action_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: RichTextLabel = RichTextLabel.new()
 	_label2.bbcode_enabled = true
@@ -3995,10 +4004,11 @@ func Create_ConsumableItem_InMarket_Button(_item_serializable: Action_Serializab
 func Create_EquipItem_InMarket_Button(_equip_serializable: Equip_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _equip_serializable.equip_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: Label = Label.new()
 	_label2.add_theme_font_size_override("font_size", 16)
@@ -4015,10 +4025,11 @@ func Create_EquipItem_InMarket_Button(_equip_serializable: Equip_Serializable) -
 func Create_KeyItem_InMarket_Button(_key_serializable: Key_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = "  "+tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))+"  "
+	_button.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _key_serializable.key_resource.icon
 	#-------------------------------------------------------------------------------
 	var _label2: Label = Label.new()
 	_label2.add_theme_font_size_override("font_size", 16)
@@ -4256,10 +4267,11 @@ func Enter_Battle():
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_Position_1():
 	var _camera_center: Vector2 = camera.global_position
-	battle_background.global_position = _camera_center - camera_size*0.5
+	battle_background.size = Vector2(width, height)/camera.zoom + Vector2(2,2)
+	battle_background.global_position = _camera_center - battle_background.size*0.5
 	#-------------------------------------------------------------------------------
-	var _x1: float = 0.1
-	var _x2: float = 0.35
+	var _x1: float = 0.17
+	var _x2: float = 0.42
 	var _y1: float = -0.15
 	var _y2: float = 0.25
 	#-------------------------------------------------------------------------------
@@ -4276,6 +4288,7 @@ func Set_All_Fighters_Position_1():
 		battle_ui.add_child(_ally_ui)
 		_ally_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
+		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		ally_node_array[_i].z_index = 2
 		ally_node_array[_i].show()
 	#-------------------------------------------------------------------------------
@@ -4292,6 +4305,7 @@ func Set_All_Fighters_Position_1():
 		battle_ui.add_child(_enemy_ui)
 		_enemy_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
+		Animation_StateMachine(enemy_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		enemy_node_array[_i].z_index = 2
 		enemy_node_array[_i].show()
 	#-------------------------------------------------------------------------------
@@ -4300,8 +4314,8 @@ func Set_All_Fighters_Position_2():
 	var _camera_center: Vector2 = camera.global_position
 	battle_background.global_position = _camera_center - camera_size*0.5
 	#-------------------------------------------------------------------------------
-	var _x1: float = 0.3
-	var _x2: float = 0.3
+	var _x1: float = 0.35
+	var _x2: float = 0.35
 	var _y1: float = -0.28
 	var _y2: float = 0.63
 	#-------------------------------------------------------------------------------
@@ -4318,6 +4332,7 @@ func Set_All_Fighters_Position_2():
 		battle_ui.add_child(_ally_ui)
 		_ally_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
+		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		ally_node_array[_i].z_index = 2
 		ally_node_array[_i].show()
 	#-------------------------------------------------------------------------------
@@ -4334,6 +4349,7 @@ func Set_All_Fighters_Position_2():
 		battle_ui.add_child(_enemy_ui)
 		_enemy_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
+		Animation_StateMachine(enemy_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		enemy_node_array[_i].z_index = 2
 		enemy_node_array[_i].show()
 	#-------------------------------------------------------------------------------

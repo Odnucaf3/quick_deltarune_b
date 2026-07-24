@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://c82bhq2um2yfn"]
 
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_liqc5"]
+[ext_resource type="Texture2D" uid="uid://cduwj3pr5g2hb" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_179.png" id="1_qc23c"]
 
 [resource]
 script = ExtResource("1_liqc5")
+icon = ExtResource("1_qc23c")
 max_hold = 2
 tp_cost = 99
 max_cooldown = 2

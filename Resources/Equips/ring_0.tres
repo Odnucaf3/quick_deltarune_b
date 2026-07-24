@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://eqq4ohxxujty"]
 
 [ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="1_2cdqm"]
+[ext_resource type="Texture2D" uid="uid://knpqt6ed360d" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_146.png" id="1_vibjj"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_vibjj"]
 
 [resource]
 script = ExtResource("1_2cdqm")
+icon = ExtResource("1_vibjj")
 myEQUIP_TYPE = 3
 price = 55
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

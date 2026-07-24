@@ -2,9 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_k1vqb"]
 [ext_resource type="Script" uid="uid://bnx2er4h8h2kj" path="res://Scripts/title_scene.gd" id="1_lrmdu"]
-[ext_resource type="Texture2D" uid="uid://yy565t01ec72" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/background/skyline-a.png" id="2_ywsiu"]
-[ext_resource type="Texture2D" uid="uid://kks30ip1l7ww" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/background/buildings-bg.png" id="3_vmviq"]
-[ext_resource type="Texture2D" uid="uid://brtov6l66gycm" path="res://Assets/ansimuz/warped_city_files/ENVIRONMENT/background/near-buildings-bg.png" id="4_f2pgg"]
+[ext_resource type="Texture2D" uid="uid://dldjkna4o87fw" path="res://Assets/rpg_maker_mv/img/titles1/Castle.png" id="2_1m4le"]
 
 [node name="Title_Scene" type="Node" unique_id=2113985453 node_paths=PackedStringArray("title_menu", "title_menu_label", "title_menu_button_start", "title_menu_button_options", "title_menu_button_credits", "title_menu_button_quit", "credits_menu", "credits_menu_root", "credits_menu_richtext", "credits_menu_button_0")]
 script = ExtResource("1_lrmdu")
@@ -25,38 +23,9 @@ credits_menu_button_0 = NodePath("CanvasLayer2/credits_menu/VBoxContainer/HBoxCo
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -88.0
-offset_bottom = -88.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_ywsiu")
-
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer" unique_id=825039404]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -124.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(2.935, 2.935)
-pivot_offset = Vector2(576, 124)
-texture = ExtResource("3_vmviq")
-stretch_mode = 1
-
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer" unique_id=1384139496]
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -209.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(1.875, 1.875)
-pivot_offset = Vector2(576, 209)
-texture = ExtResource("4_f2pgg")
-stretch_mode = 1
+texture = ExtResource("2_1m4le")
 
 [node name="title_menu" type="MarginContainer" parent="CanvasLayer" unique_id=2139866153]
 anchors_preset = 15
@@ -183,19 +152,7 @@ theme_override_constants/margin_right = 15
 [node name="credits_menu_richtext" type="RichTextLabel" parent="CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer/credits_menu_root/MarginContainer" unique_id=453127189]
 layout_mode = 2
 bbcode_enabled = true
-text = "* \"Sewer Pack Files\" (de Ansimuz).
-([url]https://ansimuz.itch.io/sewers-action-pack[/url])
-
-* \"Starfighter Files\" (de Ansimuz).
-([url]https://ansimuz.itch.io/star-fighter[/url])
-
-* \"Warped City Files\" (de Ansimuz).
-([url]https://ansimuz.itch.io/warped-city[/url])
-
-* \"Pattern Pack 2\" (de Kenney-Assets).
-([url]https://kenney-assets.itch.io/pattern-pack-2[/url])
-
-* Recursos de RPG Maker MV (de Gotcha Gotcha Games, KADOKAWA y Yoji Ojima).
+text = "* Recursos de RPG Maker MV (de Gotcha Gotcha Games, KADOKAWA y Yoji Ojima).
 ([url]https://rpgmakerofficial.com/en/support/rule/[/url])
 
 *Programación y Diseño (a cargo de Facundo Flores).

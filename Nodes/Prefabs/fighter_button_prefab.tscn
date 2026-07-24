@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://1nomtsf23yj7"]
 
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_auc1d"]
-[ext_resource type="Texture2D" uid="uid://c04up2aujmyel" path="res://Assets/Sprites/player3_idle1.png" id="1_erbc2"]
 [ext_resource type="Script" uid="uid://cxx5pwlrb74iv" path="res://Scripts/Prefabs/fighter_button.gd" id="2_fofx7"]
+[ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="3_my0jw"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="3_xjfi7"]
 
 [node name="fighter_button_prefab" type="Button" unique_id=363646927 node_paths=PackedStringArray("face", "name_label", "title_label", "level_label", "class_label", "hp_label", "status_label", "hp_bar")]
@@ -38,7 +38,7 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1024554581]
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("1_erbc2")
+texture = ExtResource("3_my0jw")
 expand_mode = 3
 
 [node name="Control" type="Control" parent="MarginContainer/HBoxContainer" unique_id=242790922]

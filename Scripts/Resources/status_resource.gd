@@ -2,6 +2,7 @@ extends Resource
 class_name Status_Resource
 #-------------------------------------------------------------------------------
 @export_category("Status Stats")
+@export var icon: Texture2D
 @export var is_infinite: bool = false
 @export var max_turns: int = 1
 #-------------------------------------------------------------------------------

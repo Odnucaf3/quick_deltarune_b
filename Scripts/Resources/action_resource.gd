@@ -7,6 +7,7 @@ enum EFFECT{DAMAGE, HEAL}
 enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USER, ALLY_DOWN_1, ALLY_DOWN_ALL}
 #-------------------------------------------------------------------------------
 @export_category("Action Stats")
+@export var icon: Texture2D
 @export var max_hold: int
 var max_stored: int = 99
 @export_range(0, 100) var tp_cost: int
