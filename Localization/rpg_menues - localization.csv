@@ -74,18 +74,22 @@ elemental_rate,Tasas Elementales,Elemental Rates
 status_effect_resistances,Resistencias a Estados Alterados,Status Effect Resistances
 fighter_type_text,Clase,Class
 fighter_type_EVERYONE,-,-
-fighter_type_MAGICIAN,Hechicero,Magician
-fighter_type_PRIEST,Sacerdote,Priest
+fighter_type_HEROE,Heroe,Hero
 fighter_type_WARRIOR,Guerrero,Warrior
-name_character_ally_0,Vanesa,Vanessa
-title_character_ally_0,La Hacker Más Copada,The Coolest Hacker of Them All
-description_character_ally_0,¡Nadie puede hackear como Yo!,Nobody can hack like Me!
-name_character_ally_1,Daniel,Danny
-title_character_ally_1,El Loco Sacerdote del Culto Cibernético,The Mad Priest of the Cyber Cult
-description_character_ally_1,¡Atestiguame!,Witness Me!
-name_character_ally_2,Julieta,Juliet
-title_character_ally_2,La Chica Policia Estoica,The Stoic Police Girl
-description_character_ally_2,"¡Alto ahí, escoria criminal!",Stop right there criminal scum!
+fighter_type_MAGICIAN,Mago,Mage
+fighter_type_PRIEST,Sacerdote,Priest
+name_character_ally_0,Harold,Harold
+title_character_ally_0,,
+description_character_ally_0,,
+name_character_ally_1,Therese,Therese
+title_character_ally_1,,
+description_character_ally_1,,
+name_character_ally_2,Marsha,Marsha
+title_character_ally_2,,
+description_character_ally_2,,
+name_character_ally_3,Lucius,Lucius
+title_character_ally_3,,
+description_character_ally_3,,
 name_item_damage_0,Cóctel molotov,Molotov Cocktail
 description_item_damage_0,"Explota en llamas al ser arrojada contra un objeto. Es una de las herramientas de caza más antiguas disponibles en el taller.
 Desde la tragedia que asoló Old Yharnam, el fuego se ha convertido en un elemento fundamental en la caza de bestias y se cree que purifica.
@@ -181,21 +185,21 @@ name_weapon_2,Maza de Sacerdote Básico,Basic Preist Mace
 description_weapon_2,-,-
 name_weapon_3,Espada de Guerrero Básico,Basic Warrior Sword
 description_weapon_3,-,-
-name_head_0,Lentes de Hacker,Hacker Glasses
+name_head_0,Casco de Harold,Harold's Helmet
 description_head_0,-,-
-name_head_1,Sombrero de Mago Básico,Basic Magician Hat
+name_head_1,Casco de Therese,Therese's Helmet
 description_head_1,-,-
-name_head_2,Rosario de Sacerdote Básico,Basic Priest Rosary
+name_head_2,Sombrero de Marsha,Marsha's Hat
 description_head_2,-,-
-name_head_3,Casco de Guerrero Básico,Basic Warrior Helmet
+name_head_3,Sombero de Lucius,Lucius's Hat
 description_head_3,-,-
-name_body_0,Chaqueta de Hacker,Hacker Jacket
+name_body_0,Armadura de Harold,Hacker Jacket
 description_body_0,-,-
-name_body_1,Túnica de Mago Básico,Basic Wizard Robe
+name_body_1,Armadura de Therese,Basic Wizard Robe
 description_body_1,-,-
-name_body_2,Túnica de Sacerdote Básico,Basic Priest Robe
+name_body_2,Túnica de Marsha,Marsha's Robes
 description_body_2,-,-
-name_body_3,Armadura de Guerrero Básico,Basic Warrior Armor
+name_body_3,Túnica de Lucius,Lucius's 's Robes
 description_body_3,-,-
 name_ring_0,Chip de Hacker,Hacker Chip
 description_ring_0,-,-

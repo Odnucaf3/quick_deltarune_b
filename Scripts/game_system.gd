@@ -8,7 +8,8 @@ enum BATTLE_STATE{STILL_FIGHTING, YOU_WIN, YOU_LOSE, YOU_ESCAPE, YOU_RETRY}
 #-------------------------------------------------------------------------------
 var key_dictionary: Dictionary[String, int]
 #-------------------------------------------------------------------------------
-@export var canvas_layer: CanvasLayer
+@export var background_canvas_layer: CanvasLayer
+@export var main_canvas_layer: CanvasLayer
 @export var world_2d: Node2D
 @export var battle_box: Control
 @export var battle_ui: Control
@@ -356,7 +357,8 @@ func _enter_tree() -> void:
 #-------------------------------------------------------------------------------
 func _ready() -> void:
 	Pause_Off()
-	canvas_layer.show()
+	main_canvas_layer.show()
+	background_canvas_layer.show()
 	#-------------------------------------------------------------------------------
 	black_screen_override.show()
 	battle_box.hide()
@@ -710,7 +712,7 @@ func PauseMenu_Open():
 	#-------------------------------------------------------------------------------
 	for _i in ally_node_array.size():
 		var _party_button: Fighter_Button = Create_Fighter_Button(ally_node_array[_i])
-		_party_button.custom_minimum_size.y = 170.0
+		_party_button.custom_minimum_size.y = 126
 		pause_menu_fighter_button_content.add_child(_party_button)
 		ally_button_array.append(_party_button)
 		_button_array.append(_party_button as Button)

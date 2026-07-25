@@ -105,7 +105,7 @@ text = "300 / 300 HP"
 horizontal_alignment = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1580204792]
-custom_minimum_size = Vector2(0, 24)
+custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 theme = ExtResource("3_xjfi7")
 step = 1.0

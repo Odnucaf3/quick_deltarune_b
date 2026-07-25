@@ -13,40 +13,44 @@
 [ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="10_seov8"]
 [ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="11_n53vq"]
 [ext_resource type="Texture2D" uid="uid://ssbbdf2f4b61" path="res://Assets/rpg_maker_mv/img/battlebacks1/Grassland.png" id="11_r4og7"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_ally_0.tres" id="12_hf3yd"]
-[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter_ally_1.tres" id="12_pclkw"]
+[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter1_1.tres" id="12_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://dgojjdoocby4g" path="res://Assets/rpg_maker_mv/img/battlebacks2/Grassland.png" id="12_xm4vn"]
-[ext_resource type="Resource" uid="uid://b20slmyq6aoho" path="res://Resources/Characters/character_enemy_0.tres" id="14_5rrxs"]
+[ext_resource type="Resource" uid="uid://b20slmyq6aoho" path="res://Resources/Characters/actor1_6.tres" id="14_5rrxs"]
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="16_0t8i2"]
 [ext_resource type="Script" uid="uid://dosow2j1xm5y3" path="res://Scripts/Resources/key_serializable.gd" id="16_ql07v"]
 [ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_0.tres" id="17_hf3yd"]
-[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_ally_2.tres" id="17_r4og7"]
 [ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
-[ext_resource type="Resource" uid="uid://13mkeix0571g" path="res://Resources/Characters/character_enemy_1.tres" id="21_r4og7"]
+[ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter1_8.tres" id="19_8m6hh"]
+[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter2_7.tres" id="21_ngqpa"]
 [ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="22_0ol08"]
-[ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter_ally_1.tscn" id="22_5rrxs"]
-[ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter_ally_2.tscn" id="23_jvut7"]
-[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_ally_1.tscn" id="24_5rrxs"]
-[ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_ally_2.tscn" id="26_jvut7"]
-[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_ally_0.tscn" id="27_0ol08"]
+[ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter3_8.tscn" id="22_5rrxs"]
+[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter3_8.tres" id="22_shqvj"]
+[ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter2_7.tscn" id="23_jvut7"]
+[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/actor3_8.tscn" id="24_5rrxs"]
+[ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/actor2_7.tscn" id="26_jvut7"]
+[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Resource" uid="uid://blm178xewop8y" path="res://Resources/Keys/key_1.tres" id="28_0t8i2"]
-[ext_resource type="PackedScene" uid="uid://4evqnt3jxeef" path="res://Nodes/Prefabs/Fighters/fighter_enemy_0.tscn" id="28_jvut7"]
+[ext_resource type="PackedScene" uid="uid://4evqnt3jxeef" path="res://Nodes/Prefabs/Fighters/fighter1_6.tscn" id="28_jvut7"]
 [ext_resource type="Texture2D" uid="uid://dat3yglb4a0lr" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_A2.png" id="30_n53vq"]
 [ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="30_okou3"]
 [ext_resource type="Texture2D" uid="uid://bd8wsbia6rebq" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_B.png" id="30_p24l3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
+[ext_resource type="PackedScene" uid="uid://rj8wk0p7m1vh" path="res://Nodes/Prefabs/Fighters/fighter1_8.tscn" id="32_acn20"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="32_gijw1"]
+[ext_resource type="Texture2D" uid="uid://cnyjkhhss7xp4" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_A5.png" id="33_ngqpa"]
 [ext_resource type="Theme" uid="uid://drphpbb8kep0x" path="res://Themes/title_label_theme.tres" id="34_206if"]
 [ext_resource type="Theme" uid="uid://cof2v378gb86t" path="res://Themes/tp_bar_theme.tres" id="35_4yjru"]
-[ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_ally_0.tscn" id="35_n53vq"]
+[ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter1_1.tscn" id="35_n53vq"]
+[ext_resource type="PackedScene" uid="uid://dwe23u11yf586" path="res://Nodes/Prefabs/Characters/actor1_6.tscn" id="36_0t8i2"]
 [ext_resource type="Theme" uid="uid://dkaas12c836ew" path="res://Themes/tab_theme.tres" id="36_5668i"]
+[ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/actor1_8.tscn" id="36_altm3"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
+[ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
 [ext_resource type="Texture2D" uid="uid://dnp7htyab2ryr" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_209.png" id="44_0t8i2"]
 [ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="44_r4og7"]
 [ext_resource type="Texture2D" uid="uid://dcl7iyt5kjpwt" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_138.png" id="45_y1dyr"]
 [ext_resource type="Texture2D" uid="uid://b0ahrc6537fvk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_190.png" id="46_f8ljg"]
-[ext_resource type="Texture2D" uid="uid://c45owka0ssp2p" path="res://Assets/rpg_maker_mv/dlc/DarkFantasyCharacterPack/img/characters/3_Actor1.png" id="46_seov8"]
 [ext_resource type="Texture2D" uid="uid://cceadn16e18rp" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_242.png" id="47_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
@@ -102,9 +106,15 @@ script/source = "extends Room_Script
 @export var ally_2_fighter_resouce: Fighter_Resource
 @export var ally_2_fighter_prefab: PackedScene
 #-------------------------------------------------------------------------------
+@export_category(\"Ally 3\")
+@export var ally_3: Interactable_Script
+@export var ally_3_character: Character_Node
+@export var ally_3_fighter_resouce: Fighter_Resource
+@export var ally_3_fighter_prefab: PackedScene
+#-------------------------------------------------------------------------------
 @export_category(\"NPC 3\")
 @export var npc_3: Interactable_Script
-@export var npc_3_character_resource: Character_Resource
+@export var npc_3_character: Character_Node
 @export var npc_3_item_consumable_array: Array[Action_Serializable]
 @export var npc_3_item_equip_array: Array[Equip_Serializable]
 @export var npc_3_item_key_array: Array[Key_Serializable]
@@ -121,6 +131,7 @@ func Set_Room():
 	Set_NPC_1(ally_0, ally_0_character, ally_0_fighter_resouce, ally_0_fighter_prefab)
 	Set_NPC_1(ally_1, ally_1_character, ally_1_fighter_resouce, ally_1_fighter_prefab)
 	Set_NPC_1(ally_2, ally_2_character, ally_2_fighter_resouce, ally_2_fighter_prefab)
+	Set_NPC_1(ally_3, ally_3_character, ally_3_fighter_resouce, ally_3_fighter_prefab)
 	npc_3.interactable_by_action = func(): NPC_3_Talk()
 	npc_4.interactable_by_action = func(): NPC_4_Talk()
 	interactable.interactable_by_action = func(): Interactable_Action()
@@ -203,7 +214,7 @@ func NPC_3_Talk():
 	_game_system.Stop_Moving()
 	_game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_with_Face_0(npc_3_character_resource, \"* Hola Che. Vamos a pelear!\")
+	await _game_system.Dialogue_with_Face_0(npc_3_character.character_resource, \"* Hola Che. Vamos a pelear!\")
 	_game_system.Open_Dialogue_Options([\"Comprar\", \"Hablar\", \"Irse\"])
 	await _game_system.next_signal
 	#-------------------------------------------------------------------------------
@@ -212,24 +223,24 @@ func NPC_3_Talk():
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
 			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Comprar.\")
-			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, te muestro lo que tengo.\")
+			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, te muestro lo que tengo.\")
 			_game_system.Dialogue_Close_0()
 			await _game_system.Open_Market(npc_3.name, npc_3_item_consumable_array, npc_3_item_equip_array, npc_3_item_key_array)
 			#-------------------------------------------------------------------------------
 			_game_system.Dialogue_Open()
-			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Gracias, vuelva Pronto.\")
+			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Gracias, vuelva Pronto.\")
 		#-------------------------------------------------------------------------------
 		1:
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
 			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
-			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
+			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
 		#-------------------------------------------------------------------------------
 		2:
 			_game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
 			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
-			await _game_system.Dialogue_with_Face(npc_3_character_resource, \"* No? Ok, para la próxima.\")
+			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* No? Ok, para la próxima.\")
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	await _game_system.Dialogue_Close()
@@ -292,25 +303,21 @@ metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 [sub_resource type="Resource" id="Resource_pclkw"]
 script = ExtResource("8_r4og7")
 equip_resource = ExtResource("11_n53vq")
-stored = 4
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_0ol08"]
 script = ExtResource("8_r4og7")
 equip_resource = ExtResource("10_seov8")
-stored = 66
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_jvut7"]
 script = ExtResource("8_r4og7")
 equip_resource = ExtResource("9_xm4vn")
-stored = 22
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_acn20"]
 script = ExtResource("16_ql07v")
 key_resource = ExtResource("28_0t8i2")
-stored = 3
 metadata/_custom_type_script = "uid://dosow2j1xm5y3"
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_p24l3"]
@@ -832,10 +839,158 @@ texture_region_size = Vector2i(96, 96)
 0:7/0/texture_origin = Vector2i(0, 24)
 0:7/0/y_sort_origin = 23
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shqvj"]
+texture = ExtResource("33_ngqpa")
+texture_region_size = Vector2i(48, 48)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+5:10/0 = 0
+6:10/0 = 0
+7:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+3:11/0 = 0
+4:11/0 = 0
+5:11/0 = 0
+6:11/0 = 0
+7:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+2:12/0 = 0
+3:12/0 = 0
+4:12/0 = 0
+5:12/0 = 0
+6:12/0 = 0
+7:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+3:13/0 = 0
+4:13/0 = 0
+5:13/0 = 0
+6:13/0 = 0
+7:13/0 = 0
+0:14/0 = 0
+0:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+1:14/0 = 0
+1:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+2:14/0 = 0
+2:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+3:14/0 = 0
+4:14/0 = 0
+5:14/0 = 0
+5:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+6:14/0 = 0
+6:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+7:14/0 = 0
+7:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+0:15/0 = 0
+0:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+1:15/0 = 0
+1:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+2:15/0 = 0
+2:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+3:15/0 = 0
+4:15/0 = 0
+5:15/0 = 0
+5:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+6:15/0 = 0
+6:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+7:15/0 = 0
+7:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
+
 [sub_resource type="TileSet" id="TileSet_kwath"]
 tile_size = Vector2i(48, 48)
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_gbvte")
 sources/1 = SubResource("TileSetAtlasSource_r4og7")
+sources/2 = SubResource("TileSetAtlasSource_shqvj")
 pattern_0 = SubResource("TileMapPattern_seov8")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcbh6"]
@@ -846,100 +1001,6 @@ radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
 radius = 16.0
-
-[sub_resource type="Animation" id="Animation_xm4vn"]
-resource_name = "Idle"
-length = 0.14287143495827914
-step = 0.14285715
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("46_seov8")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("pivot/Sprite2D:offset")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -32)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("pivot/Sprite2D:hframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [12]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("pivot/Sprite2D:vframes")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [8]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("pivot/Sprite2D:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [10]
-}
-
-[sub_resource type="Animation" id="Animation_seov8"]
-length = 0.03333666840530932
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_n53vq"]
-_data = {
-&"Idle": SubResource("Animation_xm4vn"),
-&"RESET": SubResource("Animation_seov8")
-}
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gbvte"]
-animation = &"Idle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4sv24"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_nc528"]
-states/Idle/node = SubResource("AnimationNodeAnimation_gbvte")
-states/Idle/position = Vector2(346, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_4sv24")]
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_acn20"]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_nc528")
-nodes/base_StateMachine/position = Vector2(-180, 40)
-nodes/base_TimeScale/node = SubResource("AnimationNodeTimeScale_acn20")
-nodes/base_TimeScale/position = Vector2(80, 100)
-node_connections = [&"output", 0, &"base_TimeScale", &"base_TimeScale", 0, &"base_StateMachine"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qeicn"]
 
@@ -1009,6 +1070,11 @@ _data = {
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3em1u"]
 animation = &"Idle"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5jtt"]
+shader = ExtResource("54_8m6hh")
+shader_parameter/speed_x = 0.03
+shader_parameter/speed_y = 0.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3em1u"]
 bg_color = Color(0, 0, 0, 0.8039216)
 
@@ -1021,9 +1087,10 @@ bg_color = Color(0, 0, 0, 0.8039216)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5t6d6"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("canvas_layer", "world_2d", "battle_box", "battle_ui", "black_screen_override", "ally_node_array", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_name", "battle_background", "battle_menu", "battle_menu_skills_button", "battle_menu_items_button", "battle_menu_statistics_button", "battle_menu_status_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
+[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "battle_box", "battle_ui", "black_screen_override", "ally_node_array", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_name", "battle_background", "battle_menu", "battle_menu_skills_button", "battle_menu_items_button", "battle_menu_statistics_button", "battle_menu_status_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
 script = ExtResource("1_jvut7")
-canvas_layer = NodePath("main_canvas_layer")
+background_canvas_layer = NodePath("World_Background")
+main_canvas_layer = NodePath("main_canvas_layer")
 world_2d = NodePath("World_2D")
 battle_box = NodePath("World_2D/battle_box")
 battle_ui = NodePath("main_canvas_layer/battle_ui")
@@ -1034,7 +1101,7 @@ fighter_button_prefab = ExtResource("2_0ol08")
 fighter_ally_ui_prefab = ExtResource("5_r4og7")
 fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
 money_serializable = SubResource("Resource_6ottl")
-ally_node_array = [NodePath("World_2D/player_characterbody2d/fighter_ally_0"), NodePath("World_2D/player_characterbody2d/fighter_ally_1"), NodePath("World_2D/player_characterbody2d/fighter_ally_2")]
+ally_node_array = [NodePath("World_2D/player_characterbody2d/fighter1_1"), NodePath("World_2D/player_characterbody2d/fighter1_8"), NodePath("World_2D/player_characterbody2d/fighter2_7"), NodePath("World_2D/player_characterbody2d/fighter3_8")]
 player_characterbody2d = NodePath("World_2D/player_characterbody2d")
 player_interactable_by_action_area2d = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d")
 player_interactable_by_action_collider = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d/CollisionShape2D")
@@ -1247,7 +1314,7 @@ debug_label = NodePath("main_canvas_layer/debug_menu/debug_label")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1925114159]
 position = Vector2(-424, -248)
-zoom = Vector2(1.7, 1.7)
+zoom = Vector2(2, 2)
 
 [node name="World_2D" type="Node2D" parent="." unique_id=1813968239]
 y_sort_enabled = true
@@ -1400,35 +1467,41 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d/player_interactable_by_action_area2d" unique_id=1893623121]
 shape = SubResource("CircleShape2D_aoydg")
 
-[node name="fighter_ally_0" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
+[node name="fighter1_1" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
 
-[node name="fighter_ally_1" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
+[node name="fighter1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
 
-[node name="fighter_ally_2" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
+[node name="fighter3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
 
-[node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "npc_3", "npc_4", "npc_4_fighter_array", "interactable", "room_limits")]
+[node name="fighter2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
+
+[node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "ally_3", "ally_3_character", "npc_3", "npc_3_character", "npc_4", "npc_4_fighter_array", "interactable", "room_limits")]
 y_sort_enabled = true
 script = SubResource("GDScript_fuapw")
 ally_0 = NodePath("ally_0")
-ally_0_character = NodePath("ally_0/character_ally_0")
+ally_0_character = NodePath("ally_0/actor1_1")
 ally_0_fighter_resouce = ExtResource("12_hf3yd")
 ally_0_fighter_prefab = ExtResource("35_n53vq")
 ally_1 = NodePath("ally_1")
-ally_1_character = NodePath("ally_1/character_ally_1")
-ally_1_fighter_resouce = ExtResource("12_pclkw")
-ally_1_fighter_prefab = ExtResource("22_5rrxs")
+ally_1_character = NodePath("ally_1/actor1_8")
+ally_1_fighter_resouce = ExtResource("19_8m6hh")
+ally_1_fighter_prefab = ExtResource("32_acn20")
 ally_2 = NodePath("ally_2")
-ally_2_character = NodePath("ally_2/character_ally_2")
-ally_2_fighter_resouce = ExtResource("17_r4og7")
+ally_2_character = NodePath("ally_2/actor2_7")
+ally_2_fighter_resouce = ExtResource("21_ngqpa")
 ally_2_fighter_prefab = ExtResource("23_jvut7")
+ally_3 = NodePath("ally_3")
+ally_3_character = NodePath("ally_3/actor3_8")
+ally_3_fighter_resouce = ExtResource("22_shqvj")
+ally_3_fighter_prefab = ExtResource("22_5rrxs")
 npc_3 = NodePath("npc_3")
-npc_3_character_resource = ExtResource("21_r4og7")
+npc_3_character = NodePath("npc_3/actor1_6")
 npc_3_item_consumable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_5rrxs")])
 npc_3_item_equip_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_pclkw"), SubResource("Resource_0ol08"), SubResource("Resource_jvut7")])
 npc_3_item_key_array = Array[ExtResource("16_ql07v")]([SubResource("Resource_acn20")])
 npc_4 = NodePath("npc_4")
 npc_4_character_resource = ExtResource("14_5rrxs")
-npc_4_fighter_array = [NodePath("npc_4/fighter_enemy_0"), NodePath("npc_4/fighter_enemy_1"), NodePath("npc_4/fighter_enemy_2")]
+npc_4_fighter_array = [NodePath("npc_4/fighter1_6"), NodePath("npc_4/fighter1_7"), NodePath("npc_4/fighter1_8")]
 interactable = NodePath("Interactable")
 room_limits = NodePath("room_limits")
 
@@ -1436,7 +1509,7 @@ room_limits = NodePath("room_limits")
 layout_mode = 3
 anchors_preset = 0
 offset_left = -104.0
-offset_top = -696.0
+offset_top = -912.0
 offset_right = 680.0
 offset_bottom = 80.0
 
@@ -1497,7 +1570,7 @@ tile_set = SubResource("TileSet_3em1u")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="World_2D/room_00" unique_id=992122150]
 z_index = -1
-tile_map_data = PackedByteArray("AAD///z/AAAAAAEAAAD///3/AAAAAAIAAAAAAPz/AAABAAEAAAAAAP3/AAABAAIAAAD///7/AAAAAAEAAAD/////AAAAAAIAAAAAAP7/AAABAAEAAAAAAP//AAABAAIAAAD//wAAAAAAAAEAAAAAAAAAAAABAAEAAAABAPz/AAAAAAEAAAABAP3/AAAAAAIAAAACAPz/AAABAAEAAAACAP3/AAABAAIAAAABAP7/AAAAAAEAAAABAP//AAAAAAIAAAACAP7/AAABAAEAAAACAP//AAABAAIAAAABAAAAAAAAAAEAAAACAAAAAAABAAEAAAADAPz/AAAAAAEAAAADAP3/AAAAAAIAAAADAP7/AAAAAAEAAAADAP//AAAAAAIAAAADAAAAAAAAAAEAAAAEAP7/AAAAAAEAAAAFAP7/AAABAAEAAAAGAP7/AAAAAAEAAAAHAP7/AAAAAAIAAAAIAP7/AAAAAAEAAAAJAP7/AAABAAEAAAAKAP7/AAAAAAIAAAALAP7/AAABAAIAAAAKAP3/AAAAAAEAAAALAP3/AAABAAEAAAAKAP//AAAAAAEAAAALAP//AAABAAEAAAAMAP3/AAAAAAEAAAAMAP7/AAAAAAIAAAAMAP//AAAAAAEAAAAHAPn/AAAAAAEAAAAHAPr/AAAAAAIAAAAHAPv/AAAAAAEAAAAHAPz/AAAAAAIAAAAHAP3/AAAAAAEAAAAEAPP/AAAAAAEAAAAEAPT/AAAAAAIAAAAFAPP/AAABAAEAAAAFAPT/AAABAAIAAAAEAPX/AAAAAAEAAAAEAPb/AAAAAAIAAAAFAPX/AAABAAEAAAAFAPb/AAABAAIAAAAEAPf/AAAAAAEAAAAEAPj/AAAAAAIAAAAFAPf/AAABAAEAAAAFAPj/AAABAAIAAAAGAPP/AAAAAAEAAAAGAPT/AAAAAAIAAAAHAPP/AAABAAEAAAAHAPT/AAABAAIAAAAGAPX/AAAAAAEAAAAGAPb/AAAAAAIAAAAHAPX/AAABAAEAAAAHAPb/AAABAAIAAAAGAPf/AAAAAAEAAAAGAPj/AAAAAAIAAAAHAPf/AAABAAEAAAAHAPj/AAABAAIAAAAIAPP/AAAAAAEAAAAIAPT/AAAAAAIAAAAJAPP/AAABAAEAAAAJAPT/AAABAAIAAAAIAPX/AAAAAAEAAAAIAPb/AAAAAAIAAAAJAPX/AAABAAEAAAAJAPb/AAABAAIAAAAIAPf/AAAAAAEAAAAIAPj/AAAAAAIAAAAJAPf/AAABAAEAAAAJAPj/AAABAAIAAAAKAPP/AAAAAAEAAAAKAPT/AAAAAAIAAAAKAPX/AAAAAAEAAAAKAPb/AAAAAAIAAAAKAPf/AAAAAAEAAAAKAPj/AAAAAAIAAAAEAPL/AAABAAEAAAAFAPL/AAAAAAEAAAAGAPL/AAABAAEAAAAHAPL/AAAAAAEAAAAIAPL/AAABAAEAAAAJAPL/AAAAAAEAAAAKAPL/AAABAAEAAAA=")
+tile_map_data = PackedByteArray("AAD///z/AgAAAAsAAAD///3/AgAAAAwAAAAAAPz/AgABAAsAAAAAAP3/AgAAAAIAAAD///7/AgAAAAwAAAD/////AgAAAAwAAAAAAP7/AAABAAEAAAAAAP//AAABAAIAAAD//wAAAgAAAA0AAAAAAAAAAgABAA0AAAABAPz/AgABAAsAAAABAP3/AgAAAAIAAAACAPz/AgABAAsAAAACAP3/AAABAAIAAAABAP7/AgAAAAIAAAABAP//AAAAAAIAAAACAP7/AgAAAAIAAAACAP//AgAAAAIAAAABAAAAAgABAA0AAAACAAAAAgABAA0AAAADAPz/AgACAAsAAAADAP3/AgACAAwAAAADAP7/AgAEAA0AAAADAP//AgACAAwAAAADAAAAAgACAA0AAAAEAP7/AgABAA0AAAAFAP7/AgABAA0AAAAGAP7/AgABAA0AAAAHAP7/AgABAA0AAAAIAP7/AgABAA0AAAAJAP7/AgABAA0AAAAKAP7/AgAAAAIAAAALAP7/AgAAAAIAAAALAP3/AgABAAsAAAAKAP//AgAAAA0AAAALAP//AgABAA0AAAAMAP3/AgACAAsAAAAMAP7/AgACAAwAAAAMAP//AgACAA0AAAAHAPn/AgADAAAAAAAHAPr/AgADAAAAAAAHAPv/AgADAAAAAAAHAPz/AgADAAAAAAAHAP3/AgADAAAAAAAEAPP/AgAAAAwAAAAEAPT/AgAAAAwAAAAFAPP/AAABAAEAAAAFAPT/AAABAAIAAAAEAPX/AgAAAAwAAAAEAPb/AgAAAAwAAAAFAPX/AAABAAEAAAAFAPb/AAABAAIAAAAEAPf/AgAAAAwAAAAEAPj/AgAAAA0AAAAFAPf/AAABAAEAAAAFAPj/AgABAA0AAAAGAPP/AAAAAAEAAAAGAPT/AAAAAAIAAAAHAPP/AAABAAEAAAAHAPT/AAABAAIAAAAGAPX/AAAAAAEAAAAGAPb/AAAAAAIAAAAHAPX/AAABAAEAAAAHAPb/AAABAAIAAAAGAPf/AAAAAAEAAAAGAPj/AgADAA0AAAAHAPf/AAABAAEAAAAHAPj/AAABAAIAAAAIAPP/AAAAAAEAAAAIAPT/AAAAAAIAAAAJAPP/AAABAAEAAAAJAPT/AAABAAIAAAAIAPX/AAAAAAEAAAAIAPb/AAAAAAIAAAAJAPX/AAABAAEAAAAJAPb/AAABAAIAAAAIAPf/AAAAAAEAAAAIAPj/AgAEAA0AAAAJAPf/AAABAAEAAAAJAPj/AgABAA0AAAAKAPP/AgACAAwAAAAKAPT/AgACAAwAAAAKAPX/AgACAAwAAAAKAPb/AgACAAwAAAAKAPf/AgACAAwAAAAKAPj/AgACAA0AAAAEAPL/AgADAA0AAAAFAPL/AgAAAAIAAAAGAPL/AgAAAAIAAAAHAPL/AgAAAAIAAAAIAPL/AgAAAAIAAAAJAPL/AgAAAAIAAAAKAPL/AgAEAA0AAAD+/wEAAgAAAAEAAAABAAEAAgABAA4AAAACAAEAAgABAA4AAAADAAEAAgACAA4AAAAEAAEAAgABAA8AAAAEAP//AgABAA4AAAAFAP//AgABAA4AAAAGAP//AgABAA4AAAAHAP//AgABAA4AAAAIAP//AgABAA4AAAAJAP//AgABAA4AAAAEAAAAAgABAA4AAAAJAAAAAgABAA4AAAD+//v/AgAAAAEAAAD+//z/AgAAAAEAAAD+//3/AgAAAAEAAAD+//7/AgAAAAEAAAD+////AgAAAAEAAAD+/wAAAgAAAAEAAAD///v/AgAAAAEAAAAAAPv/AgAAAAEAAAABAPv/AgAAAAEAAAACAPv/AgAAAAEAAAADAPv/AgAAAAEAAAAEAPv/AgAAAA8AAAAGAP3/AgACAAAAAAAKAAAAAgAAAA4AAAALAAAAAgABAA4AAAAMAAAAAgACAA4AAAANAAAAAgAAAAEAAAANAPz/AgAAAAEAAAANAP3/AgAAAAEAAAANAP7/AgAAAAEAAAANAP//AgAAAAEAAAALAPz/AgAAAAEAAAAMAPz/AgAAAAEAAAAIAP3/AgAEAAAAAAAIAPn/AgAEAAAAAAAIAPr/AgAEAAAAAAAIAPv/AgAEAAAAAAAIAPz/AgAEAAAAAAAJAPn/AgABAA4AAAAKAPn/AgACAA4AAAALAPn/AgAAAAEAAAALAPL/AgABAA0AAAALAPP/AgABAA4AAAALAPT/AgABAA4AAAALAPX/AgABAA4AAAALAPb/AgAAAAEAAAALAPf/AgAAAAEAAAALAPj/AgAAAAEAAAALAPH/AgAAAAEAAAADAPH/AgAAAAEAAAAEAPH/AgAAAA8AAAAFAPH/AgABAA8AAAAGAPH/AgABAA8AAAAHAPH/AgABAA8AAAAIAPH/AgABAA8AAAAJAPH/AgABAA8AAAAKAPH/AgACAA8AAAADAPL/AgABAA0AAAADAPP/AgABAA4AAAADAPT/AgABAA4AAAADAPX/AgABAA4AAAADAPb/AgAAAAEAAAADAPf/AgAAAAEAAAADAPj/AgAAAAEAAAADAPn/AgAAAAEAAAAEAPn/AgAAAA4AAAAFAPn/AgABAA4AAAAGAPn/AgACAAAAAAAGAPr/AgACAAAAAAAGAPv/AgACAAAAAAAGAPz/AgACAAAAAAAEAPD/AgAAAA4AAAAFAPD/AgABAA4AAAAGAPD/AgABAA4AAAAHAPD/AgABAA4AAAAIAPD/AgABAA4AAAAJAPD/AgABAA4AAAAKAPD/AgACAA4AAAAEAO//AgAAAA0AAAAFAO//AgABAA0AAAAGAO//AgABAA0AAAAHAO//AgABAA0AAAAIAO//AgABAA0AAAAJAO//AgABAA0AAAAKAO//AgACAA0AAAAEAO7/AgAAAAwAAAAEAO3/AgAAAAsAAAAFAO3/AgABAAsAAAAFAO7/AgABAAwAAAAGAO3/AgABAAsAAAAGAO7/AgABAAwAAAAHAO3/AgABAAsAAAAHAO7/AgABAAwAAAAIAO3/AgABAAsAAAAIAO7/AgABAAwAAAAJAO3/AgABAAsAAAAJAO7/AgABAAwAAAAKAO3/AgACAAsAAAAKAO7/AgACAAwAAAAEAPr/AgAAAA4AAAAKAPr/AgACAA4AAAAJAPr/AgABAA4AAAAFAPr/AgABAA4AAAACAPL/AgABAA0AAAABAPL/AgABAA0AAAABAPP/AgABAA4AAAABAPT/AgABAA4AAAACAPT/AgABAA4AAAACAPP/AgABAA4AAAABAPX/AgABAA4AAAACAPX/AgABAA4AAAAFAPv/AgABAA8AAAAJAPv/AgABAA8AAAAKAPv/AgACAA8AAAAMAPL/AgABAA0AAAANAPL/AgABAA0AAAAMAPT/AgABAA4AAAAMAPX/AgABAA4AAAANAPX/AgABAA4AAAANAPT/AgABAA4AAAANAPP/AgABAA4AAAAMAPP/AgABAA4AAAAKAP3/AgAAAAsAAAD//wIAAgAAAA4AAAADAAIAAgACAA4AAAAAAAIAAgABAA4AAAABAAIAAgABAA4AAAACAAIAAgABAA4AAAD//wMAAgAAAA8AAAADAAMAAgACAA8AAAAAAAMAAgABAA8AAAABAAMAAgABAA8AAAACAAMAAgABAA8AAAD//wEAAgAAAA4AAAAAAAEAAgABAA4AAAAKAAEAAgAAAA4AAAAFAAAAAgABAA4AAAAGAAAAAgABAA4AAAAHAAAAAgABAA4AAAAIAAAAAgABAA4AAAAFAAEAAgABAA8AAAAGAAEAAgABAA8AAAAHAAEAAgABAA8AAAAIAAEAAgABAA8AAAAJAAEAAgABAA8AAAAKAAIAAgAAAA8AAAAMAAIAAgACAA8AAAALAAIAAgABAA8AAAAMAAEAAgACAA4AAAALAAEAAgABAA4AAAA=")
 tile_set = SubResource("TileSet_kwath")
 
 [node name="TileMapLayer3" type="TileMapLayer" parent="World_2D/room_00" unique_id=529153433]
@@ -1505,7 +1578,7 @@ y_sort_enabled = true
 tile_set = SubResource("TileSet_kwath")
 
 [node name="ally_0" type="Area2D" parent="World_2D/room_00" unique_id=1227329894 node_paths=PackedStringArray("collider")]
-position = Vector2(8, -152)
+position = Vector2(-16, -152)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1514,31 +1587,43 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_0" unique_id=1611377659]
 shape = SubResource("CircleShape2D_lcbh6")
 
-[node name="character_ally_0" parent="World_2D/room_00/ally_0" unique_id=1234637241 instance=ExtResource("27_0ol08")]
+[node name="actor1_1" parent="World_2D/room_00/ally_0" unique_id=1234637241 instance=ExtResource("27_0ol08")]
 
-[node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=899666073 node_paths=PackedStringArray("collider")]
-position = Vector2(64, -152)
+[node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=726168508 node_paths=PackedStringArray("collider")]
+position = Vector2(32, -152)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
 collider = NodePath("CollisionShape2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1" unique_id=257041145]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1" unique_id=1352624756]
 shape = SubResource("CircleShape2D_lcbh6")
 
-[node name="character_ally_1" parent="World_2D/room_00/ally_1" unique_id=957001427 instance=ExtResource("24_5rrxs")]
+[node name="actor1_8" parent="World_2D/room_00/ally_1" unique_id=1388025439 instance=ExtResource("36_altm3")]
 
-[node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
+[node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=899666073 node_paths=PackedStringArray("collider")]
+position = Vector2(80, -152)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("22_0ol08")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2" unique_id=257041145]
+shape = SubResource("CircleShape2D_lcbh6")
+
+[node name="actor2_7" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
+
+[node name="ally_3" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
 position = Vector2(128, -152)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
 collider = NodePath("CollisionShape2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2" unique_id=451903423]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_3" unique_id=451903423]
 shape = SubResource("CircleShape2D_3em1u")
 
-[node name="character_ally_2" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
+[node name="actor3_8" parent="World_2D/room_00/ally_3" unique_id=957001427 instance=ExtResource("24_5rrxs")]
 
 [node name="npc_3" type="Area2D" parent="World_2D/room_00" unique_id=1896668672 node_paths=PackedStringArray("collider")]
 position = Vector2(560, -136)
@@ -1550,26 +1635,10 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3" unique_id=839204334]
 shape = SubResource("CircleShape2D_5t6d6")
 
-[node name="character_enemy_1" type="Node2D" parent="World_2D/room_00/npc_3" unique_id=256094377]
-
-[node name="pivot" type="Node2D" parent="World_2D/room_00/npc_3/character_enemy_1" unique_id=1124174354]
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/npc_3/character_enemy_1/pivot" unique_id=1158731447]
-texture = ExtResource("46_seov8")
-offset = Vector2(0, -32)
-hframes = 12
-vframes = 8
-frame = 10
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/room_00/npc_3/character_enemy_1" unique_id=653059733]
-libraries/ = SubResource("AnimationLibrary_n53vq")
-
-[node name="AnimationTree" type="AnimationTree" parent="World_2D/room_00/npc_3/character_enemy_1" unique_id=512058777]
-tree_root = SubResource("AnimationNodeBlendTree_3em1u")
-anim_player = NodePath("../AnimationPlayer")
-parameters/base_TimeScale/scale = 1.0
+[node name="actor1_6" parent="World_2D/room_00/npc_3" unique_id=1440330506 instance=ExtResource("36_0t8i2")]
 
 [node name="npc_4" type="Area2D" parent="World_2D/room_00" unique_id=303175137 node_paths=PackedStringArray("collider")]
+y_sort_enabled = true
 position = Vector2(256, -384)
 collision_layer = 4
 collision_mask = 0
@@ -1579,13 +1648,13 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_4" unique_id=849842313]
 shape = SubResource("CircleShape2D_5t6d6")
 
-[node name="fighter_enemy_0" parent="World_2D/room_00/npc_4" unique_id=1370430890 instance=ExtResource("28_jvut7")]
+[node name="fighter1_6" parent="World_2D/room_00/npc_4" unique_id=1370430890 instance=ExtResource("28_jvut7")]
 
-[node name="fighter_enemy_1" parent="World_2D/room_00/npc_4" unique_id=1637077777 instance=ExtResource("28_jvut7")]
-visible = false
+[node name="fighter1_7" parent="World_2D/room_00/npc_4" unique_id=1637077777 instance=ExtResource("28_jvut7")]
+position = Vector2(16, -8)
 
-[node name="fighter_enemy_2" parent="World_2D/room_00/npc_4" unique_id=232465966 instance=ExtResource("28_jvut7")]
-visible = false
+[node name="fighter1_8" parent="World_2D/room_00/npc_4" unique_id=232465966 instance=ExtResource("28_jvut7")]
+position = Vector2(-16, -8)
 
 [node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
 position = Vector2(-24, 24)
@@ -1614,6 +1683,18 @@ layer = -1
 visible = false
 
 [node name="TextureRect3" type="TextureRect" parent="World_Background" unique_id=1531642551]
+material = SubResource("ShaderMaterial_x5jtt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("40_8m6hh")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="World_Background" unique_id=1686974335]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1623,6 +1704,7 @@ texture = ExtResource("37_seov8")
 expand_mode = 1
 
 [node name="TextureRect4" type="TextureRect" parent="World_Background" unique_id=1738882888]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1633,6 +1715,7 @@ expand_mode = 1
 
 [node name="main_canvas_layer" type="CanvasLayer" parent="." unique_id=1994462941 node_paths=PackedStringArray("game_scene")]
 process_mode = 3
+visible = false
 script = ExtResource("31_en4w2")
 game_scene = NodePath("..")
 
@@ -1826,7 +1909,7 @@ text = "100"
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/tp_bar/VBoxContainer" unique_id=1985511289]
-custom_minimum_size = Vector2(24, 300)
+custom_minimum_size = Vector2(12, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -2031,11 +2114,14 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="Fighter_Button4" parent="main_canvas_layer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/pause_menu_fighter_button_content" unique_id=941968002 instance=ExtResource("2_0ol08")]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="pause_menu_fighter_button_mouse_blocker" type="Control" parent="main_canvas_layer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2" unique_id=1806914593]
 layout_mode = 2
 
 [node name="battle_ui" type="Control" parent="main_canvas_layer" unique_id=1173258026]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
