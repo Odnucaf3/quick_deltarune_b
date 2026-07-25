@@ -177,13 +177,13 @@ equip_type_WEAPON,Arma,Weapon
 equip_type_HEAD,Cabeza,Head
 equip_type_BODY,Cuerpo,Body
 equip_type_RING,Anillo,Ring
-name_weapon_0,Cunchillo de Hacker,Hacker Knife
-description_weapon_0,Hasta los que trabajan con ceros y unos necesitas una forma de defenserse en esta ciudad.,-
-name_weapon_1,Báculo de Mago Básico,Basic Magician Staff
+name_weapon_0,Espada de Harold,Harold's Sword
+description_weapon_0,-,-
+name_weapon_1,Estada de Therese,Therese's Sword
 description_weapon_1,-,-
-name_weapon_2,Maza de Sacerdote Básico,Basic Preist Mace
+name_weapon_2,Báculo de Marsha,Marsha's Staff
 description_weapon_2,-,-
-name_weapon_3,Espada de Guerrero Básico,Basic Warrior Sword
+name_weapon_3,Masa de Lucius,Lucius's Maze
 description_weapon_3,-,-
 name_head_0,Casco de Harold,Harold's Helmet
 description_head_0,-,-
@@ -201,16 +201,16 @@ name_body_2,Túnica de Marsha,Marsha's Robes
 description_body_2,-,-
 name_body_3,Túnica de Lucius,Lucius's 's Robes
 description_body_3,-,-
-name_ring_0,Chip de Hacker,Hacker Chip
+name_ring_0,Anillo de Harold,Harold's Ring
 description_ring_0,-,-
-name_ring_1,Anillo de Mago Básico,Basic Wizard Ring
+name_ring_1,Anillo de Therese,Therese's Ring
 description_ring_1,-,-
-name_ring_2,Anillo de Sacerdote Básico,Basic Priest Ring
+name_ring_2,Anillo de Marsha,Marsha's Ring
 description_ring_2,-,-
-name_ring_3,Anillo de Guerrero Básico,Basic Warrior Ring
+name_ring_3,Anillo de Lucius,Lucius's Ring
 description_ring_3,-,-
-name_key_0,Llave Cibernética,Cyber Key
-description_key_0,"Llave que se utiliza para abrir ""Puertas Cibernéticas"".","Key used to open ""Cyber ​​Doors""."
+name_key_0,Llave de Mazmorra,Dungeon Key
+description_key_0,-,-
 name_status_guard,Guardia,Guard
 description_status_guard,-,-
 name_status_death,Nockeado,Knokdown

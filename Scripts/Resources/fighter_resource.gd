@@ -42,17 +42,6 @@ enum FIGHTER_CLASS{EVERYONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
 @export var light: Vector4i = Vector4i(100, 100, 0, 0)
 @export var dark: Vector4i = Vector4i(100, 100, 0, 0)
 #-------------------------------------------------------------------------------
-@export_category("Equip Slots")
-@export var equip_type_array: Array[Equip_Resource.EQUIP_TYPE] = [
-	Equip_Resource.EQUIP_TYPE.WEAPON,
-	Equip_Resource.EQUIP_TYPE.HEAD,
-	Equip_Resource.EQUIP_TYPE.BODY,
-	Equip_Resource.EQUIP_TYPE.RING,
-	Equip_Resource.EQUIP_TYPE.RING,
-	Equip_Resource.EQUIP_TYPE.RING,
-	Equip_Resource.EQUIP_TYPE.RING
-]
-#-------------------------------------------------------------------------------
 @export_category("Status Effect Resistances")
 @export var status_resistance_dictionary: Dictionary[StringName, int]
 #-------------------------------------------------------------------------------

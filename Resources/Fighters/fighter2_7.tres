@@ -8,6 +8,6 @@
 
 [resource]
 script = ExtResource("1_ofp85")
-myFIGHTER_CLASS = 3
+myFIGHTER_CLASS = 4
 skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("3_ya47g"), ExtResource("4_ndm8g"), ExtResource("5_u8boi")])
 metadata/_custom_type_script = "uid://nvm68ow83k0c"

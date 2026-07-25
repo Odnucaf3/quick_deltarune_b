@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_3pmha"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_8ooxm"]
-[ext_resource type="Resource" uid="uid://cewon8umfxmyo" path="res://Resources/Equips/weapon_1.tres" id="3_hrfpj"]
-[ext_resource type="Resource" uid="uid://dvfnbsobaqma" path="res://Resources/Equips/head_1.tres" id="4_pbq1k"]
-[ext_resource type="Resource" uid="uid://cl0jpahmd0lwv" path="res://Resources/Equips/body_1.tres" id="5_eqvaq"]
-[ext_resource type="Resource" uid="uid://depglun5duu7e" path="res://Resources/Equips/ring_1.tres" id="6_4r6jp"]
+[ext_resource type="Resource" uid="uid://d35ei50cimw18" path="res://Resources/Equips/weapon_0.tres" id="3_eqfro"]
+[ext_resource type="Resource" uid="uid://dnqwa4ac4201s" path="res://Resources/Equips/head_0.tres" id="4_0fglg"]
+[ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="5_rgjyi"]
+[ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="6_hnfnv"]
 [ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter1_1.tres" id="7_ui50d"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_l7osr"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_127ya"]
@@ -15,24 +15,24 @@
 
 [sub_resource type="Resource" id="Resource_hf3yd"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("3_hrfpj")
+equip_resource = ExtResource("3_eqfro")
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_ql07v"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("4_pbq1k")
+equip_resource = ExtResource("4_0fglg")
 myEQUIP_TYPE = 1
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_xkpdv"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("5_eqvaq")
+equip_resource = ExtResource("5_rgjyi")
 myEQUIP_TYPE = 2
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_pclkw"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("6_4r6jp")
+equip_resource = ExtResource("6_hnfnv")
 myEQUIP_TYPE = 3
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 

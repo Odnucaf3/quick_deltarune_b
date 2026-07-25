@@ -111,6 +111,8 @@ var skill_menu_button_array: Array[Button]
 @export var skill_menu_information_title: Label
 @export var skill_menu_information_content: VBoxContainer
 #-------------------------------------------------------------------------------
+@export var skill_menu_information_name: Label
+@export var skill_menu_information_icon: TextureRect
 @export var skill_menu_information_hold_title: Label
 @export var skill_menu_information_hold_value: Label
 @export var skill_menu_information_tp_cost_title: Label
@@ -155,6 +157,9 @@ var item_menu_consumable_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var item_menu_consumable_information_root: ScrollContainer
 @export var item_menu_consumable_information_content: VBoxContainer
+#-------------------------------------------------------------------------------
+@export var item_menu_consumable_information_name: Label
+@export var item_menu_consumable_information_icon: TextureRect
 @export var item_menu_consumable_information_hold_title: Label
 @export var item_menu_consumable_information_hold_value: Label
 @export var item_menu_consumable_information_stored_title: Label
@@ -185,6 +190,9 @@ var item_menu_equip_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var item_menu_equip_information_root: ScrollContainer
 @export var item_menu_equip_information_content: VBoxContainer
+#-------------------------------------------------------------------------------
+@export var item_menu_equip_information_name: Label
+@export var item_menu_equip_information_icon: TextureRect
 @export var item_menu_equip_information_stored_title: Label
 @export var item_menu_equip_information_stored_value: Label
 @export var item_menu_equip_information_level_title: Label
@@ -207,6 +215,9 @@ var item_menu_key_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var item_menu_key_information_root: ScrollContainer
 @export var item_menu_key_information_content: VBoxContainer
+#-------------------------------------------------------------------------------
+@export var item_menu_key_information_name: Label
+@export var item_menu_key_information_icon: TextureRect
 @export var item_menu_key_information_stored_title: Label
 @export var item_menu_key_information_stored_value: Label
 @export var item_menu_key_information_description_title: Label
@@ -224,6 +235,9 @@ var equip_menu_button_array: Array[Button]
 @export var equip_menu_information_root: ScrollContainer
 @export var equip_menu_information_title: Label
 @export var equip_menu_information_content: VBoxContainer
+#-------------------------------------------------------------------------------
+@export var equip_menu_information_name: Label
+@export var equip_menu_information_icon: TextureRect
 @export var equip_menu_information_stored_title: Label
 @export var equip_menu_information_stored_value: Label
 @export var equip_menu_information_level_title: Label
@@ -299,6 +313,9 @@ var status_menu_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var status_menu_information_title: Label
 @export var status_menu_information_root: ScrollContainer
+#-------------------------------------------------------------------------------
+@export var status_menu_information_name: Label
+@export var status_menu_information_icon: TextureRect
 @export var status_menu_information_turns_title: Label
 @export var status_menu_information_turns_value: Label
 @export var status_menu_information_statistics_title: Label
@@ -1020,6 +1037,9 @@ func Set_Skill_Information(_action_serializable:Action_Serializable):
 	var _tp_cost_text: String = Get_TpCost_Text_A(_action_serializable.action_resource)
 	var _cooldown_text: String = Get_CoolDown_Text(_action_serializable)
 	#----------------------------------------------------------------------------
+	skill_menu_information_icon.texture = _action_serializable.action_resource.icon
+	skill_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_action_serializable.action_resource))
+	#----------------------------------------------------------------------------
 	skill_menu_information_hold_value.text = _hold_text
 	#----------------------------------------------------------------------------
 	skill_menu_information_tp_cost_value.text = _tp_cost_text
@@ -1394,6 +1414,9 @@ func Set_Item_Consumable_Information(_action_serializable:Action_Serializable):
 	var _cooldown_text: String = Get_CoolDown_Text(_action_serializable)
 	var _stored_text: String = Get_Stored_Text(_action_serializable)
 	#----------------------------------------------------------------------------
+	item_menu_consumable_information_icon.texture = _action_serializable.action_resource.icon
+	item_menu_consumable_information_name.text = tr("name_"+singleton.get_resource_filename(_action_serializable.action_resource))
+	#----------------------------------------------------------------------------
 	item_menu_consumable_information_hold_value.text = _hold_text
 	item_menu_consumable_information_stored_value.text = _stored_text
 	#----------------------------------------------------------------------------
@@ -1414,6 +1437,9 @@ func Set_Item_Consumable_Information(_action_serializable:Action_Serializable):
 #-------------------------------------------------------------------------------
 func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	var _equip_resource: Equip_Resource = _equip_serializable.equip_resource
+	#-------------------------------------------------------------------------------
+	item_menu_equip_information_icon.texture = _equip_serializable.equip_resource.icon
+	item_menu_equip_information_name.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 	item_menu_equip_information_stored_value.text = "["+str(_equip_serializable.stored)+"]"
@@ -1481,6 +1507,9 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 	#-------------------------------------------------------------------------------
 	if(_equip_serializable.equip_resource != null):
 		var _equip_resource: Equip_Resource = _equip_serializable.equip_resource
+		#-------------------------------------------------------------------------------
+		equip_menu_information_icon.texture = _equip_resource.icon
+		equip_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_equip_resource))
 		#-------------------------------------------------------------------------------
 		equip_menu_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_serializable_array, _equip_resource)
@@ -1554,6 +1583,9 @@ func Get_Level_Required(_level_required:int) -> String:
 func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	#-------------------------------------------------------------------------------
 		var _status_resource: Status_Resource = _status_serializable.status_resource
+		#-------------------------------------------------------------------------------
+		status_menu_information_icon.texture = _status_resource.icon
+		status_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_status_resource))
 		#-------------------------------------------------------------------------------
 		var _turns: int = clampi(_status_serializable.turns, 0, _status_resource.max_turns)
 		status_menu_information_turns_value.text ="["+str(_turns)+"/"+str(_status_resource.max_turns)+"]"
@@ -1703,6 +1735,9 @@ func Get_Number_with_Sign(_int:int) -> String:
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Item_Key_Information(_key_serializable:Key_Serializable):
+	item_menu_key_information_icon.texture = _key_serializable.key_resource.icon
+	item_menu_key_information_name.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))
+	#-------------------------------------------------------------------------------
 	item_menu_key_information_stored_value.text = "["+str(_key_serializable.stored)+"]"
 	item_menu_key_information_description_value.text = tr("description_"+singleton.get_resource_filename(_key_serializable.key_resource))
 	item_menu_key_information_description_value.text += Blablabla()
@@ -2389,15 +2424,6 @@ func Pause_Status_Menu_Status_Button_Cancel(_fighter_index:int):
 #endregion
 #-------------------------------------------------------------------------------
 #region CONSTRUCTOR FUNCTIONS
-#-------------------------------------------------------------------------------
-func Set_Equip(_fighter_serializable: Fighter_Serializable):
-	_fighter_serializable.equip_serializable_array.clear()
-	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.fighter_resource.equip_type_array.size():
-		var _equip_serializable: Equip_Serializable = Equip_Serializable.new()
-		Set_Equip_Serializable(_equip_serializable, _fighter_serializable.fighter_resource.equip_type_array[_i])
-		_fighter_serializable.equip_serializable_array.append(_equip_serializable)
-	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Equip_Serializable(_equip_serializable: Equip_Serializable, _equip_type:Equip_Resource.EQUIP_TYPE):
 	_equip_serializable.myEQUIP_TYPE = _equip_type
@@ -4034,6 +4060,7 @@ func Create_ConsumableItem_InMarket_Button(_item_serializable: Action_Serializab
 	_label2.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_label2.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_label2.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_label2.mouse_filter = Control.MOUSE_FILTER_PASS
 	_label2.text = ""
 	_label2.text += "[font_size=16]"+Get_Money_Label(_item_serializable.action_resource.price)+"  "+"[/font_size]"
 	#_label2.text += "["+str(_item_serializable.stored)+"]  "

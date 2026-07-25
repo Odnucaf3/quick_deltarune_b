@@ -7,5 +7,6 @@
 [resource]
 script = ExtResource("1_yufao")
 icon = ExtResource("1_gyjgo")
+myFIGHTER_CLASS = 1
 price = 59
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

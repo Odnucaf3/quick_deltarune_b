@@ -35,16 +35,6 @@ equip_resource = ExtResource("6_o0fwv")
 myEQUIP_TYPE = 3
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
-[sub_resource type="Resource" id="Resource_kpcsh"]
-script = ExtResource("2_fnmow")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_kombn"]
-script = ExtResource("2_fnmow")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
 [sub_resource type="Resource" id="Resource_2i5i2"]
 script = ExtResource("9_ih5rp")
 status_resource = ExtResource("10_m5fk7")
@@ -53,7 +43,7 @@ metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
 [sub_resource type="Resource" id="Resource_25p7l"]
 script = ExtResource("8_urbvg")
 fighter_resource = ExtResource("7_apdi8")
-equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_5dha6"), SubResource("Resource_lb5xn"), SubResource("Resource_8pkgd"), SubResource("Resource_ph88x"), SubResource("Resource_kpcsh"), SubResource("Resource_kombn")])
+equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_5dha6"), SubResource("Resource_lb5xn"), SubResource("Resource_8pkgd"), SubResource("Resource_ph88x")])
 status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
