@@ -149,6 +149,7 @@ func Set_NPC_1(_imteractable_script:Interactable_Script, _character_node:Charact
 #-------------------------------------------------------------------------------
 func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
 	#-------------------------------------------------------------------------------
+	singleton.game_system.Disable_Pause_Input()
 	singleton.game_system.Stop_Moving()
 	singleton.game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
@@ -177,6 +178,7 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		await singleton.game_system.Dialogue_Close()
+		singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 	else:
 		await singleton.game_system.Dialogue_with_Face_0(_character_node.character_resource, \"* Querés que me vaya del grupo?\")
@@ -205,90 +207,94 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		await singleton.game_system.Dialogue_Close()
+		singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func NPC_3_Talk():
 	#-------------------------------------------------------------------------------
-	var _game_system: Game_System = singleton.game_system
-	var _player_1_character_resource: Character_Resource = _game_system.ally_node_array[0].character_node.character_resource
-	_game_system.Stop_Moving()
-	_game_system.Dialogue_Open()
+	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_node_array[0].character_node.character_resource
+	singleton.game_system.Disable_Pause_Input()
+	singleton.game_system.Stop_Moving()
+	singleton.game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_with_Face_0(npc_3_character.character_resource, \"* Hola Che. Vamos a pelear!\")
-	_game_system.Open_Dialogue_Options([\"Comprar\", \"Hablar\", \"Irse\"])
-	await _game_system.next_signal
+	await singleton.game_system.Dialogue_with_Face_0(npc_3_character.character_resource, \"* Hola Che. Vamos a pelear!\")
+	singleton.game_system.Open_Dialogue_Options([\"Comprar\", \"Hablar\", \"Irse\"])
+	await singleton.game_system.next_signal
 	#-------------------------------------------------------------------------------
-	match(_game_system.dialogue_option_index):
+	match(singleton.game_system.dialogue_option_index):
 		0:
-			_game_system.Close_Dialogue_Options()
+			singleton.game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Comprar.\")
-			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, te muestro lo que tengo.\")
-			_game_system.Dialogue_Close_0()
-			await _game_system.Open_Market(npc_3.name, npc_3_item_consumable_array, npc_3_item_equip_array, npc_3_item_key_array)
+			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Comprar.\")
+			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, te muestro lo que tengo.\")
+			singleton.game_system.Dialogue_Close_0()
+			await singleton.game_system.Open_Market(npc_3.name, npc_3_item_consumable_array, npc_3_item_equip_array, npc_3_item_key_array)
 			#-------------------------------------------------------------------------------
-			_game_system.Dialogue_Open()
-			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Gracias, vuelva Pronto.\")
+			singleton.game_system.Dialogue_Open()
+			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Gracias, vuelva Pronto.\")
 		#-------------------------------------------------------------------------------
 		1:
-			_game_system.Close_Dialogue_Options()
+			singleton.game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
-			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
+			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
+			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
 		#-------------------------------------------------------------------------------
 		2:
-			_game_system.Close_Dialogue_Options()
+			singleton.game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
-			await _game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* No? Ok, para la próxima.\")
+			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\")
+			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* No? Ok, para la próxima.\")
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_Close()
+	await singleton.game_system.Dialogue_Close()
+	singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func NPC_4_Talk():
 	#-------------------------------------------------------------------------------
-	var _game_system: Game_System = singleton.game_system
-	var _player_1_character_resource: Character_Resource = _game_system.ally_node_array[0].character_node.character_resource
-	_game_system.Stop_Moving()
-	_game_system.Dialogue_Open()
+	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_node_array[0].character_node.character_resource
+	singleton.game_system.Disable_Pause_Input()
+	singleton.game_system.Stop_Moving()
+	singleton.game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_with_Face_0(npc_4_character_resource, \"* Hola Che. Vamos a pelear!\")
-	_game_system.Open_Dialogue_Options([\"Pelear\", \"Irse\"])
-	await _game_system.next_signal
+	await singleton.game_system.Dialogue_with_Face_0(npc_4_character_resource, \"* Hola Che. Vamos a pelear!\")
+	singleton.game_system.Open_Dialogue_Options([\"Pelear\", \"Irse\"])
+	await singleton.game_system.next_signal
 	#-------------------------------------------------------------------------------
-	match(_game_system.dialogue_option_index):
+	match(singleton.game_system.dialogue_option_index):
 		0:
-			_game_system.Close_Dialogue_Options()
+			singleton.game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Pelear.\")
-			await _game_system.Dialogue_with_Face(npc_4_character_resource, \"* Ok, vamos a pelear.\")
+			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Pelear.\")
+			await singleton.game_system.Dialogue_with_Face(npc_4_character_resource, \"* Ok, vamos a pelear.\")
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_Close()
-			_game_system.enemy_node_array = npc_4_fighter_array
-			_game_system.Dialogue_0(\"* The Battle Began!\")
-			await _game_system.Enter_Battle()
-			await _game_system.next_signal
+			await singleton.game_system.Dialogue_Close()
+			singleton.game_system.enemy_node_array = npc_4_fighter_array
+			singleton.game_system.Dialogue_0(\"* The Battle Began!\")
+			await singleton.game_system.Enter_Battle()
+			await singleton.game_system.next_signal
 		#-------------------------------------------------------------------------------
 		1:
-			_game_system.Close_Dialogue_Options()
+			singleton.game_system.Close_Dialogue_Options()
 			#-------------------------------------------------------------------------------
-			await _game_system.Dialogue_with_Face(_player_1_character_resource, \"* No.\")
-			await _game_system.Dialogue_with_Face(npc_4_character_resource, \"* No? Ok, para la próxima.\")
+			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* No.\")
+			await singleton.game_system.Dialogue_with_Face(npc_4_character_resource, \"* No? Ok, para la próxima.\")
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_Close()
+	await singleton.game_system.Dialogue_Close()
+	singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Interactable_Action():
 	#-------------------------------------------------------------------------------
-	var _game_system: Game_System = singleton.game_system
-	_game_system.Stop_Moving()
-	_game_system.Dialogue_Open()
+	singleton.game_system.Disable_Pause_Input()
+	singleton.game_system.Stop_Moving()
+	singleton.game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue(\"* Una luz extraña en la esquina de la habitación.\")
+	await singleton.game_system.Dialogue(\"* Una luz extraña en la esquina de la habitación.\")
 	#-------------------------------------------------------------------------------
-	await _game_system.Dialogue_Close()
+	await singleton.game_system.Dialogue_Close()
+	singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 "
@@ -1299,9 +1305,9 @@ dialogue_menu = NodePath("main_canvas_layer/dialogue_menu")
 dialogue_menu_face = NodePath("main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/dialogue_menu_face")
 dialogue_menu_name = NodePath("main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/dialogue_menu_name")
 dialogue_menu_value = NodePath("main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/dialogue_menu_value")
-dialogue_menu_button_content = NodePath("main_canvas_layer/dialogue_menu/VBoxContainer/VBoxContainer")
+dialogue_menu_button_content = NodePath("main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer/VBoxContainer")
 dialogue_menu_audio = NodePath("main_canvas_layer/dialogue_menu/dialogue_menu_audio")
-button_next = NodePath("main_canvas_layer/button_next")
+button_next = NodePath("main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer/Control/button_next")
 confirm_buy_menu = NodePath("main_canvas_layer/confirm_buy_menu")
 confirm_buy_menu_item_name = NodePath("main_canvas_layer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Label2")
 confirm_buy_menu_button = NodePath("main_canvas_layer/confirm_buy_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button")
@@ -1715,7 +1721,6 @@ expand_mode = 1
 
 [node name="main_canvas_layer" type="CanvasLayer" parent="." unique_id=1994462941 node_paths=PackedStringArray("game_scene")]
 process_mode = 3
-visible = false
 script = ExtResource("31_en4w2")
 game_scene = NodePath("..")
 
@@ -1765,7 +1770,6 @@ value = 75.0
 show_percentage = false
 
 [node name="dialogue_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=226866622]
-visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1786,17 +1790,36 @@ layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/dialogue_menu/VBoxContainer" unique_id=2045885254]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/dialogue_menu/VBoxContainer" unique_id=1008370635]
+layout_mode = 2
+alignment = 2
+
+[node name="Control" type="Control" parent="main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer" unique_id=784919494]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="button_next" type="Button" parent="main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer/Control" unique_id=959158716]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_right = 88.0
+grow_vertical = 0
+theme = ExtResource("16_0t8i2")
+text = "  Next  "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer" unique_id=2045885254]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="Button" type="Button" parent="main_canvas_layer/dialogue_menu/VBoxContainer/VBoxContainer" unique_id=1891317768]
+[node name="Button" type="Button" parent="main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1891317768]
 layout_mode = 2
 text = "  Si "
 alignment = 0
 
-[node name="Button2" type="Button" parent="main_canvas_layer/dialogue_menu/VBoxContainer/VBoxContainer" unique_id=1728026747]
+[node name="Button2" type="Button" parent="main_canvas_layer/dialogue_menu/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1728026747]
 layout_mode = 2
 text = "  No  "
 alignment = 0
@@ -1926,7 +1949,97 @@ theme = ExtResource("34_206if")
 text = "PT"
 horizontal_alignment = 1
 
+[node name="battle_ui" type="Control" parent="main_canvas_layer" unique_id=1173258026]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="battle_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=259250482]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_0t8i2")
+theme_override_constants/margin_bottom = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_menu" unique_id=1227264853]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="skill_menu_button_x" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer" unique_id=1997718613]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  X  "
+
+[node name="PanelContainer" type="PanelContainer" parent="main_canvas_layer/battle_menu/VBoxContainer" unique_id=796616216]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer" unique_id=2035201869]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=2125259765]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=911702133]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1318792161]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=714878963]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Battle Menu"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=72343048]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1905214686]
+layout_mode = 2
+text = "  Habilities  "
+icon = ExtResource("43_acn20")
+
+[node name="Button2" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=886415627]
+layout_mode = 2
+text = "  Inventory  "
+icon = ExtResource("44_0t8i2")
+
+[node name="Button4" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1741977542]
+layout_mode = 2
+text = "  Status Effects  "
+icon = ExtResource("47_8m6hh")
+
+[node name="Button3" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=136522799]
+layout_mode = 2
+text = "  Statistics  "
+icon = ExtResource("46_f8ljg")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=596553659]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="pause_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1277621130]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2120,230 +2233,6 @@ size_flags_vertical = 3
 
 [node name="pause_menu_fighter_button_mouse_blocker" type="Control" parent="main_canvas_layer/pause_menu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2" unique_id=1806914593]
 layout_mode = 2
-
-[node name="battle_ui" type="Control" parent="main_canvas_layer" unique_id=1173258026]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/battle_ui" unique_id=757258544]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer" unique_id=1524465526]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer" unique_id=1542730571]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=1285861014]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=923507398]
-layout_mode = 2
-theme = ExtResource("32_gijw1")
-value = 75.0
-show_percentage = false
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer" unique_id=1173121532]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=2062079394]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1133354797]
-layout_mode = 2
-theme = ExtResource("32_gijw1")
-value = 75.0
-show_percentage = false
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer" unique_id=456791761]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer" unique_id=69963269]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2036022142]
-layout_mode = 2
-theme = ExtResource("32_gijw1")
-value = 75.0
-show_percentage = false
-
-[node name="Control" type="Control" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer" unique_id=1219298138]
-layout_mode = 2
-
-[node name="Control2" type="Control" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer" unique_id=1406864204]
-layout_mode = 2
-
-[node name="Control3" type="Control" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer" unique_id=319882731]
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer" unique_id=1846549624]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2" unique_id=1057238319]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer3" unique_id=125194122]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer3" unique_id=625152902]
-layout_mode = 2
-theme = ExtResource("32_gijw1")
-value = 75.0
-show_percentage = false
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2" unique_id=1070012024]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer2" unique_id=670466714]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer2" unique_id=1508678719]
-layout_mode = 2
-theme = ExtResource("32_gijw1")
-value = 75.0
-show_percentage = false
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2" unique_id=562101251]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=1719431018]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=1693161577]
-layout_mode = 2
-theme = ExtResource("32_gijw1")
-value = 75.0
-show_percentage = false
-
-[node name="Control" type="Control" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2" unique_id=126437898]
-layout_mode = 2
-
-[node name="Control2" type="Control" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2" unique_id=489088709]
-layout_mode = 2
-
-[node name="Control3" type="Control" parent="main_canvas_layer/battle_ui/MarginContainer/VBoxContainer2" unique_id=531930970]
-layout_mode = 2
-
-[node name="battle_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=259250482]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("16_0t8i2")
-theme_override_constants/margin_bottom = 60
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_menu" unique_id=1227264853]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/separation = 0
-alignment = 2
-
-[node name="skill_menu_button_x" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer" unique_id=1997718613]
-layout_mode = 2
-size_flags_horizontal = 8
-focus_mode = 0
-theme_override_font_sizes/font_size = 16
-text = "  X  "
-
-[node name="PanelContainer" type="PanelContainer" parent="main_canvas_layer/battle_menu/VBoxContainer" unique_id=796616216]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer" unique_id=2035201869]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer" unique_id=2125259765]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=911702133]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1318792161]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=714878963]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "Battle Menu"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=72343048]
-visible = false
-layout_mode = 2
-
-[node name="Button" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1905214686]
-layout_mode = 2
-text = "  Habilities  "
-icon = ExtResource("43_acn20")
-
-[node name="Button2" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=886415627]
-layout_mode = 2
-text = "  Inventory  "
-icon = ExtResource("44_0t8i2")
-
-[node name="Button4" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1741977542]
-layout_mode = 2
-text = "  Status Effects  "
-icon = ExtResource("47_8m6hh")
-
-[node name="Button3" type="Button" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=136522799]
-layout_mode = 2
-text = "  Statistics  "
-icon = ExtResource("46_f8ljg")
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=596553659]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="skill_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=2011766193]
 visible = false
@@ -4822,14 +4711,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "No"
 
-[node name="button_next" type="Button" parent="main_canvas_layer" unique_id=959158716]
-offset_left = 552.0
-offset_top = 760.0
-offset_right = 640.0
-offset_bottom = 802.0
-theme = ExtResource("16_0t8i2")
-text = "  Next  "
-
 [node name="money_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1794139411]
 visible = false
 anchors_preset = 1
@@ -4984,4 +4865,5 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5t6d6")

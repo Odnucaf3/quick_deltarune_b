@@ -13,6 +13,7 @@ class_name Title_Scene
 @export var credits_menu_root: ScrollContainer
 @export var credits_menu_richtext: RichTextLabel
 @export var credits_menu_button_0: Button
+var nothing_cancel: Callable = func():pass
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -27,7 +28,12 @@ func _ready() -> void:
 	#singleton.Play_BGM(singleton.title_bgm)
 	#-------------------------------------------------------------------------------
 	Set_Title_Menu()
-	Set_Credit_Menu()
+#-------------------------------------------------------------------------------
+func _physics_process(_delta: float) -> void:
+	#-------------------------------------------------------------------------------
+	if(Input.is_action_just_pressed("Input_Pause")):
+		nothing_cancel.call()
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Title_Menu():
 	#-------------------------------------------------------------------------------
@@ -46,19 +52,19 @@ func Set_Title_Menu():
 	var _submit_credits:Callable = func():Title_Menu_Credit_Button_Submit()
 	var _submit_quit:Callable = func():Title_Menu_Quit_Button_Submit()
 	var _selected:Callable = func():singleton.Common_Selected()
-	var _cancel:Callable = func():Title_Menu_Any_Button_Cancel()
+	nothing_cancel = func():Title_Menu_Any_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button(title_menu_button_start, _selected, _submit_start, _cancel)
-	singleton.Set_Button(title_menu_button_options, _selected, _submit_options, _cancel)
-	singleton.Set_Button(title_menu_button_credits, _selected, _submit_credits, _cancel)
-	singleton.Set_Button(title_menu_button_quit, _selected, _submit_quit, _cancel)
+	singleton.Set_Button(title_menu_button_start, _selected, _submit_start)
+	singleton.Set_Button(title_menu_button_options, _selected, _submit_options)
+	singleton.Set_Button(title_menu_button_credits, _selected, _submit_credits)
+	singleton.Set_Button(title_menu_button_quit, _selected, _submit_quit)
 #-------------------------------------------------------------------------------
 func Set_Credit_Menu():
 	credits_menu_richtext.meta_clicked.connect(func(_meta:Variant):_richtextlabel_on_meta_clicked(_meta))
 	#-------------------------------------------------------------------------------
 	var _selected: Callable = func(): singleton.Common_Selected()
 	var _submit: Callable = func(): pass
-	var _cancel: Callable = func(): credits_menu_Back_Button_Cancel()
+	nothing_cancel = func(): credits_menu_Back_Button_Cancel()
 	#-------------------------------------------------------------------------------
 	var _w: Callable = func():
 		singleton.ScrollContainer_Up(credits_menu_root)
@@ -67,7 +73,7 @@ func Set_Credit_Menu():
 		singleton.ScrollContainer_Down(credits_menu_root)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Remove_Navigation(credits_menu_button_0)
-	singleton.Set_Button_WS_Up_Down(credits_menu_button_0, _selected, _submit, _cancel, _w, _s)
+	singleton.Set_Button_WS_Up_Down(credits_menu_button_0, _selected, _submit, _w, _s)
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -82,9 +88,9 @@ func Title_Menu_Option_Button_Submit():
 	#-------------------------------------------------------------------------------
 	var _selected:Callable = func():singleton.Common_Selected()
 	var _submit:Callable = func():Option_Menu_Back_Button_Submit()
-	var _cancel:Callable = func():Option_Menu_Back_Button_Cancel()
+	nothing_cancel = func():Option_Menu_Back_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button(singleton.option_menu.back, _selected, _submit, _cancel)
+	singleton.Set_Button(singleton.option_menu.back, _selected, _submit)
 	#-------------------------------------------------------------------------------
 	title_menu.hide()
 	singleton.Move_to_Button(singleton.option_menu.back)
@@ -93,6 +99,9 @@ func Title_Menu_Option_Button_Submit():
 func Title_Menu_Credit_Button_Submit() -> void:
 	credits_menu.show()
 	title_menu.hide()
+	#-------------------------------------------------------------------------------
+	Set_Credit_Menu()
+	#-------------------------------------------------------------------------------
 	credits_menu_richtext.get_v_scroll_bar().value = 0
 	singleton.Move_to_Button(credits_menu_button_0)
 	singleton.Common_Submited()
@@ -124,6 +133,7 @@ func Option_Menu_Back_Button_Common() -> void:
 	singleton.option_menu.hide()
 	Set_Idiome()
 	title_menu.show()
+	nothing_cancel = func(): Title_Menu_Any_Button_Cancel()
 #-------------------------------------------------------------------------------
 func Set_Idiome():
 	#-------------------------------------------------------------------------------
@@ -147,6 +157,7 @@ func Set_Idiome():
 func credits_menu_Back_Button_Cancel():
 	credits_menu.hide()
 	title_menu.show()
+	nothing_cancel = func(): Title_Menu_Any_Button_Cancel()
 	singleton.Move_to_Button(title_menu_button_credits)
 	singleton.Common_Canceled()
 #-------------------------------------------------------------------------------

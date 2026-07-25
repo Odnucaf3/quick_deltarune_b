@@ -9,7 +9,7 @@ enum BATTLE_STATE{STILL_FIGHTING, YOU_WIN, YOU_LOSE, YOU_ESCAPE, YOU_RETRY}
 var key_dictionary: Dictionary[String, int]
 #-------------------------------------------------------------------------------
 @export var background_canvas_layer: CanvasLayer
-@export var main_canvas_layer: CanvasLayer
+@export var main_canvas_layer: Main_CanvasLayer
 @export var world_2d: Node2D
 @export var battle_box: Control
 @export var battle_ui: Control
@@ -356,7 +356,7 @@ func _enter_tree() -> void:
 	singleton.game_system = self
 #-------------------------------------------------------------------------------
 func _ready() -> void:
-	Pause_Off()
+	Pause_Off_1()
 	main_canvas_layer.show()
 	background_canvas_layer.show()
 	#-------------------------------------------------------------------------------
@@ -426,12 +426,6 @@ func _physics_process(_delta: float) -> void:
 			#-------------------------------------------------------------------------------
 			if(is_in_dialogue):
 				return
-			#-------------------------------------------------------------------------------
-			if(!get_tree().paused):
-				if(Input.is_action_just_pressed("Input_Pause")):
-					PauseMenu_Open()
-					return
-				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			if(Input.is_action_just_pressed("ui_accept")):
 				var _area2d_array : Array[Area2D] = player_interactable_by_action_area2d.get_overlapping_areas()
@@ -663,10 +657,10 @@ func Set_Go_to_Title_Menu():
 	var _selected: Callable = func():singleton.Common_Selected()
 	var _submit_yes: Callable = func():Set_Go_to_Title_Menu_Yes_Button_Submit()
 	var _submit_no: Callable = func():Set_Go_to_Title_Menu_No_Button_Submit()
-	var _cancel: Callable = func():Set_Go_to_Title_Menu_Button_Cancel()
+	main_canvas_layer.nothing_cancel = func():Set_Go_to_Title_Menu_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button(go_to_title_menu_button_yes, _selected, _submit_yes, _cancel)
-	singleton.Set_Button(go_to_title_menu_button_no, _selected, _submit_no, _cancel)
+	singleton.Set_Button(go_to_title_menu_button_yes, _selected, _submit_yes)
+	singleton.Set_Button(go_to_title_menu_button_no, _selected, _submit_no)
 	#-------------------------------------------------------------------------------
 	var _button_array: Array[Button] = [
 		go_to_title_menu_button_yes, 
@@ -677,25 +671,37 @@ func Set_Go_to_Title_Menu():
 #-------------------------------------------------------------------------------
 func Set_Go_to_Title_Menu_Yes_Button_Submit():
 	singleton.Common_Submited()
-	Pause_Off()
+	Pause_Off_1()
 	get_tree().change_scene_to_file("res://Nodes/Scenes/title_scene.tscn")
 #-------------------------------------------------------------------------------
 func Set_Go_to_Title_Menu_No_Button_Submit():
-	go_to_title_menu.hide()
+	Set_Go_to_Title_Menu_Button_Common()
 	singleton.Move_to_Button_by_Submit(pause_menu_button_quit)
 #-------------------------------------------------------------------------------
 func Set_Go_to_Title_Menu_Button_Cancel():
-	go_to_title_menu.hide()
+	Set_Go_to_Title_Menu_Button_Common()
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_quit)
+#-------------------------------------------------------------------------------
+func Set_Go_to_Title_Menu_Button_Common():
+	go_to_title_menu.hide()
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
 #region PAUSE MENU
 #-------------------------------------------------------------------------------
-func Pause_On():
+func Pause_On_1():
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
+	Pause_On_0()
+#-------------------------------------------------------------------------------
+func Pause_On_0():
 	get_tree().set_deferred("paused", true)
 #-------------------------------------------------------------------------------
-func Pause_Off():
+func Pause_Off_1():
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Open()
+	Pause_Off_0()
+#-------------------------------------------------------------------------------
+func Pause_Off_0():
 	get_tree().set_deferred("paused", false)
 #-------------------------------------------------------------------------------
 func PauseMenu_Open():
@@ -722,7 +728,7 @@ func PauseMenu_Open():
 	singleton.Move_to_Button(pause_menu_button_skill)
 	singleton.Common_Submited()
 	#-------------------------------------------------------------------------------
-	Pause_On()
+	Pause_On_1()
 #-------------------------------------------------------------------------------
 func PauseMenu_Close():
 	pause_menu.hide()
@@ -737,7 +743,8 @@ func PauseMenu_Close():
 	singleton.Destroy_Button_Array(_button_array)
 	ally_button_array.clear()
 	#-------------------------------------------------------------------------------
-	Pause_Off()
+	singleton.Common_Canceled()
+	Pause_Off_1()
 #-------------------------------------------------------------------------------
 func Create_Fighter_Button(_fighter_node:Fighter_Node) -> Fighter_Button:
 	var _party_button: Fighter_Button = fighter_button_prefab.instantiate() as Fighter_Button
@@ -765,15 +772,13 @@ func Pause_Menu_Set():
 	var _options_submit: Callable = func(): PauseMenu_OptionButton_Submit()
 	var _quit_submit: Callable = func(): PauseMenu_QuitButton_Submit()
 	#-------------------------------------------------------------------------------
-	var _cancel: Callable = func(): PauseMenu_AnyButton_Cancel()
-	#-------------------------------------------------------------------------------
-	singleton.Set_Button(pause_menu_button_skill, _selected, _skill_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_item, _selected, _item_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_equip, _selected, _equip_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_status, _selected, _status_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_statistics, _selected, _statistics_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_options, _selected, _options_submit, _cancel)
-	singleton.Set_Button(pause_menu_button_quit, _selected, _quit_submit, _cancel)
+	singleton.Set_Button(pause_menu_button_skill, _selected, _skill_submit)
+	singleton.Set_Button(pause_menu_button_item, _selected, _item_submit)
+	singleton.Set_Button(pause_menu_button_equip, _selected, _equip_submit)
+	singleton.Set_Button(pause_menu_button_status, _selected, _status_submit)
+	singleton.Set_Button(pause_menu_button_statistics, _selected, _statistics_submit)
+	singleton.Set_Button(pause_menu_button_options, _selected, _options_submit)
+	singleton.Set_Button(pause_menu_button_quit, _selected, _quit_submit)
 	#-------------------------------------------------------------------------------
 	var _button_array: Array[Button] = [
 		pause_menu_button_skill,
@@ -789,16 +794,16 @@ func Pause_Menu_Set():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Pause_Menu_Skill_Button_Submit():
-	#-------------------------------------------------------------------------------
 	pause_menu_button_mouse_blocker.show()
 	pause_menu_fighter_button_mouse_blocker.hide()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Skill_Fighter_Button_Cancel()
 	#-------------------------------------------------------------------------------
 	for _i in ally_button_array.size():
 		var _selected: Callable = func(): singleton.Common_Selected()
 		var _submit: Callable = func(): Pause_Menu_Skill_Fighter_Button_Submit(_i)
-		var _cancel: Callable = func(): Pause_Menu_Skill_Fighter_Button_Cancel()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(ally_button_array[_i], _selected, _submit, _cancel)
+		singleton.Set_Button(ally_button_array[_i], _selected, _submit)
 	#-------------------------------------------------------------------------------
 	Disable_Item_Button_0(pause_menu_button_skill)
 	singleton.Move_to_Button_by_Submit(ally_button_array[0])
@@ -812,6 +817,7 @@ func Pause_Menu_Skill_Fighter_Button_Cancel():
 	pause_menu_button_mouse_blocker.hide()
 	pause_menu_fighter_button_mouse_blocker.show()
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 	Enable_Item_Button_0(pause_menu_button_skill)
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_skill)
 #-------------------------------------------------------------------------------
@@ -821,16 +827,16 @@ func Pause_Menu_Item_Button_Submit():
 	item_menu.show()
 #-------------------------------------------------------------------------------
 func Pause_Menu_Equip_Button_Submit():
-	#-------------------------------------------------------------------------------
 	pause_menu_button_mouse_blocker.show()
 	pause_menu_fighter_button_mouse_blocker.hide()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Equip_Fighter_Button_Cancel()
 	#-------------------------------------------------------------------------------
 	for _i in ally_button_array.size():
 		var _selected: Callable = func(): singleton.Common_Selected()
 		var _submit: Callable = func(): Pause_Menu_Equip_Fighter_Button_Submit(_i)
-		var _cancel: Callable = func(): Pause_Menu_Equip_Fighter_Button_Cancel()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(ally_button_array[_i], _selected, _submit, _cancel)
+		singleton.Set_Button(ally_button_array[_i], _selected, _submit)
 	#-------------------------------------------------------------------------------
 	Disable_Item_Button_0(pause_menu_button_equip)
 	singleton.Move_to_Button_by_Submit(ally_button_array[0])
@@ -844,20 +850,21 @@ func Pause_Menu_Equip_Fighter_Button_Cancel():
 	pause_menu_button_mouse_blocker.hide()
 	pause_menu_fighter_button_mouse_blocker.show()
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 	Enable_Item_Button_0(pause_menu_button_equip)
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_equip)
 #-------------------------------------------------------------------------------
 func Pause_Menu_Statistics_Button_Submit():
-	#-------------------------------------------------------------------------------
 	pause_menu_button_mouse_blocker.show()
 	pause_menu_fighter_button_mouse_blocker.hide()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Statistics_Fighter_Button_Cancel()
 	#-------------------------------------------------------------------------------
 	for _i in ally_button_array.size():
 		var _selected: Callable = func(): singleton.Common_Selected()
 		var _submit: Callable = func(): Pause_Menu_Statistics_Fighter_Button_Submit(_i)
-		var _cancel: Callable = func(): Pause_Menu_Statistics_Fighter_Button_Cancel()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(ally_button_array[_i], _selected, _submit, _cancel)
+		singleton.Set_Button(ally_button_array[_i], _selected, _submit)
 	#-------------------------------------------------------------------------------
 	Disable_Item_Button_0(pause_menu_button_statistics)
 	singleton.Move_to_Button_by_Submit(ally_button_array[0])
@@ -873,20 +880,21 @@ func Pause_Menu_Statistics_Fighter_Button_Cancel():
 	pause_menu_button_mouse_blocker.hide()
 	pause_menu_fighter_button_mouse_blocker.show()
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 	Enable_Item_Button_0(pause_menu_button_statistics)
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_statistics)
 #-------------------------------------------------------------------------------
 func Pause_Menu_Status_Button_Submit():
-	#-------------------------------------------------------------------------------
 	pause_menu_button_mouse_blocker.show()
 	pause_menu_fighter_button_mouse_blocker.hide()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Status_Fighter_Button_Cancel()
 	#-------------------------------------------------------------------------------
 	for _i in ally_button_array.size():
 		var _selected: Callable = func(): singleton.Common_Selected()
 		var _submit: Callable = func(): Pause_Menu_Status_Fighter_Button_Submit(_i)
-		var _cancel: Callable = func(): Pause_Menu_Status_Fighter_Button_Cancel()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(ally_button_array[_i], _selected, _submit, _cancel)
+		singleton.Set_Button(ally_button_array[_i], _selected, _submit)
 	#-------------------------------------------------------------------------------
 	Disable_Item_Button_0(pause_menu_button_status)
 	singleton.Move_to_Button_by_Submit(ally_button_array[0])
@@ -901,6 +909,7 @@ func Pause_Menu_Status_Fighter_Button_Cancel():
 	pause_menu_button_mouse_blocker.hide()
 	pause_menu_fighter_button_mouse_blocker.show()
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 	Enable_Item_Button_0(pause_menu_button_status)
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_status)
 #-------------------------------------------------------------------------------
@@ -910,15 +919,14 @@ func PauseMenu_QuitButton_Submit():
 	singleton.Move_to_Button_by_Submit(go_to_title_menu_button_no)
 #-------------------------------------------------------------------------------
 func PauseMenu_AnyButton_Cancel():
-	singleton.Common_Canceled()
-	#-------------------------------------------------------------------------------
-	await get_tree().physics_frame
 	PauseMenu_Close()
 #endregion
 #-------------------------------------------------------------------------------
 #region PAUSE-SKILL MENU
 #-------------------------------------------------------------------------------
 func Pause_Skill_Menu_Set(_fighter_index:int):
+	main_canvas_layer.nothing_cancel = func(): Pause_Skill_Menu_Main_Button_Cancel(_fighter_index)
+	#-------------------------------------------------------------------------------
 	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
 	Set_Skill(_fighter_serializable)
 	var _skill_serializable_array: Array[Action_Serializable] = Get_Skill(_fighter_serializable)
@@ -934,9 +942,8 @@ func Pause_Skill_Menu_Set(_fighter_index:int):
 			#-------------------------------------------------------------------------------
 			var _selected: Callable = func(): Pause_Skill_Menu_Skill_Button_Selected(_skill_serializable_array[_i])
 			var _submit: Callable = func(): singleton.Common_Canceled()
-			var _cancel: Callable = func(): Pause_Skill_Menu_Main_Button_Cancel(_fighter_index)
 			#-------------------------------------------------------------------------------
-			singleton.Set_Button_WS(_button, _selected, _submit, _cancel, _w, _s)
+			singleton.Set_Button_WS(_button, _selected, _submit, _w, _s)
 			#-------------------------------------------------------------------------------
 			skill_menu_button_content.add_child(_button)
 			skill_menu_button_array.append(_button)
@@ -950,9 +957,8 @@ func Pause_Skill_Menu_Set(_fighter_index:int):
 		#-------------------------------------------------------------------------------
 		var _selected: Callable = func(): singleton.Common_Selected()
 		var _submit: Callable = func(): pass
-		var _cancel: Callable = func(): Pause_Skill_Menu_Main_Button_Cancel(_fighter_index)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(skill_menu_button_0, _selected, _submit, _cancel)
+		singleton.Set_Button(skill_menu_button_0, _selected, _submit)
 		#-------------------------------------------------------------------------------
 		Enable_Item_Button_0(skill_menu_button_0)
 		skill_menu_information_root.hide()
@@ -1005,6 +1011,8 @@ func Pause_Skill_Menu_Main_Button_Cancel(_fighter_index:int):
 	pause_menu.show()
 	skill_menu.hide()
 	singleton.Destroy_Button_Array(skill_menu_button_array)
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Skill_Fighter_Button_Cancel()
 	singleton.Move_to_Button_by_Cancel(ally_button_array[_fighter_index])
 #-------------------------------------------------------------------------------
 func Set_Skill_Information(_action_serializable:Action_Serializable):
@@ -1225,12 +1233,12 @@ func Pause_Item_Menu_Set():
 	#-------------------------------------------------------------------------------
 	var _submit_0: Callable = func():singleton.Common_Canceled()
 	#-------------------------------------------------------------------------------
-	var _cancel: Callable = func():Pause_Item_Menu_Main_Button_Cancel()
+	main_canvas_layer.nothing_cancel = func():Pause_Item_Menu_Main_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, _all_selected_0, _submit_0, _cancel, _all_a, _all_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, _consumable_selected_0, _submit_0, _cancel, _consumable_a, _consumable_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, _equip_selected_0, _submit_0, _cancel, _equip_a, _equip_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, _key_selected_0, _submit_0, _cancel, _key_a, _key_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, _all_selected_0, _submit_0, _all_a, _all_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, _consumable_selected_0, _submit_0, _consumable_a, _consumable_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, _equip_selected_0, _submit_0, _equip_a, _equip_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, _key_selected_0, _submit_0, _key_a, _key_d)
 	#-------------------------------------------------------------------------------
 	var _consumable_serializable_array: Array[Action_Serializable] = item_consumable_serializable_array
 	var _equip_serializable_array: Array[Equip_Serializable] = item_equip_serializable_array
@@ -1255,7 +1263,7 @@ func Pause_Item_Menu_Set():
 		#-------------------------------------------------------------------------------
 		var _consumable_submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, _cancel, _consumable_w, _consumable_s, _consumable_a, _consumable_d)
+		singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, _consumable_w, _consumable_s, _consumable_a, _consumable_d)
 		item_menu_consumable_button_content.add_child(_consumable_button)
 		item_menu_consumable_button_array.append(_consumable_button)
 		#-------------------------------------------------------------------------------
@@ -1268,7 +1276,7 @@ func Pause_Item_Menu_Set():
 		#-------------------------------------------------------------------------------
 		var _all_submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, _cancel, _consumable_w, _consumable_s, _all_a, _all_d)
+		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, _consumable_w, _consumable_s, _all_a, _all_d)
 		item_menu_all_button_content.add_child(_all_button)
 		item_menu_all_button_array.append(_all_button)
 	#-------------------------------------------------------------------------------
@@ -1287,7 +1295,7 @@ func Pause_Item_Menu_Set():
 		#-------------------------------------------------------------------------------
 		var _equip_submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, _cancel, _equip_w, _equip_s, _equip_a, _equip_d)
+		singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, _equip_w, _equip_s, _equip_a, _equip_d)
 		item_menu_equip_button_content.add_child(_equip_button)
 		item_menu_equip_button_array.append(_equip_button)
 		#-------------------------------------------------------------------------------
@@ -1300,7 +1308,7 @@ func Pause_Item_Menu_Set():
 		#-------------------------------------------------------------------------------
 		var _all_submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, _cancel, _equip_w, _equip_s, _all_a, _all_d)
+		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, _equip_w, _equip_s, _all_a, _all_d)
 		item_menu_all_button_content.add_child(_all_button)
 		item_menu_all_button_array.append(_all_button)
 		#-------------------------------------------------------------------------------
@@ -1320,7 +1328,7 @@ func Pause_Item_Menu_Set():
 		#-------------------------------------------------------------------------------
 		var _key_submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, _cancel, _key_w, _key_s, _key_a, _key_d)
+		singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, _key_w, _key_s, _key_a, _key_d)
 		item_menu_key_button_content.add_child(_key_button)
 		item_menu_key_button_array.append(_key_button)
 		#-------------------------------------------------------------------------------
@@ -1333,7 +1341,7 @@ func Pause_Item_Menu_Set():
 		#-------------------------------------------------------------------------------
 		var _all_submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, _cancel, _key_w, _key_s, _all_a, _all_d)
+		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, _key_w, _key_s, _all_a, _all_d)
 		item_menu_all_button_content.add_child(_all_button)
 		item_menu_all_button_array.append(_all_button)
 		#-------------------------------------------------------------------------------
@@ -1765,6 +1773,7 @@ func Pause_Item_Menu_Main_Button_Cancel():
 	singleton.Destroy_Button_Array(item_menu_key_button_array)
 	pause_menu.show()
 	item_menu.hide()
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 	singleton.Move_to_Button_by_Cancel(pause_menu_button_item)
 #-------------------------------------------------------------------------------
 func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold:int, _cooldown:int) -> Button:
@@ -1859,11 +1868,14 @@ func Create_KeyItem_Button(_key_serializable: Key_Serializable) -> Button:
 #region PAUSE-EQUIP MENU
 #-------------------------------------------------------------------------------
 func Pause_Equip_Menu_Set(_fighter_index:int):
+	main_canvas_layer.nothing_cancel = func():Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
+	#-------------------------------------------------------------------------------
 	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
 	var _equip_serializable_array: Array[Equip_Serializable] = _fighter_serializable.equip_serializable_array
 	#-------------------------------------------------------------------------------
-	if(_equip_serializable_array.size() >0):
-		equip_menu_button_type.text = ""
+	equip_menu_button_type.text = ""
+	#-------------------------------------------------------------------------------
+	if(_equip_serializable_array.size() > 0):
 		#-------------------------------------------------------------------------------
 		for _i in _equip_serializable_array.size():
 			var _button: Button = Create_EquipSlot_Button(_equip_serializable_array[_i])
@@ -1884,14 +1896,14 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 				singleton.Common_Selected()
 			#-------------------------------------------------------------------------------
 			var _submit_1: Callable = func():Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index, _i)
-			var _cancel_1: Callable = func():Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 			#-------------------------------------------------------------------------------
-			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _cancel_1, _w, _s)
+			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _w, _s)
 			equip_menu_button_content.add_child(_button)
 			equip_menu_button_array.append(_button)
 			#-------------------------------------------------------------------------------
 			equip_menu_button_type.text += "* "+Get_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)+":  "+"\n"
 		#-------------------------------------------------------------------------------
+		equip_menu_information_root.show()
 		singleton.Button_Array_Set_Vertical_Navigation(equip_menu_button_array)
 		Remove_Last_Letter(equip_menu_button_type)
 		Disable_Item_Button_0(equip_menu_button_0)
@@ -1899,11 +1911,12 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
+		equip_menu_information_root.hide()
+		#-------------------------------------------------------------------------------
 		var _selected: Callable = func():singleton.Common_Selected()
 		var _submit: Callable = func():pass
-		var _cancel: Callable = func():Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(equip_menu_button_0, _selected, _submit, _cancel)
+		singleton.Set_Button(equip_menu_button_0, _selected, _submit)
 		Enable_Item_Button_0(equip_menu_button_0)
 		singleton.Move_to_Button_by_Submit(equip_menu_button_0)
 	#-------------------------------------------------------------------------------
@@ -1920,9 +1933,9 @@ func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 		singleton.Common_Selected()
 	#-------------------------------------------------------------------------------
 	var _submit_0: Callable = func():Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index, _equip_index)
-	var _cancel_0: Callable = func():Pause_Equip_Menu_Equip_Slot_Equi_Item_Cancel(_equip_index)
+	main_canvas_layer.nothing_cancel = func():Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index, _equip_index)
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button(_empty_button, _selected_0, _submit_0, _cancel_0)
+	singleton.Set_Button(_empty_button, _selected_0, _submit_0)
 	item_menu_equip_button_content.add_child(_empty_button)
 	item_menu_equip_button_array.append(_empty_button)
 	#-------------------------------------------------------------------------------
@@ -1942,9 +1955,8 @@ func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 				singleton.Common_Selected()
 			#-------------------------------------------------------------------------------
 			var _submit_1: Callable = func(): Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index, _equip_index, item_equip_serializable_array[_i])
-			var _cancel_1: Callable = func(): Pause_Equip_Menu_Equip_Slot_Equi_Item_Cancel(_equip_index)
 			#-------------------------------------------------------------------------------
-			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _cancel_1, _w_1, _s_1)
+			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _w_1, _s_1)
 			item_menu_equip_button_content.add_child(_button)
 			item_menu_equip_button_array.append(_button)
 			#-------------------------------------------------------------------------------
@@ -1986,6 +1998,8 @@ func Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index:int, _equip_in
 	Remove_Equip_Item_From_Inventory(_equip_serializable.equip_resource, 1)
 	Equip_Item_to_Fighter(_fighter_index, _equip_index, _equip_serializable)
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
+	#-------------------------------------------------------------------------------
 	singleton.Move_to_Button_by_Equip(equip_menu_button_array[_equip_index])
 #-------------------------------------------------------------------------------
 func Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index:int, _equip_index:int):
@@ -2000,18 +2014,22 @@ func Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index:int, _equip_i
 	#-------------------------------------------------------------------------------
 	Unequip_Item_to_Fighter(_fighter_index, _equip_index)
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
+	#-------------------------------------------------------------------------------
 	singleton.Move_to_Button_by_Unequip(equip_menu_button_array[_equip_index])
 #-------------------------------------------------------------------------------
 func Equip_Item_to_Fighter(_fighter_index:int, _equip_index:int, _equip_serializable:Equip_Serializable):
 	var _equip_slot: Equip_Serializable = ally_node_array[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	_equip_slot.equip_resource = _equip_serializable.equip_resource
 	_equip_slot.stored = 1
+	equip_menu_button_array[_equip_index].icon = _equip_serializable.equip_resource.icon
 	equip_menu_button_array[_equip_index].text = "  "+tr("name_"+singleton.get_resource_filename(_equip_slot.equip_resource))+"  "
 #-------------------------------------------------------------------------------
 func Unequip_Item_to_Fighter(_fighter_index:int, _equip_index:int):
 	var _equip_slot: Equip_Serializable = ally_node_array[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	_equip_slot.equip_resource = null
 	_equip_slot.stored = 0
+	equip_menu_button_array[_equip_index].icon = null
 	equip_menu_button_array[_equip_index].text = "  ["+tr("equip_null")+"]  "
 #-------------------------------------------------------------------------------
 func Remove_Equip_Item_From_Inventory(_equip_resource:Equip_Resource, _remove:int):
@@ -2045,9 +2063,12 @@ func Add_Equip_Item_To_Inventory(_equip_resource:Equip_Resource, _add:int):
 	item_equip_serializable_array.append(_equip_serializable)
 	return
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Equip_Slot_Equi_Item_Cancel(_equip_index:int):
+func Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index:int, _equip_index:int):
 	item_menu.hide()
 	equip_menu.show()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
+	#-------------------------------------------------------------------------------
 	singleton.Destroy_Button_Array(item_menu_equip_button_array)
 	singleton.Move_to_Button_by_Cancel(equip_menu_button_array[_equip_index])
 #-------------------------------------------------------------------------------
@@ -2056,12 +2077,16 @@ func Pause_Equip_Menu_Main_Button_Cancel(_fighter_index:int):
 	pause_menu.show()
 	equip_menu.hide()
 	Fighter_Button_Set_HP(ally_button_array[_fighter_index], ally_node_array[_fighter_index].fighter_serializable)
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Equip_Fighter_Button_Cancel()
+	#-------------------------------------------------------------------------------
 	var _button: Button = ally_button_array[_fighter_index] as Button
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 func Create_EquipEmpty_Button() -> Button:
 	var _empty_button: Button = Button.new()
 	#-------------------------------------------------------------------------------
+	_empty_button.icon = null
 	_empty_button.text = "  ["+tr("equip_null")+"]  "
 	_empty_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_empty_button.custom_minimum_size.y = button_array_minimum_size_y
@@ -2098,9 +2123,9 @@ func Pause_Statistics_Menu_Set(_fighter_index:int):
 	#-------------------------------------------------------------------------------
 	var _selected: Callable = func():singleton.Common_Selected()
 	var _submit: Callable = func():pass
-	var _cancel: Callable = func():Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index)
+	main_canvas_layer.nothing_cancel = func():Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_WS_Up_Down(statistics_menu_button_0, _selected, _submit, _cancel, _w, _s)
+	singleton.Set_Button_WS_Up_Down(statistics_menu_button_0, _selected, _submit, _w, _s)
 	#-------------------------------------------------------------------------------
 	var _fighter_node: Fighter_Node = ally_node_array[_fighter_index]
 	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable
@@ -2275,6 +2300,7 @@ func Set_Fighter_Description(_fighter_resource:Fighter_Resource):
 func Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index:int):
 	pause_menu.show()
 	statistics_menu.hide()
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Statistics_Fighter_Button_Cancel()
 	var _button: Button = ally_button_array[_fighter_index] as Button
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
@@ -2286,7 +2312,7 @@ func Pause_Status_Menu_Set(_fighter_index:int):
 	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
 	var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
 	#-------------------------------------------------------------------------------
-	var _cancel: Callable = func():Pause_Status_Menu_Status_Button_Cancel(_fighter_index)
+	main_canvas_layer.nothing_cancel = func():Pause_Status_Menu_Status_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
 	if(_status_serializable_array.size() > 0):
 		#-------------------------------------------------------------------------------
@@ -2302,7 +2328,7 @@ func Pause_Status_Menu_Set(_fighter_index:int):
 			#-------------------------------------------------------------------------------
 			var _submit: Callable = func():singleton.Common_Canceled()
 			#-------------------------------------------------------------------------------
-			singleton.Set_Button_WS(_button, _selected, _submit, _cancel, _w, _s)
+			singleton.Set_Button_WS(_button, _selected, _submit, _w, _s)
 			status_menu_button_content.add_child(_button)
 			status_menu_button_array.append(_button)
 		#-------------------------------------------------------------------------------
@@ -2318,7 +2344,7 @@ func Pause_Status_Menu_Set(_fighter_index:int):
 		var _submit: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
 		Enable_Item_Button_0(status_menu_button_0)
-		singleton.Set_Button(status_menu_button_0, _selected, _submit, _cancel)
+		singleton.Set_Button(status_menu_button_0, _selected, _submit)
 		singleton.Move_to_Button_by_Submit(status_menu_button_0)
 		status_menu_information_root.hide()
 	#-------------------------------------------------------------------------------
@@ -2354,6 +2380,9 @@ func Pause_Status_Menu_Status_Button_Cancel(_fighter_index:int):
 	singleton.Destroy_Button_Array(status_menu_button_array)
 	status_menu.hide()
 	pause_menu.show()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Status_Fighter_Button_Cancel()
+	#-------------------------------------------------------------------------------
 	var _button:Button = ally_button_array[_fighter_index] as Button
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
@@ -2972,7 +3001,12 @@ func Get_Fighter_Elemental_Stats_Dark(_fighter_serializable:Fighter_Serializable
 #-------------------------------------------------------------------------------
 func PauseMenu_OptionButton_Submit():
 	singleton.option_menu.show()
-	singleton.Set_Button(singleton.option_menu.back, func():singleton.Common_Selected(), func():OptionMenu_BackButton_Subited(), func():OptionMenu_BackButton_Canceled())
+	#-------------------------------------------------------------------------------
+	var _selected: Callable = func():singleton.Common_Selected()
+	var _submit: Callable = func():OptionMenu_BackButton_Subited()
+	main_canvas_layer.nothing_cancel = func():OptionMenu_BackButton_Canceled()
+	#-------------------------------------------------------------------------------
+	singleton.Set_Button(singleton.option_menu.back, _selected, _submit)
 	pause_menu.hide()
 	tp_bar.hide()
 	#-------------------------------------------------------------------------------
@@ -2981,18 +3015,17 @@ func PauseMenu_OptionButton_Submit():
 #-------------------------------------------------------------------------------
 func OptionMenu_BackButton_Subited() -> void:
 	OptionMenu_BackButton_Common()
-	singleton.Move_to_Button(pause_menu_button_options)
-	singleton.Common_Submited()
+	singleton.Move_to_Button_by_Submit(pause_menu_button_options)
 #-------------------------------------------------------------------------------
 func OptionMenu_BackButton_Canceled() -> void:
 	OptionMenu_BackButton_Common()
-	singleton.Move_to_Button(pause_menu_button_options)
-	singleton.Common_Canceled()
+	singleton.Move_to_Button_by_Cancel(pause_menu_button_options)
 #-------------------------------------------------------------------------------
 func OptionMenu_BackButton_Common() -> void:
 	singleton.option_menu.Save_OptionSaveData_Json()
 	singleton.option_menu.hide()
 	Set_Idiome()
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Close()
 	tp_bar.show()
 	pause_menu.show()
 #-------------------------------------------------------------------------------
@@ -3455,6 +3488,12 @@ func Dialogue_Close_0():
 	button_next.hide()
 	dialogue_menu.hide()
 #-------------------------------------------------------------------------------
+func Disable_Pause_Input():
+	main_canvas_layer.nothing_cancel = func(): pass
+#-------------------------------------------------------------------------------
+func Enable_Pause_Input():
+	main_canvas_layer.nothing_cancel = func(): PauseMenu_Open()
+#-------------------------------------------------------------------------------
 func Stop_Moving():
 	#-------------------------------------------------------------------------------
 	for _i in ally_node_array.size():
@@ -3463,6 +3502,8 @@ func Stop_Moving():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Open_Dialogue_Options(_array_string:Array[String]):
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func():pass
 	#-------------------------------------------------------------------------------
 	if(_array_string.size() > 0):
 		singleton.Destroy_Button_Array(dialogue_menu_button_array)
@@ -3479,9 +3520,7 @@ func Open_Dialogue_Options(_array_string:Array[String]):
 				dialogue_option_index = _i
 				next_signal.emit()
 			#-------------------------------------------------------------------------------
-			var _cancel: Callable = func():pass
-			#-------------------------------------------------------------------------------
-			singleton.Set_Button(_button, _selected, _submit, _cancel)
+			singleton.Set_Button(_button, _selected, _submit)
 			dialogue_menu_button_content.add_child(_button)
 			dialogue_menu_button_array.append(_button)
 		#-------------------------------------------------------------------------------
@@ -3506,7 +3545,7 @@ func Get_Money_Label(_value:int) -> String:
 #-------------------------------------------------------------------------------
 func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Serializable], _equipitem_array:Array[Equip_Serializable], _keyitem_array:Array[Key_Serializable]):
 	item_menu.show()
-	Pause_On()
+	Pause_On_0()
 	tp_bar.show()
 	pause_menu_panel.show()
 	#-------------------------------------------------------------------------------
@@ -3602,12 +3641,12 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	var _submit_0: Callable = func():pass
-	var _cancel_0: Callable = func():Close_Market()
+	main_canvas_layer.nothing_cancel = func():Close_Market()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, _all_selected_0, _submit_0, _cancel_0, _all_a, _all_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, _consumable_selected_0, _submit_0, _cancel_0, _consumable_a, _consumable_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, _equip_selected_0, _submit_0, _cancel_0, _equip_a, _equip_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, _key_selected_0, _submit_0, _cancel_0, _key_a, _key_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, _all_selected_0, _submit_0, _all_a, _all_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, _consumable_selected_0, _submit_0, _consumable_a, _consumable_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, _equip_selected_0, _submit_0, _equip_a, _equip_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, _key_selected_0, _submit_0, _key_a, _key_d)
 	#-------------------------------------------------------------------------------
 	for _i in _consumableitem_array.size():
 		var _hold: int = _consumableitem_array[_i].stored
@@ -3622,7 +3661,7 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 		var _consumable_selected: Callable = func():BuyMenu_Item_Consumable_Selected(_consumableitem_array[_i])
 		var _submit_consumable_item: Callable = func():BuyMenu_ItemConsumable_Submit(_consumableitem_button, _merchant_name, _consumableitem_array[_i])
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_consumableitem_button, _consumable_selected, _submit_consumable_item, _cancel_0, _consumable_w, _consumable_s, _consumable_a, _consumable_d)
+		singleton.Set_Button_WSAD_Left_Right(_consumableitem_button, _consumable_selected, _submit_consumable_item, _consumable_w, _consumable_s, _consumable_a, _consumable_d)
 		item_menu_consumable_button_content.add_child(_consumableitem_button)
 		item_menu_consumable_button_array.append(_consumableitem_button)
 		#-------------------------------------------------------------------------------
@@ -3634,7 +3673,7 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 			#-------------------------------------------------------------------------------
 		var _submit_all_item: Callable = func():BuyMenu_ItemConsumable_Submit(_allitem_button, _merchant_name, _consumableitem_array[_i])
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_allitem_button, _all_select_1, _submit_all_item, _cancel_0, _consumable_w, _consumable_s, _all_a, _all_d)
+		singleton.Set_Button_WSAD_Left_Right(_allitem_button, _all_select_1, _submit_all_item, _consumable_w, _consumable_s, _all_a, _all_d)
 		item_menu_all_button_content.add_child(_allitem_button)
 		item_menu_all_button_array.append(_allitem_button)
 		#-------------------------------------------------------------------------------
@@ -3651,7 +3690,7 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 		var _equip_selected: Callable = func():BuyMenu_EquipItem_Selected(_equipitem_array[_i])
 		var _submit_equip_item: Callable = func():BuyMenu_EquipItem_Submit(_equipitem_button, _merchant_name, _equipitem_array[_i], _equipitem_button, _allitem_button)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_equipitem_button, _equip_selected, _submit_equip_item, _cancel_0, _equip_w, _equip_s, _equip_a, _equip_d)
+		singleton.Set_Button_WSAD_Left_Right(_equipitem_button, _equip_selected, _submit_equip_item, _equip_w, _equip_s, _equip_a, _equip_d)
 		item_menu_equip_button_content.add_child(_equipitem_button)
 		item_menu_equip_button_array.append(_equipitem_button)
 		#-------------------------------------------------------------------------------
@@ -3661,7 +3700,7 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 		#-------------------------------------------------------------------------------
 		var _all_submit: Callable = func():BuyMenu_EquipItem_Submit(_allitem_button, _merchant_name, _equipitem_array[_i], _equipitem_button, _allitem_button)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_allitem_button, _all_select_1, _all_submit, _cancel_0, _equip_w, _equip_s, _all_a, _all_d)
+		singleton.Set_Button_WSAD_Left_Right(_allitem_button, _all_select_1, _all_submit, _equip_w, _equip_s, _all_a, _all_d)
 		item_menu_all_button_content.add_child(_allitem_button)
 		item_menu_all_button_array.append(_allitem_button)
 	#-------------------------------------------------------------------------------
@@ -3677,7 +3716,7 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 		var _key_selected_1: Callable = func():BuyMenu_KeyItem_Selected(_keyitem_array[_i])
 		var _submit_keyitem: Callable = func():BuyMenu_KeyItem_Submit(_keyitem_button, _merchant_name, _keyitem_array[_i], _keyitem_button, _allitem_button)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_keyitem_button, _key_selected_1, _submit_keyitem, _cancel_0, _key_w, _key_s, _key_a, _key_d)
+		singleton.Set_Button_WSAD_Left_Right(_keyitem_button, _key_selected_1, _submit_keyitem, _key_w, _key_s, _key_a, _key_d)
 		item_menu_key_button_content.add_child(_keyitem_button)
 		item_menu_key_button_array.append(_keyitem_button)
 		#-------------------------------------------------------------------------------
@@ -3687,7 +3726,7 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 		#-------------------------------------------------------------------------------
 		var _submit_allitem: Callable = func():BuyMenu_KeyItem_Submit(_allitem_button, _merchant_name, _keyitem_array[_i], _keyitem_button, _allitem_button)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_allitem_button, _all_select_1, _submit_allitem, _cancel_0, _key_w, _key_s, _all_a, _all_d)
+		singleton.Set_Button_WSAD_Left_Right(_allitem_button, _all_select_1, _submit_allitem, _key_w, _key_s, _all_a, _all_d)
 		item_menu_all_button_content.add_child(_allitem_button)
 		item_menu_all_button_array.append(_allitem_button)
 	#-------------------------------------------------------------------------------
@@ -3715,10 +3754,10 @@ func Close_Market():
 	#-------------------------------------------------------------------------------
 	singleton.Common_Canceled()
 	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): pass
 	next_signal.emit()
 	#-------------------------------------------------------------------------------
-	await get_tree().physics_frame
-	Pause_Off()
+	Pause_Off_0()
 #-------------------------------------------------------------------------------
 func BuyMenu_Item_Consumable_Selected(_item_serializable: Action_Serializable):
 	#-------------------------------------------------------------------------------
@@ -4054,10 +4093,13 @@ func Confirm_Buy_Menu_Submit(_submit:Callable, _button:Button, _up:Callable, _do
 	var _cancel: Callable = func():
 		confirm_buy_menu.hide()
 		_button.disabled = false
+		main_canvas_layer.nothing_cancel = func(): Close_Market()
 		singleton.Move_to_Button(_button)
 		singleton.Common_Canceled()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_Up_Down_Left_Right(confirm_buy_menu_button, func():pass, _submit, _cancel, _up, _down, _left, _right)
+	main_canvas_layer.nothing_cancel = _cancel
+	#-------------------------------------------------------------------------------
+	singleton.Set_Button_Up_Down_Left_Right(confirm_buy_menu_button, func():pass, _submit, _up, _down, _left, _right)
 	singleton.Move_to_Button(confirm_buy_menu_button)
 	singleton.Common_Submited()
 #-------------------------------------------------------------------------------

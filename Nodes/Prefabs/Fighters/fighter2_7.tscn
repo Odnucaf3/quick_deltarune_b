@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://ckw37s74f5y6" path="res://Resources/Equips/head_3.tres" id="4_np0vf"]
 [ext_resource type="Resource" uid="uid://cfn6jkj7set5x" path="res://Resources/Equips/body_3.tres" id="5_jt8pj"]
 [ext_resource type="Resource" uid="uid://bg53x77yko4ip" path="res://Resources/Equips/ring_3.tres" id="6_u8pqw"]
-[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter3_8.tres" id="7_frpv2"]
+[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter2_7.tres" id="7_x6tdn"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_hjwwf"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_jynrw"]
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/actor2_7.tscn" id="10_8vovb"]
@@ -41,7 +41,7 @@ metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_g6gf4"]
 script = ExtResource("8_hjwwf")
-fighter_resource = ExtResource("7_frpv2")
+fighter_resource = ExtResource("7_x6tdn")
 experience = 999999
 equip_serializable_array = Array[ExtResource("2_i2bd6")]([SubResource("Resource_0tgis"), SubResource("Resource_h02ql"), SubResource("Resource_hi72e"), SubResource("Resource_l6iag"), SubResource("Resource_gvk4o")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"

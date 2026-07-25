@@ -61,25 +61,15 @@ func Set_Dialogue_Button(_b:Button, _submit:Callable, _w:Callable, _s:Callable):
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable) -> void:
+func Set_Button(_b:Button, _selected:Callable, _submited:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
 	_b.mouse_exited.connect(func():Mouse_Keep_Focus_When_Ext())
 	_b.pressed.connect(func():Mouse_Grab_Button_and_Submit(_b, _submited))
-	#-------------------------------------------------------------------------------
-	_b.gui_input.connect(
-		#-------------------------------------------------------------------------------
-		func(_event:InputEvent):
-			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_WS(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _w:Callable, _s:Callable) -> void:
+func Set_Button_WS(_b:Button, _selected:Callable, _submited:Callable, _w:Callable, _s:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -90,10 +80,7 @@ func Set_Button_WS(_b:Button, _selected:Callable, _submited:Callable, _canceled:
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(Input.is_action_pressed("Input_W")):
+			if(Input.is_action_pressed("Input_W")):
 				_w.call()
 			#-------------------------------------------------------------------------------
 			elif(Input.is_action_pressed("Input_S")):
@@ -103,7 +90,7 @@ func Set_Button_WS(_b:Button, _selected:Callable, _submited:Callable, _canceled:
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_WS_Up_Down(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _w:Callable, _s:Callable) -> void:
+func Set_Button_WS_Up_Down(_b:Button, _selected:Callable, _submited:Callable, _w:Callable, _s:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -114,10 +101,7 @@ func Set_Button_WS_Up_Down(_b:Button, _selected:Callable, _submited:Callable, _c
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(Input.is_action_pressed("ui_up")):
+			if(Input.is_action_pressed("ui_up")):
 				_w.call()
 			#-------------------------------------------------------------------------------
 			elif(Input.is_action_pressed("ui_down")):
@@ -133,7 +117,7 @@ func Set_Button_WS_Up_Down(_b:Button, _selected:Callable, _submited:Callable, _c
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_AD_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _a:Callable, _d:Callable) -> void:
+func Set_Button_AD_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _a:Callable, _d:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -144,10 +128,7 @@ func Set_Button_AD_Left_Right(_b:Button, _selected:Callable, _submited:Callable,
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(_event.is_action_pressed("ui_left")):
+			if(_event.is_action_pressed("ui_left")):
 				_a.call()
 			#-------------------------------------------------------------------------------
 			elif(_event.is_action_pressed("ui_right")):
@@ -163,7 +144,7 @@ func Set_Button_AD_Left_Right(_b:Button, _selected:Callable, _submited:Callable,
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_WSAD(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _w:Callable, _s:Callable, _a:Callable, _d:Callable) -> void:
+func Set_Button_WSAD(_b:Button, _selected:Callable, _submited:Callable, _w:Callable, _s:Callable, _a:Callable, _d:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -174,10 +155,7 @@ func Set_Button_WSAD(_b:Button, _selected:Callable, _submited:Callable, _cancele
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(Input.is_action_pressed("Input_W")):
+			if(Input.is_action_pressed("Input_W")):
 				_w.call()
 			#-------------------------------------------------------------------------------
 			elif(Input.is_action_pressed("Input_S")):
@@ -193,7 +171,7 @@ func Set_Button_WSAD(_b:Button, _selected:Callable, _submited:Callable, _cancele
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_WSAD_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _w:Callable, _s:Callable, _a:Callable, _d:Callable) -> void:
+func Set_Button_WSAD_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _w:Callable, _s:Callable, _a:Callable, _d:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -204,10 +182,7 @@ func Set_Button_WSAD_Left_Right(_b:Button, _selected:Callable, _submited:Callabl
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(_event.is_action_pressed("ui_left")):
+			if(_event.is_action_pressed("ui_left")):
 				_a.call()
 			#-------------------------------------------------------------------------------
 			elif(_event.is_action_pressed("ui_right")):
@@ -229,7 +204,7 @@ func Set_Button_WSAD_Left_Right(_b:Button, _selected:Callable, _submited:Callabl
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_WSAD_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _w:Callable, _s:Callable, _a:Callable, _d:Callable) -> void:
+func Set_Button_WSAD_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _w:Callable, _s:Callable, _a:Callable, _d:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -240,10 +215,7 @@ func Set_Button_WSAD_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(Input.is_action_pressed("ui_up")):
+			if(Input.is_action_pressed("ui_up")):
 				_w.call()
 			#-------------------------------------------------------------------------------
 			elif(Input.is_action_pressed("ui_down")):
@@ -271,7 +243,7 @@ func Set_Button_WSAD_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Button_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _canceled:Callable, _up:Callable, _down:Callable, _left:Callable, _right:Callable) -> void:
+func Set_Button_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited:Callable, _up:Callable, _down:Callable, _left:Callable, _right:Callable) -> void:
 	Disconnect_Button(_b)
 	_b.focus_entered.connect(_selected)
 	_b.mouse_entered.connect(func():Mouse_Grab_Button(_b))
@@ -282,10 +254,7 @@ func Set_Button_Up_Down_Left_Right(_b:Button, _selected:Callable, _submited:Call
 		#-------------------------------------------------------------------------------
 		func(_event:InputEvent):
 			#-------------------------------------------------------------------------------
-			if(_event.is_action_pressed(cancelInput)):
-				_canceled.call()
-			#-------------------------------------------------------------------------------
-			elif(Input.is_action_pressed("ui_up")):
+			if(Input.is_action_pressed("ui_up")):
 				_up.call()
 			#-------------------------------------------------------------------------------
 			elif(Input.is_action_pressed("ui_down")):
