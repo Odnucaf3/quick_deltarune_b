@@ -36,6 +36,8 @@ var myBATTLE_STATE: BATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
 @export_category("Player")
 @export var ally_node_array: Array[Fighter_Node]
 var ally_button_array: Array[Fighter_Button]
+var fighter_index: int = 0
+@export var lock_on: TextureRect
 @export var enemy_node_array: Array[Fighter_Node]
 @export var player_characterbody2d: CharacterBody2D
 @export var player_interactable_by_action_area2d: Area2D
@@ -69,10 +71,10 @@ var viewport_center: Vector2
 @export_category("Battle Menu")
 @export var battle_background: Control
 @export var battle_menu: Control
-@export var battle_menu_skills_button: Button
-@export var battle_menu_items_button: Button
-@export var battle_menu_statistics_button: Button
-@export var battle_menu_status_button: Button
+@export var battle_menu_button_skill: Button
+@export var battle_menu_button_item: Button
+@export var battle_menu_button_status: Button
+@export var battle_menu_button_statistics: Button
 #-------------------------------------------------------------------------------
 @export_category("Go to Title Menu")
 @export var go_to_title_menu: Control
@@ -384,6 +386,7 @@ func _ready() -> void:
 	Set_Room(current_room)
 	camera.global_position = Camera_Set_Target_Position()
 	#-------------------------------------------------------------------------------
+	lock_on.hide()
 	battle_background.hide()
 	battle_menu.hide()
 	dialogue_menu.hide()
@@ -898,7 +901,12 @@ func Pause_Menu_Statistics_Fighter_Button_Submit(_fighter_index:int):
 	pause_menu.hide()
 	statistics_menu.show()
 	singleton.Move_to_Button_by_Submit(statistics_menu_button_0)
-	Pause_Statistics_Menu_Set(_fighter_index)
+	#-------------------------------------------------------------------------------
+	var _fighter_node: Fighter_Node = ally_node_array[_fighter_index]
+	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable
+	var _cancel:Callable = func():Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index)
+	#-------------------------------------------------------------------------------
+	Pause_Statistics_Menu_Set(_fighter_node, _fighter_serializable, _cancel)
 	statistics_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
 func Pause_Menu_Statistics_Fighter_Button_Cancel():
@@ -927,7 +935,8 @@ func Pause_Menu_Status_Button_Submit():
 func Pause_Menu_Status_Fighter_Button_Submit(_fighter_index:int):
 	pause_menu.hide()
 	status_menu.show()
-	Pause_Status_Menu_Set(_fighter_index)
+	var _cancel:Callable = func():Pause_Status_Menu_Status_Button_Cancel(_fighter_index)
+	Pause_Status_Menu_Set(ally_node_array[_fighter_index].fighter_serializable, _cancel)
 	status_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
 func Pause_Menu_Status_Fighter_Button_Cancel():
@@ -2161,21 +2170,99 @@ func Create_EquipSlot_Button(_equip_serializable: Equip_Serializable) -> Button:
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
+#region PAUSE-STATUS-EFFECT MENU
+#-------------------------------------------------------------------------------
+func Pause_Status_Menu_Set(_fighter_serializable: Fighter_Serializable, _cancel:Callable):
+	var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = _cancel
+	#-------------------------------------------------------------------------------
+	if(_status_serializable_array.size() > 0):
+		#-------------------------------------------------------------------------------
+		for _i in _status_serializable_array.size():
+			var _button: Button = Create_StatusEffect_Serializable_Button(_status_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _w: Callable = func():singleton.ScrollContainer_Up(status_menu_information_root)
+			var _s: Callable = func():singleton.ScrollContainer_Down(status_menu_information_root)
+			#-------------------------------------------------------------------------------
+			var _selected: Callable = func():
+				singleton.Common_Selected()
+				Set_User_Status_Information(_status_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _submit: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WS(_button, _selected, _submit, _w, _s)
+			status_menu_button_content.add_child(_button)
+			status_menu_button_array.append(_button)
+		#-------------------------------------------------------------------------------
+		singleton.Button_Array_Set_Vertical_Navigation(status_menu_button_array)
+		Disable_Item_Button_0(status_menu_button_0)
+		singleton.Move_to_Button_by_Submit(status_menu_button_array[0])
+		status_menu_information_root.show()
+	#-------------------------------------------------------------------------------
+	else:
+		var _selected: Callable = func():
+			pass
+		#-------------------------------------------------------------------------------
+		var _submit: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		Enable_Item_Button_0(status_menu_button_0)
+		singleton.Set_Button(status_menu_button_0, _selected, _submit)
+		singleton.Move_to_Button_by_Submit(status_menu_button_0)
+		status_menu_information_root.hide()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serializable) -> Button:
+	var _button: Button = Button.new()
+	#-------------------------------------------------------------------------------
+	_button.text = tr("name_"+singleton.get_resource_filename(_status_serializable.status_resource))+"  "
+	_button.add_theme_font_size_override("font_size", button_array_font_size)
+	_button.custom_minimum_size.y = button_array_minimum_size_y
+	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_button.icon = _status_serializable.status_resource.icon
+	#-------------------------------------------------------------------------------
+	var _label2: Label = Label.new()
+	_label2.add_theme_font_size_override("font_size", 16)
+	_label2.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_label2.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_label2.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	#-------------------------------------------------------------------------------
+	if(_status_serializable.status_resource.is_infinite):
+		#∞, ꝏ, Ꝏ
+		_label2.text = "[Ꝏ]  "
+	#-------------------------------------------------------------------------------
+	else:
+		var _turns: int = clampi(_status_serializable.turns, 0, _status_serializable.status_resource.max_turns)
+		_label2.text = "["+str(_turns)+"/"+str(_status_serializable.status_resource.max_turns)+"]  "
+	#-------------------------------------------------------------------------------
+	_button.add_child(_label2)
+	#-------------------------------------------------------------------------------
+	return _button
+#-------------------------------------------------------------------------------
+func Pause_Status_Menu_Status_Button_Cancel(_fighter_index:int):
+	singleton.Destroy_Button_Array(status_menu_button_array)
+	status_menu.hide()
+	pause_menu.show()
+	#-------------------------------------------------------------------------------
+	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Status_Fighter_Button_Cancel()
+	#-------------------------------------------------------------------------------
+	var _button:Button = ally_button_array[_fighter_index] as Button
+	singleton.Move_to_Button_by_Cancel(_button)
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
 #region PAUSE-STATISTICS MENU
 #-------------------------------------------------------------------------------
-func Pause_Statistics_Menu_Set(_fighter_index:int):
+func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializable: Fighter_Serializable, _cancel:Callable):
 	#-------------------------------------------------------------------------------
 	var _w: Callable = func(): singleton.ScrollContainer_Up(statistics_menu_information_root)
 	var _s: Callable = func(): singleton.ScrollContainer_Down(statistics_menu_information_root)
 	#-------------------------------------------------------------------------------
 	var _selected: Callable = func():singleton.Common_Selected()
 	var _submit: Callable = func():pass
-	main_canvas_layer.nothing_cancel = func():Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index)
+	main_canvas_layer.nothing_cancel = _cancel
 	#-------------------------------------------------------------------------------
 	singleton.Set_Button_WS_Up_Down(statistics_menu_button_0, _selected, _submit, _w, _s)
-	#-------------------------------------------------------------------------------
-	var _fighter_node: Fighter_Node = ally_node_array[_fighter_index]
-	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable
 	#-------------------------------------------------------------------------------
 	statistics_menu_information_fighter_face.texture = _fighter_node.character_node.character_resource.face
 	#-------------------------------------------------------------------------------
@@ -2268,6 +2355,9 @@ func Set_Fighter_Equip_Stats(_equip_serializable_array:Array[Equip_Serializable]
 	#-------------------------------------------------------------------------------
 	Remove_Last_Letter(statistics_menu_information_equip_type)
 	Remove_Last_Letter(statistics_menu_information_equip_value)
+	#-------------------------------------------------------------------------------
+	Show_Line_if_String_is_Empty(statistics_menu_information_equip_type)
+	Show_Line_if_String_is_Empty(statistics_menu_information_equip_value)
 #-------------------------------------------------------------------------------
 func Set_Fighter_Skill_List(_fighter_serializable:Fighter_Serializable):
 	Set_Skill(_fighter_serializable)
@@ -2349,88 +2439,6 @@ func Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index:int):
 	statistics_menu.hide()
 	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Statistics_Fighter_Button_Cancel()
 	var _button: Button = ally_button_array[_fighter_index] as Button
-	singleton.Move_to_Button_by_Cancel(_button)
-#-------------------------------------------------------------------------------
-#endregion
-#-------------------------------------------------------------------------------
-#region PAUSE-STATUS-EFFECT MENU
-#-------------------------------------------------------------------------------
-func Pause_Status_Menu_Set(_fighter_index:int):
-	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
-	var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
-	#-------------------------------------------------------------------------------
-	main_canvas_layer.nothing_cancel = func():Pause_Status_Menu_Status_Button_Cancel(_fighter_index)
-	#-------------------------------------------------------------------------------
-	if(_status_serializable_array.size() > 0):
-		#-------------------------------------------------------------------------------
-		for _i in _status_serializable_array.size():
-			var _button: Button = Create_StatusEffect_Serializable_Button(_status_serializable_array[_i])
-			#-------------------------------------------------------------------------------
-			var _w: Callable = func():singleton.ScrollContainer_Up(status_menu_information_root)
-			var _s: Callable = func():singleton.ScrollContainer_Down(status_menu_information_root)
-			#-------------------------------------------------------------------------------
-			var _selected: Callable = func():
-				singleton.Common_Selected()
-				Set_User_Status_Information(_status_serializable_array[_i])
-			#-------------------------------------------------------------------------------
-			var _submit: Callable = func():singleton.Common_Canceled()
-			#-------------------------------------------------------------------------------
-			singleton.Set_Button_WS(_button, _selected, _submit, _w, _s)
-			status_menu_button_content.add_child(_button)
-			status_menu_button_array.append(_button)
-		#-------------------------------------------------------------------------------
-		singleton.Button_Array_Set_Vertical_Navigation(status_menu_button_array)
-		Disable_Item_Button_0(status_menu_button_0)
-		singleton.Move_to_Button_by_Submit(status_menu_button_array[0])
-		status_menu_information_root.show()
-	#-------------------------------------------------------------------------------
-	else:
-		var _selected: Callable = func():
-			pass
-		#-------------------------------------------------------------------------------
-		var _submit: Callable = func():singleton.Common_Canceled()
-		#-------------------------------------------------------------------------------
-		Enable_Item_Button_0(status_menu_button_0)
-		singleton.Set_Button(status_menu_button_0, _selected, _submit)
-		singleton.Move_to_Button_by_Submit(status_menu_button_0)
-		status_menu_information_root.hide()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serializable) -> Button:
-	var _button: Button = Button.new()
-	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_status_serializable.status_resource))+"  "
-	_button.add_theme_font_size_override("font_size", button_array_font_size)
-	_button.custom_minimum_size.y = button_array_minimum_size_y
-	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	_button.icon = _status_serializable.status_resource.icon
-	#-------------------------------------------------------------------------------
-	var _label2: Label = Label.new()
-	_label2.add_theme_font_size_override("font_size", 16)
-	_label2.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_label2.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_label2.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	#-------------------------------------------------------------------------------
-	if(_status_serializable.status_resource.is_infinite):
-		#∞, ꝏ, Ꝏ
-		_label2.text = "[Ꝏ]  "
-	#-------------------------------------------------------------------------------
-	else:
-		var _turns: int = clampi(_status_serializable.turns, 0, _status_serializable.status_resource.max_turns)
-		_label2.text = "["+str(_turns)+"/"+str(_status_serializable.status_resource.max_turns)+"]  "
-	#-------------------------------------------------------------------------------
-	_button.add_child(_label2)
-	#-------------------------------------------------------------------------------
-	return _button
-#-------------------------------------------------------------------------------
-func Pause_Status_Menu_Status_Button_Cancel(_fighter_index:int):
-	singleton.Destroy_Button_Array(status_menu_button_array)
-	status_menu.hide()
-	pause_menu.show()
-	#-------------------------------------------------------------------------------
-	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Status_Fighter_Button_Cancel()
-	#-------------------------------------------------------------------------------
-	var _button:Button = ally_button_array[_fighter_index] as Button
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 #endregion
@@ -4226,35 +4234,39 @@ func Get_KeyItem_in_Inventory(_key_resource:Key_Resource) -> Key_Serializable:
 func Enter_Battle():
 	myGAME_STATE = GAME_STATE.IN_BATTLE
 	await Fade_Out_Override()
+	#-------------------------------------------------------------------------------
 	battle_background.show()
+	battle_background.size = Vector2(width, height)/camera.zoom + Vector2(2,2)
+	battle_background.global_position = camera.global_position - battle_background.size*0.5
+	#-------------------------------------------------------------------------------
 	tp_bar.show()
 	#-------------------------------------------------------------------------------
-	if(true == true):
-		Set_All_Fighters_Position_1()
-		dialogue_menu.show()
-		#battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
-		#battle_box.show()
-		await Seconds(0.1)
-		await Fade_In_Override()
-		await Seconds(0.1)
-		battle_menu.show()
+	for _i in ally_node_array.size():
+		ally_node_array[_i].fighter_serializable_in_battle = ally_node_array[_i].fighter_serializable
 	#-------------------------------------------------------------------------------
-	else:
-		Set_All_Fighters_Position_2()
-		battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
-		battle_box.show()
-		dialogue_menu.hide()
-		await Seconds(0.1)
-		await Fade_In_Override()
-		await Seconds(0.1)
-		battle_menu.hide()
+	for _i in enemy_node_array.size():
+		enemy_node_array[_i].fighter_serializable_in_battle = enemy_node_array[_i].fighter_serializable
 	#-------------------------------------------------------------------------------
-	singleton.Move_to_Button(battle_menu_skills_button)
+	Create_All_Fighters_UI()
+	Set_All_Fighters_Position_1()
+	dialogue_menu.show()
+	await Seconds(0.1)
+	await Fade_In_Override()
+	await Seconds(0.1)
+	battle_menu.show()
+	#-------------------------------------------------------------------------------
+	fighter_index = 0
+	lock_on.show()
+	Set_Lock_On_Position()
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		Set_Skill(ally_node_array[_i].fighter_serializable)
+	#-------------------------------------------------------------------------------
+	BattleMenu_Set()
+	singleton.Move_to_Button(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_Position_1():
 	var _camera_center: Vector2 = camera.global_position
-	battle_background.size = Vector2(width, height)/camera.zoom + Vector2(2,2)
-	battle_background.global_position = _camera_center - battle_background.size*0.5
 	#-------------------------------------------------------------------------------
 	var _x1: float = 0.17
 	var _x2: float = 0.42
@@ -4270,9 +4282,7 @@ func Set_All_Fighters_Position_1():
 		ally_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
 		Face_Left(ally_node_array[_i].character_node, false)
 		#-------------------------------------------------------------------------------
-		var _ally_ui: Fighter_UI = fighter_ally_ui_prefab.instantiate() as Fighter_UI
-		battle_ui.add_child(_ally_ui)
-		_ally_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
+		ally_node_array[_i].fighter_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
 		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		ally_node_array[_i].z_index = 2
@@ -4287,18 +4297,32 @@ func Set_All_Fighters_Position_1():
 		enemy_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
 		Face_Left(enemy_node_array[_i].character_node, true)
 		#-------------------------------------------------------------------------------
-		var _enemy_ui: Fighter_UI = fighter_enemy_ui_prefab.instantiate() as Fighter_UI
-		battle_ui.add_child(_enemy_ui)
-		_enemy_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
+		enemy_node_array[_i].fighter_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
 		Animation_StateMachine(enemy_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		enemy_node_array[_i].z_index = 2
 		enemy_node_array[_i].show()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Create_All_Fighters_UI():
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		Create_Fighter_UI(ally_node_array[_i], fighter_ally_ui_prefab)
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		Create_Fighter_UI(enemy_node_array[_i], fighter_enemy_ui_prefab)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Create_Fighter_UI(_fighter_node:Fighter_Node, _fighter_ui_prefab:PackedScene):
+	var _ally_ui: Fighter_UI = _fighter_ui_prefab.instantiate() as Fighter_UI
+	battle_ui.add_child(_ally_ui)
+	_ally_ui.global_position = Get_Position_in_Canvas_Layer(_fighter_node.global_position)
+	_fighter_node.fighter_ui = _ally_ui
+	_ally_ui.button.text = "  "+tr("name_"+singleton.get_resource_filename(_fighter_node.fighter_serializable.fighter_resource))+"  "
+	_ally_ui.button.hide()
+#-------------------------------------------------------------------------------
 func Set_All_Fighters_Position_2():
 	var _camera_center: Vector2 = camera.global_position
-	battle_background.global_position = _camera_center - camera_size*0.5
 	#-------------------------------------------------------------------------------
 	var _x1: float = 0.35
 	var _x2: float = 0.35
@@ -4314,9 +4338,7 @@ func Set_All_Fighters_Position_2():
 		ally_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
 		Face_Left(ally_node_array[_i].character_node, false)
 		#-------------------------------------------------------------------------------
-		var _ally_ui: Fighter_UI = fighter_ally_ui_prefab.instantiate() as Fighter_UI
-		battle_ui.add_child(_ally_ui)
-		_ally_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
+		ally_node_array[_i].fighter_ui.global_position = Get_Position_in_Canvas_Layer(ally_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
 		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		ally_node_array[_i].z_index = 2
@@ -4331,14 +4353,353 @@ func Set_All_Fighters_Position_2():
 		enemy_node_array[_i].global_position = _camera_center + Vector2(_x, _y)
 		Face_Left(enemy_node_array[_i].character_node, true)
 		#-------------------------------------------------------------------------------
-		var _enemy_ui: Fighter_UI = fighter_enemy_ui_prefab.instantiate() as Fighter_UI
-		battle_ui.add_child(_enemy_ui)
-		_enemy_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
+		enemy_node_array[_i].fighter_ui.global_position = Get_Position_in_Canvas_Layer(enemy_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
 		Animation_StateMachine(enemy_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
 		enemy_node_array[_i].z_index = 2
 		enemy_node_array[_i].show()
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
+func BattleMenu_Set():
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
+	#-------------------------------------------------------------------------------
+	var _selected: Callable = func(): singleton.Common_Selected()
+	#-------------------------------------------------------------------------------
+	var _skill_submit: Callable = func(): Battle_Menu_Skill_Button_Submit()
+	var _item_submit: Callable = func(): Battle_Menu_Item_Button_Submit()
+	var _status_submit: Callable = func(): Battle_Menu_Status_Button_Submit()
+	var _statistics_submit: Callable = func(): Battle_Menu_Statistics_Button_Submit()
+	#-------------------------------------------------------------------------------
+	singleton.Set_Button(battle_menu_button_skill, _selected, _skill_submit)
+	singleton.Set_Button(battle_menu_button_item, _selected, _item_submit)
+	singleton.Set_Button(battle_menu_button_status, _selected, _status_submit)
+	singleton.Set_Button(battle_menu_button_statistics, _selected, _statistics_submit)
+	#-------------------------------------------------------------------------------
+	var _button_array: Array[Button] = [
+		battle_menu_button_skill,
+		battle_menu_button_item,
+		battle_menu_button_status,
+		battle_menu_button_statistics
+	]
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(_button_array)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func BattleMenu_Cancel():
+	ally_node_array[fighter_index].action_serializable = null
+	#-------------------------------------------------------------------------------
+	fighter_index -= 1
+	#-------------------------------------------------------------------------------
+	if(fighter_index < 0):
+		fighter_index = 0
+	#-------------------------------------------------------------------------------
+	else:
+		Set_Lock_On_Position()
+		singleton.Common_Canceled()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Battle_Menu_Skill_Button_Submit():
+	Battle_Skill_Menu_Set()
+	battle_menu.hide()
+	dialogue_menu.hide()
+	skill_menu.show()
+#-------------------------------------------------------------------------------
+func Battle_Skill_Menu_Set():
+	main_canvas_layer.nothing_cancel = func(): Battle_Menu_Skill_Button_Cancel()
+	#-------------------------------------------------------------------------------
+	var _fighter_serializable: Fighter_Serializable = ally_node_array[fighter_index].fighter_serializable
+	var _skill_serializable_array: Array[Action_Serializable] = Get_Skill(_fighter_serializable)
+	#-------------------------------------------------------------------------------
+	if(_skill_serializable_array.size() > 0):
+		#-------------------------------------------------------------------------------
+		for _i in _skill_serializable_array.size():
+			var _button: Button = Create_Skill_Button(_skill_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _w: Callable = func():singleton.ScrollContainer_Up(skill_menu_information_root)
+			#-------------------------------------------------------------------------------
+			var _s: Callable = func():singleton.ScrollContainer_Down(skill_menu_information_root)
+			#-------------------------------------------------------------------------------
+			var _selected: Callable = func(): Pause_Skill_Menu_Skill_Button_Selected(_skill_serializable_array[_i])
+			var _submit: Callable = func(): BattleMenu_Skill_Button_Submit(_skill_serializable_array[_i], _button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WS(_button, _selected, _submit, _w, _s)
+			#-------------------------------------------------------------------------------
+			skill_menu_button_content.add_child(_button)
+			skill_menu_button_array.append(_button)
+		#-------------------------------------------------------------------------------
+		Disable_Item_Button_0(skill_menu_button_0)
+		skill_menu_information_root.show()
+		singleton.Button_Array_Set_Vertical_Navigation(skill_menu_button_array)
+		singleton.Move_to_Button_by_Submit(skill_menu_button_array[0])
+	#-------------------------------------------------------------------------------
+	else:
+		#-------------------------------------------------------------------------------
+		var _selected: Callable = func(): singleton.Common_Selected()
+		var _submit: Callable = func(): pass
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button(skill_menu_button_0, _selected, _submit)
+		#-------------------------------------------------------------------------------
+		Enable_Item_Button_0(skill_menu_button_0)
+		skill_menu_information_root.hide()
+		singleton.Button_Remove_Navigation(skill_menu_button_0)
+		singleton.Move_to_Button_by_Submit(skill_menu_button_0)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Battle_Menu_Skill_Button_Cancel():
+	battle_menu.show()
+	dialogue_menu.show()
+	skill_menu.hide()
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
+	singleton.Destroy_Button_Array(skill_menu_button_array)
+	singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
+#-------------------------------------------------------------------------------
+func BattleMenu_Skill_Button_Submit(_skill_serializable:Action_Serializable, _button:Button):
+	skill_menu.hide()
+	dialogue_menu.show()
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Skill_Target_Cancel(_button)
+	var _submit:Callable = func():BattleMenu_Skill_Target_Submit(_skill_serializable)
+	BattleMenu_Target_Set(_skill_serializable, _submit)
+#-------------------------------------------------------------------------------
+func BattleMenu_Skill_Target_Submit(_action_serializable:Action_Serializable):
+	ally_node_array[fighter_index].action_serializable = _action_serializable
+	singleton.Common_Submited()
+	#-------------------------------------------------------------------------------
+	fighter_index +=1
+	var _max: int = ally_node_array.size()-1
+	#-------------------------------------------------------------------------------
+	if(fighter_index > _max):
+		Hide_All_Targets()
+		dialogue_menu.hide()
+		lock_on.hide()
+		battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
+		battle_box.show()
+		Set_All_Fighters_Position_2()
+		#-------------------------------------------------------------------------------
+		for _i in ally_node_array.size():
+			#-------------------------------------------------------------------------------
+			if(ally_node_array[_i].action_serializable == null):
+				print("Fighter "+str(_i)+" does "+"Nothing")
+			#-------------------------------------------------------------------------------
+			else:
+				var _action_resource:Action_Resource = ally_node_array[_i].action_serializable.action_resource
+				print("Fighter "+str(_i)+" does "+tr("name_"+singleton.get_resource_filename(_action_resource)))
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		await Seconds(3.0)
+		Set_All_Fighters_Position_1()
+		Set_All_Fighters_Actions_to_Null()
+		fighter_index = 0
+		lock_on.show()
+		battle_box.hide()
+		Open_Battle_Menu()
+	#-------------------------------------------------------------------------------
+	else:
+		Open_Battle_Menu()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Open_Battle_Menu():
+	Set_Lock_On_Position()
+	battle_menu.show()
+	dialogue_menu.show()
+	Hide_All_Targets()
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
+	singleton.Destroy_Button_Array(skill_menu_button_array)
+	singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
+#-------------------------------------------------------------------------------
+func BattleMenu_Skill_Target_Cancel(_button:Button):
+	dialogue_menu.hide()
+	skill_menu.show()
+	Hide_All_Targets()
+	main_canvas_layer.nothing_cancel = func():Battle_Menu_Skill_Button_Cancel()
+	singleton.Move_to_Button_by_Cancel(_button)
+#-------------------------------------------------------------------------------
+func Hide_All_Targets():
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		var _button:Button = ally_node_array[_i].fighter_ui.button
+		_button.hide()
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		var _button:Button = enemy_node_array[_i].fighter_ui.button
+		_button.hide()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Show_All_Targets():
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		var _button:Button = ally_node_array[_i].fighter_ui.button
+		_button.show()
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		var _button:Button = enemy_node_array[_i].fighter_ui.button
+		_button.show()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_All_Fighters_Actions_to_Null():
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		ally_node_array[_i].action_serializable = null
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		enemy_node_array[_i].action_serializable = null
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func BattleMenu_Target_Set(_action_serializable:Action_Serializable, _submit:Callable):
+	var _selected:Callable = func():singleton.Common_Selected()
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		var _button:Button = ally_node_array[_i].fighter_ui.button
+		_button.show()
+		singleton.Set_Button(_button, _selected, _submit)
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		var _button:Button = enemy_node_array[_i].fighter_ui.button
+		_button.show()
+		singleton.Set_Button(_button, _selected, _submit)
+	#-------------------------------------------------------------------------------
+	singleton.Move_to_Button_by_Submit(ally_node_array[0].fighter_ui.button)
+	#-------------------------------------------------------------------------------
+	match(_action_serializable.action_resource.myTARGET):
+		Action_Resource.TARGET.ENEMY_1:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ENEMY_RANDOM:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ENEMY_ALL:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ALLY_1:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ALLY_RANDOM:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ALLY_ALL:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.USER:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ALLY_DOWN_1:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ALLY_DOWN_ALL:
+			pass
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Battle_Menu_Item_Button_Submit():
+	pass
+#-------------------------------------------------------------------------------
+#region BATTLE STATUS MENU
+#-------------------------------------------------------------------------------
+func Battle_Menu_Status_Button_Submit():
+	battle_menu.hide()
+	var _cancel:Callable = func():Battle_Menu_Status_Target_Button_Cancel()
+	var _selected:Callable = func():singleton.Common_Selected()
+	main_canvas_layer.nothing_cancel = _cancel
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		var _button:Button = ally_node_array[_i].fighter_ui.button
+		_button.show()
+		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(ally_node_array[_i].fighter_serializable_in_battle, _button)
+		singleton.Set_Button(_button, _selected, _submit)
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		var _button:Button = enemy_node_array[_i].fighter_ui.button
+		_button.show()
+		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(enemy_node_array[_i].fighter_serializable_in_battle, _button)
+		singleton.Set_Button(_button, _selected, _submit)
+	#-------------------------------------------------------------------------------
+	Set_Target_Button_Navigation()
+	singleton.Move_to_Button_by_Submit(ally_node_array[fighter_index].fighter_ui.button)
+#-------------------------------------------------------------------------------
+func Set_Target_Button_Navigation():
+	var _button_array_1: Array[Button]
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		_button_array_1.append(ally_node_array[_i].fighter_ui.button)
+	#-------------------------------------------------------------------------------
+	var _button_array_2: Array[Button]
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		_button_array_2.append(enemy_node_array[_i].fighter_ui.button)
+	#-------------------------------------------------------------------------------
+	singleton.Twin_Button_Array_Set_Navigation(_button_array_1, _button_array_2)
+#-------------------------------------------------------------------------------
+func Battle_Menu_Status_Target_Button_Submit(_fighter_serializable:Fighter_Serializable, _button:Button):
+	Hide_All_Targets()
+	dialogue_menu.hide()
+	status_menu.show()
+	var _cancel:Callable = func():Battle_Menu_Status_Menu_Button_Cancel(_button)
+	main_canvas_layer.nothing_cancel = _cancel
+	Pause_Status_Menu_Set(_fighter_serializable, _cancel)
+	status_menu_information_root.get_v_scroll_bar().value = 0
+#-------------------------------------------------------------------------------
+func Battle_Menu_Status_Target_Button_Cancel():
+	battle_menu.show()
+	Hide_All_Targets()
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
+	singleton.Move_to_Button_by_Cancel(battle_menu_button_status)
+#-------------------------------------------------------------------------------
+func Battle_Menu_Status_Menu_Button_Cancel(_button:Button):
+	singleton.Destroy_Button_Array(status_menu_button_array)
+	status_menu.hide()
+	dialogue_menu.show()
+	Show_All_Targets()
+	main_canvas_layer.nothing_cancel = func():Battle_Menu_Status_Target_Button_Cancel()
+	singleton.Move_to_Button_by_Cancel(_button)
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
+#region BATTLE STATISTICS MENU
+#-------------------------------------------------------------------------------
+func Battle_Menu_Statistics_Button_Submit():
+	battle_menu.hide()
+	var _cancel:Callable = func():Battle_Menu_Statistics_Target_Button_Cancel()
+	var _selected:Callable = func():singleton.Common_Selected()
+	main_canvas_layer.nothing_cancel = _cancel
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		var _button:Button = ally_node_array[_i].fighter_ui.button
+		_button.show()
+		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(ally_node_array[_i], ally_node_array[_i].fighter_serializable_in_battle, _button)
+		singleton.Set_Button(_button, _selected, _submit)
+	#-------------------------------------------------------------------------------
+	for _i in enemy_node_array.size():
+		var _button:Button = enemy_node_array[_i].fighter_ui.button
+		_button.show()
+		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(enemy_node_array[_i], enemy_node_array[_i].fighter_serializable_in_battle, _button)
+		singleton.Set_Button(_button, _selected, _submit)
+	#-------------------------------------------------------------------------------
+	Set_Target_Button_Navigation()
+	singleton.Move_to_Button_by_Submit(ally_node_array[fighter_index].fighter_ui.button)
+#-------------------------------------------------------------------------------
+func Battle_Menu_Statistics_Target_Button_Submit(_fighter_node:Fighter_Node, _fighter_serializable:Fighter_Serializable, _button:Button):
+	Hide_All_Targets()
+	dialogue_menu.hide()
+	statistics_menu.show()
+	var _cancel:Callable = func():Battle_Menu_Statistics_Menu_Button_Cancel(_button)
+	main_canvas_layer.nothing_cancel = _cancel
+	Pause_Statistics_Menu_Set(_fighter_node, _fighter_serializable, _cancel)
+	statistics_menu_information_root.get_v_scroll_bar().value = 0
+	singleton.Move_to_Button_by_Submit(statistics_menu_button_0)
+#-------------------------------------------------------------------------------
+func Battle_Menu_Statistics_Target_Button_Cancel():
+	battle_menu.show()
+	Hide_All_Targets()
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
+	singleton.Move_to_Button_by_Cancel(battle_menu_button_statistics)
+#-------------------------------------------------------------------------------
+func Battle_Menu_Statistics_Menu_Button_Cancel(_button:Button):
+	statistics_menu.hide()
+	dialogue_menu.show()
+	Show_All_Targets()
+	main_canvas_layer.nothing_cancel = func():Battle_Menu_Statistics_Target_Button_Cancel()
+	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -4397,4 +4758,9 @@ func Get_Position_in_Canvas_Layer(_global_position:Vector2) -> Vector2:
 	return _new_position
 #-------------------------------------------------------------------------------
 #endregion
+#-------------------------------------------------------------------------------
+func Set_Lock_On_Position():
+	lock_on.global_position = ally_node_array[fighter_index].global_position
+	lock_on.global_position.y -= 20
+	lock_on.global_position -= lock_on.size* 0.5 * lock_on.scale
 #-------------------------------------------------------------------------------

@@ -445,6 +445,51 @@ func ScrollContainer_Up(_scroll_container:ScrollContainer):
 		singleton.Common_Selected()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Twin_Button_Array_Set_Navigation(_button_array_1:Array[Button], _button_array_2:Array[Button]):
+	#-------------------------------------------------------------------------------
+	if(_button_array_1.size() > 0):
+		if(_button_array_1.size() > 1):
+			var _button_first:Button = Get_Button_if_Exist_in_Array(_button_array_1[0], _button_array_2,0)
+			Button_Set_Navigation(_button_array_1[0], _button_array_1[_button_array_1.size()-1], _button_array_1[1], _button_first, _button_first)
+			#-------------------------------------------------------------------------------	
+			for _i in range(1, _button_array_1.size()-1):
+				var _button_mid:Button = Get_Button_if_Exist_in_Array(_button_array_1[_i], _button_array_2,_i)
+				Button_Set_Navigation(_button_array_1[_i], _button_array_1[_i-1], _button_array_1[_i+1], _button_mid, _button_mid)
+			#-------------------------------------------------------------------------------
+			var _button_last:Button = Get_Button_if_Exist_in_Array(_button_array_1[_button_array_1.size()-1], _button_array_2, _button_array_2.size()-1)
+			Button_Set_Navigation(_button_array_1[_button_array_1.size()-1], _button_array_1[_button_array_1.size()-2], _button_array_1[0], _button_last, _button_last)
+		#-------------------------------------------------------------------------------
+		else:
+			var _button_first:Button = Get_Button_if_Exist_in_Array(_button_array_1[0], _button_array_2,0)
+			Button_Set_Navigation(_button_array_1[0], _button_array_1[0], _button_array_1[0], _button_first, _button_first)
+	#-------------------------------------------------------------------------------
+	if(_button_array_2.size() > 0):
+		if(_button_array_2.size() > 1):
+			var _button_first:Button = Get_Button_if_Exist_in_Array(_button_array_2[0], _button_array_1,0)
+			Button_Set_Navigation(_button_array_2[0], _button_array_2[_button_array_2.size()-1], _button_array_2[1], _button_first, _button_first)
+			#-------------------------------------------------------------------------------
+			for _i in range(1, _button_array_2.size()-1):
+				var _button_mid:Button = Get_Button_if_Exist_in_Array(_button_array_2[_i], _button_array_1,_i)
+				Button_Set_Navigation(_button_array_2[_i], _button_array_2[_i-1], _button_array_2[_i+1], _button_mid, _button_mid)
+			#-------------------------------------------------------------------------------
+			var _button_last:Button = Get_Button_if_Exist_in_Array(_button_array_2[_button_array_2.size()-1], _button_array_1, _button_array_1.size()-1)
+			Button_Set_Navigation(_button_array_2[_button_array_2.size()-1], _button_array_2[_button_array_2.size()-2], _button_array_2[0], _button_last, _button_last)
+		#-------------------------------------------------------------------------------
+		else:
+			var _button_first:Button = Get_Button_if_Exist_in_Array(_button_array_2[0], _button_array_1,0)
+			Button_Set_Navigation(_button_array_2[0], _button_array_2[0], _button_array_2[0], _button_first, _button_first)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Get_Button_if_Exist_in_Array(_default_button:Button, _button_array:Array[Button], _index:int) ->Button:
+	#-------------------------------------------------------------------------------
+	if(_button_array.size()>0):
+		_index = clampi(_index, 0, _button_array.size()-1)
+		return _button_array[_index]
+	#-------------------------------------------------------------------------------
+	else:
+		return _default_button
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 func Button_Array_Set_Vertical_Navigation(_button_array:Array[Button]):
 	#-------------------------------------------------------------------------------
 	if(_button_array.size() > 0):
@@ -484,6 +529,12 @@ func Button_Array_Set_Horizontal_Navigation(_button_array:Array[Button]):
 func Button_Set_Horizontal_Navigation(_button:Button, _button_left:Button, _button_right:Button):
 	_button.focus_neighbor_top = _button.get_path()
 	_button.focus_neighbor_bottom = _button.get_path()
+	_button.focus_neighbor_left = _button_left.get_path()
+	_button.focus_neighbor_right = _button_right.get_path()
+#-------------------------------------------------------------------------------
+func Button_Set_Navigation(_button:Button, _button_top:Button, _button_botton:Button, _button_left:Button, _button_right:Button):
+	_button.focus_neighbor_top = _button_top.get_path()
+	_button.focus_neighbor_bottom = _button_botton.get_path()
 	_button.focus_neighbor_left = _button_left.get_path()
 	_button.focus_neighbor_right = _button_right.get_path()
 #-------------------------------------------------------------------------------

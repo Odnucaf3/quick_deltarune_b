@@ -3,8 +3,11 @@
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_x5jtt"]
 [ext_resource type="Script" uid="uid://bcrucc2wrc473" path="res://Scripts/Prefabs/fighter_ui.gd" id="2_1735b"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="3_48gh8"]
+[ext_resource type="Texture2D" uid="uid://brcg6yd4ucjv" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_3.png" id="4_bw1h1"]
+[ext_resource type="Texture2D" uid="uid://bewl0l0tdcrpk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_10.png" id="5_ydirw"]
+[ext_resource type="Texture2D" uid="uid://b35u0hbn3sq6i" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_8.png" id="6_px7xa"]
 
-[node name="enemy_fighter_ui" type="Control" unique_id=116234824]
+[node name="enemy_fighter_ui" type="Control" unique_id=116234824 node_paths=PackedStringArray("button")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -15,11 +18,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_x5jtt")
 script = ExtResource("2_1735b")
+button = NodePath("Control2/Button")
 
 [node name="Control" type="Control" parent="." unique_id=1439823442]
 anchors_preset = 0
-offset_top = -150.0
-offset_bottom = -150.0
+offset_top = -130.0
+offset_bottom = -130.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=24198179]
 layout_mode = 1
@@ -39,7 +43,7 @@ alignment = 2
 layout_mode = 2
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 16
-text = "300 / 300 HP"
+text = "3000 / 3000 HP"
 horizontal_alignment = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="Control/VBoxContainer" unique_id=387271048]
@@ -48,19 +52,47 @@ theme = ExtResource("3_48gh8")
 value = 75.0
 show_percentage = false
 
+[node name="Control" type="Control" parent="Control/VBoxContainer" unique_id=1852915024]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/Control" unique_id=1404700511]
+layout_mode = 1
+offset_right = 128.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/Control/HBoxContainer" unique_id=1873030601]
+layout_mode = 2
+texture = ExtResource("4_bw1h1")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Control/VBoxContainer/Control/HBoxContainer" unique_id=1869468781]
+layout_mode = 2
+texture = ExtResource("5_ydirw")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Control/VBoxContainer/Control/HBoxContainer" unique_id=38651505]
+layout_mode = 2
+texture = ExtResource("6_px7xa")
+expand_mode = 2
+
 [node name="Control2" type="Control" parent="." unique_id=395403198]
 anchors_preset = 0
+offset_left = -40.0
+offset_right = -40.0
 
 [node name="Button" type="Button" parent="Control2" unique_id=649627608]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -177.0
-offset_top = -31.0
+offset_left = -8.0
+offset_top = -8.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "  Name of the Enemy  "
+theme_override_font_sizes/font_size = 20
+text = "  Enemy  "

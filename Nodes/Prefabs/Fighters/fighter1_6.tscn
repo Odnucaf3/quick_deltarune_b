@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_qyvlv"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_u17gx"]
-[ext_resource type="Resource" uid="uid://dc7emsl383hgl" path="res://Resources/Fighters/fighter_enemy_0.tres" id="3_pjqid"]
+[ext_resource type="Resource" uid="uid://dc7emsl383hgl" path="res://Resources/Fighters/fighter1_6.tres" id="3_pjqid"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="4_0b4gc"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="5_cm745"]
 [ext_resource type="PackedScene" uid="uid://dwe23u11yf586" path="res://Nodes/Prefabs/Characters/actor1_6.tscn" id="6_ou4p7"]

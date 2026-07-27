@@ -65,6 +65,7 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_constants/outline_size = 2
 text = "60 fps."
 
 [node name="option_menu" type="MarginContainer" parent="CanvasLayer" unique_id=1724359426 node_paths=PackedStringArray("singleton", "title", "idiome_label", "idiome_optionbutton", "resolution_label", "resolution_optionbutton", "fullscreen_label", "fullscreen_checkbutton", "borderless_label", "borderless_checkbutton", "vsync_label", "vsync_checkbutton", "master_label", "master_number", "master_slider", "sfx_label", "sfx_number", "sfx_slider", "bgm_label", "bgm_number", "bgm_slider", "back")]
