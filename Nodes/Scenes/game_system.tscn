@@ -1539,7 +1539,7 @@ npc_3_item_equip_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_pc
 npc_3_item_key_array = Array[ExtResource("16_ql07v")]([SubResource("Resource_acn20")])
 npc_4 = NodePath("npc_4")
 npc_4_character_resource = ExtResource("14_5rrxs")
-npc_4_fighter_array = [NodePath("npc_4/fighter1_6"), NodePath("npc_4/fighter1_7"), NodePath("npc_4/fighter1_8")]
+npc_4_fighter_array = [NodePath("npc_4/fighter1_6"), NodePath("npc_4/fighter1_7"), NodePath("npc_4/fighter1_8"), NodePath("npc_4/fighter1_9")]
 interactable = NodePath("Interactable")
 room_limits = NodePath("room_limits")
 
@@ -1616,7 +1616,7 @@ y_sort_enabled = true
 tile_set = SubResource("TileSet_kwath")
 
 [node name="ally_0" type="Area2D" parent="World_2D/room_00" unique_id=1227329894 node_paths=PackedStringArray("collider")]
-position = Vector2(-16, -152)
+position = Vector2(16, -152)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1628,7 +1628,7 @@ shape = SubResource("CircleShape2D_lcbh6")
 [node name="actor1_1" parent="World_2D/room_00/ally_0" unique_id=1234637241 instance=ExtResource("27_0ol08")]
 
 [node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=726168508 node_paths=PackedStringArray("collider")]
-position = Vector2(32, -152)
+position = Vector2(48, -152)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1652,7 +1652,7 @@ shape = SubResource("CircleShape2D_lcbh6")
 [node name="actor2_7" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
 
 [node name="ally_3" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
-position = Vector2(128, -152)
+position = Vector2(112, -152)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1693,6 +1693,9 @@ position = Vector2(16, -8)
 
 [node name="fighter1_8" parent="World_2D/room_00/npc_4" unique_id=232465966 instance=ExtResource("28_jvut7")]
 position = Vector2(-16, -8)
+
+[node name="fighter1_9" parent="World_2D/room_00/npc_4" unique_id=1418258395 instance=ExtResource("28_jvut7")]
+position = Vector2(0, -24)
 
 [node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
 position = Vector2(-24, 24)
@@ -1948,6 +1951,7 @@ theme_override_constants/separation = -1
 layout_mode = 2
 size_flags_vertical = 1
 theme = ExtResource("34_206if")
+theme_override_constants/outline_size = 4
 text = "75"
 horizontal_alignment = 1
 
@@ -1960,6 +1964,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_vertical = 1
 theme = ExtResource("34_206if")
+theme_override_constants/outline_size = 4
 text = "100"
 horizontal_alignment = 1
 
@@ -1978,6 +1983,7 @@ show_percentage = false
 layout_mode = 2
 size_flags_vertical = 1
 theme = ExtResource("34_206if")
+theme_override_constants/outline_size = 4
 text = "PT"
 horizontal_alignment = 1
 
@@ -4148,6 +4154,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="statistics_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1643418800]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4766,6 +4773,7 @@ autowrap_mode = 2
 layout_mode = 2
 
 [node name="debug_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=728377450]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4862,17 +4870,19 @@ theme_override_constants/margin_bottom = 15
 
 [node name="PanelContainer" type="PanelContainer" parent="main_canvas_layer/money_menu" unique_id=1096050419]
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/money_menu/PanelContainer" unique_id=1489085504]
 layout_mode = 2
-theme_override_constants/margin_left = 15
+theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 15
+theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="money_menu_label" type="Label" parent="main_canvas_layer/money_menu/PanelContainer/MarginContainer" unique_id=1863266937]
 layout_mode = 2
-text = "999.999.999 G"
+horizontal_alignment = 2
 
 [node name="confirm_buy_menu" type="Panel" parent="main_canvas_layer" unique_id=1770860910]
 visible = false
@@ -4891,12 +4901,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -222.75
-offset_top = -85.0
+offset_top = -160.5
 offset_right = 222.75
-offset_bottom = 85.0
+offset_bottom = 160.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("16_0t8i2")
+
+[node name="Button" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer" unique_id=1508059048]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  X  "
 
 [node name="PanelContainer" type="PanelContainer" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer" unique_id=1328584547]
 layout_mode = 2
@@ -5004,6 +5021,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5t6d6")
 
 [node name="mouse_blocker" type="Control" parent="main_canvas_layer" unique_id=963677709]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

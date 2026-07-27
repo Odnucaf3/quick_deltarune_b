@@ -37,6 +37,7 @@ alignment = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=763344982]
 layout_mode = 2
+theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 16
 text = "300 / 300 HP"
 horizontal_alignment = 2
