@@ -3,15 +3,10 @@
 [ext_resource type="Script" uid="uid://b2cd1gt8aev08" path="res://Scripts/game_system.gd" id="1_jvut7"]
 [ext_resource type="PackedScene" uid="uid://1nomtsf23yj7" path="res://Nodes/Prefabs/fighter_button_prefab.tscn" id="2_0ol08"]
 [ext_resource type="Resource" uid="uid://crf420awv7t56" path="res://Resources/Skills/attack.tres" id="2_pclkw"]
-[ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="3_pclkw"]
 [ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/guard.tres" id="3_xkpdv"]
-[ext_resource type="Resource" uid="uid://6snkwbnrq70e" path="res://Resources/Items/item_damage_1.tres" id="5_ql07v"]
 [ext_resource type="PackedScene" uid="uid://opymv7weatpj" path="res://Nodes/Prefabs/ui/ally_fighter_ui.tscn" id="5_r4og7"]
 [ext_resource type="PackedScene" uid="uid://cwyf6jru36e8y" path="res://Nodes/Prefabs/ui/enemy_fighter_ui.tscn" id="6_xm4vn"]
-[ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="8_r4og7"]
-[ext_resource type="Resource" uid="uid://dnqwa4ac4201s" path="res://Resources/Equips/head_0.tres" id="9_xm4vn"]
-[ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="10_seov8"]
-[ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="11_n53vq"]
+[ext_resource type="Texture2D" uid="uid://chxaf10imxbm4" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_85.png" id="9_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://ssbbdf2f4b61" path="res://Assets/rpg_maker_mv/img/battlebacks1/Grassland.png" id="11_r4og7"]
 [ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter1_1.tres" id="12_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://dgojjdoocby4g" path="res://Assets/rpg_maker_mv/img/battlebacks2/Grassland.png" id="12_xm4vn"]
@@ -27,10 +22,11 @@
 [ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter3_8.tres" id="22_shqvj"]
 [ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter2_7.tscn" id="23_jvut7"]
 [ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/actor3_8.tscn" id="24_5rrxs"]
-[ext_resource type="Resource" uid="uid://1ittax2epliw" path="res://Resources/Items/item_damage_0.tres" id="25_bv80u"]
+[ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="24_altm3"]
+[ext_resource type="Resource" uid="uid://1ittax2epliw" path="res://Resources/Items/item_damage_0.tres" id="25_otuwt"]
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/actor2_7.tscn" id="26_jvut7"]
+[ext_resource type="Resource" uid="uid://6snkwbnrq70e" path="res://Resources/Items/item_damage_1.tres" id="26_w2ngq"]
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/actor1_1.tscn" id="27_0ol08"]
-[ext_resource type="Resource" uid="uid://blm178xewop8y" path="res://Resources/Keys/key_1.tres" id="28_0t8i2"]
 [ext_resource type="PackedScene" uid="uid://4evqnt3jxeef" path="res://Nodes/Prefabs/Fighters/fighter1_6.tscn" id="28_jvut7"]
 [ext_resource type="Texture2D" uid="uid://dat3yglb4a0lr" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_A2.png" id="30_n53vq"]
 [ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="30_okou3"]
@@ -47,7 +43,6 @@
 [ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/actor1_8.tscn" id="36_altm3"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
 [ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
-[ext_resource type="Texture2D" uid="uid://ctvqp0ojy22fa" path="res://Assets/Sprites/heart.png" id="41_3i786"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
 [ext_resource type="Texture2D" uid="uid://dnp7htyab2ryr" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_209.png" id="44_0t8i2"]
 [ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="44_r4og7"]
@@ -85,7 +80,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.625, 0.75, 0.875, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(12, 12), Vector2(16, 16), Vector2(12, 12), Vector2(16, 16), Vector2(12, 12)]
+"values": [Vector2(16, 16), Vector2(20, 20), Vector2(16, 16), Vector2(20, 20), Vector2(16, 16)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -97,7 +92,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.625, 0.75, 0.875, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(-6, -6), Vector2(-8, -8), Vector2(-6, -6), Vector2(-8, -8), Vector2(-6, -6)]
+"values": [Vector2(-8, -8), Vector2(-10, -10), Vector2(-8, -8), Vector2(-10, -10), Vector2(-8, -8)]
 }
 
 [sub_resource type="Animation" id="Animation_b6a3y"]
@@ -112,7 +107,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(12, 12)]
+"values": [Vector2(16, 16)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -124,7 +119,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-6, -6)]
+"values": [Vector2(-8, -8)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hklgd"]
@@ -384,37 +379,15 @@ func Interactable_Action():
 #-------------------------------------------------------------------------------
 "
 
-[sub_resource type="Resource" id="Resource_5rrxs"]
-script = ExtResource("3_pclkw")
-action_resource = ExtResource("25_bv80u")
-hold = 5
-stored = 6
+[sub_resource type="Resource" id="Resource_ma215"]
+script = ExtResource("24_altm3")
+action_resource = ExtResource("25_otuwt")
 metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 
-[sub_resource type="Resource" id="Resource_f6puh"]
-script = ExtResource("3_pclkw")
-action_resource = ExtResource("5_ql07v")
+[sub_resource type="Resource" id="Resource_pkj5u"]
+script = ExtResource("24_altm3")
+action_resource = ExtResource("26_w2ngq")
 metadata/_custom_type_script = "uid://ck6vbg7epahmp"
-
-[sub_resource type="Resource" id="Resource_pclkw"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("11_n53vq")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_0ol08"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("10_seov8")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_jvut7"]
-script = ExtResource("8_r4og7")
-equip_resource = ExtResource("9_xm4vn")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_acn20"]
-script = ExtResource("16_ql07v")
-key_resource = ExtResource("28_0t8i2")
-metadata/_custom_type_script = "uid://dosow2j1xm5y3"
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_p24l3"]
 tile_data = PackedInt32Array(65536, 0, 14, 131072, 0, 15, 1, 0, 14, 65537, 131072, 14, 131073, 131072, 15, 196609, 0, 15, 2, 65536, 14, 65538, 196608, 14, 131074, 196608, 15, 196610, 65536, 15, 65539, 65536, 14, 131075, 65536, 15)
@@ -1446,13 +1419,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -6.0
-offset_top = -6.0
-offset_right = 6.0
-offset_bottom = 6.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("41_3i786")
+texture = ExtResource("9_8m6hh")
 expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/lock_on" unique_id=342866111]
@@ -1556,27 +1529,18 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 theme = ExtResource("16_0t8i2")
 
-[node name="TextureRect" type="TextureRect" parent="World_2D/battle_box" unique_id=1699119715]
-self_modulate = Color(1, 0, 1, 1)
-z_index = 1
+[node name="hitbox" type="Control" parent="World_2D/battle_box" unique_id=1563630517]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -12.0
-offset_top = -12.0
-offset_right = 12.0
-offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("41_3i786")
-expand_mode = 1
 
-[node name="TextureRect" type="TextureRect" parent="World_2D/battle_box/TextureRect" unique_id=681833552]
-self_modulate = Color(1, 1, 1, 0.60784316)
-show_behind_parent = true
+[node name="TextureRect2" type="TextureRect" parent="World_2D/battle_box/hitbox" unique_id=681833552]
+self_modulate = Color(1, 1, 1, 0.4117647)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1591,6 +1555,22 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("18_ngqpa")
 expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="World_2D/battle_box/hitbox" unique_id=1699119715]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_8m6hh")
 
 [node name="player_characterbody2d" type="CharacterBody2D" parent="World_2D" unique_id=412323299]
 y_sort_enabled = true
@@ -1635,9 +1615,7 @@ ally_3_fighter_resouce = ExtResource("22_shqvj")
 ally_3_fighter_prefab = ExtResource("22_5rrxs")
 npc_3 = NodePath("npc_3")
 npc_3_character = NodePath("npc_3/actor1_6")
-npc_3_item_consumable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_5rrxs"), SubResource("Resource_f6puh")])
-npc_3_item_equip_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_pclkw"), SubResource("Resource_0ol08"), SubResource("Resource_jvut7")])
-npc_3_item_key_array = Array[ExtResource("16_ql07v")]([SubResource("Resource_acn20")])
+npc_3_item_consumable_array = Array[ExtResource("24_altm3")]([SubResource("Resource_ma215"), SubResource("Resource_pkj5u")])
 npc_4 = NodePath("npc_4")
 npc_4_character_resource = ExtResource("14_5rrxs")
 npc_4_fighter_array = [NodePath("npc_4/fighter1_6"), NodePath("npc_4/fighter1_7"), NodePath("npc_4/fighter1_8"), NodePath("npc_4/fighter1_9")]

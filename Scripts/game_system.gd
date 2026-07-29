@@ -984,23 +984,23 @@ func Pause_Skill_Menu_Set(_fighter_index:int):
 			skill_menu_button_content.add_child(_button)
 			skill_menu_button_array.append(_button)
 		#-------------------------------------------------------------------------------
-		Disable_Item_Button_0(skill_menu_button_0)
 		skill_menu_information_root.show()
-		singleton.Button_Array_Set_Vertical_Navigation(skill_menu_button_array)
-		singleton.Move_to_Button_by_Submit(skill_menu_button_array[0])
 	#-------------------------------------------------------------------------------
 	else:
 		#-------------------------------------------------------------------------------
 		var _selected: Callable = func(): singleton.Common_Selected()
-		var _submit: Callable = func(): pass
+		var _submit: Callable = func(): singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(skill_menu_button_0, _selected, _submit)
+		var _button: Button = Create_Empty_Button()
+		singleton.Set_Button(_button, _selected, _submit)
+		skill_menu_button_content.add_child(_button)
+		skill_menu_button_array.append(_button)
 		#-------------------------------------------------------------------------------
-		Enable_Item_Button_0(skill_menu_button_0)
 		skill_menu_information_root.hide()
-		singleton.Button_Remove_Navigation(skill_menu_button_0)
-		singleton.Move_to_Button_by_Submit(skill_menu_button_0)
 	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(skill_menu_button_array)
+	singleton.Move_to_Button_by_Submit(skill_menu_button_array[0])
+	Disable_Item_Button_0(skill_menu_button_0)
 #-------------------------------------------------------------------------------
 func Pause_Skill_Menu_Skill_Button_Selected(_action_serializable:Action_Serializable):
 	Set_Skill_Information(_action_serializable)
@@ -1227,12 +1227,8 @@ var button_all_selected_0: Callable = func():
 	Hide_All_Item_Menues()
 	item_menu_all_button_root.show()
 	#-------------------------------------------------------------------------------
-	if(item_menu_all_button_array.size() > 0):
-		Disable_Item_Button_0(item_menu_all_button_0)
-		singleton.Move_to_Button(item_menu_all_button_array[0])
-	#-------------------------------------------------------------------------------
-	else:
-		singleton.Common_Selected()
+	Disable_Item_Button_0(item_menu_all_button_0)
+	singleton.Move_to_Button(item_menu_all_button_array[0])
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 var button_consumable_selected_0: Callable = func():
@@ -1241,13 +1237,9 @@ var button_consumable_selected_0: Callable = func():
 	Hide_All_Item_Information_Root()
 	item_menu_consumable_button_root.show()
 	#-------------------------------------------------------------------------------
-	if(item_menu_consumable_button_array.size() > 0):
-		item_menu_consumable_information_root.show()
-		Disable_Item_Button_0(item_menu_consumable_button_0)
-		singleton.Move_to_Button(item_menu_consumable_button_array[0])
-	#-------------------------------------------------------------------------------
-	else:
-		singleton.Common_Selected()
+	item_menu_consumable_information_root.show()
+	Disable_Item_Button_0(item_menu_consumable_button_0)
+	singleton.Move_to_Button(item_menu_consumable_button_array[0])
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 var button_equip_selected_0: Callable = func():
@@ -1256,13 +1248,9 @@ var button_equip_selected_0: Callable = func():
 	Hide_All_Item_Information_Root()
 	item_menu_equip_button_root.show()
 	#-------------------------------------------------------------------------------
-	if(item_menu_equip_button_array.size() > 0):
-		item_menu_equip_information_root.show()
-		Disable_Item_Button_0(item_menu_equip_button_0)
-		singleton.Move_to_Button(item_menu_equip_button_array[0])
-	#-------------------------------------------------------------------------------
-	else:
-		singleton.Common_Selected()
+	item_menu_equip_information_root.show()
+	Disable_Item_Button_0(item_menu_equip_button_0)
+	singleton.Move_to_Button(item_menu_equip_button_array[0])
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 var button_key_selected_0: Callable = func():
@@ -1271,14 +1259,14 @@ var button_key_selected_0: Callable = func():
 	Hide_All_Item_Information_Root()
 	item_menu_key_button_root.show()
 	#-------------------------------------------------------------------------------
-	if(item_menu_key_button_array.size() > 0):
-		item_menu_key_information_root.show()
-		Disable_Item_Button_0(item_menu_key_button_0)
-		singleton.Move_to_Button(item_menu_key_button_array[0])
+	item_menu_key_information_root.show()
+	Disable_Item_Button_0(item_menu_key_button_0)
+	singleton.Move_to_Button(item_menu_key_button_array[0])
 	#-------------------------------------------------------------------------------
-	else:
-		singleton.Common_Selected()
-	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func button_empty_select_1():
+	Hide_All_Item_Information_Root()
+	singleton.Common_Selected()
 #-------------------------------------------------------------------------------
 func button_all_consumable_select_1(_item_serializable:Action_Serializable):
 	button_consumable_select_1(_item_serializable)
@@ -1313,10 +1301,10 @@ func Pause_Item_Menu_Set():
 	var _submit_0: Callable = func():singleton.Common_Canceled()
 	main_canvas_layer.nothing_cancel = func():Pause_Item_Menu_Main_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, button_all_selected_0, _submit_0, button_all_a, button_all_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0, button_consumable_a, button_consumable_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, button_equip_selected_0, _submit_0, button_equip_a, button_equip_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, button_key_selected_0, _submit_0, button_key_a, button_key_d)
+	singleton.Set_Button(item_menu_all_button_0, button_all_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_equip_button_0, button_equip_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_key_button_0, button_key_selected_0, _submit_0)
 	#-------------------------------------------------------------------------------
 	var _consumable_serializable_array: Array[Action_Serializable] = item_consumable_inventory
 	var _equip_serializable_array: Array[Equip_Serializable] = item_equip_inventory
@@ -1326,70 +1314,121 @@ func Pause_Item_Menu_Set():
 	Sort_Equip_by_ID(_equip_serializable_array)
 	Sort_Key_by_ID(_key_serializable_array)
 	#-------------------------------------------------------------------------------
-	for _i in _consumable_serializable_array.size():
-		var _hold: int = _consumable_serializable_array[_i].hold
-		var _cooldown: int = 0
+	if(_consumable_serializable_array.size() >0):
 		#-------------------------------------------------------------------------------
-		var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
-		var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+		for _i in _consumable_serializable_array.size():
+			var _hold: int = _consumable_serializable_array[_i].hold
+			var _cooldown: int = 0
+			#-------------------------------------------------------------------------------
+			var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+			var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+			#-------------------------------------------------------------------------------
+			var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
+			var _consumable_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
+			item_menu_consumable_button_content.add_child(_consumable_button)
+			item_menu_consumable_button_array.append(_consumable_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
+			var _all_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
 		#-------------------------------------------------------------------------------
-		var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
-		var _consumable_submit_1: Callable = func():singleton.Common_Canceled()
+	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
-		item_menu_consumable_button_content.add_child(_consumable_button)
-		item_menu_consumable_button_array.append(_consumable_button)
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
-		var _all_submit_1: Callable = func():singleton.Common_Canceled()
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_consumable_a, button_consumable_d)
+		item_menu_consumable_button_content.add_child(_button)
+		item_menu_consumable_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_consumable_button_array)
 	#-------------------------------------------------------------------------------
-	for _i in _equip_serializable_array.size():
-		var _equip_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
-		var _all_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+	if(_equip_serializable_array.size()>0):
 		#-------------------------------------------------------------------------------
-		var _equip_select_1: Callable = func():button_equip_select_1(_equip_serializable_array[_i])
-		var _equip_submit_1: Callable = func():singleton.Common_Canceled()
+		for _i in _equip_serializable_array.size():
+			var _equip_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+			var _all_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _equip_select_1: Callable = func():button_equip_select_1(_equip_serializable_array[_i])
+			var _equip_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
+			item_menu_equip_button_content.add_child(_equip_button)
+			item_menu_equip_button_array.append(_equip_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():button_all_equip_select_1(_equip_serializable_array[_i])
+			var _all_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
-		item_menu_equip_button_content.add_child(_equip_button)
-		item_menu_equip_button_array.append(_equip_button)
+	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():button_all_equip_select_1(_equip_serializable_array[_i])
-		var _all_submit_1: Callable = func():singleton.Common_Canceled()
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
-		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_equip_a, button_equip_d)
+		item_menu_equip_button_content.add_child(_button)
+		item_menu_equip_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_equip_button_array)
 	#-------------------------------------------------------------------------------
-	for _i in _key_serializable_array.size():
-		var _key_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
-		var _all_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+	if(_key_serializable_array.size()>0):
 		#-------------------------------------------------------------------------------
-		var _key_select_1: Callable = func():button_key_select_1(_key_serializable_array[_i])
-		var _key_submit_1: Callable = func():singleton.Common_Canceled()
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
-		item_menu_key_button_content.add_child(_key_button)
-		item_menu_key_button_array.append(_key_button)
-		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():button_all_key_select_1(_key_serializable_array[_i])
-		var _all_submit_1: Callable = func():singleton.Common_Canceled()
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		for _i in _key_serializable_array.size():
+			var _key_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+			var _all_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _key_select_1: Callable = func():button_key_select_1(_key_serializable_array[_i])
+			var _key_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
+			item_menu_key_button_content.add_child(_key_button)
+			item_menu_key_button_array.append(_key_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():button_all_key_select_1(_key_serializable_array[_i])
+			var _all_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
+		#-------------------------------------------------------------------------------
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_key_a, button_key_d)
+		item_menu_key_button_content.add_child(_button)
+		item_menu_key_button_array.append(_button)
+	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_key_button_array)
+	#-------------------------------------------------------------------------------
+	var _all_size:int = _consumable_serializable_array.size() + _equip_serializable_array.size() + _key_serializable_array.size()
+	#-------------------------------------------------------------------------------
+	if(_all_size <= 0):
+		var _button: Button = Create_Empty_Button()
+		#-------------------------------------------------------------------------------
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_all_a, button_all_d)
+		item_menu_all_button_content.add_child(_button)
+		item_menu_all_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_all_button_array)
 	#-------------------------------------------------------------------------------
@@ -1416,12 +1455,8 @@ func Move_To_Item_Button_List(_button_container:Control, _button_0:Button, _butt
 	#-------------------------------------------------------------------------------
 	_button_container.show()
 	#-------------------------------------------------------------------------------
-	if(_button_array.size() > 0):
-		singleton.Move_to_Button(_button_array[0])
-		Disable_Item_Button_0(_button_0)
-	#-------------------------------------------------------------------------------
-	else:
-		singleton.Move_to_Button(_button_0)
+	singleton.Move_to_Button(_button_array[0])
+	Disable_Item_Button_0(_button_0)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Pause_Item_Menu_Main_All_Button_Selected():
@@ -1521,8 +1556,10 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 func Get_Equip_Stored_in_Inventory(_equip_serializable_array:Array[Equip_Serializable], _equip_resource:Equip_Resource) -> int:
 	#-------------------------------------------------------------------------------
 	for _i in _equip_serializable_array.size():
+		#-------------------------------------------------------------------------------
 		if(_equip_serializable_array[_i].equip_resource == _equip_resource):
 			return _equip_serializable_array[_i].stored
+		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return 0
 #-------------------------------------------------------------------------------
@@ -1605,62 +1642,62 @@ func Get_Level_Required(_level_required:int) -> String:
 #-------------------------------------------------------------------------------
 func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	#-------------------------------------------------------------------------------
-		var _status_resource: Status_Resource = _status_serializable.status_resource
-		#-------------------------------------------------------------------------------
-		status_menu_information_icon.texture = _status_resource.icon
-		status_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_status_resource))
-		#-------------------------------------------------------------------------------
-		var _turns: int = clampi(_status_serializable.turns, 0, _status_resource.max_turns)
-		status_menu_information_turns_value.text ="["+str(_turns)+"/"+str(_status_resource.max_turns)+"]"
-		#-------------------------------------------------------------------------------
-		status_menu_information_statistics_name.text = ""
-		status_menu_information_statistics_value.text = ""
-		#-------------------------------------------------------------------------------
-		Set_User_Status_Stat("max_hp", _status_resource.max_hp, "")
-		Set_User_Status_Stat("physical_attack", _status_resource.physical_attack, "")
-		Set_User_Status_Stat("physical_defense", _status_resource.physical_defense, "")
-		Set_User_Status_Stat("magical_attack", _status_resource.magical_attack, "")
-		Set_User_Status_Stat("magical_defense", _status_resource.magical_defense, "")
-		Set_User_Status_Stat("luck", _status_resource.luck, "")
-		#-------------------------------------------------------------------------------
-		Set_User_Status_Stat("physical_presition_rate", _status_resource.physical_presition_rate, "%")
-		Set_User_Status_Stat("physical_evasion_rate", _status_resource.physical_evasion_rate, "%")
-		Set_User_Status_Stat("magical_presition_rate", _status_resource.magical_presition_rate, "%")
-		Set_User_Status_Stat("magical_evasion_rate", _status_resource.magical_evasion_rate, "%")
-		Set_User_Status_Stat("critical_presition_rate", _status_resource.critical_presition_rate, "%")
-		Set_User_Status_Stat("critical_evasion_rate", _status_resource.critical_evasion_rate, "%")
-		#-------------------------------------------------------------------------------
-		Set_User_Status_Stat("target_rate", _status_resource.target_rate, "%")
-		Set_User_Status_Stat("guard_effect", _status_resource.guard_effect, "%")
-		Set_User_Status_Stat("recovery_effect", _status_resource.recovery_effect, "%")
-		Set_User_Status_Stat("pharmacology", _status_resource.pharmacology, "%")
-		Set_User_Status_Stat("tp_cost_rate", _status_resource.tp_cost_rate, "%")
-		Set_User_Status_Stat("tp_charge_rate", _status_resource.tp_charge_rate, "%")
-		Set_User_Status_Stat("tp_recovery", _status_resource.tp_recovery, "%")
-		Set_User_Status_Stat("hp_recovery", _status_resource.hp_recovery, "%")
-		#-------------------------------------------------------------------------------
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.NORMAL, _status_resource.normal)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.WATER, _status_resource.water)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.FIRE, _status_resource.fire)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.EARTH, _status_resource.earth)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.WIND, _status_resource.wind)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.ICE, _status_resource.ice)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.THUNDER, _status_resource.thunder)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.LIGHT, _status_resource.light)
-		Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.DARK, _status_resource.dark)
-		#-------------------------------------------------------------------------------
-		Set_User_Status_Status_Resistance_Rate(_status_resource.status_resistance_dictionary)
-		Set_User_Status_Skills(_status_resource.skill_resource_array)
-		#-------------------------------------------------------------------------------
-		Remove_Last_Letter(status_menu_information_statistics_name)
-		Remove_Last_Letter(status_menu_information_statistics_value)
-		#-------------------------------------------------------------------------------
-		Show_Line_if_String_is_Empty(status_menu_information_statistics_name)
-		Show_Line_if_String_is_Empty(status_menu_information_statistics_value)
-		#-------------------------------------------------------------------------------
-		status_menu_information_description_value.text = tr("description_"+singleton.get_resource_filename(_status_resource))
-		status_menu_information_description_value.text += Blablabla()
-		status_menu_information_root.get_v_scroll_bar().value = 0
+	var _status_resource: Status_Resource = _status_serializable.status_resource
+	#-------------------------------------------------------------------------------
+	status_menu_information_icon.texture = _status_resource.icon
+	status_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_status_resource))
+	#-------------------------------------------------------------------------------
+	var _turns: int = clampi(_status_serializable.turns, 0, _status_resource.max_turns)
+	status_menu_information_turns_value.text ="["+str(_turns)+"/"+str(_status_resource.max_turns)+"]"
+	#-------------------------------------------------------------------------------
+	status_menu_information_statistics_name.text = ""
+	status_menu_information_statistics_value.text = ""
+	#-------------------------------------------------------------------------------
+	Set_User_Status_Stat("max_hp", _status_resource.max_hp, "")
+	Set_User_Status_Stat("physical_attack", _status_resource.physical_attack, "")
+	Set_User_Status_Stat("physical_defense", _status_resource.physical_defense, "")
+	Set_User_Status_Stat("magical_attack", _status_resource.magical_attack, "")
+	Set_User_Status_Stat("magical_defense", _status_resource.magical_defense, "")
+	Set_User_Status_Stat("luck", _status_resource.luck, "")
+	#-------------------------------------------------------------------------------
+	Set_User_Status_Stat("physical_presition_rate", _status_resource.physical_presition_rate, "%")
+	Set_User_Status_Stat("physical_evasion_rate", _status_resource.physical_evasion_rate, "%")
+	Set_User_Status_Stat("magical_presition_rate", _status_resource.magical_presition_rate, "%")
+	Set_User_Status_Stat("magical_evasion_rate", _status_resource.magical_evasion_rate, "%")
+	Set_User_Status_Stat("critical_presition_rate", _status_resource.critical_presition_rate, "%")
+	Set_User_Status_Stat("critical_evasion_rate", _status_resource.critical_evasion_rate, "%")
+	#-------------------------------------------------------------------------------
+	Set_User_Status_Stat("target_rate", _status_resource.target_rate, "%")
+	Set_User_Status_Stat("guard_effect", _status_resource.guard_effect, "%")
+	Set_User_Status_Stat("recovery_effect", _status_resource.recovery_effect, "%")
+	Set_User_Status_Stat("pharmacology", _status_resource.pharmacology, "%")
+	Set_User_Status_Stat("tp_cost_rate", _status_resource.tp_cost_rate, "%")
+	Set_User_Status_Stat("tp_charge_rate", _status_resource.tp_charge_rate, "%")
+	Set_User_Status_Stat("tp_recovery", _status_resource.tp_recovery, "%")
+	Set_User_Status_Stat("hp_recovery", _status_resource.hp_recovery, "%")
+	#-------------------------------------------------------------------------------
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.NORMAL, _status_resource.normal)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.WATER, _status_resource.water)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.FIRE, _status_resource.fire)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.EARTH, _status_resource.earth)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.WIND, _status_resource.wind)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.ICE, _status_resource.ice)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.THUNDER, _status_resource.thunder)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.LIGHT, _status_resource.light)
+	Set_User_Status_Element_4_Stats(Action_Resource.ELEMENT.DARK, _status_resource.dark)
+	#-------------------------------------------------------------------------------
+	Set_User_Status_Status_Resistance_Rate(_status_resource.status_resistance_dictionary)
+	Set_User_Status_Skills(_status_resource.skill_resource_array)
+	#-------------------------------------------------------------------------------
+	Remove_Last_Letter(status_menu_information_statistics_name)
+	Remove_Last_Letter(status_menu_information_statistics_value)
+	#-------------------------------------------------------------------------------
+	Show_Line_if_String_is_Empty(status_menu_information_statistics_name)
+	Show_Line_if_String_is_Empty(status_menu_information_statistics_value)
+	#-------------------------------------------------------------------------------
+	status_menu_information_description_value.text = tr("description_"+singleton.get_resource_filename(_status_resource))
+	status_menu_information_description_value.text += Blablabla()
+	status_menu_information_root.get_v_scroll_bar().value = 0
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Item_Equip_Stat(_name:String, _int:int, _unit: String):
@@ -1934,28 +1971,16 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
 	var _equip_serializable_array: Array[Equip_Serializable] = _fighter_serializable.equip_serializable_array
 	#-------------------------------------------------------------------------------
-	equip_menu_button_type.text = ""
-	#-------------------------------------------------------------------------------
 	if(_equip_serializable_array.size() > 0):
+		equip_menu_button_type.show()
+		equip_menu_button_type.text = ""
 		#-------------------------------------------------------------------------------
 		for _i in _equip_serializable_array.size():
 			var _button: Button = Create_EquipSlot_Button(_equip_serializable_array[_i])
 			#-------------------------------------------------------------------------------
-			var _w: Callable = func():
-				#-------------------------------------------------------------------------------
-				if(_equip_serializable_array[_i].equip_resource != null):
-					singleton.ScrollContainer_Up(equip_menu_information_root)
-				#-------------------------------------------------------------------------------
-			var _s: Callable = func():
-				#-------------------------------------------------------------------------------
-				if(_equip_serializable_array[_i].equip_resource != null):
-					singleton.ScrollContainer_Down(equip_menu_information_root)
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			var _selected_1: Callable = func():
-				Set_User_Equip_Information(_equip_serializable_array[_i])
-				singleton.Common_Selected()
-			#-------------------------------------------------------------------------------
+			var _w: Callable = func():Pause_Equip_Menu_Button_W(_equip_serializable_array[_i])
+			var _s: Callable = func():Pause_Equip_Menu_Button_S(_equip_serializable_array[_i])
+			var _selected_1: Callable = func():Pause_Equip_Menu_Button_Selected(_equip_serializable_array[_i])
 			var _submit_1: Callable = func():Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index, _i)
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _w, _s)
@@ -1964,24 +1989,43 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 			#-------------------------------------------------------------------------------
 			equip_menu_button_type.text += "* "+Get_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)+":  "+"\n"
 		#-------------------------------------------------------------------------------
-		equip_menu_information_root.show()
-		singleton.Button_Array_Set_Vertical_Navigation(equip_menu_button_array)
 		Remove_Last_Letter(equip_menu_button_type)
-		Disable_Item_Button_0(equip_menu_button_0)
-		singleton.Move_to_Button_by_Submit(equip_menu_button_array[0])
 		#-------------------------------------------------------------------------------
+		equip_menu_information_root.show()
 	#-------------------------------------------------------------------------------
 	else:
-		equip_menu_information_root.hide()
+		equip_menu_button_type.hide()
+		#-------------------------------------------------------------------------------
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
 		var _selected: Callable = func():singleton.Common_Selected()
-		var _submit: Callable = func():pass
+		var _submit: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button(equip_menu_button_0, _selected, _submit)
-		Enable_Item_Button_0(equip_menu_button_0)
-		singleton.Move_to_Button_by_Submit(equip_menu_button_0)
+		singleton.Set_Button(_button, _selected, _submit)
+		equip_menu_button_content.add_child(_button)
+		equip_menu_button_array.append(_button)
+		#-------------------------------------------------------------------------------
+		equip_menu_information_root.hide()
 	#-------------------------------------------------------------------------------
+	Disable_Item_Button_0(equip_menu_button_0)
+	singleton.Button_Array_Set_Vertical_Navigation(equip_menu_button_array)
+	singleton.Move_to_Button_by_Submit(equip_menu_button_array[0])
+#-------------------------------------------------------------------------------
+func Pause_Equip_Menu_Button_W(_equip_serializable:Equip_Serializable):
 	#-------------------------------------------------------------------------------
+	if(_equip_serializable.equip_resource != null):
+		singleton.ScrollContainer_Up(equip_menu_information_root)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Pause_Equip_Menu_Button_S(_equip_serializable:Equip_Serializable):
+	#-------------------------------------------------------------------------------
+	if(_equip_serializable.equip_resource != null):
+		singleton.ScrollContainer_Down(equip_menu_information_root)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Pause_Equip_Menu_Button_Selected(_equip_serializable:Equip_Serializable):
+	Set_User_Equip_Information(_equip_serializable)
+	singleton.Common_Selected()
 #-------------------------------------------------------------------------------
 func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 	equip_menu.hide()
@@ -2200,22 +2244,23 @@ func Pause_Status_Menu_Set(_fighter_serializable: Fighter_Serializable, _cancel:
 			status_menu_button_content.add_child(_button)
 			status_menu_button_array.append(_button)
 		#-------------------------------------------------------------------------------
-		singleton.Button_Array_Set_Vertical_Navigation(status_menu_button_array)
-		Disable_Item_Button_0(status_menu_button_0)
-		singleton.Move_to_Button_by_Submit(status_menu_button_array[0])
 		status_menu_information_root.show()
 	#-------------------------------------------------------------------------------
 	else:
-		var _selected: Callable = func():
-			pass
 		#-------------------------------------------------------------------------------
+		var _selected: Callable = func():singleton.Common_Selected()
 		var _submit: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		Enable_Item_Button_0(status_menu_button_0)
-		singleton.Set_Button(status_menu_button_0, _selected, _submit)
-		singleton.Move_to_Button_by_Submit(status_menu_button_0)
+		var _button:Button = Create_Empty_Button()
+		singleton.Set_Button(_button, _selected, _submit)
+		status_menu_button_content.add_child(_button)
+		status_menu_button_array.append(_button)
+		#-------------------------------------------------------------------------------
 		status_menu_information_root.hide()
 	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(status_menu_button_array)
+	Disable_Item_Button_0(status_menu_button_0)
+	singleton.Move_to_Button_by_Submit(status_menu_button_array[0])
 #-------------------------------------------------------------------------------
 func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serializable) -> Button:
 	var _button: Button = Button.new()
@@ -2241,6 +2286,15 @@ func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serial
 		_label2.text = "["+str(_turns)+"/"+str(_status_serializable.status_resource.max_turns)+"]  "
 	#-------------------------------------------------------------------------------
 	_button.add_child(_label2)
+	#-------------------------------------------------------------------------------
+	return _button
+#-------------------------------------------------------------------------------
+func Create_Empty_Button() -> Button:
+	var _button: Button = Button.new()
+	#-------------------------------------------------------------------------------
+	_button.text = ""
+	_button.add_theme_font_size_override("font_size", button_array_font_size)
+	_button.custom_minimum_size.y = button_array_minimum_size_y
 	#-------------------------------------------------------------------------------
 	return _button
 #-------------------------------------------------------------------------------
@@ -3281,17 +3335,17 @@ func Get_Fighter_Hp_Text(_hp:int, _max_hp:int) -> String:
 #-------------------------------------------------------------------------------
 func Blablabla() -> String:
 	var _s:String = ""
-	#_s += "\n"
-	#_s += "\n"
-	#_s += "Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
-	#_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla."
+	_s += "\n"
+	_s += "\n"
+	_s += "Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla "
+	_s += "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla."
 	return _s
 #-------------------------------------------------------------------------------
 func String_With_2_Spaces(_s:String) -> String:
@@ -3610,73 +3664,127 @@ func Open_Market(_merchant_name:String, _consumableitem_array:Array[Action_Seria
 	var _submit_0: Callable = func():pass
 	main_canvas_layer.nothing_cancel = func():Close_Market()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, button_all_selected_0, _submit_0, button_all_a, button_all_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0, button_consumable_a, button_consumable_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, button_equip_selected_0, _submit_0, button_equip_a, button_equip_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, button_key_selected_0, _submit_0, button_key_a, button_key_d)
+	singleton.Set_Button(item_menu_all_button_0, button_all_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_equip_button_0, button_equip_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_key_button_0, button_key_selected_0, _submit_0)
 	#-------------------------------------------------------------------------------
-	for _i in _consumableitem_array.size():
-		var _hold: int = _consumableitem_array[_i].stored
-		var _cooldown: int = _consumableitem_array[_i].cooldown
+	if(_consumableitem_array.size()>0):
 		#-------------------------------------------------------------------------------
-		var _consumable_button: Button = Create_ConsumableItem_InMarket_Button(_consumableitem_array[_i])
-		var _all_button: Button = Create_ConsumableItem_InMarket_Button(_consumableitem_array[_i])
-		#-------------------------------------------------------------------------------
-		var _consumable_selected_1: Callable = func():BuyMenu_Item_Consumable_Selected(_consumableitem_array[_i])
-		var _consumable_submit_1: Callable = func():BuyMenu_ItemConsumable_Submit(_consumable_button, _merchant_name, _consumableitem_array[_i])
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_selected_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
-		item_menu_consumable_button_content.add_child(_consumable_button)
-		item_menu_consumable_button_array.append(_consumable_button)
-		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():BuyMenu_All_Item_Consumable_Selected(_consumableitem_array[_i])
-		var _all_submit_1: Callable = func():BuyMenu_ItemConsumable_Submit(_all_button, _merchant_name, _consumableitem_array[_i])
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		for _i in _consumableitem_array.size():
+			var _hold: int = _consumableitem_array[_i].stored
+			var _cooldown: int = _consumableitem_array[_i].cooldown
+			#-------------------------------------------------------------------------------
+			var _consumable_button: Button = Create_ConsumableItem_InMarket_Button(_consumableitem_array[_i])
+			var _all_button: Button = Create_ConsumableItem_InMarket_Button(_consumableitem_array[_i])
+			#-------------------------------------------------------------------------------
+			var _consumable_selected_1: Callable = func():BuyMenu_Item_Consumable_Selected(_consumableitem_array[_i])
+			var _consumable_submit_1: Callable = func():BuyMenu_ItemConsumable_Submit(_consumable_button, _merchant_name, _consumableitem_array[_i])
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_selected_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
+			item_menu_consumable_button_content.add_child(_consumable_button)
+			item_menu_consumable_button_array.append(_consumable_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():BuyMenu_All_Item_Consumable_Selected(_consumableitem_array[_i])
+			var _all_submit_1: Callable = func():BuyMenu_ItemConsumable_Submit(_all_button, _merchant_name, _consumableitem_array[_i])
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	for _i in _equipitem_array.size():
-		var _equip_button: Button = Create_EquipItem_InMarket_Button(_equipitem_array[_i])
-		var _all_button: Button = Create_EquipItem_InMarket_Button(_equipitem_array[_i])
+	else:
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
-		var _equip_selected_1: Callable = func():BuyMenu_EquipItem_Selected(_equipitem_array[_i])
-		var _equip_submit_1: Callable = func():BuyMenu_EquipItem_Submit(_equip_button, _merchant_name, _equipitem_array[_i], _equip_button, _all_button)
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_selected_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
-		item_menu_equip_button_content.add_child(_equip_button)
-		item_menu_equip_button_array.append(_equip_button)
-		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():BuyMenu_All_EquipItem_Selected(_equipitem_array[_i])
-		var _all_submit_1: Callable = func():BuyMenu_EquipItem_Submit(_all_button, _merchant_name, _equipitem_array[_i], _equip_button, _all_button)
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_consumable_a, button_consumable_d)
+		item_menu_consumable_button_content.add_child(_button)
+		item_menu_consumable_button_array.append(_button)
 	#-------------------------------------------------------------------------------
-	for _i in _keyitem_array.size():
-		var _key_button: Button = Create_KeyItem_InMarket_Button(_keyitem_array[_i])
-		var _all_button: Button = Create_KeyItem_InMarket_Button(_keyitem_array[_i])
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_consumable_button_array)
+	#-------------------------------------------------------------------------------
+	if(_equipitem_array.size()>0):
 		#-------------------------------------------------------------------------------
-		var _key_selected_1: Callable = func():BuyMenu_KeyItem_Selected(_keyitem_array[_i])
-		var _key_submit_1: Callable = func():BuyMenu_KeyItem_Submit(_key_button, _merchant_name, _keyitem_array[_i], _key_button, _all_button)
+		for _i in _equipitem_array.size():
+			var _equip_button: Button = Create_EquipItem_InMarket_Button(_equipitem_array[_i])
+			var _all_button: Button = Create_EquipItem_InMarket_Button(_equipitem_array[_i])
+			#-------------------------------------------------------------------------------
+			var _equip_selected_1: Callable = func():BuyMenu_EquipItem_Selected(_equipitem_array[_i])
+			var _equip_submit_1: Callable = func():BuyMenu_EquipItem_Submit(_equip_button, _merchant_name, _equipitem_array[_i], _equip_button, _all_button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_selected_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
+			item_menu_equip_button_content.add_child(_equip_button)
+			item_menu_equip_button_array.append(_equip_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():BuyMenu_All_EquipItem_Selected(_equipitem_array[_i])
+			var _all_submit_1: Callable = func():BuyMenu_EquipItem_Submit(_all_button, _merchant_name, _equipitem_array[_i], _equip_button, _all_button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_key_button, _key_selected_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
-		item_menu_key_button_content.add_child(_key_button)
-		item_menu_key_button_array.append(_key_button)
+	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():BuyMenu_All_KeyItem_Selected(_keyitem_array[_i])
-		var _all_submit_1: Callable = func():BuyMenu_KeyItem_Submit(_all_button, _merchant_name, _keyitem_array[_i], _key_button, _all_button)
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_equip_a, button_equip_d)
+		item_menu_equip_button_content.add_child(_button)
+		item_menu_equip_button_array.append(_button)
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_equip_button_array)
+	#-------------------------------------------------------------------------------
+	if(_keyitem_array.size()>0):
+		#-------------------------------------------------------------------------------
+		for _i in _keyitem_array.size():
+			var _key_button: Button = Create_KeyItem_InMarket_Button(_keyitem_array[_i])
+			var _all_button: Button = Create_KeyItem_InMarket_Button(_keyitem_array[_i])
+			#-------------------------------------------------------------------------------
+			var _key_selected_1: Callable = func():BuyMenu_KeyItem_Selected(_keyitem_array[_i])
+			var _key_submit_1: Callable = func():BuyMenu_KeyItem_Submit(_key_button, _merchant_name, _keyitem_array[_i], _key_button, _all_button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_key_button, _key_selected_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
+			item_menu_key_button_content.add_child(_key_button)
+			item_menu_key_button_array.append(_key_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():BuyMenu_All_KeyItem_Selected(_keyitem_array[_i])
+			var _all_submit_1: Callable = func():BuyMenu_KeyItem_Submit(_all_button, _merchant_name, _keyitem_array[_i], _key_button, _all_button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
+		#-------------------------------------------------------------------------------
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_key_a, button_key_d)
+		item_menu_key_button_content.add_child(_button)
+		item_menu_key_button_array.append(_button)
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_key_button_array)
+	#-------------------------------------------------------------------------------
+	var _all_size:int = _consumableitem_array.size() + _equipitem_array.size() + _keyitem_array.size()
+	#-------------------------------------------------------------------------------
+	if(_all_size <= 0):
+		var _button: Button = Create_Empty_Button()
+		#-------------------------------------------------------------------------------
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_all_a, button_all_d)
+		item_menu_all_button_content.add_child(_button)
+		item_menu_all_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_all_button_array)
-	singleton.Button_Array_Set_Vertical_Navigation(item_menu_consumable_button_array)
-	singleton.Button_Array_Set_Vertical_Navigation(item_menu_equip_button_array)
-	singleton.Button_Array_Set_Vertical_Navigation(item_menu_key_button_array)
 	#-------------------------------------------------------------------------------
 	Show_All_Item_Button_0()
 	Move_To_Item_Button_List(item_menu_all_button_root, item_menu_all_button_0, item_menu_all_button_array)
@@ -4444,7 +4552,7 @@ func Battle_Skill_Menu_Set():
 	else:
 		#-------------------------------------------------------------------------------
 		var _selected: Callable = func(): singleton.Common_Selected()
-		var _submit: Callable = func(): pass
+		var _submit: Callable = func(): singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
 		singleton.Set_Button(skill_menu_button_0, _selected, _submit)
 		#-------------------------------------------------------------------------------
@@ -4619,10 +4727,10 @@ func Battle_Item_Menu_Set():
 	var _submit_0: Callable = func():singleton.Common_Canceled()
 	main_canvas_layer.nothing_cancel = func():Battle_Item_Menu_Consumable_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, button_all_selected_0, _submit_0, button_all_a, button_all_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0, button_consumable_a, button_consumable_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, button_equip_selected_0, _submit_0, button_equip_a, button_equip_d)
-	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, button_key_selected_0, _submit_0, button_key_a, button_key_d)
+	singleton.Set_Button(item_menu_all_button_0, button_all_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_equip_button_0, button_equip_selected_0, _submit_0)
+	singleton.Set_Button(item_menu_key_button_0, button_key_selected_0, _submit_0)
 	#-------------------------------------------------------------------------------
 	var _consumable_serializable_array: Array[Action_Serializable] = item_consumable_inventory
 	var _equip_serializable_array: Array[Equip_Serializable] = item_equip_inventory
@@ -4632,82 +4740,133 @@ func Battle_Item_Menu_Set():
 	Sort_Equip_by_ID(_equip_serializable_array)
 	Sort_Key_by_ID(_key_serializable_array)
 	#-------------------------------------------------------------------------------
-	for _i in _consumable_serializable_array.size():
-		var _hold: int = _consumable_serializable_array[_i].hold
-		var _cooldown: int = 0
+	if(_consumable_serializable_array.size() >0):
 		#-------------------------------------------------------------------------------
-		for _j in fighter_index:
+		for _i in _consumable_serializable_array.size():
+			var _hold: int = _consumable_serializable_array[_i].hold
+			var _cooldown: int = 0
 			#-------------------------------------------------------------------------------
-			if(_consumable_serializable_array[_i].action_resource == (ally_node_array[_j].action_serializable.action_resource)):
-				_hold -= 1
+			for _j in fighter_index:
+				#-------------------------------------------------------------------------------
+				if(_consumable_serializable_array[_i].action_resource == (ally_node_array[_j].action_serializable.action_resource)):
+					_hold -= 1
+				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		for _j in fighter_index:
+			for _j in fighter_index:
+				#-------------------------------------------------------------------------------
+				if(_consumable_serializable_array[_i].action_resource == (ally_node_array[_j].action_serializable.action_resource)):
+					_cooldown += _consumable_serializable_array[_i].action_resource.max_cooldown
+				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			if(_consumable_serializable_array[_i].action_resource == (ally_node_array[_j].action_serializable.action_resource)):
-				_cooldown += _consumable_serializable_array[_i].action_resource.max_cooldown
+			var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+			var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
 			#-------------------------------------------------------------------------------
+			var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
+			var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _consumable_button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
+			item_menu_consumable_button_content.add_child(_consumable_button)
+			item_menu_consumable_button_array.append(_consumable_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
+			var _all_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _all_button)
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
 		#-------------------------------------------------------------------------------
-		var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
-		var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
-		var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
-		var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _consumable_button)
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
-		item_menu_consumable_button_content.add_child(_consumable_button)
-		item_menu_consumable_button_array.append(_consumable_button)
-		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
-		var _all_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _all_button)
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_consumable_a, button_consumable_d)
+		item_menu_consumable_button_content.add_child(_button)
+		item_menu_consumable_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_consumable_button_array)
 	#-------------------------------------------------------------------------------
-	for _i in _equip_serializable_array.size():
-		var _equip_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
-		var _all_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+	if(_equip_serializable_array.size()>0):
 		#-------------------------------------------------------------------------------
-		var _equip_select_1: Callable = func():button_equip_select_1(_equip_serializable_array[_i])
-		var _equip_submit_1: Callable = func():singleton.Common_Canceled()
+		for _i in _equip_serializable_array.size():
+			var _equip_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+			var _all_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _equip_select_1: Callable = func():button_equip_select_1(_equip_serializable_array[_i])
+			var _equip_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
+			item_menu_equip_button_content.add_child(_equip_button)
+			item_menu_equip_button_array.append(_equip_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():button_all_equip_select_1(_equip_serializable_array[_i])
+			var _all_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
-		item_menu_equip_button_content.add_child(_equip_button)
-		item_menu_equip_button_array.append(_equip_button)
+	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
 		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():button_all_equip_select_1(_equip_serializable_array[_i])
-		var _all_submit_1: Callable = func():singleton.Common_Canceled()
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
-		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_equip_a, button_equip_d)
+		item_menu_equip_button_content.add_child(_button)
+		item_menu_equip_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_equip_button_array)
 	#-------------------------------------------------------------------------------
-	for _i in _key_serializable_array.size():
-		var _key_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
-		var _all_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+	if(_key_serializable_array.size()>0):
 		#-------------------------------------------------------------------------------
-		var _key_select_1: Callable = func():button_key_select_1(_key_serializable_array[_i])
-		var _key_submit_1: Callable = func():singleton.Common_Canceled()
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
-		item_menu_key_button_content.add_child(_key_button)
-		item_menu_key_button_array.append(_key_button)
-		#-------------------------------------------------------------------------------
-		var _all_select_1: Callable = func():button_all_key_select_1(_key_serializable_array[_i])
-		var _all_submit_1: Callable = func():singleton.Common_Canceled()
-		#-------------------------------------------------------------------------------
-		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
-		item_menu_all_button_content.add_child(_all_button)
-		item_menu_all_button_array.append(_all_button)
+		for _i in _key_serializable_array.size():
+			var _key_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+			var _all_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+			#-------------------------------------------------------------------------------
+			var _key_select_1: Callable = func():button_key_select_1(_key_serializable_array[_i])
+			var _key_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
+			item_menu_key_button_content.add_child(_key_button)
+			item_menu_key_button_array.append(_key_button)
+			#-------------------------------------------------------------------------------
+			var _all_select_1: Callable = func():button_all_key_select_1(_key_serializable_array[_i])
+			var _all_submit_1: Callable = func():singleton.Common_Canceled()
+			#-------------------------------------------------------------------------------
+			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
+			item_menu_all_button_content.add_child(_all_button)
+			item_menu_all_button_array.append(_all_button)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	else:
+		var _button: Button = Create_Empty_Button()
+		#-------------------------------------------------------------------------------
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_key_a, button_key_d)
+		item_menu_key_button_content.add_child(_button)
+		item_menu_key_button_array.append(_button)
+	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_key_button_array)
+	#-------------------------------------------------------------------------------
+	var _all_size:int = _consumable_serializable_array.size() + _equip_serializable_array.size() + _key_serializable_array.size()
+	#-------------------------------------------------------------------------------
+	if(_all_size <= 0):
+		var _button: Button = Create_Empty_Button()
+		#-------------------------------------------------------------------------------
+		var _select_1: Callable = func():button_empty_select_1()
+		var _submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_AD_Left_Right(_button, _select_1, _submit_1, button_all_a, button_all_d)
+		item_menu_all_button_content.add_child(_button)
+		item_menu_all_button_array.append(_button)
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(item_menu_all_button_array)
 	#-------------------------------------------------------------------------------
