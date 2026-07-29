@@ -22,13 +22,15 @@ var key_dictionary: Dictionary[String, int]
 @export var fighter_ally_ui_prefab: PackedScene
 @export var fighter_enemy_ui_prefab: PackedScene
 #-------------------------------------------------------------------------------
-@export_category("Serializables")
-@export var money_serializable: Key_Serializable
-#-------------------------------------------------------------------------------
 @export_category("Inventory")
-@export var item_consumable_serializable_array: Array[Action_Serializable]
-@export var item_equip_serializable_array: Array[Equip_Serializable]
-@export var item_key_serializable_array: Array[Key_Serializable]
+@export var item_consumable_inventory: Array[Action_Serializable]
+var item_consumable_inventory_in_battle: Array[Action_Serializable]
+@export var item_equip_inventory: Array[Equip_Serializable]
+var item_equip_inventory_in_battle: Array[Equip_Serializable]
+@export var item_key_inventory: Array[Key_Serializable]
+var item_key_inventory_in_battle: Array[Key_Serializable]
+@export var money_inventory: Key_Serializable
+var money_inventory_in_battle: Key_Serializable
 #-------------------------------------------------------------------------------
 var myGAME_STATE: GAME_STATE = GAME_STATE.IN_WORLD
 var myBATTLE_STATE: BATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
@@ -37,7 +39,7 @@ var myBATTLE_STATE: BATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
 @export var ally_node_array: Array[Fighter_Node]
 var ally_button_array: Array[Fighter_Button]
 var fighter_index: int = 0
-@export var lock_on: TextureRect
+@export var lock_on: Control
 @export var enemy_node_array: Array[Fighter_Node]
 @export var player_characterbody2d: CharacterBody2D
 @export var player_interactable_by_action_area2d: Area2D
@@ -1280,7 +1282,7 @@ var button_key_selected_0: Callable = func():
 #-------------------------------------------------------------------------------
 func button_all_consumable_select_1(_item_serializable:Action_Serializable):
 	button_consumable_select_1(_item_serializable)
-	Move_To_Item_Information_0(item_menu_equip_information_root)
+	Move_To_Item_Information_0(item_menu_consumable_information_root)
 #-------------------------------------------------------------------------------
 func button_consumable_select_1(_item_serializable:Action_Serializable):
 	Set_Item_Consumable_Information(_item_serializable)
@@ -1296,7 +1298,7 @@ func button_equip_select_1(_equip_serializable:Equip_Serializable):
 #-------------------------------------------------------------------------------
 func button_all_key_select_1(_key_serializable:Key_Serializable):
 	button_key_select_1(_key_serializable)
-	Move_To_Item_Information_0(item_menu_equip_information_root)
+	Move_To_Item_Information_0(item_menu_key_information_root)
 #-------------------------------------------------------------------------------
 func button_key_select_1(_key_serializable:Key_Serializable):
 	Set_Item_Key_Information(_key_serializable)
@@ -1316,9 +1318,9 @@ func Pause_Item_Menu_Set():
 	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, button_equip_selected_0, _submit_0, button_equip_a, button_equip_d)
 	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, button_key_selected_0, _submit_0, button_key_a, button_key_d)
 	#-------------------------------------------------------------------------------
-	var _consumable_serializable_array: Array[Action_Serializable] = item_consumable_serializable_array
-	var _equip_serializable_array: Array[Equip_Serializable] = item_equip_serializable_array
-	var _key_serializable_array: Array[Key_Serializable] = item_key_serializable_array
+	var _consumable_serializable_array: Array[Action_Serializable] = item_consumable_inventory
+	var _equip_serializable_array: Array[Equip_Serializable] = item_equip_inventory
+	var _key_serializable_array: Array[Key_Serializable] = item_key_inventory
 	#-------------------------------------------------------------------------------
 	Sort_Action_by_ID(_consumable_serializable_array)
 	Sort_Equip_by_ID(_equip_serializable_array)
@@ -1533,7 +1535,7 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		equip_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_equip_resource))
 		#-------------------------------------------------------------------------------
 		equip_menu_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
-		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_serializable_array, _equip_resource)
+		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_inventory, _equip_resource)
 		equip_menu_information_stored_value.text = "["+str(_stored)+"]"
 		equip_menu_information_class_value.text = Get_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
 		equip_menu_information_type_value.text = Get_Equip_Type(_equip_resource.myEQUIP_TYPE)
@@ -1849,15 +1851,18 @@ func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold
 	_label2.mouse_filter = Control.MOUSE_FILTER_PASS
 	_label2.text = ""
 	#-------------------------------------------------------------------------------
+	var _font_size:String = "[font_size=16]"
+	var _no_font_size:String = "[/font_size]"
+	#-------------------------------------------------------------------------------
 	if(_cooldown <= 0 or _item_serializable.action_resource.max_cooldown <= 0):
 		#-------------------------------------------------------------------------------
 		if(_item_serializable.action_resource.tp_cost > 0):
-			_label2.text += "[font_size=16]"+Get_TP_Cost_Text(_item_serializable.action_resource.tp_cost)+"  "+"[/font_size]"
+			_label2.text += _font_size+Get_TP_Cost_Text(_item_serializable.action_resource.tp_cost)+"  "+_no_font_size
 		#-------------------------------------------------------------------------------
 		var _max_hold: int = _item_serializable.action_resource.max_hold
 		#-------------------------------------------------------------------------------
 		if(_max_hold > 0):
-			var _s: String = "[font_size=16]"+"[lb]"+str(_hold)+"/"+str(_max_hold)+"[rb]"+"  "+"[/font_size]"
+			var _s: String = _font_size+"[lb]"+str(_hold)+"/"+str(_max_hold)+"[rb]"+"  "+_no_font_size
 			#-------------------------------------------------------------------------------
 			if(_hold < _item_serializable.hold):
 				_label2.text += "[color="+hex_color_yellow+"]"+_s+"[/color]"
@@ -1868,7 +1873,7 @@ func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
-		var _s: String = Get_CD_Text(_cooldown)+"  "
+		var _s: String = _font_size+Get_CD_Text(_cooldown)+"  "+_no_font_size
 		#-------------------------------------------------------------------------------
 		if(_cooldown > _item_serializable.cooldown):
 			_label2.text = "[color="+hex_color_yellow+"]"+_s+"[/color]"
@@ -1998,19 +2003,19 @@ func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 	var _current_Fighter: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
 	var _current_equip_slot: Equip_Serializable = _current_Fighter.equip_serializable_array[_equip_index]
 	#-------------------------------------------------------------------------------
-	for _i in item_equip_serializable_array.size():
-		if(Is_Weapon_Avalible_to_be_Equipable(item_equip_serializable_array[_i].equip_resource, _current_equip_slot, _current_Fighter.fighter_resource.myFIGHTER_CLASS)):
-			var _button: Button = Create_EquipItem_Button(item_equip_serializable_array[_i])
+	for _i in item_equip_inventory.size():
+		if(Is_Weapon_Avalible_to_be_Equipable(item_equip_inventory[_i].equip_resource, _current_equip_slot, _current_Fighter.fighter_resource.myFIGHTER_CLASS)):
+			var _button: Button = Create_EquipItem_Button(item_equip_inventory[_i])
 			#-------------------------------------------------------------------------------
 			var _w_1: Callable = func():singleton.ScrollContainer_Up(item_menu_equip_information_root)
 			var _s_1: Callable = func():singleton.ScrollContainer_Down(item_menu_equip_information_root)
 			#-------------------------------------------------------------------------------
 			var _selected_1: Callable = func():
-				Set_Item_Equip_Information(item_equip_serializable_array[_i])
+				Set_Item_Equip_Information(item_equip_inventory[_i])
 				item_menu_equip_information_root.show()
 				singleton.Common_Selected()
 			#-------------------------------------------------------------------------------
-			var _submit_1: Callable = func(): Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index, _equip_index, item_equip_serializable_array[_i])
+			var _submit_1: Callable = func(): Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index, _equip_index, item_equip_inventory[_i])
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _w_1, _s_1)
 			item_menu_equip_button_content.add_child(_button)
@@ -2090,13 +2095,13 @@ func Unequip_Item_to_Fighter(_fighter_index:int, _equip_index:int):
 #-------------------------------------------------------------------------------
 func Remove_Equip_Item_From_Inventory(_equip_resource:Equip_Resource, _remove:int):
 	#-------------------------------------------------------------------------------
-	for _i in item_equip_serializable_array.size():
+	for _i in item_equip_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_equip_serializable_array[_i].equip_resource == _equip_resource):
-			item_equip_serializable_array[_i].stored -= _remove
+		if(item_equip_inventory[_i].equip_resource == _equip_resource):
+			item_equip_inventory[_i].stored -= _remove
 			#-------------------------------------------------------------------------------
-			if(item_equip_serializable_array[_i].stored <= 0):
-				item_equip_serializable_array.remove_at(_i)
+			if(item_equip_inventory[_i].stored <= 0):
+				item_equip_inventory.remove_at(_i)
 			#-------------------------------------------------------------------------------
 			return
 		#-------------------------------------------------------------------------------
@@ -2104,10 +2109,10 @@ func Remove_Equip_Item_From_Inventory(_equip_resource:Equip_Resource, _remove:in
 #-------------------------------------------------------------------------------
 func Add_Equip_Item_To_Inventory(_equip_resource:Equip_Resource, _add:int):
 	#-------------------------------------------------------------------------------
-	for _i in item_equip_serializable_array.size():
+	for _i in item_equip_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_equip_serializable_array[_i].equip_resource == _equip_resource):
-			item_equip_serializable_array[_i].stored += _add
+		if(item_equip_inventory[_i].equip_resource == _equip_resource):
+			item_equip_inventory[_i].stored += _add
 			return
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -2116,7 +2121,7 @@ func Add_Equip_Item_To_Inventory(_equip_resource:Equip_Resource, _add:int):
 	_equip_serializable.myEQUIP_TYPE = _equip_resource.myEQUIP_TYPE
 	_equip_serializable.stored = _add
 	#-------------------------------------------------------------------------------
-	item_equip_serializable_array.append(_equip_serializable)
+	item_equip_inventory.append(_equip_serializable)
 	return
 #-------------------------------------------------------------------------------
 func Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index:int, _equip_index:int):
@@ -2460,12 +2465,12 @@ func Set_Skill_Serializable(_skill_serializable: Action_Serializable, _skill_res
 #-------------------------------------------------------------------------------
 func Fill_the_ConsumableItems_Stored_from_Hold():
 	#-------------------------------------------------------------------------------
-	for _i in item_consumable_serializable_array.size():
+	for _i in item_consumable_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_consumable_serializable_array[_i].hold > item_consumable_serializable_array[_i].action_resource.max_hold):
-			var _extra: int = item_consumable_serializable_array[_i].hold - item_consumable_serializable_array[_i].action_resource.max_hold
-			item_consumable_serializable_array[_i].hold = item_consumable_serializable_array[_i].action_resource.max_hold
-			item_consumable_serializable_array[_i].stored += _extra
+		if(item_consumable_inventory[_i].hold > item_consumable_inventory[_i].action_resource.max_hold):
+			var _extra: int = item_consumable_inventory[_i].hold - item_consumable_inventory[_i].action_resource.max_hold
+			item_consumable_inventory[_i].hold = item_consumable_inventory[_i].action_resource.max_hold
+			item_consumable_inventory[_i].stored += _extra
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -3582,7 +3587,7 @@ func Close_Dialogue_Options():
 #region MONEY FUNCTIONS
 #-------------------------------------------------------------------------------
 func SetMoney_Label():
-	var _s: String = "  "+Get_Money_Label(money_serializable.stored)+"  "
+	var _s: String = "  "+Get_Money_Label(money_inventory.stored)+"  "
 	pause_menu_money_label.text = _s
 	money_menu_label.text = _s
 #-------------------------------------------------------------------------------
@@ -3703,10 +3708,10 @@ func BuyMenu_All_Item_Consumable_Selected(_item_serializable: Action_Serializabl
 #-------------------------------------------------------------------------------
 func BuyMenu_Item_Consumable_Selected(_item_serializable: Action_Serializable):
 	#-------------------------------------------------------------------------------
-	for _i in item_consumable_serializable_array.size():
+	for _i in item_consumable_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_consumable_serializable_array[_i].action_resource == _item_serializable.action_resource):
-			Set_Item_Consumable_Information(item_consumable_serializable_array[_i])
+		if(item_consumable_inventory[_i].action_resource == _item_serializable.action_resource):
+			Set_Item_Consumable_Information(item_consumable_inventory[_i])
 			singleton.Common_Selected()
 			return
 		#-------------------------------------------------------------------------------
@@ -3726,7 +3731,7 @@ func Duplicate_Consumable_Serializable(_old_item_serializable:Action_Serializabl
 func BuyMenu_ItemConsumable_Submit(_button:Button, _merchant_name: String, _item_serializable: Action_Serializable):
 	var _price: int = _item_serializable.action_resource.price
 	#-------------------------------------------------------------------------------
-	if(_price >= money_serializable.stored):
+	if(_price >= money_inventory.stored):
 		singleton.Common_Canceled()
 		return
 	#-------------------------------------------------------------------------------
@@ -3738,9 +3743,9 @@ func BuyMenu_ItemConsumable_Submit(_button:Button, _merchant_name: String, _item
 	var _submit: Callable= func():
 		var _final_price: int = _price * how_many_would_you_buy
 		#-------------------------------------------------------------------------------
-		if(_final_price <= money_serializable.stored):
+		if(_final_price <= money_inventory.stored):
 			_item_serializable.hold -= how_many_would_you_buy
-			money_serializable.stored -= _final_price
+			money_inventory.stored -= _final_price
 			#-------------------------------------------------------------------------------
 			var _id: String = Get_MerchantId_and_ItemId_and_Hold(_merchant_name, _item_serializable.action_resource)
 			key_dictionary[_id] = _item_serializable.stored
@@ -3772,10 +3777,10 @@ func BuyMenu_All_EquipItem_Selected(_equip_serializable: Equip_Serializable):
 #-------------------------------------------------------------------------------
 func BuyMenu_EquipItem_Selected(_equip_serializable: Equip_Serializable):
 	#-------------------------------------------------------------------------------
-	for _i in item_equip_serializable_array.size():
+	for _i in item_equip_inventory.size():
 		#----------------------------------------------------------------
-		if(item_equip_serializable_array[_i].equip_resource == _equip_serializable.equip_resource):
-			Set_Item_Equip_Information(item_equip_serializable_array[_i])
+		if(item_equip_inventory[_i].equip_resource == _equip_serializable.equip_resource):
+			Set_Item_Equip_Information(item_equip_inventory[_i])
 			singleton.Common_Selected()
 			return
 		#----------------------------------------------------------------
@@ -3794,7 +3799,7 @@ func Duplicate_Equip_Serializable(_old_equip_serializable: Equip_Serializable) -
 func BuyMenu_EquipItem_Submit(_button:Button, _merchant_name: String, _equip_serializable: Equip_Serializable, _equipitem_button:Button, _allitem_button:Button):
 	var _price: int = _equip_serializable.equip_resource.price
 	#-------------------------------------------------------------------------------
-	if(_price >= money_serializable.stored or _equip_serializable.stored <= 0):
+	if(_price >= money_inventory.stored or _equip_serializable.stored <= 0):
 		singleton.Common_Canceled()
 		return
 	#-------------------------------------------------------------------------------
@@ -3806,9 +3811,9 @@ func BuyMenu_EquipItem_Submit(_button:Button, _merchant_name: String, _equip_ser
 	var _submit: Callable= func():
 		var _final_price: int = _price * how_many_would_you_buy
 		#-------------------------------------------------------------------------------
-		if(_final_price <= money_serializable.stored and how_many_would_you_buy <= _equip_serializable.stored):
+		if(_final_price <= money_inventory.stored and how_many_would_you_buy <= _equip_serializable.stored):
 			_equip_serializable.stored -= how_many_would_you_buy
-			money_serializable.stored -= _final_price
+			money_inventory.stored -= _final_price
 			#-------------------------------------------------------------------------------
 			var _id: String = Get_MerchantId_and_ItemId_and_Hold(_merchant_name, _equip_serializable.equip_resource)
 			key_dictionary[_id] = _equip_serializable.stored
@@ -3843,10 +3848,10 @@ func BuyMenu_All_KeyItem_Selected(_key_serializable: Key_Serializable):
 #----------------------------------------------------------------
 func BuyMenu_KeyItem_Selected(_key_serializable: Key_Serializable):
 	#----------------------------------------------------------------
-	for _i in item_key_serializable_array.size():
+	for _i in item_key_inventory.size():
 		#----------------------------------------------------------------
-		if(item_key_serializable_array[_i].key_resource == _key_serializable.key_resource):
-			Set_Item_Key_Information(item_key_serializable_array[_i])
+		if(item_key_inventory[_i].key_resource == _key_serializable.key_resource):
+			Set_Item_Key_Information(item_key_inventory[_i])
 			singleton.Common_Selected()
 			return
 		#----------------------------------------------------------------
@@ -3865,7 +3870,7 @@ func Duplicate_Key_Serializable(_old_keyitem_serializable:Key_Serializable) -> K
 func BuyMenu_KeyItem_Submit(_button:Button, _merchant_name: String, _key_serializable: Key_Serializable, _keyitem_button:Button, _allitem_button:Button):
 	var _price: int = _key_serializable.key_resource.price
 	#-------------------------------------------------------------------------------
-	if(_price >= money_serializable.stored or _key_serializable.stored <= 0):
+	if(_price >= money_inventory.stored or _key_serializable.stored <= 0):
 		singleton.Common_Canceled()
 		return
 	#-------------------------------------------------------------------------------
@@ -3877,9 +3882,9 @@ func BuyMenu_KeyItem_Submit(_button:Button, _merchant_name: String, _key_seriali
 	var _submit: Callable= func():
 		var _final_price: int = _price * how_many_would_you_buy
 		#-------------------------------------------------------------------------------
-		if(_final_price <= money_serializable.stored and how_many_would_you_buy <= _key_serializable.stored):
+		if(_final_price <= money_inventory.stored and how_many_would_you_buy <= _key_serializable.stored):
 			_key_serializable.stored -= how_many_would_you_buy
-			money_serializable.stored -= _final_price
+			money_inventory.stored -= _final_price
 			#-------------------------------------------------------------------------------
 			var _id: String = Get_MerchantId_and_ItemId_and_Hold(_merchant_name, _key_serializable.key_resource)
 			key_dictionary[_id] = _key_serializable.stored
@@ -3945,7 +3950,7 @@ func Set_Max_Items_You_Can_Buy(_stored:int, _price:int, _whole_cost:int):
 	if(how_many_would_you_buy > _stored):
 		how_many_would_you_buy = _stored
 	#-------------------------------------------------------------------------------
-	while(money_serializable.stored < _whole_cost):
+	while(money_inventory.stored < _whole_cost):
 		how_many_would_you_buy -= 1
 		_whole_cost = _price * how_many_would_you_buy
 	#-------------------------------------------------------------------------------
@@ -4054,7 +4059,7 @@ func Print_How_Many_Do_You_Buy(_price:int, _has_limited_stored:bool, _stored:int
 		confirm_buy_menu_button.text = "["+str(how_many_would_you_buy)+"]"
 	#-------------------------------------------------------------------------------
 	confirm_buy_menu_item_price.text = Get_Money_Label(_price * how_many_would_you_buy)
-	confirm_buy_menu_item_price.text += "  /  "+Get_Money_Label(money_serializable.stored)
+	confirm_buy_menu_item_price.text += "  /  "+Get_Money_Label(money_inventory.stored)
 #-------------------------------------------------------------------------------
 func Print_How_Many_Do_You_Hold_and_Stored(_action_serializable:Action_Serializable):
 	confirm_buy_menu_hold_value.text = "["+str(_action_serializable.hold)+"/"+str(_action_serializable.action_resource.max_hold)+"]"
@@ -4085,26 +4090,26 @@ func Get_MerchantId_and_ItemId_and_Hold(_name:String, _resource:Resource) -> Str
 #-------------------------------------------------------------------------------
 func Add_ConsumableItem_to_Inventory(_item_serializable: Action_Serializable, _hold:int) -> Action_Serializable:
 	#-------------------------------------------------------------------------------
-	for _i in item_consumable_serializable_array.size():
+	for _i in item_consumable_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_consumable_serializable_array[_i].action_resource == _item_serializable.action_resource):
+		if(item_consumable_inventory[_i].action_resource == _item_serializable.action_resource):
 			#-------------------------------------------------------------------------------
 			if(_item_serializable.action_resource.max_hold > 0):
-				item_consumable_serializable_array[_i].hold += _hold
+				item_consumable_inventory[_i].hold += _hold
 				#-------------------------------------------------------------------------------
-				if(item_consumable_serializable_array[_i].hold > _item_serializable.action_resource.max_hold):
-					var _extra: int = item_consumable_serializable_array[_i].hold - _item_serializable.action_resource.max_hold
-					item_consumable_serializable_array[_i].hold = _item_serializable.action_resource.max_hold
-					item_consumable_serializable_array[_i].stored += _extra
-					return item_consumable_serializable_array[_i]
+				if(item_consumable_inventory[_i].hold > _item_serializable.action_resource.max_hold):
+					var _extra: int = item_consumable_inventory[_i].hold - _item_serializable.action_resource.max_hold
+					item_consumable_inventory[_i].hold = _item_serializable.action_resource.max_hold
+					item_consumable_inventory[_i].stored += _extra
+					return item_consumable_inventory[_i]
 				#-------------------------------------------------------------------------------
 				else:
-					return item_consumable_serializable_array[_i]
+					return item_consumable_inventory[_i]
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			else:
-				item_consumable_serializable_array[_i].stored += _hold
-				return item_consumable_serializable_array[_i]
+				item_consumable_inventory[_i].stored += _hold
+				return item_consumable_inventory[_i]
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -4117,26 +4122,26 @@ func Add_ConsumableItem_to_Inventory(_item_serializable: Action_Serializable, _h
 			var _extra: int = _new_item.hold - _item_serializable.action_resource.max_hold
 			_new_item.hold = _item_serializable.action_resource.max_hold
 			_new_item.stored += _extra
-			item_consumable_serializable_array.append(_new_item)
+			item_consumable_inventory.append(_new_item)
 			return _new_item
 		#-------------------------------------------------------------------------------
 		else:
-			item_consumable_serializable_array.append(_new_item)
+			item_consumable_inventory.append(_new_item)
 			return _new_item
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
 		_new_item.stored = _hold
-		item_consumable_serializable_array.append(_new_item)
+		item_consumable_inventory.append(_new_item)
 		return _new_item
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_ConsumableItem_in_Inventory(_item_resource: Action_Resource) -> Action_Serializable:
 	#-------------------------------------------------------------------------------
-	for _i in item_consumable_serializable_array.size():
+	for _i in item_consumable_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_consumable_serializable_array[_i].action_resource == _item_resource):
-			return item_consumable_serializable_array[_i]
+		if(item_consumable_inventory[_i].action_resource == _item_resource):
+			return item_consumable_inventory[_i]
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	var _new_item: Action_Serializable = Action_Serializable.new()
@@ -4148,14 +4153,14 @@ func Get_ConsumableItem_in_Inventory(_item_resource: Action_Resource) -> Action_
 	return _new_item
 #-------------------------------------------------------------------------------
 func Add_EquipItem_to_Inventory(_equip_serializable: Equip_Serializable, _hold:int) -> Equip_Serializable:
-	return Add_Equip_Serializable_to_Array(item_equip_serializable_array, _equip_serializable.equip_resource, _hold)
+	return Add_Equip_Serializable_to_Array(item_equip_inventory, _equip_serializable.equip_resource, _hold)
 #-------------------------------------------------------------------------------
 func Get_EquipItem_in_Inventory(_equip_resource:Equip_Resource) -> Equip_Serializable:
 	#-------------------------------------------------------------------------------
-	for _i in item_equip_serializable_array.size():
+	for _i in item_equip_inventory.size():
 		#-------------------------------------------------------------------------------
-		if(item_equip_serializable_array[_i].equip_resource == _equip_resource):
-			return item_equip_serializable_array[_i]
+		if(item_equip_inventory[_i].equip_resource == _equip_resource):
+			return item_equip_inventory[_i]
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	var _equip_serializable: Equip_Serializable = Equip_Serializable.new()
@@ -4187,37 +4192,37 @@ func Create_Equip_Serializable_with_Equip_Resource(_equip_resource:Equip_Resourc
 #-------------------------------------------------------------------------------
 func Add_KeyItem_to_Inventory(_key_serializable: Key_Serializable, _hold:int) -> Key_Serializable:
 	#-------------------------------------------------------------------------------
-	if(_key_serializable.key_resource == money_serializable.key_resource):
-		money_serializable.stored += _hold
-		return money_serializable
+	if(_key_serializable.key_resource == money_inventory.key_resource):
+		money_inventory.stored += _hold
+		return money_inventory
 	#-------------------------------------------------------------------------------
 	else:
 		#-------------------------------------------------------------------------------
-		for _i in item_key_serializable_array.size():
+		for _i in item_key_inventory.size():
 			#-------------------------------------------------------------------------------
-			if(item_key_serializable_array[_i].key_resource == _key_serializable.key_resource):
-				item_key_serializable_array[_i].stored += _hold
-				return item_key_serializable_array[_i]
+			if(item_key_inventory[_i].key_resource == _key_serializable.key_resource):
+				item_key_inventory[_i].stored += _hold
+				return item_key_inventory[_i]
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		var _new_key_serializable: Key_Serializable = Duplicate_Key_Serializable(_key_serializable)
 		_new_key_serializable.key_resource = _key_serializable.key_resource
 		_new_key_serializable.stored = _hold
-		item_key_serializable_array.append(_new_key_serializable)
+		item_key_inventory.append(_new_key_serializable)
 		return _new_key_serializable
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_KeyItem_in_Inventory(_key_resource:Key_Resource) -> Key_Serializable:
 	#-------------------------------------------------------------------------------
-	if(_key_resource == money_serializable.key_resource):
-		return money_serializable
+	if(_key_resource == money_inventory.key_resource):
+		return money_inventory
 	#-------------------------------------------------------------------------------
 	else:
 		#-------------------------------------------------------------------------------
-		for _i in item_key_serializable_array.size():
+		for _i in item_key_inventory.size():
 			#-------------------------------------------------------------------------------
-			if(item_key_serializable_array[_i].key_resource == _key_resource):
-				return item_key_serializable_array[_i]
+			if(item_key_inventory[_i].key_resource == _key_resource):
+				return item_key_inventory[_i]
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		var _new_key_serializable: Key_Serializable = Key_Serializable.new()
@@ -4397,8 +4402,10 @@ func BattleMenu_Cancel():
 	#-------------------------------------------------------------------------------
 	else:
 		Set_Lock_On_Position()
-		singleton.Common_Canceled()
+		singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#region BATTLE SKILL MENU
 #-------------------------------------------------------------------------------
 func Battle_Menu_Skill_Button_Submit():
 	Battle_Skill_Menu_Set()
@@ -4462,51 +4469,26 @@ func BattleMenu_Skill_Button_Submit(_skill_serializable:Action_Serializable, _bu
 	var _submit:Callable = func():BattleMenu_Skill_Target_Submit(_skill_serializable)
 	BattleMenu_Target_Set(_skill_serializable, _submit)
 #-------------------------------------------------------------------------------
-func BattleMenu_Skill_Target_Submit(_action_serializable:Action_Serializable):
-	ally_node_array[fighter_index].action_serializable = _action_serializable
+func BattleMenu_Skill_Target_Submit(_skill_serializable:Action_Serializable):
+	ally_node_array[fighter_index].action_serializable = _skill_serializable
 	singleton.Common_Submited()
 	#-------------------------------------------------------------------------------
 	fighter_index +=1
 	var _max: int = ally_node_array.size()-1
 	#-------------------------------------------------------------------------------
 	if(fighter_index > _max):
-		Hide_All_Targets()
-		dialogue_menu.hide()
-		lock_on.hide()
-		battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
-		battle_box.show()
-		Set_All_Fighters_Position_2()
+		singleton.Destroy_Button_Array(skill_menu_button_array)
 		#-------------------------------------------------------------------------------
-		for _i in ally_node_array.size():
-			#-------------------------------------------------------------------------------
-			if(ally_node_array[_i].action_serializable == null):
-				print("Fighter "+str(_i)+" does "+"Nothing")
-			#-------------------------------------------------------------------------------
-			else:
-				var _action_resource:Action_Resource = ally_node_array[_i].action_serializable.action_resource
-				print("Fighter "+str(_i)+" does "+tr("name_"+singleton.get_resource_filename(_action_resource)))
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		await Seconds(3.0)
-		Set_All_Fighters_Position_1()
-		Set_All_Fighters_Actions_to_Null()
-		fighter_index = 0
-		lock_on.show()
-		battle_box.hide()
+		await Do_Actions()
 		Open_Battle_Menu()
+		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 	else:
+		singleton.Destroy_Button_Array(skill_menu_button_array)
+		#-------------------------------------------------------------------------------
 		Open_Battle_Menu()
+		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Open_Battle_Menu():
-	Set_Lock_On_Position()
-	battle_menu.show()
-	dialogue_menu.show()
-	Hide_All_Targets()
-	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
-	singleton.Destroy_Button_Array(skill_menu_button_array)
-	singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
 func BattleMenu_Skill_Target_Cancel(_button:Button):
 	dialogue_menu.hide()
@@ -4514,6 +4496,40 @@ func BattleMenu_Skill_Target_Cancel(_button:Button):
 	Hide_All_Targets()
 	main_canvas_layer.nothing_cancel = func():Battle_Menu_Skill_Button_Cancel()
 	singleton.Move_to_Button_by_Cancel(_button)
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
+func Do_Actions():
+	Hide_All_Targets()
+	dialogue_menu.hide()
+	lock_on.hide()
+	battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
+	battle_box.show()
+	Set_All_Fighters_Position_2()
+	#-------------------------------------------------------------------------------
+	for _i in ally_node_array.size():
+		#-------------------------------------------------------------------------------
+		if(ally_node_array[_i].action_serializable == null):
+			print("Fighter "+str(_i)+" does "+"Nothing")
+		#-------------------------------------------------------------------------------
+		else:
+			var _action_resource:Action_Resource = ally_node_array[_i].action_serializable.action_resource
+			print("Fighter "+str(_i)+" does "+tr("name_"+singleton.get_resource_filename(_action_resource)))
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	await Seconds(3.0)
+	Set_All_Fighters_Position_1()
+	Set_All_Fighters_Actions_to_Null()
+	fighter_index = 0
+	lock_on.show()
+	battle_box.hide()
+#-------------------------------------------------------------------------------
+func Open_Battle_Menu():
+	Set_Lock_On_Position()
+	battle_menu.show()
+	dialogue_menu.show()
+	Hide_All_Targets()
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 #-------------------------------------------------------------------------------
 func Hide_All_Targets():
 	#-------------------------------------------------------------------------------
@@ -4559,6 +4575,7 @@ func BattleMenu_Target_Set(_action_serializable:Action_Serializable, _submit:Cal
 		_button.show()
 		singleton.Set_Button(_button, _selected, _submit)
 	#-------------------------------------------------------------------------------
+	Set_Target_Button_Navigation()
 	singleton.Move_to_Button_by_Submit(ally_node_array[0].fighter_ui.button)
 	#-------------------------------------------------------------------------------
 	match(_action_serializable.action_resource.myTARGET):
@@ -4592,7 +4609,172 @@ func BattleMenu_Target_Set(_action_serializable:Action_Serializable, _submit:Cal
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Battle_Menu_Item_Button_Submit():
-	pass
+	Battle_Item_Menu_Set()
+	battle_menu.hide()
+	dialogue_menu.hide()
+	item_menu.show()
+#-------------------------------------------------------------------------------
+func Battle_Item_Menu_Set():
+	#-------------------------------------------------------------------------------
+	var _submit_0: Callable = func():singleton.Common_Canceled()
+	main_canvas_layer.nothing_cancel = func():Battle_Item_Menu_Consumable_Button_Cancel()
+	#-------------------------------------------------------------------------------
+	singleton.Set_Button_AD_Left_Right(item_menu_all_button_0, button_all_selected_0, _submit_0, button_all_a, button_all_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0, button_consumable_a, button_consumable_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_equip_button_0, button_equip_selected_0, _submit_0, button_equip_a, button_equip_d)
+	singleton.Set_Button_AD_Left_Right(item_menu_key_button_0, button_key_selected_0, _submit_0, button_key_a, button_key_d)
+	#-------------------------------------------------------------------------------
+	var _consumable_serializable_array: Array[Action_Serializable] = item_consumable_inventory
+	var _equip_serializable_array: Array[Equip_Serializable] = item_equip_inventory
+	var _key_serializable_array: Array[Key_Serializable] = item_key_inventory
+	#-------------------------------------------------------------------------------
+	Sort_Action_by_ID(_consumable_serializable_array)
+	Sort_Equip_by_ID(_equip_serializable_array)
+	Sort_Key_by_ID(_key_serializable_array)
+	#-------------------------------------------------------------------------------
+	for _i in _consumable_serializable_array.size():
+		var _hold: int = _consumable_serializable_array[_i].hold
+		var _cooldown: int = 0
+		#-------------------------------------------------------------------------------
+		for _j in fighter_index:
+			#-------------------------------------------------------------------------------
+			if(_consumable_serializable_array[_i].action_resource == (ally_node_array[_j].action_serializable.action_resource)):
+				_hold -= 1
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		for _j in fighter_index:
+			#-------------------------------------------------------------------------------
+			if(_consumable_serializable_array[_i].action_resource == (ally_node_array[_j].action_serializable.action_resource)):
+				_cooldown += _consumable_serializable_array[_i].action_resource.max_cooldown
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+		var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+		#-------------------------------------------------------------------------------
+		var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
+		var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _consumable_button)
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
+		item_menu_consumable_button_content.add_child(_consumable_button)
+		item_menu_consumable_button_array.append(_consumable_button)
+		#-------------------------------------------------------------------------------
+		var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
+		var _all_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _all_button)
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
+		item_menu_all_button_content.add_child(_all_button)
+		item_menu_all_button_array.append(_all_button)
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_consumable_button_array)
+	#-------------------------------------------------------------------------------
+	for _i in _equip_serializable_array.size():
+		var _equip_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+		var _all_button: Button = Create_EquipItem_Button(_equip_serializable_array[_i])
+		#-------------------------------------------------------------------------------
+		var _equip_select_1: Callable = func():button_equip_select_1(_equip_serializable_array[_i])
+		var _equip_submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_WSAD_Left_Right(_equip_button, _equip_select_1, _equip_submit_1, button_equip_w, button_equip_s, button_equip_a, button_equip_d)
+		item_menu_equip_button_content.add_child(_equip_button)
+		item_menu_equip_button_array.append(_equip_button)
+		#-------------------------------------------------------------------------------
+		var _all_select_1: Callable = func():button_all_equip_select_1(_equip_serializable_array[_i])
+		var _all_submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_equip_w, button_equip_s, button_all_a, button_all_d)
+		item_menu_all_button_content.add_child(_all_button)
+		item_menu_all_button_array.append(_all_button)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_equip_button_array)
+	#-------------------------------------------------------------------------------
+	for _i in _key_serializable_array.size():
+		var _key_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+		var _all_button: Button = Create_KeyItem_Button(_key_serializable_array[_i])
+		#-------------------------------------------------------------------------------
+		var _key_select_1: Callable = func():button_key_select_1(_key_serializable_array[_i])
+		var _key_submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_WSAD_Left_Right(_key_button, _key_select_1, _key_submit_1, button_key_w, button_key_s, button_key_a, button_key_d)
+		item_menu_key_button_content.add_child(_key_button)
+		item_menu_key_button_array.append(_key_button)
+		#-------------------------------------------------------------------------------
+		var _all_select_1: Callable = func():button_all_key_select_1(_key_serializable_array[_i])
+		var _all_submit_1: Callable = func():singleton.Common_Canceled()
+		#-------------------------------------------------------------------------------
+		singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_key_w, button_key_s, button_all_a, button_all_d)
+		item_menu_all_button_content.add_child(_all_button)
+		item_menu_all_button_array.append(_all_button)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_key_button_array)
+	#-------------------------------------------------------------------------------
+	singleton.Button_Array_Set_Vertical_Navigation(item_menu_all_button_array)
+	#-------------------------------------------------------------------------------
+	Show_All_Item_Button_0()
+	Move_To_Item_Information_1(item_menu_consumable_information_root, item_menu_consumable_button_array.size())
+	Move_To_Item_Button_List(item_menu_consumable_button_root, item_menu_consumable_button_0, item_menu_consumable_button_array)
+	#-------------------------------------------------------------------------------
+	singleton.Common_Submited()
+#-------------------------------------------------------------------------------
+func Battle_Item_Menu_Consumable_Button_Sumbit(_item_serializable:Action_Serializable, _hold:int, _cooldown:int, _button:Button):
+	#-------------------------------------------------------------------------------
+	if(_hold>0 and _cooldown<=0):
+		item_menu.hide()
+		dialogue_menu.show()
+		main_canvas_layer.nothing_cancel = func():BattleMenu_Item_Target_Cancel(_button)
+		var _submit:Callable = func():BattleMenu_Item_Target_Submit(_item_serializable)
+		BattleMenu_Target_Set(_item_serializable, _submit)
+	#-------------------------------------------------------------------------------
+	else:
+		singleton.Common_Canceled()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Battle_Item_Menu_Consumable_Button_Cancel():
+	singleton.Destroy_Button_Array(item_menu_all_button_array)
+	singleton.Destroy_Button_Array(item_menu_consumable_button_array)
+	singleton.Destroy_Button_Array(item_menu_equip_button_array)
+	singleton.Destroy_Button_Array(item_menu_key_button_array)
+	#-------------------------------------------------------------------------------
+	battle_menu.show()
+	dialogue_menu.show()
+	item_menu.hide()
+	singleton.Move_to_Button_by_Cancel(battle_menu_button_item)
+	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
+#-------------------------------------------------------------------------------
+func BattleMenu_Item_Target_Submit(_item_serializable:Action_Serializable):
+	ally_node_array[fighter_index].action_serializable = _item_serializable
+	singleton.Common_Submited()
+	#-------------------------------------------------------------------------------
+	fighter_index +=1
+	var _max: int = ally_node_array.size()-1
+	#-------------------------------------------------------------------------------
+	if(fighter_index > _max):
+		singleton.Destroy_Button_Array(item_menu_all_button_array)
+		singleton.Destroy_Button_Array(item_menu_consumable_button_array)
+		singleton.Destroy_Button_Array(item_menu_equip_button_array)
+		singleton.Destroy_Button_Array(item_menu_key_button_array)
+		#-------------------------------------------------------------------------------
+		await Do_Actions()
+		Open_Battle_Menu()
+		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
+	#-------------------------------------------------------------------------------
+	else:
+		singleton.Destroy_Button_Array(item_menu_all_button_array)
+		singleton.Destroy_Button_Array(item_menu_consumable_button_array)
+		singleton.Destroy_Button_Array(item_menu_equip_button_array)
+		singleton.Destroy_Button_Array(item_menu_key_button_array)
+		#-------------------------------------------------------------------------------
+		Open_Battle_Menu()
+		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func BattleMenu_Item_Target_Cancel(_button:Button):
+	item_menu.show()
+	dialogue_menu.hide()
+	Hide_All_Targets()
+	main_canvas_layer.nothing_cancel = func():Battle_Item_Menu_Consumable_Button_Cancel()
+	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 #region BATTLE STATUS MENU
 #-------------------------------------------------------------------------------
@@ -4762,5 +4944,4 @@ func Get_Position_in_Canvas_Layer(_global_position:Vector2) -> Vector2:
 func Set_Lock_On_Position():
 	lock_on.global_position = ally_node_array[fighter_index].global_position
 	lock_on.global_position.y -= 20
-	lock_on.global_position -= lock_on.size* 0.5 * lock_on.scale
 #-------------------------------------------------------------------------------

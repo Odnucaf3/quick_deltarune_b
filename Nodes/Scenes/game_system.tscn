@@ -27,6 +27,7 @@
 [ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter3_8.tres" id="22_shqvj"]
 [ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter2_7.tscn" id="23_jvut7"]
 [ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/actor3_8.tscn" id="24_5rrxs"]
+[ext_resource type="Resource" uid="uid://1ittax2epliw" path="res://Resources/Items/item_damage_0.tres" id="25_bv80u"]
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/actor2_7.tscn" id="26_jvut7"]
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Resource" uid="uid://blm178xewop8y" path="res://Resources/Keys/key_1.tres" id="28_0t8i2"]
@@ -63,11 +64,74 @@
 [ext_resource type="Texture2D" uid="uid://b816kdwjyshvw" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_196.png" id="59_bv80u"]
 [ext_resource type="Texture2D" uid="uid://fnxrokl8esje" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_2.png" id="60_b6a3y"]
 
-[sub_resource type="Resource" id="Resource_6ottl"]
+[sub_resource type="Resource" id="Resource_hdd08"]
 script = ExtResource("16_ql07v")
 key_resource = ExtResource("17_hf3yd")
 stored = 4000
 metadata/_custom_type_script = "uid://dosow2j1xm5y3"
+
+[sub_resource type="Animation" id="Animation_bv80u"]
+resource_name = "Idle"
+length = 1.0000125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.625, 0.75, 0.875, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(12, 12), Vector2(16, 16), Vector2(12, 12), Vector2(16, 16), Vector2(12, 12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.625, 0.75, 0.875, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-6, -6), Vector2(-8, -8), Vector2(-6, -6), Vector2(-8, -8), Vector2(-6, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_b6a3y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(12, 12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-6, -6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hklgd"]
+_data = {
+&"Idle": SubResource("Animation_bv80u"),
+&"RESET": SubResource("Animation_b6a3y")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aoydg"]
 bg_color = Color(0, 0, 0, 1)
@@ -322,9 +386,14 @@ func Interactable_Action():
 
 [sub_resource type="Resource" id="Resource_5rrxs"]
 script = ExtResource("3_pclkw")
-action_resource = ExtResource("5_ql07v")
+action_resource = ExtResource("25_bv80u")
 hold = 5
 stored = 6
+metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+
+[sub_resource type="Resource" id="Resource_f6puh"]
+script = ExtResource("3_pclkw")
+action_resource = ExtResource("5_ql07v")
 metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 
 [sub_resource type="Resource" id="Resource_pclkw"]
@@ -1127,7 +1196,7 @@ guard_resource = ExtResource("3_xkpdv")
 fighter_button_prefab = ExtResource("2_0ol08")
 fighter_ally_ui_prefab = ExtResource("5_r4og7")
 fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
-money_serializable = SubResource("Resource_6ottl")
+money_inventory = SubResource("Resource_hdd08")
 ally_node_array = [NodePath("World_2D/player_characterbody2d/fighter1_1"), NodePath("World_2D/player_characterbody2d/fighter1_8"), NodePath("World_2D/player_characterbody2d/fighter3_8"), NodePath("World_2D/player_characterbody2d/fighter2_7")]
 lock_on = NodePath("World_2D/lock_on")
 player_characterbody2d = NodePath("World_2D/player_characterbody2d")
@@ -1359,6 +1428,37 @@ zoom = Vector2(2, 2)
 [node name="World_2D" type="Node2D" parent="." unique_id=1813968239]
 y_sort_enabled = true
 
+[node name="lock_on" type="Control" parent="World_2D" unique_id=1817202298]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="World_2D/lock_on" unique_id=1509173289]
+z_index = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("41_3i786")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/lock_on" unique_id=342866111]
+libraries/ = SubResource("AnimationLibrary_hklgd")
+autoplay = &"Idle"
+
 [node name="Control" type="Control" parent="World_2D" unique_id=1056546741]
 visible = false
 z_index = 1
@@ -1433,6 +1533,7 @@ texture = ExtResource("12_xm4vn")
 expand_mode = 1
 
 [node name="Panel" type="Panel" parent="World_2D/Control" unique_id=615616082]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1470,7 +1571,7 @@ offset_right = 12.0
 offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("18_ngqpa")
+texture = ExtResource("41_3i786")
 expand_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="World_2D/battle_box/TextureRect" unique_id=681833552]
@@ -1534,7 +1635,7 @@ ally_3_fighter_resouce = ExtResource("22_shqvj")
 ally_3_fighter_prefab = ExtResource("22_5rrxs")
 npc_3 = NodePath("npc_3")
 npc_3_character = NodePath("npc_3/actor1_6")
-npc_3_item_consumable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_5rrxs")])
+npc_3_item_consumable_array = Array[ExtResource("3_pclkw")]([SubResource("Resource_5rrxs"), SubResource("Resource_f6puh")])
 npc_3_item_equip_array = Array[ExtResource("8_r4og7")]([SubResource("Resource_pclkw"), SubResource("Resource_0ol08"), SubResource("Resource_jvut7")])
 npc_3_item_key_array = Array[ExtResource("16_ql07v")]([SubResource("Resource_acn20")])
 npc_4 = NodePath("npc_4")
@@ -1721,22 +1822,6 @@ libraries/ = SubResource("AnimationLibrary_p24l3")
 [node name="AnimationTree" type="AnimationTree" parent="World_2D/room_00/Interactable" unique_id=2090549667]
 tree_root = SubResource("AnimationNodeAnimation_3em1u")
 anim_player = NodePath("../AnimationPlayer")
-
-[node name="lock_on" type="TextureRect" parent="World_2D" unique_id=1509173289]
-z_index = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -6.0
-offset_top = -6.0
-offset_right = 6.0
-offset_bottom = 6.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("41_3i786")
-expand_mode = 1
 
 [node name="World_Background" type="CanvasLayer" parent="." unique_id=1741204116]
 layer = -1
@@ -4927,8 +5012,54 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("16_0t8i2")
 
-[node name="Button" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer" unique_id=1508059048]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer" unique_id=2005084735]
 layout_mode = 2
+alignment = 2
+
+[node name="Button4" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer/HBoxContainer" unique_id=9494758]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  -10  "
+
+[node name="Button3" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer/HBoxContainer" unique_id=1458699508]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  -1  "
+
+[node name="Button2" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer/HBoxContainer" unique_id=1015428013]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  +1  "
+
+[node name="Button" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer/HBoxContainer" unique_id=693375868]
+layout_mode = 2
+size_flags_horizontal = 8
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+text = "  +10  "
+
+[node name="Control" type="Control" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer/HBoxContainer" unique_id=1666474645]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="main_canvas_layer/confirm_buy_menu/VBoxContainer/HBoxContainer/Control" unique_id=1508059048]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
 size_flags_horizontal = 8
 focus_mode = 0
 theme_override_font_sizes/font_size = 16
