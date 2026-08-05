@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Theme2.ogg-88c064b1514c539d1bd02bd4d63a0834.o
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

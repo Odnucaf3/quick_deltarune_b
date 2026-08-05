@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Dungeon1.ogg-e902f0ea7076ed2a3a521192488f034d
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

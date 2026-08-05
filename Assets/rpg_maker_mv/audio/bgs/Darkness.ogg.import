@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Darkness.ogg-7ab090423b6eb936c14ef298b65e167e
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

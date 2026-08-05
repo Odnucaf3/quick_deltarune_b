@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Character_Resource" format=3 uid="uid://buc4v5pr6bu4m"]
+
+[ext_resource type="Texture2D" uid="uid://b3j07bas1jq2h" path="res://Assets/rpg_maker_mv/img/faces/Monster_1.png" id="1_1faff"]
+[ext_resource type="Script" uid="uid://bhx63qkff2khj" path="res://Scripts/Resources/character_resource.gd" id="2_cmxd0"]
+[ext_resource type="AudioStream" uid="uid://4f5ei1nch5yt" path="res://Assets/rpg_maker_mv/audio/se/Ice1.ogg" id="3_mlet5"]
+
+[resource]
+script = ExtResource("2_cmxd0")
+face = ExtResource("1_1faff")
+voice = ExtResource("3_mlet5")
+metadata/_custom_type_script = "uid://bhx63qkff2khj"

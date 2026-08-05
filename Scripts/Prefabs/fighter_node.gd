@@ -1,7 +1,7 @@
 extends Node2D
 class_name Fighter_Node
 #-------------------------------------------------------------------------------
-@export var fighter_ui: Fighter_UI
+var fighter_ui: Fighter_UI
 @export var fighter_serializable: Fighter_Serializable
 var fighter_serializable_in_battle: Fighter_Serializable
 @export var character_node: Character_Node

@@ -6,8 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://brcg6yd4ucjv" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_3.png" id="3_p61pd"]
 [ext_resource type="Texture2D" uid="uid://bewl0l0tdcrpk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_10.png" id="4_aka6r"]
 [ext_resource type="Texture2D" uid="uid://b35u0hbn3sq6i" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_8.png" id="5_tkik5"]
+[ext_resource type="Texture2D" uid="uid://bsvniy8bsjfm0" path="res://Assets/Sprites/triangle.png" id="7_aka6r"]
 
-[node name="ally_fighter_ui" type="Control" unique_id=271527618 node_paths=PackedStringArray("button")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3em1u"]
+bg_color = Color(0, 0, 0, 0)
+shadow_color = Color(0, 0, 0, 0.8039216)
+shadow_size = 12
+
+[node name="ally_fighter_ui" type="Control" unique_id=271527618 node_paths=PackedStringArray("button_root", "button", "hp_bar", "hp_label", "dialogue_root")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -18,14 +24,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_lw6pq")
 script = ExtResource("2_re4ip")
-button = NodePath("Control2/Button")
+button_root = NodePath("button_root")
+button = NodePath("button_root/PanelContainer/Button")
+hp_bar = NodePath("hp_root/VBoxContainer/ProgressBar")
+hp_label = NodePath("hp_root/VBoxContainer/Label")
+dialogue_root = NodePath("dialogue_root")
 
-[node name="Control" type="Control" parent="." unique_id=1107437097]
+[node name="hp_root" type="Control" parent="." unique_id=1107437097]
 anchors_preset = 0
 offset_top = -130.0
 offset_bottom = -130.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1845980260]
+[node name="VBoxContainer" type="VBoxContainer" parent="hp_root" unique_id=1845980260]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -39,7 +49,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 2
 
-[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=331277765]
+[node name="Label" type="Label" parent="hp_root/VBoxContainer" unique_id=331277765]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_constants/outline_size = 2
@@ -47,50 +57,111 @@ theme_override_font_sizes/font_size = 16
 text = "3.000 / 3.000 HP"
 horizontal_alignment = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="Control/VBoxContainer" unique_id=1701838106]
+[node name="ProgressBar" type="ProgressBar" parent="hp_root/VBoxContainer" unique_id=1701838106]
 layout_mode = 2
 theme = ExtResource("3_3v8lk")
 value = 75.0
 show_percentage = false
 
-[node name="Control" type="Control" parent="Control/VBoxContainer" unique_id=421970189]
+[node name="Control" type="Control" parent="hp_root/VBoxContainer" unique_id=421970189]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/Control" unique_id=338790765]
+[node name="HBoxContainer" type="HBoxContainer" parent="hp_root/VBoxContainer/Control" unique_id=338790765]
 layout_mode = 1
 offset_right = 128.0
 offset_bottom = 40.0
 scale = Vector2(0.5, 0.5)
 
-[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer/Control/HBoxContainer" unique_id=1867696592]
+[node name="TextureRect" type="TextureRect" parent="hp_root/VBoxContainer/Control/HBoxContainer" unique_id=1867696592]
 layout_mode = 2
 texture = ExtResource("3_p61pd")
 expand_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="Control/VBoxContainer/Control/HBoxContainer" unique_id=2094724379]
+[node name="TextureRect2" type="TextureRect" parent="hp_root/VBoxContainer/Control/HBoxContainer" unique_id=2094724379]
 layout_mode = 2
 texture = ExtResource("4_aka6r")
 expand_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="Control/VBoxContainer/Control/HBoxContainer" unique_id=507503090]
+[node name="TextureRect3" type="TextureRect" parent="hp_root/VBoxContainer/Control/HBoxContainer" unique_id=507503090]
 layout_mode = 2
 texture = ExtResource("5_tkik5")
 expand_mode = 2
 
-[node name="Control2" type="Control" parent="." unique_id=1707289858]
+[node name="dialogue_root" type="Control" parent="." unique_id=725016944]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 56.0
+offset_top = -100.0
+offset_right = 56.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="dialogue_root" unique_id=1845230770]
+layout_mode = 1
+offset_right = 203.0
+offset_bottom = 102.0
+theme_override_constants/separation = -2
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="dialogue_root/HBoxContainer" unique_id=2145871411]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="dialogue_root/HBoxContainer/VBoxContainer" unique_id=567236050]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="dialogue_root/HBoxContainer/VBoxContainer" unique_id=1729608469]
+custom_minimum_size = Vector2(25, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("7_aka6r")
+expand_mode = 1
+flip_h = true
+
+[node name="PanelContainer" type="PanelContainer" parent="dialogue_root/HBoxContainer" unique_id=1080136521]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="dialogue_root/HBoxContainer/PanelContainer" unique_id=2000430990]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="dialogue_root/HBoxContainer/PanelContainer/MarginContainer" unique_id=1465255115]
+layout_mode = 2
+bbcode_enabled = true
+text = "asdasdasdasdas
+asdasdasdasd
+asdasd"
+fit_content = true
+autowrap_mode = 0
+
+[node name="button_root" type="Control" parent="." unique_id=1707289858]
 anchors_preset = 0
 offset_left = 40.0
 offset_right = 40.0
 
-[node name="Button" type="Button" parent="Control2" unique_id=1050430004]
+[node name="PanelContainer" type="PanelContainer" parent="button_root" unique_id=2077909450]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 8.0
+offset_top = -44.0
+offset_right = 72.0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3em1u")
+
+[node name="Button" type="Button" parent="button_root/PanelContainer" unique_id=1050430004]
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "  Ally  "

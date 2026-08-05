@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Storm2.ogg-050ceae6851c2bc5f772bfde44e9f916.o
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

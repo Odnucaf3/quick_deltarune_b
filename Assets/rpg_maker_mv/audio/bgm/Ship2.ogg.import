@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Ship2.ogg-1f30e4dc581e6a1e562208bbafe3567a.og
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

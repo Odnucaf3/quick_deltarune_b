@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Castle1.ogg-a883e68b52ddc10aa488933d0d69acae.
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

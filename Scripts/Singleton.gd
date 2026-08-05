@@ -5,13 +5,24 @@ class_name Singleton
 #-------------------------------------------------------------------------------
 var game_system: Game_System
 const cancelInput: String = "ui_cancel"
-@export_category("Audio and SFXs")
+@export_category("SFX")
 @export var audioStreamPlayer_selected: AudioStreamPlayer
 @export var audioStreamPlayer_submit: AudioStreamPlayer
 @export var audioStreamPlayer_cancel: AudioStreamPlayer
 @export var audioStreamPlayer_equip: AudioStreamPlayer
 @export var audioStreamPlayer_unequip: AudioStreamPlayer
 @export var audioStreamPlayer_shop: AudioStreamPlayer
+@export var audioStreamPlayer_enter_battle: AudioStreamPlayer
+#-------------------------------------------------------------------------------
+@export_category("BGM")
+@export var audioStreamPlayer_bgm: AudioStreamPlayer
+var bgm_position: float
+#-------------------------------------------------------------------------------
+@export var bgm_title: AudioStream
+@export var bgm_stage1: AudioStream
+@export var bgm_battle1: AudioStream
+#-------------------------------------------------------------------------------
+@export_category("Misc")
 @export var fps_label: Label
 @export var option_menu: Option_Menu
 #-------------------------------------------------------------------------------
@@ -19,17 +30,19 @@ const v_scroll_value: int = 90
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
-# Called when the node enters the scene tree for the first time.
+#region MONOVEHABIOUR
+#-------------------------------------------------------------------------------
 func _ready() -> void:
 	pass # Replace with function body.
 #-------------------------------------------------------------------------------
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	#Set_FullScreen()
 	#Set_Vsync()
 	#Set_MouseMode()
 	ResetGame()
 	Show_fps()
+#-------------------------------------------------------------------------------
+#endregion
 #-------------------------------------------------------------------------------
 #region BUTTON FUNCTIONS (WITH MOUSE CONTROL)
 #-------------------------------------------------------------------------------
@@ -305,6 +318,8 @@ func Mouse_Keep_Focus_When_Ext():
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
+#region CONTROL FUNCTIONS
+#-------------------------------------------------------------------------------
 func Set_OptionButtons(_ob:OptionButton, _selected:Callable, _submited:Callable, _canceled:Callable) -> void:
 	Disconnect_OptionButtons(_ob)
 	#-------------------------------------------------------------------------------
@@ -378,6 +393,8 @@ func Disconnect_All(_signal:Signal):
 		_signal.disconnect(_dictionary["callable"])
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
 func Common_Selected() -> void:
 	audioStreamPlayer_selected.play()
 #-------------------------------------------------------------------------------
@@ -388,9 +405,6 @@ func Common_Submited() -> void:
 func Common_Canceled() -> void:
 	audioStreamPlayer_cancel.play()
 	audioStreamPlayer_selected.stop()
-#-------------------------------------------------------------------------------
-func Play_SFX_Shop() -> void:
-	audioStreamPlayer_shop.play()
 #-------------------------------------------------------------------------------
 func Move_to_Button(_b:Button) -> void:
 	_b.grab_focus()
@@ -412,6 +426,34 @@ func Move_to_Button_by_Unequip(_b:Button):
 func Move_to_Button_by_Cancel(_b:Button):
 	Move_to_Button(_b)
 	Common_Canceled()
+#-------------------------------------------------------------------------------
+func Play_SFX_Shop() -> void:
+	audioStreamPlayer_shop.play()
+#-------------------------------------------------------------------------------
+func Play_SFX_Enter_Battle() -> void:
+	audioStreamPlayer_enter_battle.play()
+#-------------------------------------------------------------------------------
+func Play_BGM_Title():
+	audioStreamPlayer_bgm.stream = bgm_title
+	audioStreamPlayer_bgm.play()
+#-------------------------------------------------------------------------------
+func Play_BGM_Stage1():
+	audioStreamPlayer_bgm.stream = bgm_stage1
+	audioStreamPlayer_bgm.play()
+#-------------------------------------------------------------------------------
+func Play_BGM_Battle1():
+	audioStreamPlayer_bgm.stream = bgm_battle1
+	audioStreamPlayer_bgm.play()
+#-------------------------------------------------------------------------------
+func Pause_BGM():
+	bgm_position = audioStreamPlayer_bgm.get_playback_position()
+	audioStreamPlayer_bgm.stop()
+#-------------------------------------------------------------------------------
+func Stop_BGM():
+	audioStreamPlayer_bgm.stop()
+#-------------------------------------------------------------------------------
+func Continue_BGM():
+	audioStreamPlayer_bgm.play(bgm_position)
 #-------------------------------------------------------------------------------
 func Scroll_Richtext_Down(_richtext:RichTextLabel):
 	var _old_value: float = _richtext.get_v_scroll_bar().value
