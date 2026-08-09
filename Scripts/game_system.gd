@@ -2,7 +2,8 @@ extends Node
 class_name Game_System
 #-------------------------------------------------------------------------------
 enum GAME_STATE{IN_WORLD, IN_MENU, IN_BATTLE}
-enum BATTLE_STATE{STILL_FIGHTING, YOU_WIN, YOU_LOSE, YOU_ESCAPE, YOU_RETRY}
+enum BATTLE_STATE{STILL_FIGHTING, YOU_WIN, YOU_LOSE, YOU_ESCAPE}
+enum LOSE_STATE{YOU_RETRY, YOU_ESCAPE_TO_SAVEPOINT, YOU_GIVE_UP}
 #-------------------------------------------------------------------------------
 #region VARIABLES
 #-------------------------------------------------------------------------------
@@ -48,14 +49,16 @@ var money_inventory_in_battle: Key_Serializable
 #-------------------------------------------------------------------------------
 var myGAME_STATE: GAME_STATE = GAME_STATE.IN_WORLD
 var myBATTLE_STATE: BATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
+var myLOSE_STATE: LOSE_STATE = LOSE_STATE.YOU_RETRY
 #-------------------------------------------------------------------------------
 @export_category("Player")
-@export var ally_node_array: Array[Fighter_Node]
+@export var ally_party: Array[Fighter_Node]
 var ally_button_array: Array[Fighter_Button]
-var fighter_index: int = 0
+var current_fighter_turn: int = 0
 @export var lock_on: Control
-@export var enemy_node_array: Array[Fighter_Node]
+@export var enemy_party: Array[Fighter_Node]
 @export var player_characterbody2d: CharacterBody2D
+var player_starting_position: Vector2
 @export var player_interactable_by_action_area2d: Area2D
 @export var player_interactable_by_action_collider: CollisionShape2D
 var isSlowMotion: bool = false
@@ -98,9 +101,14 @@ var viewport_center: Vector2
 #-------------------------------------------------------------------------------
 @export_category("Escape Menu")
 @export var escape_menu: Control
-@export var escape_menu_retry_button: Button
-@export var escape_menu_escape_button: Button
-@export var escape_menu_surrender_button: Button
+@export var escape_menu_yes_button: Button
+@export var escape_menu_no_button: Button
+#-------------------------------------------------------------------------------
+@export_category("Lose Menu")
+@export var lose_menu: Control
+@export var lose_menu_retry_button: Button
+@export var lose_menu_go_to_savepoint_button: Button
+@export var lose_menu_give_up_button: Button
 #-------------------------------------------------------------------------------
 @export_category("Go to Title Menu")
 @export var go_to_title_menu: Control
@@ -393,6 +401,8 @@ const hex_color_orange: String = "fb7927"
 #-------------------------------------------------------------------------------
 const button_array_minimum_size_y: int = 42
 const button_array_font_size: int = 20
+var battle_order: int = 2
+var world_order: int = 0
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -405,6 +415,7 @@ func _ready() -> void:
 	Pause_Off_1()
 	main_canvas_layer.show()
 	background_canvas_layer.show()
+	player_starting_position = player_characterbody2d.global_position
 	#-------------------------------------------------------------------------------
 	black_screen_override.show()
 	battle_box.hide()
@@ -412,9 +423,10 @@ func _ready() -> void:
 	black_screen_override.self_modulate = Color.TRANSPARENT
 	Set_Camera_Parameters()
 	Set_Room(current_room)
-	camera.global_position = Camera_Set_Target_Position()
+	Camera_Set_Target_Position()
 	#-------------------------------------------------------------------------------
 	escape_menu.hide()
+	lose_menu.hide()
 	lock_on.hide()
 	battle_background_root.hide()
 	battle_menu.hide()
@@ -465,9 +477,10 @@ func _ready() -> void:
 	Set_Fighter_0()
 	#-------------------------------------------------------------------------------
 	NormalMotion()
-	Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Idle")
+	Animation_StateMachine(ally_party[0].character_node.animation_tree, state_machine_layer_1, "Idle")
 #-------------------------------------------------------------------------------
 func _physics_process(_delta: float) -> void:
+	tween_Array = get_tree().get_processed_tweens()
 	#-------------------------------------------------------------------------------
 	match(myGAME_STATE):
 		GAME_STATE.IN_WORLD:
@@ -510,24 +523,24 @@ func Player_Movement():
 	if(abs(input_dir.y) < dead_zone):
 		input_dir.y = 0
 	#-------------------------------------------------------------------------------
-	if(ally_node_array[0].character_node.is_moving):
+	if(ally_party[0].character_node.is_moving):
 		#-------------------------------------------------------------------------------
 		if(input_dir == Vector2.ZERO):
-			Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Idle")
-			ally_node_array[0].character_node.is_moving = false
+			Animation_StateMachine(ally_party[0].character_node.animation_tree, state_machine_layer_1, "Idle")
+			ally_party[0].character_node.is_moving = false
 			input_dir_normal = Vector2.ZERO
 			return
 		#-------------------------------------------------------------------------------
 		else:
 			input_dir_normal = input_dir.normalized()
 			#-------------------------------------------------------------------------------
-			if(ally_node_array[0].character_node.is_running):
+			if(ally_party[0].character_node.is_running):
 				var _new_velocity: Vector2 = input_dir_normal * 200.0 * deltaTimeScale
 				player_characterbody2d.velocity = _new_velocity
 				#-------------------------------------------------------------------------------
 				if(!_run_flag):
-					Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Walk")
-					ally_node_array[0].character_node.is_running = false
+					Animation_StateMachine(ally_party[0].character_node.animation_tree, state_machine_layer_1, "Walk")
+					ally_party[0].character_node.is_running = false
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			else:
@@ -535,44 +548,44 @@ func Player_Movement():
 				player_characterbody2d.velocity = _new_velocity
 				#-------------------------------------------------------------------------------
 				if(_run_flag):
-					Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Run")
-					ally_node_array[0].character_node.is_running = true
+					Animation_StateMachine(ally_party[0].character_node.animation_tree, state_machine_layer_1, "Run")
+					ally_party[0].character_node.is_running = true
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			if(ally_node_array[0].character_node.is_facing_left):
+			if(ally_party[0].character_node.is_facing_left):
 				if(input_dir_normal.x > 0):
-					Face_Left(ally_node_array[0].character_node, false)
+					Face_Left(ally_party[0].character_node, false)
 					return
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			else:
 				if(input_dir_normal.x < 0):
-					Face_Left(ally_node_array[0].character_node, true)
+					Face_Left(ally_party[0].character_node, true)
 					return
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		Set_Fighter_Position_History(ally_node_array[0])
+		Set_Fighter_Position_History(ally_party[0])
 	#-------------------------------------------------------------------------------
 	else:
 		#-------------------------------------------------------------------------------
 		if(input_dir != Vector2.ZERO):
 			#-------------------------------------------------------------------------------
 			if(_run_flag):
-				Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Run")
-				ally_node_array[0].character_node.is_running = true
+				Animation_StateMachine(ally_party[0].character_node.animation_tree, state_machine_layer_1, "Run")
+				ally_party[0].character_node.is_running = true
 			#-------------------------------------------------------------------------------
 			else:
-				Animation_StateMachine(ally_node_array[0].character_node.animation_tree, state_machine_layer_1, "Walk")
-				ally_node_array[0].character_node.is_running = false
+				Animation_StateMachine(ally_party[0].character_node.animation_tree, state_machine_layer_1, "Walk")
+				ally_party[0].character_node.is_running = false
 			#-------------------------------------------------------------------------------
-			ally_node_array[0].character_node.is_moving = true
+			ally_party[0].character_node.is_moving = true
 			#-------------------------------------------------------------------------------
 			if(input_dir.x > 0):
-				Face_Left(ally_node_array[0].character_node, false)
+				Face_Left(ally_party[0].character_node, false)
 			#-------------------------------------------------------------------------------
 			elif(input_dir.x < 0):
-				Face_Left(ally_node_array[0].character_node, true)
+				Face_Left(ally_party[0].character_node, true)
 			#-------------------------------------------------------------------------------
 			return
 		#-------------------------------------------------------------------------------
@@ -593,68 +606,68 @@ func Set_Fighter_Position_History(_fighter_node:Fighter_Node):
 func Followers_Movement():
 	var _run_flag: bool = Input.is_action_pressed("Input_Run")
 	#-------------------------------------------------------------------------------
-	for _i in range(1, ally_node_array.size()):
+	for _i in range(1, ally_party.size()):
 		var _distance: float = 20
 		#-------------------------------------------------------------------------------
-		if(ally_node_array[_i].global_position.distance_to(ally_node_array[_i-1].global_position) > _distance):
-			var _x: float = ally_node_array[_i].global_position.x - ally_node_array[_i-1].global_position.x
-			var _y: float = ally_node_array[_i].global_position.y - ally_node_array[_i-1].global_position.y
+		if(ally_party[_i].global_position.distance_to(ally_party[_i-1].global_position) > _distance):
+			var _x: float = ally_party[_i].global_position.x - ally_party[_i-1].global_position.x
+			var _y: float = ally_party[_i].global_position.y - ally_party[_i-1].global_position.y
 			var _dir: float = atan2(_y, _x)
 			var _x2: float = _distance * cos(_dir)
 			var _y2: float = _distance * sin(_dir)
-			var _new_position: Vector2 = ally_node_array[_i-1].global_position + Vector2(_x2, _y2)
+			var _new_position: Vector2 = ally_party[_i-1].global_position + Vector2(_x2, _y2)
 			#-------------------------------------------------------------------------------
-			if(ally_node_array[_i].character_node.is_moving):
-				ally_node_array[_i].global_position = lerp(ally_node_array[_i].global_position, _new_position, 0.1*deltaTimeScale)
+			if(ally_party[_i].character_node.is_moving):
+				ally_party[_i].global_position = lerp(ally_party[_i].global_position, _new_position, 0.1*deltaTimeScale)
 				#-------------------------------------------------------------------------------
-				if(ally_node_array[_i].global_position.distance_to(_new_position) < 5):
-					Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
-					ally_node_array[_i].character_node.is_moving = false
+				if(ally_party[_i].global_position.distance_to(_new_position) < 5):
+					Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
+					ally_party[_i].character_node.is_moving = false
 				#-------------------------------------------------------------------------------
 				else:
-					if(ally_node_array[_i].character_node.is_running):
+					if(ally_party[_i].character_node.is_running):
 						#-------------------------------------------------------------------------------
 						if(!_run_flag):
-							Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Walk")
-							ally_node_array[_i].character_node.is_running = false
+							Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Walk")
+							ally_party[_i].character_node.is_running = false
 						#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
 					else:
 						#-------------------------------------------------------------------------------
 						if(_run_flag):
-							Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Run")
-							ally_node_array[_i].character_node.is_running = true
+							Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Run")
+							ally_party[_i].character_node.is_running = true
 						#-------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------
-					Set_Fighter_Position_History(ally_node_array[_i])
+					Set_Fighter_Position_History(ally_party[_i])
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			else:
 				#-------------------------------------------------------------------------------
-				if(ally_node_array[_i].global_position.distance_to(_new_position) > 10):
+				if(ally_party[_i].global_position.distance_to(_new_position) > 10):
 					#-------------------------------------------------------------------------------
 					if(_run_flag):
-						Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Run")
-						ally_node_array[_i].character_node.is_running = true
+						Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Run")
+						ally_party[_i].character_node.is_running = true
 					#-------------------------------------------------------------------------------
 					else:
-						Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Walk")
-						ally_node_array[_i].character_node.is_running = false
+						Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Walk")
+						ally_party[_i].character_node.is_running = false
 					#-------------------------------------------------------------------------------
-					ally_node_array[_i].character_node.is_moving = true
+					ally_party[_i].character_node.is_moving = true
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		if(ally_node_array[_i].character_node.is_facing_left):
+		if(ally_party[_i].character_node.is_facing_left):
 			#-------------------------------------------------------------------------------
-			if(ally_node_array[_i].global_position < ally_node_array[_i-1].global_position):
-				Face_Left(ally_node_array[_i].character_node, false)
+			if(ally_party[_i].global_position < ally_party[_i-1].global_position):
+				Face_Left(ally_party[_i].character_node, false)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		else:
 			#-------------------------------------------------------------------------------
-			if(ally_node_array[_i].global_position > ally_node_array[_i-1].global_position):
-				Face_Left(ally_node_array[_i].character_node, true)
+			if(ally_party[_i].global_position > ally_party[_i-1].global_position):
+				Face_Left(ally_party[_i].character_node, true)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -671,11 +684,14 @@ func Set_Camera_Parameters():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Camera_Follow():
-	var _new_position: Vector2 = Camera_Set_Target_Position()
+	var _new_position: Vector2 = Camera_Get_Target_Position()
 	camera.global_position = lerp(camera.global_position, _new_position, 0.2)
 #-------------------------------------------------------------------------------
-func Camera_Set_Target_Position() -> Vector2:
-	var _new_position: Vector2 = ally_node_array[0].global_position + Vector2(0, -camera_offset_y)
+func Camera_Set_Target_Position():
+	camera.global_position = Camera_Get_Target_Position()
+#-------------------------------------------------------------------------------
+func Camera_Get_Target_Position() -> Vector2:
+	var _new_position: Vector2 = ally_party[0].global_position + Vector2(0, -camera_offset_y)
 	#-------------------------------------------------------------------------------
 	_new_position.x = clampf(_new_position.x, current_room.limit_left, current_room.limit_right)
 	_new_position.y = clampf(_new_position.y, current_room.limit_top, current_room.limit_botton)
@@ -774,10 +790,10 @@ func PauseMenu_Open():
 	#-------------------------------------------------------------------------------
 	var _button_array: Array[Button]
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		ally_node_array[_i].fighter_serializable.hp = Get_Max_HP(ally_node_array[_i].fighter_serializable)
+	for _i in ally_party.size():
+		ally_party[_i].fighter_serializable.hp = Get_Max_HP(ally_party[_i].fighter_serializable)
 		#-------------------------------------------------------------------------------
-		var _party_button: Fighter_Button = Create_Fighter_Button(ally_node_array[_i])
+		var _party_button: Fighter_Button = Create_Fighter_Button(ally_party[_i])
 		_party_button.custom_minimum_size.y = 126
 		pause_menu_fighter_button_content.add_child(_party_button)
 		ally_button_array.append(_party_button)
@@ -936,7 +952,7 @@ func Pause_Menu_Statistics_Fighter_Button_Submit(_fighter_index:int):
 	statistics_menu.show()
 	singleton.Move_to_Button_by_Submit(statistics_menu_button_0)
 	#-------------------------------------------------------------------------------
-	var _fighter_node: Fighter_Node = ally_node_array[_fighter_index]
+	var _fighter_node: Fighter_Node = ally_party[_fighter_index]
 	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable
 	var _cancel:Callable = func():Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
@@ -970,7 +986,7 @@ func Pause_Menu_Status_Fighter_Button_Submit(_fighter_index:int):
 	pause_menu.hide()
 	status_menu.show()
 	var _cancel:Callable = func():Pause_Status_Menu_Status_Button_Cancel(_fighter_index)
-	Pause_Status_Menu_Set(ally_node_array[_fighter_index].fighter_serializable, _cancel)
+	Pause_Status_Menu_Set(ally_party[_fighter_index].fighter_serializable, _cancel)
 	status_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
 func Pause_Menu_Status_Fighter_Button_Cancel():
@@ -995,7 +1011,7 @@ func PauseMenu_AnyButton_Cancel():
 func Pause_Skill_Menu_Set(_fighter_index:int):
 	main_canvas_layer.nothing_cancel = func(): Pause_Skill_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
-	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
+	var _fighter_serializable: Fighter_Serializable = ally_party[_fighter_index].fighter_serializable
 	Set_Skill(_fighter_serializable)
 	var _skill_serializable_array: Array[Action_Serializable] = Get_Skill(_fighter_serializable)
 	#-------------------------------------------------------------------------------
@@ -2005,7 +2021,7 @@ func Create_KeyItem_Button(_key_serializable: Key_Serializable) -> Button:
 func Pause_Equip_Menu_Set(_fighter_index:int):
 	main_canvas_layer.nothing_cancel = func():Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
-	var _fighter_serializable: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
+	var _fighter_serializable: Fighter_Serializable = ally_party[_fighter_index].fighter_serializable
 	var _equip_serializable_array: Array[Equip_Serializable] = _fighter_serializable.equip_serializable_array
 	#-------------------------------------------------------------------------------
 	if(_equip_serializable_array.size() > 0):
@@ -2081,7 +2097,7 @@ func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 	item_menu_equip_button_content.add_child(_empty_button)
 	item_menu_equip_button_array.append(_empty_button)
 	#-------------------------------------------------------------------------------
-	var _current_Fighter: Fighter_Serializable = ally_node_array[_fighter_index].fighter_serializable
+	var _current_Fighter: Fighter_Serializable = ally_party[_fighter_index].fighter_serializable
 	var _current_equip_slot: Equip_Serializable = _current_Fighter.equip_serializable_array[_equip_index]
 	#-------------------------------------------------------------------------------
 	for _i in item_equip_inventory.size():
@@ -2132,7 +2148,7 @@ func Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index:int, _equip_in
 	equip_menu.show()
 	singleton.Destroy_Button_Array(item_menu_equip_button_array)
 	#-------------------------------------------------------------------------------
-	var _equip_slot: Equip_Serializable = ally_node_array[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
+	var _equip_slot: Equip_Serializable = ally_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	#-------------------------------------------------------------------------------
 	if(_equip_slot.equip_resource != null):
 		Add_Equip_Item_To_Inventory(_equip_slot.equip_resource, 1)
@@ -2149,7 +2165,7 @@ func Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index:int, _equip_i
 	equip_menu.show()
 	singleton.Destroy_Button_Array(item_menu_equip_button_array)
 	#-------------------------------------------------------------------------------
-	var _current_equip_slot: Equip_Serializable = ally_node_array[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
+	var _current_equip_slot: Equip_Serializable = ally_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	#-------------------------------------------------------------------------------
 	if(_current_equip_slot.equip_resource != null):
 		Add_Equip_Item_To_Inventory(_current_equip_slot.equip_resource, 1)
@@ -2161,14 +2177,14 @@ func Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index:int, _equip_i
 	singleton.Move_to_Button_by_Unequip(equip_menu_button_array[_equip_index])
 #-------------------------------------------------------------------------------
 func Equip_Item_to_Fighter(_fighter_index:int, _equip_index:int, _equip_serializable:Equip_Serializable):
-	var _equip_slot: Equip_Serializable = ally_node_array[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
+	var _equip_slot: Equip_Serializable = ally_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	_equip_slot.equip_resource = _equip_serializable.equip_resource
 	_equip_slot.stored = 1
 	equip_menu_button_array[_equip_index].icon = _equip_serializable.equip_resource.icon
 	equip_menu_button_array[_equip_index].text = "  "+tr("name_"+singleton.get_resource_filename(_equip_slot.equip_resource))+"  "
 #-------------------------------------------------------------------------------
 func Unequip_Item_to_Fighter(_fighter_index:int, _equip_index:int):
-	var _equip_slot: Equip_Serializable = ally_node_array[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
+	var _equip_slot: Equip_Serializable = ally_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	_equip_slot.equip_resource = null
 	_equip_slot.stored = 0
 	equip_menu_button_array[_equip_index].icon = null
@@ -2218,7 +2234,7 @@ func Pause_Equip_Menu_Main_Button_Cancel(_fighter_index:int):
 	singleton.Destroy_Button_Array(equip_menu_button_array)
 	pause_menu.show()
 	equip_menu.hide()
-	Fighter_Button_Set_HP(ally_button_array[_fighter_index], ally_node_array[_fighter_index].fighter_serializable)
+	Fighter_Button_Set_HP(ally_button_array[_fighter_index], ally_party[_fighter_index].fighter_serializable)
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func(): Pause_Menu_Equip_Fighter_Button_Cancel()
 	#-------------------------------------------------------------------------------
@@ -3318,7 +3334,7 @@ func Set_Idiome():
 	for _i in ally_button_array.size():
 		#-------------------------------------------------------------------------------
 		if(ally_button_array[_i] != null):
-			Fighter_Button_Set_Information_and_Idiome(ally_button_array[_i], ally_node_array[_i].character_node.character_resource, ally_node_array[_i].fighter_serializable)
+			Fighter_Button_Set_Information_and_Idiome(ally_button_array[_i], ally_party[_i].character_node.character_resource, ally_party[_i].fighter_serializable)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -3415,20 +3431,51 @@ func Face_Left(_user:Character_Node, _b:bool):
 #-------------------------------------------------------------------------------
 func Debug_Information() -> void:
 	var _s: String = ""
-	_s += "Joystick: " + str(input_dir)+"\n"
-	_s += "Joystick Normal: " + str(input_dir_normal)+"\n"
-	_s += "Grab Focus: " + str(get_viewport().gui_get_focus_owner())+"\n"
+	_s += "* Joystick: " + str(input_dir)+"\n"
+	_s += "* Joystick Normal: " + str(input_dir_normal)+"\n"
 	_s += "-------------------------------------------------------\n"
-	_s += "Tweens: "+str(tween_Array.size())+"\n"
+	_s += "* Grab Focus: " + str(get_viewport().gui_get_focus_owner())+"\n"
+	_s += "* All Tweens: "+str(tween_Array.size())+"\n"
 	_s += "-------------------------------------------------------\n"
-	_s += "Player: " + str(ally_node_array.size())+"\n"
+	_s += "* myGAME_STATE: " + GAME_STATE.keys()[myGAME_STATE]+"\n"
+	_s += "* myBATTLE_STATE: " + BATTLE_STATE.keys()[myBATTLE_STATE]+"\n"
+	_s += "* myLOSE_STATE: " + LOSE_STATE.keys()[myLOSE_STATE]+"\n"
+	_s += "* is_in_dialogue: " + str(is_in_dialogue)+"\n"
+	_s += "* Current Fighter Turn: " + str(current_fighter_turn)+"\n"
 	_s += "-------------------------------------------------------\n"
-	#_s += "Enemy: " + str(enemy_party.size())+"\n"
+	_s += Get_Alive_Fighter_and_Actions_Text("Ally", ally_party)
+	_s += "-------------------------------------------------------\n"
+	_s += Get_Alive_Fighter_and_Actions_Text("Enemy", enemy_party)
 	_s += "-------------------------------------------------------\n"
 	#_s += "Enemy Bullets Enabled: " + str(enemyBullets_Enabled_Array.size())+"\n"
 	#_s += "Enemy Bullets Disabled: " + str(enemyBullets_Disabled_Array.size())+"\n"
-	_s += "-------------------------------------------------------\n"
+	#_s += "-------------------------------------------------------\n"
 	debug_label.text = _s
+#-------------------------------------------------------------------------------
+func Get_Alive_Fighter_and_Actions_Text(_name:String, _fighter_node_array:Array[Fighter_Node]) ->String:
+	var _s:String = ""
+	#-------------------------------------------------------------------------------
+	for _i in _fighter_node_array.size():
+		var _fighter_node: Fighter_Node = _fighter_node_array[_i]
+		var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable_in_battle
+		#-------------------------------------------------------------------------------
+		if(_fighter_serializable != null):
+			_s += "----> * "+_name+" "+str(_i)
+			if(_fighter_serializable.hp >0):
+				_s += " (Alive): "
+			#-------------------------------------------------------------------------------
+			else:
+				_s += " (Dead): "
+			#-------------------------------------------------------------------------------
+			if(_fighter_node.action_serializable == null):
+				_s += "null"+"\n"
+			#-------------------------------------------------------------------------------
+			else:
+				_s += singleton.get_resource_filename(_fighter_node.action_serializable.action_resource)+"\n"
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return _s
 #-------------------------------------------------------------------------------
 func Set_SlowMotion() -> void:
 	#-------------------------------------------------------------------------------
@@ -3495,7 +3542,7 @@ func Dialogue(_value:String):
 func Dialogue_0(_value:String):
 	player_interactable_by_action_collider.disabled = true
 	dialogue_menu_face.hide()
-	dialogue_menu_audio.stream = ally_node_array[0].character_node.character_resource.voice
+	dialogue_menu_audio.stream = ally_party[0].character_node.character_resource.voice
 	dialogue_menu_name.text = ""
 	dialogue_menu_name.hide()
 	dialogue_menu_value.visible_characters = 0
@@ -3638,12 +3685,13 @@ func Enable_Pause_Input():
 #-------------------------------------------------------------------------------
 func Stop_Moving():
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
-		ally_node_array[_i].character_node.is_moving = false
+	for _i in ally_party.size():
+		Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
+		ally_party[_i].character_node.is_moving = false
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Open_Dialogue_Options(_array_string:Array[String]):
+	button_next.hide()
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func():pass
 	#-------------------------------------------------------------------------------
@@ -3671,6 +3719,7 @@ func Open_Dialogue_Options(_array_string:Array[String]):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Close_Dialogue_Options():
+	button_next.show()
 	singleton.Destroy_Button_Array(dialogue_menu_button_array)
 #-------------------------------------------------------------------------------
 #endregion
@@ -4365,49 +4414,30 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		_fighter_node_array[_i].fighter_serializable_in_battle = Duplicate_Fighter_Serializable(_fighter_node_array[_i].fighter_serializable)
-		Set_Skill(_fighter_node_array[_i].fighter_serializable_in_battle)
+		var _fighter_serializable: Fighter_Serializable = _fighter_node_array[_i].fighter_serializable_in_battle
+		Set_Skill(_fighter_serializable)
 		#-------------------------------------------------------------------------------
-		var _max_hp: int = Get_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle)
+		var _max_hp: int = Get_Max_HP(_fighter_serializable)
 		var _hp: int = _max_hp
 		#-------------------------------------------------------------------------------
-		_fighter_node_array[_i].fighter_serializable_in_battle.hp = _max_hp
+		_fighter_serializable.hp = _max_hp
 		_fighter_node_array[_i].fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
 		_fighter_node_array[_i].fighter_ui.hp_bar.max_value = _max_hp
 		_fighter_node_array[_i].fighter_ui.hp_bar.value = _hp
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Enter_Battle():
-	myGAME_STATE = GAME_STATE.IN_BATTLE
-	singleton.Stop_BGM()
-	singleton.Play_SFX_Enter_Battle()
-	await Fade_Out_Override()
+func Set_Fighter_After_Battle(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
-	Set_Battle_Background()
-	tp_bar.show()
-	tp = 100
-	Set_TP_Bar(tp)
-	dialogue_menu.show()
-	Create_All_Fighters_UI()
-	Set_Inventory_When_Enter_Battle()
-	Set_Fighter_Before_Battle(ally_node_array)
-	Set_Fighter_Before_Battle(enemy_node_array)
-	await Set_All_Fighters_Position_1()
+	for _i in _fighter_node_array.size():
+		_fighter_node_array[_i].fighter_serializable = Duplicate_Fighter_Serializable(_fighter_node_array[_i].fighter_serializable_in_battle)
+		var _fighter_serializable: Fighter_Serializable = _fighter_node_array[_i].fighter_serializable
+		Set_Skill(_fighter_serializable)
+		#-------------------------------------------------------------------------------
+		var _max_hp: int = Get_Max_HP(_fighter_serializable)
+		var _hp: int = _max_hp
+		#-------------------------------------------------------------------------------
+		_fighter_serializable.hp = _max_hp
 	#-------------------------------------------------------------------------------
-	#await Seconds(0.1)
-	await Fade_In_Override()
-	await Seconds(0.1)
-	singleton.Play_BGM_Battle1()
-	battle_menu.show()
-	#-------------------------------------------------------------------------------
-	fighter_index = 0
-	lock_on.show()
-	Set_Lock_On_Position()
-	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		Set_Skill(ally_node_array[_i].fighter_serializable)
-	#-------------------------------------------------------------------------------
-	BattleMenu_Set()
-	singleton.Move_to_Button(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_Position_1():
 	await Set_All_Fighters_Position_Common(0.17, 0.42, -0.15, 0.25)
@@ -4415,20 +4445,37 @@ func Set_All_Fighters_Position_1():
 func Set_All_Fighters_Position_2():
 	await Set_All_Fighters_Position_Common(0.35, 0.35, -0.4, 0.63)
 #-------------------------------------------------------------------------------
-func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float):
-	var _camera_center: Vector2 = camera.global_position
-	#-------------------------------------------------------------------------------
-	var _ally_dx: float = (_x2-_x1) / (ally_node_array.size()+1)
-	var _ally_dy: float = (_y2-_y1) / (ally_node_array.size()+1)
+func Set_All_Fighters_Last_Position():
 	#-------------------------------------------------------------------------------
 	var _tween:Tween = create_tween()
 	var _timer: float = 0.3
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		Face_Left(ally_node_array[_i].character_node, false)
-		Animation_StateMachine(ally_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
-		ally_node_array[_i].z_index = 2
-		ally_node_array[_i].show()
+	for _i in ally_party.size():
+		Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
+		ally_party[_i].z_index = world_order
+		_tween.parallel().tween_property(ally_party[_i].character_node, "position", Vector2.ZERO, _timer)
+	#-------------------------------------------------------------------------------
+	for _i in enemy_party.size():
+		Animation_StateMachine(enemy_party[_i].character_node.animation_tree, state_machine_layer_1, "Idle")
+		enemy_party[_i].z_index = world_order
+		_tween.parallel().tween_property(enemy_party[_i].character_node, "position", Vector2.ZERO, _timer)
+	#-------------------------------------------------------------------------------
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float):
+	var _camera_center: Vector2 = camera.global_position
+	#-------------------------------------------------------------------------------
+	var _ally_dx: float = (_x2-_x1) / (ally_party.size()+1)
+	var _ally_dy: float = (_y2-_y1) / (ally_party.size()+1)
+	#-------------------------------------------------------------------------------
+	var _tween:Tween = create_tween()
+	var _timer: float = 0.3
+	#-------------------------------------------------------------------------------
+	for _i in ally_party.size():
+		Face_Left(ally_party[_i].character_node, false)
+		Animation_StateMachine(ally_party[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
+		ally_party[_i].z_index = battle_order
+		ally_party[_i].show()
 		#-------------------------------------------------------------------------------
 		var _x: float = camera_size.x * (-_x1 - (_i+1) * _ally_dx)
 		var _y: float = camera_size.y * (_y1 + (_i+1) * _ally_dy)
@@ -4436,18 +4483,18 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 		var _final_position: Vector2 = _camera_center + Vector2(_x, _y)
 		var _final_position_ui: Vector2 = Get_Position_in_Canvas_Layer(_final_position)
 		#-------------------------------------------------------------------------------
-		_tween.parallel().tween_property(ally_node_array[_i], "global_position", _final_position, _timer)
-		_tween.parallel().tween_property(ally_node_array[_i].fighter_ui, "global_position", _final_position_ui, _timer)
+		_tween.parallel().tween_property(ally_party[_i].character_node, "global_position", _final_position, _timer)
+		_tween.parallel().tween_property(ally_party[_i].fighter_ui, "global_position", _final_position_ui, _timer)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	var _enemy_dx: float = (_x2-_x1) / (enemy_node_array.size()+1)
-	var _enemy_dy: float = (_y2-_y1) / (enemy_node_array.size()+1)
+	var _enemy_dx: float = (_x2-_x1) / (enemy_party.size()+1)
+	var _enemy_dy: float = (_y2-_y1) / (enemy_party.size()+1)
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():	
-		Face_Left(enemy_node_array[_i].character_node, true)
-		Animation_StateMachine(enemy_node_array[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
-		enemy_node_array[_i].z_index = 2
-		enemy_node_array[_i].show()
+	for _i in enemy_party.size():	
+		Face_Left(enemy_party[_i].character_node, true)
+		Animation_StateMachine(enemy_party[_i].character_node.animation_tree, state_machine_layer_1, "Battle_Idle")
+		enemy_party[_i].z_index = battle_order
+		enemy_party[_i].show()
 		#-------------------------------------------------------------------------------
 		var _x: float = camera_size.x * (_x1 + (_i+1) * _enemy_dx)
 		var _y: float = camera_size.y * (_y1 + (_i+1) * _enemy_dy)
@@ -4455,19 +4502,39 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 		var _final_position: Vector2 = _camera_center + Vector2(_x, _y)
 		var _final_position_ui: Vector2 = Get_Position_in_Canvas_Layer(_final_position)
 		#-------------------------------------------------------------------------------
-		_tween.parallel().tween_property(enemy_node_array[_i], "global_position", _final_position, _timer)
-		_tween.parallel().tween_property(enemy_node_array[_i].fighter_ui, "global_position", _final_position_ui, _timer)
+		_tween.parallel().tween_property(enemy_party[_i].character_node, "global_position", _final_position, _timer)
+		_tween.parallel().tween_property(enemy_party[_i].fighter_ui, "global_position", _final_position_ui, _timer)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	await _tween.finished
 #-------------------------------------------------------------------------------
 func Create_All_Fighters_UI():
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		Create_Fighter_UI(ally_node_array[_i], fighter_ally_ui_prefab)
+	for _i in ally_party.size():
+		Create_Fighter_UI(ally_party[_i], fighter_ally_ui_prefab)
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		Create_Fighter_UI(enemy_node_array[_i], fighter_enemy_ui_prefab)
+	for _i in enemy_party.size():
+		Create_Fighter_UI(enemy_party[_i], fighter_enemy_ui_prefab)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Delete_All_Fighters_UI():
+	#-------------------------------------------------------------------------------
+	for _i in ally_party.size():
+		ally_party[_i].fighter_ui.queue_free()
+		ally_party[_i].fighter_ui = null
+	#-------------------------------------------------------------------------------
+	for _i in enemy_party.size():
+		enemy_party[_i].fighter_ui.queue_free()
+		enemy_party[_i].fighter_ui = null
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Show_All_Fighters_UI():
+	#-------------------------------------------------------------------------------
+	for _i in ally_party.size():
+		ally_party[_i].fighter_ui.show()
+	#-------------------------------------------------------------------------------
+	for _i in enemy_party.size():
+		enemy_party[_i].fighter_ui.show()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Create_Fighter_UI(_fighter_node:Fighter_Node, _fighter_ui_prefab:PackedScene):
@@ -4482,15 +4549,15 @@ func Create_Fighter_UI(_fighter_node:Fighter_Node, _fighter_ui_prefab:PackedScen
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
-func BattleMenu_Set():
+func BattleMenu_Set(_user:Fighter_Node):
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 	#-------------------------------------------------------------------------------
 	var _selected: Callable = func(): singleton.Common_Selected()
 	#-------------------------------------------------------------------------------
-	var _skill_submit: Callable = func(): Battle_Menu_Skill_Button_Submit()
-	var _item_submit: Callable = func(): Battle_Menu_Item_Button_Submit()
-	var _status_submit: Callable = func(): Battle_Menu_Status_Button_Submit()
-	var _statistics_submit: Callable = func(): Battle_Menu_Statistics_Button_Submit()
+	var _skill_submit: Callable = func(): Battle_Menu_Skill_Button_Submit(_user)
+	var _item_submit: Callable = func(): Battle_Menu_Item_Button_Submit(_user)
+	var _status_submit: Callable = func(): Battle_Menu_Status_Button_Submit(_user)
+	var _statistics_submit: Callable = func(): Battle_Menu_Statistics_Button_Submit(_user)
 	#-------------------------------------------------------------------------------
 	singleton.Set_Button(battle_menu_button_skill, _selected, _skill_submit)
 	singleton.Set_Button(battle_menu_button_item, _selected, _item_submit)
@@ -4508,56 +4575,269 @@ func BattleMenu_Set():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func BattleMenu_Cancel():
-	ally_node_array[fighter_index].action_serializable = null
+	ally_party[current_fighter_turn].action_serializable = null
 	#-------------------------------------------------------------------------------
-	fighter_index -= 1
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	current_fighter_turn -= 1
 	#-------------------------------------------------------------------------------
-	if(fighter_index < 0):
+	if(current_fighter_turn < 0):
+		lock_on.hide()
 		Set_Escape_Menu()
 	#-------------------------------------------------------------------------------
 	else:
 		var _tp: int = Get_Future_TP()
 		Set_TP_Bar(_tp)
 		Set_Lock_On_Position()
+		_alive_ally_party[current_fighter_turn].action_serializable = null
+		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
 		singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Escape_Menu():
 	escape_menu.show()
 	battle_menu.hide()
-	var _retry_submit: Callable = func():pass
-	var _escape_submit: Callable = func():pass
-	var _surrender_submit: Callable = func():pass
+	var _yes_submit: Callable = func():Escape_Menu_Yes_Button_Submit()
+	var _no_submit: Callable = func():Escape_Menu_No_Button_Submit()
 	var _selected: Callable = func():singleton.Common_Selected()
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func():Escape_Menu_Any_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	singleton.Set_Button(escape_menu_retry_button, _selected, _retry_submit)
-	singleton.Set_Button(escape_menu_escape_button, _selected, _escape_submit)
-	singleton.Set_Button(escape_menu_surrender_button, _selected, _surrender_submit)
+	singleton.Set_Button(escape_menu_yes_button, _selected, _yes_submit)
+	singleton.Set_Button(escape_menu_no_button, _selected, _no_submit)
 	#-------------------------------------------------------------------------------
-	singleton.Move_to_Button_by_Cancel(escape_menu_retry_button)
+	singleton.Move_to_Button_by_Cancel(escape_menu_no_button)
+#-------------------------------------------------------------------------------
+func Escape_Menu_Yes_Button_Submit():
+	myBATTLE_STATE = BATTLE_STATE.YOU_ESCAPE
+	main_canvas_layer.nothing_cancel = func():pass
+	#-------------------------------------------------------------------------------
+	escape_menu.hide()
+	singleton.Common_Submited()
+	next_signal.emit()
+#-------------------------------------------------------------------------------
+func Escape_Menu_No_Button_Submit():
+	Escape_Menu_No_Button_Common()
+	singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
 func Escape_Menu_Any_Button_Cancel():
+	Escape_Menu_No_Button_Common()
+	singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
+#-------------------------------------------------------------------------------
+func Escape_Menu_No_Button_Common():
 	battle_menu.show()
 	escape_menu.hide()
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
-	fighter_index = 0
+	current_fighter_turn = 0
+	lock_on.show()
 	Set_Lock_On_Position()
-	singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
+#-------------------------------------------------------------------------------
+#region BATTLE STATE-MACHINE
+#-------------------------------------------------------------------------------
+func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
+	enemy_party = _array_enemy_party
+	#-------------------------------------------------------------------------------
+	myGAME_STATE = GAME_STATE.IN_BATTLE
+	myBATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
+	player_interactable_by_action_collider.disabled = true
+	#-------------------------------------------------------------------------------
+	singleton.Stop_BGM()
+	singleton.Play_SFX_Enter_Battle()
+	await Fade_Out_Override()
+	#-------------------------------------------------------------------------------
+	Set_Battle_Background()
+	tp_bar.show()
+	tp = 100
+	Set_TP_Bar(tp)
+	dialogue_menu.show()
+	#-------------------------------------------------------------------------------
+	Set_Inventory_When_Enter_Battle()
+	#-------------------------------------------------------------------------------
+	Create_All_Fighters_UI()
+	Set_Fighter_Before_Battle(ally_party)
+	Set_Fighter_Before_Battle(enemy_party)
+	#-------------------------------------------------------------------------------
+	await Set_All_Fighters_Position_1()
+	#-------------------------------------------------------------------------------
+	await Fade_In_Override()
+	await Seconds(0.1)
+	singleton.Play_BGM_Battle1()
+	battle_menu.show()
+	#-------------------------------------------------------------------------------
+	current_fighter_turn = 0
+	lock_on.show()
+	Set_Lock_On_Position()
+	#-------------------------------------------------------------------------------
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	BattleMenu_Set(_alive_ally_party[current_fighter_turn])
+	singleton.Move_to_Button(battle_menu_button_skill)
+#-------------------------------------------------------------------------------
+func You_Retry():
+	myBATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
+	#-------------------------------------------------------------------------------
+	await Fade_Out_Override()
+	#-------------------------------------------------------------------------------
+	tp = 100
+	Set_TP_Bar(tp)
+	#-------------------------------------------------------------------------------
+	Set_Inventory_When_Enter_Battle()
+	#-------------------------------------------------------------------------------
+	Set_Fighter_Before_Battle(ally_party)
+	Set_Fighter_Before_Battle(enemy_party)
+	#-------------------------------------------------------------------------------
+	await Set_All_Fighters_Position_1()
+	#-------------------------------------------------------------------------------
+	await Fade_In_Override()
+	await Seconds(0.1)
+	battle_menu.show()
+	#-------------------------------------------------------------------------------
+	current_fighter_turn = 0
+	lock_on.show()
+	Set_Lock_On_Position()
+	#-------------------------------------------------------------------------------
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	BattleMenu_Set(_alive_ally_party[current_fighter_turn])
+	singleton.Move_to_Button(battle_menu_button_skill)
+#-------------------------------------------------------------------------------
+func You_Win():
+	myGAME_STATE = GAME_STATE.IN_MENU
+	#-------------------------------------------------------------------------------
+	singleton.Stop_BGM()
+	singleton.Play_SFX_Escape_Battle()
+	await Fade_Out_Override()
+	#-------------------------------------------------------------------------------
+	battle_background_root.hide()
+	tp_bar.hide()
+	dialogue_menu.hide()
+	#-------------------------------------------------------------------------------
+	Set_Inventory_When_Exit_Battle()
+	#-------------------------------------------------------------------------------
+	Delete_All_Fighters_UI()
+	Set_Fighter_After_Battle(ally_party)
+	Set_Fighter_After_Battle(enemy_party)
+	await Set_All_Fighters_Last_Position()
+	#-------------------------------------------------------------------------------
+	await Fade_In_Override()
+	await Seconds(0.1)
+	singleton.Play_BGM_Stage1()
+	#-------------------------------------------------------------------------------
+	lock_on.hide()
+	myGAME_STATE = GAME_STATE.IN_WORLD
+	player_interactable_by_action_collider.disabled = false
+#-------------------------------------------------------------------------------
+func You_Lose():
+	lose_menu.show()
+	battle_menu.hide()
+	lock_on.hide()
+	#dialogue_menu.show()
+	#-------------------------------------------------------------------------------
+	var _retry_submit: Callable = func():Lose_Menu_Retry_Button_Submit()
+	var _go_to_savepoint_submit: Callable = func():Lose_Menu_Go_To_SavePoint_Button_Submit()
+	var _give_up_submit: Callable = func():Lose_Menu_Give_Up_Button_Submit()
+	var _selected: Callable = func():singleton.Common_Selected()
+	main_canvas_layer.nothing_cancel = func():pass
+	#-------------------------------------------------------------------------------
+	singleton.Set_Button(lose_menu_retry_button, _selected, _retry_submit)
+	singleton.Set_Button(lose_menu_go_to_savepoint_button, _selected, _go_to_savepoint_submit)
+	singleton.Set_Button(lose_menu_give_up_button, _selected, _give_up_submit)
+	#-------------------------------------------------------------------------------
+	singleton.Move_to_Button_by_Cancel(lose_menu_retry_button)
+	#-------------------------------------------------------------------------------
+	await next_signal
+#-------------------------------------------------------------------------------
+func Lose_Menu_Retry_Button_Submit():
+	myLOSE_STATE = LOSE_STATE.YOU_RETRY
+	#-------------------------------------------------------------------------------
+	lose_menu.hide()
+	singleton.Common_Submited()
+	next_signal.emit()
+#-------------------------------------------------------------------------------
+func Lose_Menu_Go_To_SavePoint_Button_Submit():
+	myLOSE_STATE = LOSE_STATE.YOU_ESCAPE_TO_SAVEPOINT
+	#-------------------------------------------------------------------------------
+	lose_menu.hide()
+	singleton.Common_Submited()
+	next_signal.emit()
+#-------------------------------------------------------------------------------
+func Lose_Menu_Give_Up_Button_Submit():
+	myLOSE_STATE = LOSE_STATE.YOU_GIVE_UP
+	#-------------------------------------------------------------------------------
+	lose_menu.hide()
+	singleton.Common_Submited()
+	next_signal.emit()
+#-------------------------------------------------------------------------------
+func You_Give_Up():
+	Set_Go_to_Title_Menu_Yes_Button_Submit()
+#-------------------------------------------------------------------------------
+func You_Escape():
+	battle_background_root.hide()
+	tp_bar.hide()
+	dialogue_menu.hide()
+	lock_on.hide()
+	#-------------------------------------------------------------------------------
+	#Set_Inventory_When_Exit_Battle()
+	Delete_All_Fighters_UI()
+	#Set_Fighter_After_Battle(ally_party)
+	#Set_Fighter_After_Battle(enemy_party)
+	await Set_All_Fighters_Last_Position()
+	#-------------------------------------------------------------------------------
+	await Fade_In_Override()
+	await Seconds(0.1)
+	singleton.Play_BGM_Stage1()
+	#-------------------------------------------------------------------------------
+	myGAME_STATE = GAME_STATE.IN_WORLD
+	player_interactable_by_action_collider.disabled = false
+#-------------------------------------------------------------------------------
+func You_Escape_to_SavePoint():
+	battle_background_root.hide()
+	tp_bar.hide()
+	dialogue_menu.hide()
+	lock_on.hide()
+	#-------------------------------------------------------------------------------
+	#Set_Inventory_When_Exit_Battle()
+	Delete_All_Fighters_UI()
+	#Set_Fighter_After_Battle(ally_party)
+	#Set_Fighter_After_Battle(enemy_party)
+	await Set_All_Fighters_Last_Position()
+	#-------------------------------------------------------------------------------
+	Set_Ally_Party_Position(player_starting_position)
+	Camera_Set_Target_Position()
+	#-------------------------------------------------------------------------------
+	await Fade_In_Override()
+	await Seconds(0.1)
+	singleton.Play_BGM_Stage1()
+	#-------------------------------------------------------------------------------
+	myGAME_STATE = GAME_STATE.IN_WORLD
+	player_interactable_by_action_collider.disabled = false
+#-------------------------------------------------------------------------------
+func Escape_Effect():
+	myGAME_STATE = GAME_STATE.IN_MENU
+	#-------------------------------------------------------------------------------
+	singleton.Stop_BGM()
+	singleton.Play_SFX_Escape_Battle()
+	await Fade_Out_Override()
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
+func Set_Ally_Party_Position(_position:Vector2):
+	player_characterbody2d.global_position = _position
+	ally_party[0].position = Vector2.ZERO
+	#-------------------------------------------------------------------------------
+	for _i in range(1,ally_party.size()):
+		ally_party[_i].global_position = _position
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #region BATTLE SKILL MENU
 #-------------------------------------------------------------------------------
-func Battle_Menu_Skill_Button_Submit():
-	Battle_Skill_Menu_Set()
+func Battle_Menu_Skill_Button_Submit(_user:Fighter_Node):
+	Battle_Skill_Menu_Set(_user)
 	battle_menu.hide()
 	dialogue_menu.hide()
 	skill_menu.show()
 #-------------------------------------------------------------------------------
-func Battle_Skill_Menu_Set():
+func Battle_Skill_Menu_Set(_user:Fighter_Node):
 	main_canvas_layer.nothing_cancel = func(): Battle_Menu_Skill_Button_Cancel()
 	#-------------------------------------------------------------------------------
-	var _fighter_serializable: Fighter_Serializable = ally_node_array[fighter_index].fighter_serializable
+	var _fighter_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
 	var _skill_serializable_array: Array[Action_Serializable] = Get_Skill(_fighter_serializable)
 	#-------------------------------------------------------------------------------
 	if(_skill_serializable_array.size() > 0):
@@ -4573,7 +4853,7 @@ func Battle_Skill_Menu_Set():
 			var _s: Callable = func():singleton.ScrollContainer_Down(skill_menu_information_root)
 			#-------------------------------------------------------------------------------
 			var _selected: Callable = func(): Pause_Skill_Menu_Skill_Button_Selected(_skill_serializable_array[_i])
-			var _submit: Callable = func(): BattleMenu_Skill_Button_Submit(_skill_serializable_array[_i], _hold, _cooldown, _button)
+			var _submit: Callable = func(): BattleMenu_Skill_Button_Submit(_user, _skill_serializable_array[_i], _hold, _cooldown, _button)
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WS(_button, _selected, _submit, _w, _s)
 			#-------------------------------------------------------------------------------
@@ -4606,7 +4886,7 @@ func Battle_Menu_Skill_Button_Cancel():
 	singleton.Destroy_Button_Array(skill_menu_button_array)
 	singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
-func BattleMenu_Skill_Button_Submit(_skill_serializable:Action_Serializable, _hold:int, _cooldown:int, _button:Button):
+func BattleMenu_Skill_Button_Submit(_user:Fighter_Node, _skill_serializable:Action_Serializable, _hold:int, _cooldown:int, _button:Button):
 	var _can: bool = Can_Use_This_Action(_skill_serializable, _hold, _cooldown)
 	#-------------------------------------------------------------------------------
 	if(_can):
@@ -4616,8 +4896,7 @@ func BattleMenu_Skill_Button_Submit(_skill_serializable:Action_Serializable, _ho
 		#-------------------------------------------------------------------------------
 		main_canvas_layer.nothing_cancel = func():BattleMenu_Skill_Target_Cancel(_button)
 		#-------------------------------------------------------------------------------
-		var _user: Fighter_Node = ally_node_array[fighter_index]
-		var _submit:Callable = func():BattleMenu_Skill_Target_Submit(_user, _skill_serializable)
+		var _submit: Callable = func():BattleMenu_Skill_Target_Submit(_user, _skill_serializable)
 		BattleMenu_Target_Set(_user, _skill_serializable, _submit)
 	#-------------------------------------------------------------------------------
 	else:
@@ -4657,14 +4936,16 @@ func After_Target_Select_Actions(_user:Fighter_Node, _action_serializable:Action
 	_user.action_serializable = _action_serializable
 	singleton.Common_Submited()
 	#-------------------------------------------------------------------------------
-	fighter_index +=1
-	var _max: int = ally_node_array.size()-1
+	current_fighter_turn +=1
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	var _max: int = _alive_ally_party.size()-1
 	#-------------------------------------------------------------------------------
-	if(fighter_index > _max):
+	if(current_fighter_turn > _max):
 		Hide_All_Targets()
 		next_signal.emit()
 	#-------------------------------------------------------------------------------
 	else:
+		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
 		Open_Battle_Menu()
 		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
@@ -4688,14 +4969,18 @@ func Do_Ally_Actions():
 	main_canvas_layer.nothing_cancel = func():pass
 	lock_on.hide()
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	#-------------------------------------------------------------------------------
+	for _i in _alive_ally_party.size():
+		var _name: String = tr("name_"+singleton.get_resource_filename(_alive_ally_party[_i].fighter_serializable_in_battle.fighter_resource))
+		var _s: String = "* "+_name+" uses "
 		#-------------------------------------------------------------------------------
-		if(ally_node_array[_i].action_serializable == null):
-			dialogue_menu_value.text = "* Fighter "+str(_i)+" does "+"Nothing"
+		if(_alive_ally_party[_i].action_serializable == null):
+			dialogue_menu_value.text = _s+"Nothing"
 		#-------------------------------------------------------------------------------
 		else:
-			var _action_resource:Action_Resource = ally_node_array[_i].action_serializable.action_resource
-			dialogue_menu_value.text = "* Fighter "+str(_i)+" does "+tr("name_"+singleton.get_resource_filename(_action_resource))
+			var _action_resource:Action_Resource = _alive_ally_party[_i].action_serializable.action_resource
+			dialogue_menu_value.text = _s+tr("name_"+singleton.get_resource_filename(_action_resource))
 		#-------------------------------------------------------------------------------
 		dialogue_menu_value.visible_characters = -1
 		await Seconds(0.3)
@@ -4714,7 +4999,7 @@ func Do_Enemy_Actions():
 	await Battle_Enemy_Dialogue_in_Bubbles()
 	#-------------------------------------------------------------------------------
 	Set_and_Show_Battle_Box()
-	await Start_Timer_Tween(99)
+	await Start_Timer_Tween(4)
 	#-------------------------------------------------------------------------------
 	Set_and_Hide_Battle_Box()
 	Battle_Background_Dark_Fade_Out()
@@ -4740,15 +5025,19 @@ func Battle_Background_Dark_Fade_Common(_color:Color):
 #-------------------------------------------------------------------------------
 func After_Enemy_Actions():
 	Set_All_Fighters_Actions_to_Null()
-	fighter_index = 0
 	lock_on.show()
+	#-------------------------------------------------------------------------------
+	current_fighter_turn = 0
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	BattleMenu_Set(_alive_ally_party[0])
 	Open_Battle_Menu()
+	#-------------------------------------------------------------------------------
 	singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
 func Show_Enemy_Dialogue():
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		enemy_node_array[_i].fighter_ui.dialogue_root.show()
+	for _i in enemy_party.size():
+		enemy_party[_i].fighter_ui.dialogue_root.show()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_and_Show_Battle_Box():
@@ -4764,8 +5053,8 @@ func Set_and_Hide_Battle_Box():
 #-------------------------------------------------------------------------------
 func Hide_Enemy_Dialogue():
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		enemy_node_array[_i].fighter_ui.dialogue_root.hide()
+	for _i in enemy_party.size():
+		enemy_party[_i].fighter_ui.dialogue_root.hide()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Open_Battle_Menu():
@@ -4777,16 +5066,16 @@ func Open_Battle_Menu():
 #-------------------------------------------------------------------------------
 func Hide_All_Targets():
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		var _button_root: Control = ally_node_array[_i].fighter_ui.button_root
-		var _button: Button = ally_node_array[_i].fighter_ui.button
+	for _i in ally_party.size():
+		var _button_root: Control = ally_party[_i].fighter_ui.button_root
+		var _button: Button = ally_party[_i].fighter_ui.button
 		_button.toggle_mode = false
 		_button.button_pressed = false
 		_button_root.hide()
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		var _button_root: Control = enemy_node_array[_i].fighter_ui.button_root
-		var _button: Button = enemy_node_array[_i].fighter_ui.button
+	for _i in enemy_party.size():
+		var _button_root: Control = enemy_party[_i].fighter_ui.button_root
+		var _button: Button = enemy_party[_i].fighter_ui.button
 		_button.toggle_mode = false
 		_button.button_pressed = false
 		_button_root.hide()
@@ -4794,22 +5083,22 @@ func Hide_All_Targets():
 #-------------------------------------------------------------------------------
 func Show_All_Targets():
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		var _button_root: Control = ally_node_array[_i].fighter_ui.button_root
+	for _i in ally_party.size():
+		var _button_root: Control = ally_party[_i].fighter_ui.button_root
 		_button_root.show()
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		var _button_root: Control = enemy_node_array[_i].fighter_ui.button_root
+	for _i in enemy_party.size():
+		var _button_root: Control = enemy_party[_i].fighter_ui.button_root
 		_button_root.show()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_Actions_to_Null():
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		ally_node_array[_i].action_serializable = null
+	for _i in ally_party.size():
+		ally_party[_i].action_serializable = null
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		enemy_node_array[_i].action_serializable = null
+	for _i in enemy_party.size():
+		enemy_party[_i].action_serializable = null
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func BattleMenu_Target_Set(_user:Fighter_Node, _action_serializable:Action_Serializable, _submit:Callable):
@@ -4817,40 +5106,40 @@ func BattleMenu_Target_Set(_user:Fighter_Node, _action_serializable:Action_Seria
 	#-------------------------------------------------------------------------------
 	match(_action_serializable.action_resource.myTARGET):
 		Action_Resource.TARGET.ENEMY_1:
-			var _alive_enemy_node_array: Array[Fighter_Node] = Get_Alive_Fighter_in_Battle(enemy_node_array)
-			BattleMenu_Target_Set_2(_user, _action_serializable, _alive_enemy_node_array, _selected, _submit)
+			var _alive_enemy_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(enemy_party)
+			BattleMenu_Target_Set_2(_user, _action_serializable, _alive_enemy_party, _selected, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ENEMY_RANDOM:
-			var _alive_enemy_node_array: Array[Fighter_Node] = Get_Alive_Fighter_in_Battle(enemy_node_array)
-			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_enemy_node_array, _submit)
+			var _alive_enemy_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(enemy_party)
+			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_enemy_party, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ENEMY_ALL:
-			var _alive_enemy_node_array: Array[Fighter_Node] = Get_Alive_Fighter_in_Battle(enemy_node_array)
-			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_enemy_node_array, _submit)
+			var _alive_enemy_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(enemy_party)
+			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_enemy_party, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_1:
-			var _alive_ally_node_array: Array[Fighter_Node] = Get_Alive_Fighter_in_Battle(ally_node_array)
-			BattleMenu_Target_Set_2(_user, _action_serializable, _alive_ally_node_array, _selected, _submit)
+			var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+			BattleMenu_Target_Set_2(_user, _action_serializable, _alive_ally_party, _selected, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_RANDOM:
-			var _alive_ally_node_array: Array[Fighter_Node] = Get_Alive_Fighter_in_Battle(ally_node_array)
-			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_ally_node_array, _submit)
+			var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_ally_party, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_ALL:
-			var _alive_ally_node_array: Array[Fighter_Node] = Get_Alive_Fighter_in_Battle(ally_node_array)
-			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_ally_node_array, _submit)
+			var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+			BattleMenu_Target_Set_3(_user, _action_serializable, _alive_ally_party, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.USER:
-			var _alive_ally_node_array:Array[Fighter_Node] = Get_Alive_Fighter_in_Battle([ally_node_array[fighter_index]])
-			BattleMenu_Target_Set_2(_user, _action_serializable, _alive_ally_node_array, _selected, _submit)
+			var _alive_ally_party:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle([ally_party[current_fighter_turn]])
+			BattleMenu_Target_Set_2(_user, _action_serializable, _alive_ally_party, _selected, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_DOWN_1:
-			var _dead_ally_node_array: Array = Get_Dead_Fighter_in_Battle(ally_node_array)
-			BattleMenu_Target_Set_2(_user, _action_serializable, _dead_ally_node_array, _selected, _submit)
+			var _dead_ally_party: Array = Get_Dead_Fighter_Party_in_Battle(ally_party)
+			BattleMenu_Target_Set_2(_user, _action_serializable, _dead_ally_party, _selected, _submit)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_DOWN_ALL:
-			var _dead_ally_node_array: Array = Get_Dead_Fighter_in_Battle(ally_node_array)
-			BattleMenu_Target_Set_3(_user, _action_serializable, _dead_ally_node_array, _submit)
+			var _dead_ally_party: Array = Get_Dead_Fighter_Party_in_Battle(ally_party)
+			BattleMenu_Target_Set_3(_user, _action_serializable, _dead_ally_party, _submit)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -4904,18 +5193,18 @@ func BattleMenu_Target_Set_3(_user:Fighter_Node, _action_serializable:Action_Ser
 		singleton.Common_Canceled()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Get_Alive_Fighter_in_Battle(_fighter_node_array:Array[Fighter_Node]) -> Array[Fighter_Node]:
-	var _alive_fighter_node_array: Array[Fighter_Node]
+func Get_Alive_Fighter_Party_in_Battle(_fighter_node_array:Array[Fighter_Node]) -> Array[Fighter_Node]:
+	var _alive_ally_party: Array[Fighter_Node]
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
 		if(_fighter_node_array[_i].fighter_serializable_in_battle.hp > 0):
-			_alive_fighter_node_array.append(_fighter_node_array[_i])
+			_alive_ally_party.append(_fighter_node_array[_i])
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	return _alive_fighter_node_array
+	return _alive_ally_party
 #-------------------------------------------------------------------------------
-func Get_Dead_Fighter_in_Battle(_fighter_node_array:Array[Fighter_Node]) -> Array[Fighter_Node]:
+func Get_Dead_Fighter_Party_in_Battle(_fighter_node_array:Array[Fighter_Node]) -> Array[Fighter_Node]:
 	var _dead_fighter_node_array: Array[Fighter_Node]
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
@@ -4926,16 +5215,15 @@ func Get_Dead_Fighter_in_Battle(_fighter_node_array:Array[Fighter_Node]) -> Arra
 	#-------------------------------------------------------------------------------
 	return _dead_fighter_node_array
 #-------------------------------------------------------------------------------
-func Battle_Menu_Item_Button_Submit():
-	Battle_Item_Menu_Set()
+func Battle_Menu_Item_Button_Submit(_user:Fighter_Node):
+	Battle_Item_Menu_Set(_user)
 	battle_menu.hide()
 	dialogue_menu.hide()
 	item_menu.show()
 #-------------------------------------------------------------------------------
-func Battle_Item_Menu_Set():
-	#-------------------------------------------------------------------------------
-	var _submit_0: Callable = func():singleton.Common_Canceled()
+func Battle_Item_Menu_Set(_user:Fighter_Node):
 	main_canvas_layer.nothing_cancel = func():Battle_Item_Menu_Consumable_Button_Cancel()
+	var _submit_0: Callable = func():singleton.Common_Canceled()
 	#-------------------------------------------------------------------------------
 	singleton.Set_Button(item_menu_all_button_0, button_all_selected_0, _submit_0)
 	singleton.Set_Button(item_menu_consumable_button_0, button_consumable_selected_0, _submit_0)
@@ -4960,14 +5248,14 @@ func Battle_Item_Menu_Set():
 			var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
 			#-------------------------------------------------------------------------------
 			var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
-			var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _consumable_button)
+			var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_user, _consumable_serializable_array[_i], _hold, _cooldown, _consumable_button)
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
 			item_menu_consumable_button_content.add_child(_consumable_button)
 			item_menu_consumable_button_array.append(_consumable_button)
 			#-------------------------------------------------------------------------------
 			var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
-			var _all_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_serializable_array[_i], _hold, _cooldown, _all_button)
+			var _all_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_user, _consumable_serializable_array[_i], _hold, _cooldown, _all_button)
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WSAD_Left_Right(_all_button, _all_select_1, _all_submit_1, button_consumable_w, button_consumable_s, button_all_a, button_all_d)
 			item_menu_all_button_content.add_child(_all_button)
@@ -5074,7 +5362,7 @@ func Battle_Item_Menu_Set():
 	#-------------------------------------------------------------------------------
 	singleton.Common_Submited()
 #-------------------------------------------------------------------------------
-func Battle_Item_Menu_Consumable_Button_Sumbit(_item_serializable:Action_Serializable, _hold:int, _cooldown:int, _button:Button):
+func Battle_Item_Menu_Consumable_Button_Sumbit(_user:Fighter_Node, _item_serializable:Action_Serializable, _hold:int, _cooldown:int, _button:Button):
 	var _can: bool = Can_Use_This_Action(_item_serializable, _hold, _cooldown)
 	#-------------------------------------------------------------------------------
 	if(_can):
@@ -5084,7 +5372,6 @@ func Battle_Item_Menu_Consumable_Button_Sumbit(_item_serializable:Action_Seriali
 		#-------------------------------------------------------------------------------
 		main_canvas_layer.nothing_cancel = func():BattleMenu_Item_Target_Cancel(_button)
 		#-------------------------------------------------------------------------------
-		var _user: Fighter_Node = ally_node_array[fighter_index]
 		var _submit:Callable = func():BattleMenu_Item_Target_Submit(_user, _item_serializable)
 		BattleMenu_Target_Set(_user, _item_serializable, _submit)
 	#-------------------------------------------------------------------------------
@@ -5127,39 +5414,39 @@ func BattleMenu_Item_Target_Cancel(_button:Button):
 #-------------------------------------------------------------------------------
 #region BATTLE STATUS MENU
 #-------------------------------------------------------------------------------
-func Battle_Menu_Status_Button_Submit():
+func Battle_Menu_Status_Button_Submit(_user:Fighter_Node):
 	battle_menu.hide()
 	var _cancel:Callable = func():Battle_Menu_Status_Target_Button_Cancel()
 	var _selected:Callable = func():singleton.Common_Selected()
 	main_canvas_layer.nothing_cancel = _cancel
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		var _button_root: Control = ally_node_array[_i].fighter_ui.button_root
-		var _button: Button = ally_node_array[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(ally_node_array[_i].fighter_serializable_in_battle, _button)
+	for _i in ally_party.size():
+		var _button_root: Control = ally_party[_i].fighter_ui.button_root
+		var _button: Button = ally_party[_i].fighter_ui.button
+		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(ally_party[_i].fighter_serializable_in_battle, _button)
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		var _button_root: Control = enemy_node_array[_i].fighter_ui.button_root
-		var _button: Button = enemy_node_array[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(enemy_node_array[_i].fighter_serializable_in_battle, _button)
+	for _i in enemy_party.size():
+		var _button_root: Control = enemy_party[_i].fighter_ui.button_root
+		var _button: Button = enemy_party[_i].fighter_ui.button
+		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(enemy_party[_i].fighter_serializable_in_battle, _button)
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
 	Set_Target_Button_Navigation_2()
-	singleton.Move_to_Button_by_Submit(ally_node_array[fighter_index].fighter_ui.button)
+	singleton.Move_to_Button_by_Submit(_user.fighter_ui.button)
 #-------------------------------------------------------------------------------
 func Set_Target_Button_Navigation_2():
 	var _button_array_1: Array[Button]
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		_button_array_1.append(ally_node_array[_i].fighter_ui.button)
+	for _i in ally_party.size():
+		_button_array_1.append(ally_party[_i].fighter_ui.button)
 	#-------------------------------------------------------------------------------
 	var _button_array_2: Array[Button]
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		_button_array_2.append(enemy_node_array[_i].fighter_ui.button)
+	for _i in enemy_party.size():
+		_button_array_2.append(enemy_party[_i].fighter_ui.button)
 	#-------------------------------------------------------------------------------
 	singleton.Twin_Button_Array_Set_Navigation(_button_array_1, _button_array_2)
 #-------------------------------------------------------------------------------
@@ -5198,28 +5485,28 @@ func Battle_Menu_Status_Menu_Button_Cancel(_button:Button):
 #-------------------------------------------------------------------------------
 #region BATTLE STATISTICS MENU
 #-------------------------------------------------------------------------------
-func Battle_Menu_Statistics_Button_Submit():
+func Battle_Menu_Statistics_Button_Submit(_user:Fighter_Node):
 	battle_menu.hide()
 	var _cancel:Callable = func():Battle_Menu_Statistics_Target_Button_Cancel()
 	var _selected:Callable = func():singleton.Common_Selected()
 	main_canvas_layer.nothing_cancel = _cancel
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		var _button_root: Control = ally_node_array[_i].fighter_ui.button_root
-		var _button: Button = ally_node_array[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(ally_node_array[_i], ally_node_array[_i].fighter_serializable_in_battle, _button)
+	for _i in ally_party.size():
+		var _button_root: Control = ally_party[_i].fighter_ui.button_root
+		var _button: Button = ally_party[_i].fighter_ui.button
+		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(ally_party[_i], ally_party[_i].fighter_serializable_in_battle, _button)
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
-	for _i in enemy_node_array.size():
-		var _button_root: Control = enemy_node_array[_i].fighter_ui.button_root
-		var _button: Button = enemy_node_array[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(enemy_node_array[_i], enemy_node_array[_i].fighter_serializable_in_battle, _button)
+	for _i in enemy_party.size():
+		var _button_root: Control = enemy_party[_i].fighter_ui.button_root
+		var _button: Button = enemy_party[_i].fighter_ui.button
+		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(enemy_party[_i], enemy_party[_i].fighter_serializable_in_battle, _button)
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
 	Set_Target_Button_Navigation_2()
-	singleton.Move_to_Button_by_Submit(ally_node_array[fighter_index].fighter_ui.button)
+	singleton.Move_to_Button_by_Submit(_user.fighter_ui.button)
 #-------------------------------------------------------------------------------
 func Battle_Menu_Statistics_Target_Button_Submit(_fighter_node:Fighter_Node, _fighter_serializable:Fighter_Serializable, _button:Button):
 	Hide_All_Targets()
@@ -5252,29 +5539,29 @@ func Seconds(_timer:float):
 	await get_tree().create_timer(_timer, true, true).timeout
 #-------------------------------------------------------------------------------
 func Set_Fighter_0():
-	ally_node_array[0].show()
-	ally_node_array[0].reparent(player_characterbody2d)
-	ally_node_array[0].position = Vector2.ZERO
+	ally_party[0].show()
+	ally_party[0].reparent(player_characterbody2d)
+	ally_party[0].position = Vector2.ZERO
 	#-------------------------------------------------------------------------------
-	for _i in range(1, ally_node_array.size()):
-		ally_node_array[_i].show()
-		ally_node_array[_i].reparent(world_2d)
-		#ally_node_array[_i].global_position = player_characterbody2d.global_position
+	for _i in range(1, ally_party.size()):
+		ally_party[_i].show()
+		ally_party[_i].reparent(world_2d)
+		#ally_party[_i].global_position = player_characterbody2d.global_position
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_Ally_Fighter_Resource_Array() -> Array[Fighter_Resource]:
 	var _fighter_resource_array: Array[Fighter_Resource]
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
-		_fighter_resource_array.append(ally_node_array[_i].fighter_serializable.fighter_resource)
+	for _i in ally_party.size():
+		_fighter_resource_array.append(ally_party[_i].fighter_serializable.fighter_resource)
 	#-------------------------------------------------------------------------------
 	return _fighter_resource_array
 #-------------------------------------------------------------------------------
 func Get_Fighter_Node_Index(_fighter_resource:Fighter_Resource) -> int:
 	#-------------------------------------------------------------------------------
-	for _i in ally_node_array.size():
+	for _i in ally_party.size():
 		#-------------------------------------------------------------------------------
-		if(ally_node_array[_i].fighter_serializable.fighter_resource == _fighter_resource):
+		if(ally_party[_i].fighter_serializable.fighter_resource == _fighter_resource):
 			return _i
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -5303,7 +5590,8 @@ func Get_Position_in_Canvas_Layer(_global_position:Vector2) -> Vector2:
 #endregion
 #-------------------------------------------------------------------------------
 func Set_Lock_On_Position():
-	lock_on.global_position = ally_node_array[fighter_index].global_position
+	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	lock_on.global_position = _alive_ally_party[current_fighter_turn].character_node.global_position
 	lock_on.global_position.y -= 20
 #-------------------------------------------------------------------------------
 func Re_Open_Battle_Menu():
@@ -5590,17 +5878,17 @@ func Get_Future_TP() -> int:
 	var _max_tp: int = Get_Max_Tp()
 	_tp = clampi(_tp, 0, _max_tp)
 	#-------------------------------------------------------------------------------
-	for _i in fighter_index:
-		_tp -= Get_Action_TP_Cost(ally_node_array[_i].action_serializable)
+	for _i in current_fighter_turn:
+		_tp -= Get_Action_TP_Cost(ally_party[_i].action_serializable)
 	#-------------------------------------------------------------------------------
 	return _tp
 #-------------------------------------------------------------------------------
 func Get_Future_Hold(_action_serializable:Action_Serializable) -> int:
 	var _hold: int = _action_serializable.hold
 	#-------------------------------------------------------------------------------
-	for _j in fighter_index:
+	for _j in current_fighter_turn:
 		#-------------------------------------------------------------------------------
-		if(_action_serializable.action_resource == ally_node_array[_j].action_serializable.action_resource):
+		if(_action_serializable.action_resource == ally_party[_j].action_serializable.action_resource):
 			_hold -= 1
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -5609,9 +5897,9 @@ func Get_Future_Hold(_action_serializable:Action_Serializable) -> int:
 func Get_Future_Cooldown(_action_serializable:Action_Serializable) -> int:
 	var _cooldown: int = 0
 	#-------------------------------------------------------------------------------
-	for _j in fighter_index:
+	for _j in current_fighter_turn:
 		#-------------------------------------------------------------------------------
-		if(_action_serializable.action_resource == ally_node_array[_j].action_serializable.action_resource):
+		if(_action_serializable.action_resource == ally_party[_j].action_serializable.action_resource):
 			_cooldown += _action_serializable.action_resource.max_cooldown
 			return _cooldown
 		#-------------------------------------------------------------------------------

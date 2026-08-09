@@ -16,6 +16,7 @@
 [ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_0.tres" id="17_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
 [ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter1_8.tres" id="19_8m6hh"]
+[ext_resource type="Script" uid="uid://b6atomspo0raj" path="res://Scripts/game_system/rooms/debug_room.gd" id="21_gijw1"]
 [ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter2_7.tres" id="21_ngqpa"]
 [ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="22_0ol08"]
 [ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter3_8.tscn" id="22_5rrxs"]
@@ -56,6 +57,7 @@
 [ext_resource type="Texture2D" uid="uid://b0ahrc6537fvk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_190.png" id="46_f8ljg"]
 [ext_resource type="Texture2D" uid="uid://cceadn16e18rp" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_242.png" id="47_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
+[ext_resource type="Texture2D" uid="uid://bbykhvbevkk6r" path="res://Assets/rpg_maker_mv/img/faces/Actor1_8.png" id="49_6yqg2"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
 [ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
@@ -207,275 +209,6 @@ size = Vector2(13, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aoydg"]
 radius = 8.0
-
-[sub_resource type="GDScript" id="GDScript_fuapw"]
-script/source = "extends Room_Script
-#-------------------------------------------------------------------------------
-@export_category(\"Ally 0\")
-@export var ally_0: Interactable_Script
-@export var ally_0_character: Character_Node
-@export var ally_0_fighter_resouce: Fighter_Resource
-@export var ally_0_fighter_prefab: PackedScene
-#-------------------------------------------------------------------------------
-@export_category(\"Ally 1\")
-@export var ally_1: Interactable_Script
-@export var ally_1_character: Character_Node
-@export var ally_1_fighter_resouce: Fighter_Resource
-@export var ally_1_fighter_prefab: PackedScene
-#-------------------------------------------------------------------------------
-@export_category(\"Ally 2\")
-@export var ally_2: Interactable_Script
-@export var ally_2_character: Character_Node
-@export var ally_2_fighter_resouce: Fighter_Resource
-@export var ally_2_fighter_prefab: PackedScene
-#-------------------------------------------------------------------------------
-@export_category(\"Ally 3\")
-@export var ally_3: Interactable_Script
-@export var ally_3_character: Character_Node
-@export var ally_3_fighter_resouce: Fighter_Resource
-@export var ally_3_fighter_prefab: PackedScene
-#-------------------------------------------------------------------------------
-@export_category(\"NPC 3\")
-@export var npc_3: Interactable_Script
-@export var npc_3_character: Character_Node
-@export var npc_3_item_consumable_array: Array[Action_Serializable]
-@export var npc_3_item_equip_array: Array[Equip_Serializable]
-@export var npc_3_item_key_array: Array[Key_Serializable]
-#-------------------------------------------------------------------------------
-@export_category(\"Enemy 1\")
-@export var enemy_1: Interactable_Script
-@export var enemy_1_fighter_array: Array[Fighter_Node]
-#-------------------------------------------------------------------------------
-@export_category(\"Enemy 2\")
-@export var enemy_2: Interactable_Script
-@export var enemy_2_fighter_array: Array[Fighter_Node]
-#-------------------------------------------------------------------------------
-@export_category(\"Interactable\")
-@export var interactable: Interactable_Script
-#-------------------------------------------------------------------------------
-func Set_Room():
-	Set_Ally(ally_0, ally_0_character, ally_0_fighter_resouce, ally_0_fighter_prefab)
-	Set_Ally(ally_1, ally_1_character, ally_1_fighter_resouce, ally_1_fighter_prefab)
-	Set_Ally(ally_2, ally_2_character, ally_2_fighter_resouce, ally_2_fighter_prefab)
-	Set_Ally(ally_3, ally_3_character, ally_3_fighter_resouce, ally_3_fighter_prefab)
-	#-------------------------------------------------------------------------------
-	Set_Enemy(enemy_1, enemy_1_fighter_array)
-	Set_Enemy(enemy_2, enemy_2_fighter_array)
-	#-------------------------------------------------------------------------------
-	npc_3.interactable_by_action = func(): NPC_3_Talk()
-	interactable.interactable_by_action = func(): Interactable_Action()
-	singleton.Play_BGM_Stage1()
-#-------------------------------------------------------------------------------
-func Set_Ally(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
-	var _index: int = singleton.game_system.Get_Fighter_Node_Index(_fighter_resource)
-	#-------------------------------------------------------------------------------
-	if(_index < 0):
-		_character_node.modulate.a = 1.0
-	#-------------------------------------------------------------------------------
-	else:
-		_character_node.modulate.a = 105.0/255.0
-	#-------------------------------------------------------------------------------
-	_imteractable_script.interactable_by_action = func(): NPC_1_Talk(_imteractable_script, _character_node, _fighter_resource, _fighter_prefab)
-#-------------------------------------------------------------------------------
-func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Character_Node, _fighter_resource:Fighter_Resource, _fighter_prefab:PackedScene):
-	#-------------------------------------------------------------------------------
-	singleton.game_system.Disable_Pause_Input()
-	singleton.game_system.Stop_Moving()
-	singleton.game_system.Dialogue_Open()
-	#-------------------------------------------------------------------------------
-	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_node_array[0].character_node.character_resource
-	#-------------------------------------------------------------------------------
-	var _index: int = singleton.game_system.Get_Fighter_Node_Index(_fighter_resource)
-	#-------------------------------------------------------------------------------
-	if(_index < 0):
-		await singleton.game_system.Dialogue_with_Face_0(_character_node.character_resource, \"* Querés que te acompañe?\")
-		singleton.game_system.Open_Dialogue_Options([\"Si\", \"No\"])
-		await singleton.game_system.next_signal
-		#-------------------------------------------------------------------------------
-		match(singleton.game_system.dialogue_option_index):
-			0:
-				singleton.game_system.Close_Dialogue_Options()
-				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a ir con vos.\")
-				var _fighter_ally_1: Fighter_Node = _fighter_prefab.instantiate() as Fighter_Node
-				singleton.game_system.player_characterbody2d.add_child(_fighter_ally_1)
-				singleton.game_system.ally_node_array.append(_fighter_ally_1)
-				singleton.game_system.Set_Fighter_0()
-				_character_node.modulate.a = 105.0/255.0
-			#-------------------------------------------------------------------------------
-			1:
-				singleton.game_system.Close_Dialogue_Options()
-				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a estar acá si me necesitas.\")
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		await singleton.game_system.Dialogue_Close()
-		singleton.game_system.Enable_Pause_Input()
-	#-------------------------------------------------------------------------------
-	else:
-		await singleton.game_system.Dialogue_with_Face_0(_character_node.character_resource, \"* Querés que me vaya del grupo?\")
-		singleton.game_system.Open_Dialogue_Options([\"Si\", \"No\"])
-		await singleton.game_system.next_signal
-		#-------------------------------------------------------------------------------
-		match(singleton.game_system.dialogue_option_index):
-			0:
-				#-------------------------------------------------------------------------------
-				if(singleton.game_system.ally_node_array.size() > 1):
-					singleton.game_system.Close_Dialogue_Options()
-					await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, voy a estar acá si me necesitas.\")
-					singleton.game_system.ally_node_array[_index].queue_free()
-					singleton.game_system.ally_node_array.remove_at(_index)
-					singleton.game_system.Set_Fighter_0()
-					_character_node.modulate.a = 1.0
-				#-------------------------------------------------------------------------------
-				else:
-					singleton.game_system.Close_Dialogue_Options()
-					await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* No podés tener cero aliados en tu equipo.\")
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			1:
-				singleton.game_system.Close_Dialogue_Options()
-				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, \"* Ok, sigo con vos.\")
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		await singleton.game_system.Dialogue_Close()
-		singleton.game_system.Enable_Pause_Input()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func NPC_3_Talk():
-	#-------------------------------------------------------------------------------
-	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_node_array[0].character_node.character_resource
-	singleton.game_system.Disable_Pause_Input()
-	singleton.game_system.Stop_Moving()
-	singleton.game_system.Dialogue_Open()
-	#-------------------------------------------------------------------------------
-	await singleton.game_system.Dialogue_with_Face_0(npc_3_character.character_resource, \"* Hola Che. Vamos a pelear!\")
-	singleton.game_system.Open_Dialogue_Options([\"Comprar\", \"Hablar\", \"Irse\"])
-	await singleton.game_system.next_signal
-	#-------------------------------------------------------------------------------
-	var _blablabla: String = \"Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla \"
-	_blablabla += \"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla.\"
-	#-------------------------------------------------------------------------------
-	match(singleton.game_system.dialogue_option_index):
-		0:
-			singleton.game_system.Close_Dialogue_Options()
-			#-------------------------------------------------------------------------------
-			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Comprar.\")
-			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, te muestro lo que tengo.\")
-			singleton.game_system.Dialogue_Close_0()
-			await singleton.game_system.Open_Market(npc_3.name, npc_3_item_consumable_array, npc_3_item_equip_array, npc_3_item_key_array)
-			#-------------------------------------------------------------------------------
-			singleton.game_system.Dialogue_Open()
-			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Gracias, vuelva Pronto.\")
-		#-------------------------------------------------------------------------------
-		1:
-			singleton.game_system.Close_Dialogue_Options()
-			#-------------------------------------------------------------------------------
-			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* Si. \"+_blablabla)
-			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* Ok, pero ya no tengo ganas, asique ya fué.\")
-		#-------------------------------------------------------------------------------
-		2:
-			singleton.game_system.Close_Dialogue_Options()
-			#-------------------------------------------------------------------------------
-			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* No. \"+_blablabla)
-			await singleton.game_system.Dialogue_with_Face(npc_3_character.character_resource, \"* No? Ok, para la próxima.\")
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	await singleton.game_system.Dialogue_Close()
-	singleton.game_system.Enable_Pause_Input()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Set_Enemy(_imteractable_script:Interactable_Script, _fighter_array: Array[Fighter_Node]):
-	_imteractable_script.interactable_by_action = func(): NPC_4_Talk(_fighter_array)
-#-------------------------------------------------------------------------------
-func NPC_4_Talk(_fighter_array: Array[Fighter_Node]):
-	var _character_resource:Character_Resource = _fighter_array[0].character_node.character_resource
-	#-------------------------------------------------------------------------------
-	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_node_array[0].character_node.character_resource
-	singleton.game_system.Disable_Pause_Input()
-	singleton.game_system.Stop_Moving()
-	singleton.game_system.Dialogue_Open()
-	#-------------------------------------------------------------------------------
-	await singleton.game_system.Dialogue_with_Face_0(_character_resource, \"* Hola Che. Vamos a pelear!\")
-	singleton.game_system.Open_Dialogue_Options([\"Pelear\", \"Irse\"])
-	await singleton.game_system.next_signal
-	#-------------------------------------------------------------------------------
-	match(singleton.game_system.dialogue_option_index):
-		0:
-			singleton.game_system.Close_Dialogue_Options()
-			#-------------------------------------------------------------------------------
-			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* Quiero Pelear.\")
-			await singleton.game_system.Dialogue_with_Face(_character_resource, \"* Ok, vamos a pelear.\")
-			#-------------------------------------------------------------------------------
-			await singleton.game_system.Dialogue_Close()
-			singleton.game_system.enemy_node_array = _fighter_array
-			singleton.game_system.Dialogue_0(\"* The Battle Began!\")
-			await Enter_Battle()
-			await singleton.game_system.next_signal
-		#-------------------------------------------------------------------------------
-		1:
-			singleton.game_system.Close_Dialogue_Options()
-			#-------------------------------------------------------------------------------
-			await singleton.game_system.Dialogue_with_Face(_player_1_character_resource, \"* No.\")
-			await singleton.game_system.Dialogue_with_Face(_character_resource, \"* No? Ok, para la próxima.\")
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	await singleton.game_system.Dialogue_Close()
-	singleton.game_system.Enable_Pause_Input()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Interactable_Action():
-	#-------------------------------------------------------------------------------
-	singleton.game_system.Disable_Pause_Input()
-	singleton.game_system.Stop_Moving()
-	singleton.game_system.Dialogue_Open()
-	#-------------------------------------------------------------------------------
-	await singleton.game_system.Dialogue(\"* Una luz extraña en la esquina de la habitación.\")
-	#-------------------------------------------------------------------------------
-	await singleton.game_system.Dialogue_Close()
-	singleton.game_system.Enable_Pause_Input()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Enter_Battle():
-	await singleton.game_system.Enter_Battle()
-	await Loop_Battle()
-#-------------------------------------------------------------------------------
-func Loop_Battle():
-	#-------------------------------------------------------------------------------
-	while(singleton.game_system.myBATTLE_STATE == Game_System.BATTLE_STATE.STILL_FIGHTING):
-		await singleton.game_system.Re_Open_Battle_Menu()
-		await singleton.game_system.Do_Ally_Actions()
-		await singleton.game_system.Do_Enemy_Actions()
-	#-------------------------------------------------------------------------------
-	await After_Battle()
-#-------------------------------------------------------------------------------
-func After_Battle():
-	match(singleton.game_system.myBATTLE_STATE):
-		Game_System.BATTLE_STATE.YOU_WIN:
-			pass
-		#-------------------------------------------------------------------------------
-		Game_System.BATTLE_STATE.YOU_LOSE:
-			pass
-		#-------------------------------------------------------------------------------
-		Game_System.BATTLE_STATE.YOU_RETRY:
-			await Loop_Battle()
-		#-------------------------------------------------------------------------------
-		Game_System.BATTLE_STATE.YOU_ESCAPE:
-			pass
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-"
 
 [sub_resource type="Resource" id="Resource_ma215"]
 script = ExtResource("24_altm3")
@@ -1279,7 +1012,7 @@ bg_color = Color(0, 0, 0, 0)
 shadow_color = Color(0, 0, 0, 0.60784316)
 shadow_size = 35
 
-[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "timer_root", "timer_label", "battle_box", "hitbox_root", "battle_ui", "black_screen_override", "ally_node_array", "lock_on", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_slider", "tp_bar_name", "tp_bar_value", "tp_bar_max_value", "battle_background_root", "battle_background_dark_panel", "battle_menu", "battle_menu_button_skill", "battle_menu_button_item", "battle_menu_button_status", "battle_menu_button_statistics", "escape_menu", "escape_menu_retry_button", "escape_menu_escape_button", "escape_menu_surrender_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_name", "skill_menu_information_icon", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_name", "item_menu_consumable_information_icon", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_name", "item_menu_equip_information_icon", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_name", "item_menu_key_information_icon", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_name", "equip_menu_information_icon", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_name", "status_menu_information_icon", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_item_icon", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
+[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "timer_root", "timer_label", "battle_box", "hitbox_root", "battle_ui", "black_screen_override", "ally_party", "lock_on", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_slider", "tp_bar_name", "tp_bar_value", "tp_bar_max_value", "battle_background_root", "battle_background_dark_panel", "battle_menu", "battle_menu_button_skill", "battle_menu_button_item", "battle_menu_button_status", "battle_menu_button_statistics", "escape_menu", "escape_menu_yes_button", "escape_menu_no_button", "lose_menu", "lose_menu_retry_button", "lose_menu_go_to_savepoint_button", "lose_menu_give_up_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_name", "skill_menu_information_icon", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_name", "item_menu_consumable_information_icon", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_name", "item_menu_equip_information_icon", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_name", "item_menu_key_information_icon", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_name", "equip_menu_information_icon", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_name", "status_menu_information_icon", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_item_icon", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
 script = ExtResource("1_jvut7")
 background_canvas_layer = NodePath("World_Background")
 main_canvas_layer = NodePath("main_canvas_layer")
@@ -1297,7 +1030,7 @@ fighter_button_prefab = ExtResource("2_0ol08")
 fighter_ally_ui_prefab = ExtResource("5_r4og7")
 fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
 money_inventory = SubResource("Resource_hdd08")
-ally_node_array = [NodePath("World_2D/player_characterbody2d/fighter1_1"), NodePath("World_2D/player_characterbody2d/fighter1_8"), NodePath("World_2D/player_characterbody2d/fighter3_8"), NodePath("World_2D/player_characterbody2d/fighter2_7")]
+ally_party = [NodePath("World_2D/player_characterbody2d/fighter1_1"), NodePath("World_2D/player_characterbody2d/fighter1_8"), NodePath("World_2D/player_characterbody2d/fighter2_7"), NodePath("World_2D/player_characterbody2d/fighter3_8")]
 lock_on = NodePath("World_2D/lock_on")
 player_characterbody2d = NodePath("World_2D/player_characterbody2d")
 player_interactable_by_action_area2d = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d")
@@ -1317,9 +1050,12 @@ battle_menu_button_item = NodePath("main_canvas_layer/battle_menu/VBoxContainer/
 battle_menu_button_status = NodePath("main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/battle_menu_button_status")
 battle_menu_button_statistics = NodePath("main_canvas_layer/battle_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/battle_menu_button_statistics")
 escape_menu = NodePath("main_canvas_layer/escape_menu")
-escape_menu_retry_button = NodePath("main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/escape_menu_retry_button")
-escape_menu_escape_button = NodePath("main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/escape_menu_escape_button")
-escape_menu_surrender_button = NodePath("main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/escape_menu_surrender_button")
+escape_menu_yes_button = NodePath("main_canvas_layer/escape_menu/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer/escape_menu_yes_button")
+escape_menu_no_button = NodePath("main_canvas_layer/escape_menu/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer/escape_menu_no_button")
+lose_menu = NodePath("main_canvas_layer/lose_menu")
+lose_menu_retry_button = NodePath("main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/lose_menu_retry_button")
+lose_menu_go_to_savepoint_button = NodePath("main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/lose_menu_escape_button")
+lose_menu_give_up_button = NodePath("main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/lose_menu_surrender_button")
 go_to_title_menu = NodePath("main_canvas_layer/go_to_title_menu")
 go_to_title_menu_button_yes = NodePath("main_canvas_layer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_yes")
 go_to_title_menu_button_no = NodePath("main_canvas_layer/go_to_title_menu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/go_to_title_menu_button_no")
@@ -1745,16 +1481,20 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_aoydg")
 
 [node name="fighter1_1" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
+y_sort_enabled = true
 
 [node name="fighter1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
+y_sort_enabled = true
 
 [node name="fighter2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
+y_sort_enabled = true
 
 [node name="fighter3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
+y_sort_enabled = true
 
 [node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "ally_3", "ally_3_character", "npc_3", "npc_3_character", "enemy_1", "enemy_1_fighter_array", "enemy_2", "enemy_2_fighter_array", "interactable", "room_limits")]
 y_sort_enabled = true
-script = SubResource("GDScript_fuapw")
+script = ExtResource("21_gijw1")
 ally_0 = NodePath("ally_0")
 ally_0_character = NodePath("ally_0/actor1_1")
 ally_0_fighter_resouce = ExtResource("12_hf3yd")
@@ -1796,10 +1536,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 24.000011
-offset_top = -248.0
+offset_left = 24.000008
+offset_top = 47.999996
 offset_right = 356.0
-offset_bottom = -185.0
+offset_bottom = 111.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
@@ -1814,10 +1554,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 544.0
-offset_top = -224.00002
-offset_right = 701.0
-offset_bottom = -161.00002
+offset_left = 528.0
+offset_right = 685.0
+offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
@@ -1832,10 +1571,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 224.00002
-offset_top = -656.0
-offset_right = 376.0
-offset_bottom = -593.0
+offset_left = 215.99998
+offset_top = -336.0
+offset_right = 368.0
+offset_bottom = -273.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
@@ -1929,17 +1668,21 @@ collider = NodePath("CollisionShape2D")
 shape = SubResource("CircleShape2D_5t6d6")
 
 [node name="fighter1_6" parent="World_2D/room_00/npc_4" unique_id=1370430890 instance=ExtResource("28_jvut7")]
+y_sort_enabled = true
 
 [node name="fighter1_7" parent="World_2D/room_00/npc_4" unique_id=1637077777 instance=ExtResource("28_jvut7")]
 visible = false
+y_sort_enabled = true
 position = Vector2(16, -8)
 
 [node name="fighter1_8" parent="World_2D/room_00/npc_4" unique_id=232465966 instance=ExtResource("28_jvut7")]
 visible = false
+y_sort_enabled = true
 position = Vector2(-16, -8)
 
 [node name="fighter1_9" parent="World_2D/room_00/npc_4" unique_id=1418258395 instance=ExtResource("28_jvut7")]
 visible = false
+y_sort_enabled = true
 position = Vector2(0, -24)
 
 [node name="npc_5" type="Area2D" parent="World_2D/room_00" unique_id=447749122 node_paths=PackedStringArray("collider")]
@@ -1954,12 +1697,17 @@ collider = NodePath("CollisionShape2D")
 shape = SubResource("CircleShape2D_5t6d6")
 
 [node name="fighter_monster1_1" parent="World_2D/room_00/npc_5" unique_id=1711747710 instance=ExtResource("37_altm3")]
+y_sort_enabled = true
 
 [node name="fighter_monster1_2" parent="World_2D/room_00/npc_5" unique_id=1115349431 instance=ExtResource("37_altm3")]
 visible = false
+y_sort_enabled = true
+position = Vector2(-16, -16)
 
 [node name="fighter_monster1_3" parent="World_2D/room_00/npc_5" unique_id=1774819991 instance=ExtResource("37_altm3")]
 visible = false
+y_sort_enabled = true
+position = Vector2(16, -16)
 
 [node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
 position = Vector2(-24, 24)
@@ -2154,6 +1902,7 @@ layout_mode = 2
 
 [node name="dialogue_menu_face" type="TextureRect" parent="main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=690196325]
 layout_mode = 2
+texture = ExtResource("49_6yqg2")
 expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=1706126499]
@@ -2180,7 +1929,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "Bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla. "
+text = "Bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla. "
 scroll_following = true
 scroll_following_visible_characters = true
 visible_characters_behavior = 1
@@ -2199,6 +1948,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3em1u")
 
 [node name="tp_bar" type="Control" parent="main_canvas_layer" unique_id=1379307174]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 60.0
@@ -2350,6 +2100,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="pause_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1277621130]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -5052,25 +4803,6 @@ autowrap_mode = 2
 [node name="HSeparator7" type="HSeparator" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer" unique_id=13903741]
 layout_mode = 2
 
-[node name="debug_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=728377450]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="debug_label" type="Label" parent="main_canvas_layer/debug_menu" unique_id=1820689533]
-visible = false
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_font_sizes/font_size = 10
-
 [node name="go_to_title_menu" type="Panel" parent="main_canvas_layer" unique_id=913075753]
 visible = false
 anchors_preset = 15
@@ -5135,6 +4867,7 @@ size_flags_horizontal = 3
 text = "No"
 
 [node name="money_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1794139411]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -5168,6 +4901,7 @@ text = "400 $"
 horizontal_alignment = 2
 
 [node name="confirm_buy_menu" type="Panel" parent="main_canvas_layer" unique_id=1770860910]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -5366,7 +5100,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="escape_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=2038373494]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -5391,50 +5124,86 @@ theme_override_font_sizes/font_size = 90
 text = "  Escape?  "
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/escape_menu/VBoxContainer" unique_id=1919855690]
+[node name="PanelContainer2" type="PanelContainer" parent="main_canvas_layer/escape_menu/VBoxContainer" unique_id=1127889799]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/separation = 0
 
-[node name="skill_menu_button_x" type="Button" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer" unique_id=480988629]
-layout_mode = 2
-size_flags_horizontal = 8
-focus_mode = 0
-theme_override_font_sizes/font_size = 16
-text = "  X  "
-
-[node name="PanelContainer" type="PanelContainer" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer" unique_id=1127889799]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer" unique_id=64646012]
+[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/escape_menu/VBoxContainer/PanelContainer2" unique_id=64646012]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=1690524860]
+[node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/escape_menu/VBoxContainer/PanelContainer2/MarginContainer" unique_id=1875663550]
 layout_mode = 2
 
-[node name="escape_menu_retry_button" type="Button" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=509644775]
+[node name="escape_menu_yes_button" type="Button" parent="main_canvas_layer/escape_menu/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer" unique_id=1652777394]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "  Yes  "
+
+[node name="escape_menu_no_button" type="Button" parent="main_canvas_layer/escape_menu/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer" unique_id=146121338]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "  No  "
+
+[node name="lose_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=811343240]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_0t8i2")
+theme_override_constants/margin_bottom = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/lose_menu" unique_id=130045217]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="main_canvas_layer/lose_menu/VBoxContainer" unique_id=1464217746]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_va76y")
+
+[node name="Label" type="Label" parent="main_canvas_layer/lose_menu/VBoxContainer/PanelContainer" unique_id=374454561]
+layout_mode = 2
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 90
+text = "  Game Over  "
+horizontal_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="main_canvas_layer/lose_menu/VBoxContainer" unique_id=560461574]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2" unique_id=1073960554]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer" unique_id=1229684492]
+layout_mode = 2
+
+[node name="lose_menu_retry_button" type="Button" parent="main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer" unique_id=751685536]
 layout_mode = 2
 text = "  Retry Battle  "
 icon = ExtResource("59_otuwt")
 
-[node name="escape_menu_escape_button" type="Button" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=155927191]
+[node name="lose_menu_escape_button" type="Button" parent="main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer" unique_id=2021646941]
 layout_mode = 2
-text = "  Escape Battle  "
+text = "  Go to Save Point  "
 icon = ExtResource("49_shqvj")
 
-[node name="escape_menu_surrender_button" type="Button" parent="main_canvas_layer/escape_menu/VBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=782205089]
+[node name="lose_menu_surrender_button" type="Button" parent="main_canvas_layer/lose_menu/VBoxContainer/PanelContainer2/MarginContainer/VBoxContainer" unique_id=1232424011]
 layout_mode = 2
-text = "  Go to SavePoint  "
+text = "  Give Up  "
 icon = ExtResource("60_b6a3y")
 
 [node name="timer_root" type="MarginContainer" parent="main_canvas_layer" unique_id=964532734]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -5451,3 +5220,21 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 45
 text = "60s / 60s"
 horizontal_alignment = 1
+
+[node name="debug_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=728377450]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="debug_label" type="Label" parent="main_canvas_layer/debug_menu" unique_id=1820689533]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 10

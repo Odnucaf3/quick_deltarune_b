@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://dclg02oh4p661" path="res://Assets/rpg_maker_mv/audio/se/Cursor2.ogg" id="2_jb8s2"]
 [ext_resource type="AudioStream" uid="uid://eijhyk723p1n" path="res://Assets/rpg_maker_mv/audio/se/Decision1.ogg" id="3_5vx3t"]
 [ext_resource type="AudioStream" uid="uid://bs0om0esclcu2" path="res://Assets/rpg_maker_mv/audio/bgm/Field1.ogg" id="3_pfk01"]
-[ext_resource type="AudioStream" uid="uid://dx2bokr6nx75n" path="res://Assets/rpg_maker_vx_ace/audio/bgm/Dungeon8.ogg" id="4_i4uux"]
+[ext_resource type="AudioStream" uid="uid://dp4cp625dp2aa" path="res://Assets/rpg_maker_mv/audio/bgm/Battle1.ogg" id="4_i4uux"]
 [ext_resource type="AudioStream" uid="uid://duiuv8mj8qc40" path="res://Assets/rpg_maker_mv/audio/se/Cancel2.ogg" id="4_lhprx"]
 [ext_resource type="AudioStream" uid="uid://bw3s6146f6t1k" path="res://Assets/rpg_maker_mv/audio/se/Equip1.ogg" id="5_5vx3t"]
 [ext_resource type="AudioStream" uid="uid://d12xcnufxwb6g" path="res://Assets/rpg_maker_mv/audio/se/Equip2.ogg" id="6_lhprx"]
@@ -13,8 +13,9 @@
 [ext_resource type="Script" uid="uid://bh5dpqwmv2pkq" path="res://Scripts/Scenes/option_menu.gd" id="8_gt3s7"]
 [ext_resource type="AudioStream" uid="uid://1comjplvxtd3" path="res://Assets/rpg_maker_mv/audio/bgm/Theme6.ogg" id="8_s3k3f"]
 [ext_resource type="AudioStream" uid="uid://xwqsgv6dnqk7" path="res://Assets/rpg_maker_mv/audio/se/Battle1.ogg" id="11_i4uux"]
+[ext_resource type="AudioStream" uid="uid://b88of4wtamla4" path="res://Assets/rpg_maker_mv/audio/se/Run.ogg" id="12_26shh"]
 
-[node name="Singleton" type="Node" unique_id=729221882 node_paths=PackedStringArray("audioStreamPlayer_selected", "audioStreamPlayer_submit", "audioStreamPlayer_cancel", "audioStreamPlayer_equip", "audioStreamPlayer_unequip", "audioStreamPlayer_shop", "audioStreamPlayer_enter_battle", "audioStreamPlayer_bgm", "fps_label", "option_menu")]
+[node name="Singleton" type="Node" unique_id=729221882 node_paths=PackedStringArray("audioStreamPlayer_selected", "audioStreamPlayer_submit", "audioStreamPlayer_cancel", "audioStreamPlayer_equip", "audioStreamPlayer_unequip", "audioStreamPlayer_shop", "audioStreamPlayer_enter_battle", "audioStreamPlayer_escape_battle", "audioStreamPlayer_bgm", "fps_label", "option_menu")]
 process_mode = 3
 script = ExtResource("1_72n7e")
 audioStreamPlayer_selected = NodePath("AudioStreamPlayer_Selected")
@@ -24,6 +25,7 @@ audioStreamPlayer_equip = NodePath("AudioStreamPlayer_Equip")
 audioStreamPlayer_unequip = NodePath("AudioStreamPlayer_Unequip")
 audioStreamPlayer_shop = NodePath("AudioStreamPlayer_Shop")
 audioStreamPlayer_enter_battle = NodePath("AudioStreamPlayer_Enter_Battle")
+audioStreamPlayer_escape_battle = NodePath("AudioStreamPlayer_Escape_Battle")
 audioStreamPlayer_bgm = NodePath("BGM")
 bgm_title = ExtResource("8_s3k3f")
 bgm_stage1 = ExtResource("3_pfk01")
@@ -57,6 +59,10 @@ bus = &"sfx"
 
 [node name="AudioStreamPlayer_Enter_Battle" type="AudioStreamPlayer" parent="." unique_id=1940436975]
 stream = ExtResource("11_i4uux")
+bus = &"sfx"
+
+[node name="AudioStreamPlayer_Escape_Battle" type="AudioStreamPlayer" parent="." unique_id=1438916928]
+stream = ExtResource("12_26shh")
 bus = &"sfx"
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=2066881241]
