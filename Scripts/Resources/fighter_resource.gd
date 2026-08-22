@@ -26,7 +26,7 @@ enum FIGHTER_CLASS{EVERYONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
 @export var guard_effect: int = 50
 @export var recovery_effect: int = 0
 @export var pharmacology: int = 0
-@export var tp_cost_rate: int = 0
+@export var tp_cost_rate: int = 100
 @export var tp_charge_rate: int = 0
 @export var tp_recovery: int = 0
 @export var hp_recovery: int = 0

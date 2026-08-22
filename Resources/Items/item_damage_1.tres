@@ -12,7 +12,7 @@ max_cooldown = 1
 price = 13
 value = 30
 myELEMENT = 6
-myTARGET = 2
+myTARGET = 5
 status_dictionary = Dictionary[StringName, int]({
 &"status_damage_1": 30
 })

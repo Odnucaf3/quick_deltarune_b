@@ -10,7 +10,7 @@ var fighter_serializable_in_battle: Fighter_Serializable
 var action_serializable: Action_Serializable
 var user_party: Array[Fighter_Node]
 var target: Fighter_Node
-var target_party: Array[Fighter_Node]
+var opponent_party: Array[Fighter_Node]
 #-------------------------------------------------------------------------------
 var position_history: Array[Vector2]
 #-------------------------------------------------------------------------------

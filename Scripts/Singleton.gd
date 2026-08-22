@@ -14,6 +14,9 @@ const cancelInput: String = "ui_cancel"
 @export var audioStreamPlayer_shop: AudioStreamPlayer
 @export var audioStreamPlayer_enter_battle: AudioStreamPlayer
 @export var audioStreamPlayer_escape_battle: AudioStreamPlayer
+@export var audioStreamPlayer_damage: AudioStreamPlayer
+@export var audioStreamPlayer_reflect: AudioStreamPlayer
+@export var audioStreamPlayer_heal: AudioStreamPlayer
 #-------------------------------------------------------------------------------
 @export_category("BGM")
 @export var audioStreamPlayer_bgm: AudioStreamPlayer
@@ -436,6 +439,15 @@ func Play_SFX_Enter_Battle() -> void:
 #-------------------------------------------------------------------------------
 func Play_SFX_Escape_Battle() -> void:
 	audioStreamPlayer_escape_battle.play()
+#-------------------------------------------------------------------------------
+func Play_SFX_Damage() -> void:
+	audioStreamPlayer_damage.play()
+#-------------------------------------------------------------------------------
+func Play_SFX_Reflect() -> void:
+	audioStreamPlayer_reflect.play()
+#-------------------------------------------------------------------------------
+func Play_SFX_Heal() -> void:
+	audioStreamPlayer_heal.play()
 #-------------------------------------------------------------------------------
 func Play_BGM_Title():
 	audioStreamPlayer_bgm.stream = bgm_title

@@ -250,6 +250,8 @@ func After_Battle(_array_enemy_party:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	match(singleton.game_system.myBATTLE_STATE):
 		Game_System.BATTLE_STATE.YOU_WIN:
+			await singleton.game_system.Win_Effect()
+			Hide_Other_Fighters(_array_enemy_party)
 			await singleton.game_system.You_Win()
 			await singleton.game_system.Dialogue_Close()
 			singleton.game_system.Enable_Pause_Input()
