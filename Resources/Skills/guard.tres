@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_33g7f")
 icon = ExtResource("1_qpaoq")
+speed = 1
 myTARGET = 6
 status_dictionary = Dictionary[StringName, int]({
 &"guard": 100

@@ -1033,7 +1033,7 @@ bg_color = Color(0, 0, 0, 0)
 shadow_color = Color(0, 0, 0, 0.60784316)
 shadow_size = 35
 
-[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "timer_root", "timer_label", "battle_box", "hitbox_root", "battle_ui", "black_screen_override", "ally_party", "lock_on", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_slider", "tp_bar_name", "tp_bar_value", "tp_bar_max_value", "battle_background_root", "battle_background_dark_panel", "battle_menu", "battle_menu_button_skill", "battle_menu_button_item", "battle_menu_button_status", "battle_menu_button_statistics", "escape_menu", "escape_menu_yes_button", "escape_menu_no_button", "win_menu", "lose_menu", "lose_menu_retry_button", "lose_menu_go_to_savepoint_button", "lose_menu_give_up_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_name", "skill_menu_information_icon", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_name", "item_menu_consumable_information_icon", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_name", "item_menu_equip_information_icon", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_name", "item_menu_key_information_icon", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_name", "equip_menu_information_icon", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_name", "status_menu_information_icon", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_item_icon", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
+[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "timer_root", "timer_label", "battle_box", "hitbox_root", "battle_ui", "black_screen_override", "ally_party", "lock_on", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_slider", "tp_bar_name", "tp_bar_value", "tp_bar_max_value", "battle_background_root", "battle_background_dark_panel", "battle_menu", "battle_menu_button_skill", "battle_menu_button_item", "battle_menu_button_status", "battle_menu_button_statistics", "escape_menu", "escape_menu_yes_button", "escape_menu_no_button", "win_menu", "lose_menu", "lose_menu_retry_button", "lose_menu_go_to_savepoint_button", "lose_menu_give_up_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_name", "skill_menu_information_icon", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_affinity_title", "skill_menu_information_affinity_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_power_title", "skill_menu_information_power_value", "skill_menu_information_action_title", "skill_menu_information_action_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_name", "item_menu_consumable_information_icon", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_affinity_title", "item_menu_consumable_information_affinity_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_power_title", "item_menu_consumable_information_power_value", "item_menu_consumable_information_action_title", "item_menu_consumable_information_action_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_name", "item_menu_equip_information_icon", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_name", "item_menu_key_information_icon", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_name", "equip_menu_information_icon", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_name", "status_menu_information_icon", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_item_icon", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
 script = ExtResource("1_jvut7")
 background_canvas_layer = NodePath("World_Background")
 main_canvas_layer = NodePath("main_canvas_layer")
@@ -1115,8 +1115,12 @@ skill_menu_information_cooldown_title = NodePath("main_canvas_layer/skill_menu/V
 skill_menu_information_cooldown_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer2/skill_menu_information_cooldown_title/skill_menu_information_cooldown_value")
 skill_menu_information_speed_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_speed_title")
 skill_menu_information_speed_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_speed_title/skill_menu_information_speed_value")
-skill_menu_information_presition_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_presition_title")
-skill_menu_information_presition_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_presition_title/skill_menu_information_presition_value")
+skill_menu_information_affinity_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5/skill_menu_information_affinity_title")
+skill_menu_information_affinity_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5/skill_menu_information_affinity_title/skill_menu_information_affinity_value")
+skill_menu_information_presition_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5/skill_menu_information_presition_title")
+skill_menu_information_presition_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5/skill_menu_information_presition_title/skill_menu_information_presition_value")
+skill_menu_information_power_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_power_title")
+skill_menu_information_power_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_power_title/skill_menu_information_power_value")
 skill_menu_information_action_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/skill_menu_information_action_title")
 skill_menu_information_action_value = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/skill_menu_information_action_title/skill_menu_information_action_value")
 skill_menu_information_target_title = NodePath("main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/skill_menu_information_target_title")
@@ -1152,8 +1156,12 @@ item_menu_consumable_information_cooldown_title = NodePath("main_canvas_layer/it
 item_menu_consumable_information_cooldown_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer2/item_menu_consumable_information_cooldown_title/item_menu_consumable_information_cooldown_value")
 item_menu_consumable_information_speed_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_speed_title")
 item_menu_consumable_information_speed_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_speed_title/item_menu_consumable_information_speed_value")
-item_menu_consumable_information_presition_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_presition_title")
-item_menu_consumable_information_presition_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_presition_title/item_menu_consumable_information_presition_value")
+item_menu_consumable_information_affinity_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5/item_menu_consumable_information_affinity_title")
+item_menu_consumable_information_affinity_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5/item_menu_consumable_information_affinity_title/item_menu_consumable_information_affinity_value")
+item_menu_consumable_information_presition_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5/item_menu_consumable_information_presition_title")
+item_menu_consumable_information_presition_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5/item_menu_consumable_information_presition_title/item_menu_consumable_information_presition_value")
+item_menu_consumable_information_power_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_power_title")
+item_menu_consumable_information_power_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_power_title/item_menu_consumable_information_power_value")
 item_menu_consumable_information_action_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/item_menu_consumable_information_action_title")
 item_menu_consumable_information_action_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/item_menu_consumable_information_action_title/item_menu_consumable_information_action_value")
 item_menu_consumable_information_target_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/item_menu_consumable_information_target_title")
@@ -2321,7 +2329,6 @@ size_flags_vertical = 3
 layout_mode = 2
 
 [node name="skill_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=2011766193]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2579,6 +2586,40 @@ size_flags_horizontal = 3
 text = "(3-CD)"
 horizontal_alignment = 2
 
+[node name="HBoxContainer5" type="HBoxContainer" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content" unique_id=762927477]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="skill_menu_information_affinity_title" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5" unique_id=1031805882]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "* Afinidad:"
+
+[node name="skill_menu_information_affinity_value" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5/skill_menu_information_affinity_title" unique_id=1385962700]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "100%"
+horizontal_alignment = 2
+
+[node name="skill_menu_information_presition_title" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5" unique_id=909721608]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "* Precisión:"
+
+[node name="skill_menu_information_presition_value" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer5/skill_menu_information_presition_title" unique_id=432627829]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "100%"
+horizontal_alignment = 2
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content" unique_id=162305943]
 layout_mode = 2
 theme_override_constants/separation = 30
@@ -2595,22 +2636,22 @@ anchor_right = 1.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-text = "5"
+text = "+1"
 horizontal_alignment = 2
 
-[node name="skill_menu_information_presition_title" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3" unique_id=1007288587]
+[node name="skill_menu_information_power_title" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3" unique_id=1007288587]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "* Precisión:"
+text = "* Poder:"
 
-[node name="skill_menu_information_presition_value" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_presition_title" unique_id=1853417126]
+[node name="skill_menu_information_power_value" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content/HBoxContainer3/skill_menu_information_power_title" unique_id=1853417126]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-text = "100%"
+text = "15 HP"
 horizontal_alignment = 2
 
 [node name="skill_menu_information_action_title" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content" unique_id=1920552940]
@@ -2625,7 +2666,7 @@ anchor_right = 1.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-text = "30 de Daño Físico de Fuego"
+text = "Daño / Físico / Fuego"
 horizontal_alignment = 2
 
 [node name="skill_menu_information_target_title" type="Label" parent="main_canvas_layer/skill_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/skill_menu_information_root/MarginContainer/skill_menu_information_content" unique_id=241689863]
@@ -2684,7 +2725,6 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="item_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1586744743]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3062,7 +3102,6 @@ text = "Información:"
 horizontal_alignment = 1
 
 [node name="item_menu_consumable_information_root" type="ScrollContainer" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1882630995]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -3164,6 +3203,40 @@ size_flags_horizontal = 3
 text = "(3-CD)"
 horizontal_alignment = 2
 
+[node name="HBoxContainer5" type="HBoxContainer" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content" unique_id=1319457805]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="item_menu_consumable_information_affinity_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5" unique_id=451571394]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "* Afinidad:"
+
+[node name="item_menu_consumable_information_affinity_value" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5/item_menu_consumable_information_affinity_title" unique_id=934237704]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "100%"
+horizontal_alignment = 2
+
+[node name="item_menu_consumable_information_presition_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5" unique_id=1865321893]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "* Precisión:"
+
+[node name="item_menu_consumable_information_presition_value" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer5/item_menu_consumable_information_presition_title" unique_id=123084940]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "100%"
+horizontal_alignment = 2
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content" unique_id=1488648700]
 layout_mode = 2
 theme_override_constants/separation = 30
@@ -3180,22 +3253,22 @@ anchor_right = 1.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-text = "5"
+text = "+1"
 horizontal_alignment = 2
 
-[node name="item_menu_consumable_information_presition_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3" unique_id=1454309951]
+[node name="item_menu_consumable_information_power_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3" unique_id=1454309951]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "* Precisión:"
+text = "* Poder:"
 
-[node name="item_menu_consumable_information_presition_value" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_presition_title" unique_id=1712712115]
+[node name="item_menu_consumable_information_power_value" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content/HBoxContainer3/item_menu_consumable_information_power_title" unique_id=1712712115]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-text = "100%"
+text = "15 HP"
 horizontal_alignment = 2
 
 [node name="item_menu_consumable_information_action_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content" unique_id=303682715]
@@ -3210,7 +3283,7 @@ anchor_right = 1.0
 offset_bottom = 28.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-text = "30 (Daño / Físico / Fuego)"
+text = "Daño / Físico / Fuego"
 horizontal_alignment = 2
 
 [node name="item_menu_consumable_information_target_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_consumable_information_root/MarginContainer/item_menu_consumable_information_content" unique_id=1796525316]
@@ -3269,6 +3342,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="item_menu_equip_information_root" type="ScrollContainer" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1647662256]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -5222,6 +5296,7 @@ text = "  Give Up  "
 icon = ExtResource("60_b6a3y")
 
 [node name="win_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1352804873]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

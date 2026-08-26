@@ -17,6 +17,7 @@ var max_stored: int = 99
 @export_category("Action Effect")
 @export var speed: int = 0
 @export var presition: int = 100
+@export var affinity: int = 100
 @export var value: int
 @export var myEFFECT: EFFECT
 @export var myATRIBUTE: ATRIBUTE

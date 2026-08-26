@@ -162,8 +162,12 @@ var skill_menu_button_array: Array[Button]
 @export var skill_menu_information_cooldown_value: Label
 @export var skill_menu_information_speed_title: Label
 @export var skill_menu_information_speed_value: Label
+@export var skill_menu_information_affinity_title: Label
+@export var skill_menu_information_affinity_value: Label
 @export var skill_menu_information_presition_title: Label
 @export var skill_menu_information_presition_value: Label
+@export var skill_menu_information_power_title: Label
+@export var skill_menu_information_power_value: Label
 @export var skill_menu_information_action_title: Label
 @export var skill_menu_information_action_value: Label
 @export var skill_menu_information_target_title: Label
@@ -211,8 +215,12 @@ var item_menu_consumable_button_array: Array[Button]
 @export var item_menu_consumable_information_cooldown_value: Label
 @export var item_menu_consumable_information_speed_title: Label
 @export var item_menu_consumable_information_speed_value: Label
+@export var item_menu_consumable_information_affinity_title: Label
+@export var item_menu_consumable_information_affinity_value: Label
 @export var item_menu_consumable_information_presition_title: Label
 @export var item_menu_consumable_information_presition_value: Label
+@export var item_menu_consumable_information_power_title: Label
+@export var item_menu_consumable_information_power_value: Label
 @export var item_menu_consumable_information_action_title: Label
 @export var item_menu_consumable_information_action_value: Label
 @export var item_menu_consumable_information_target_title: Label
@@ -1121,11 +1129,14 @@ func Set_Skill_Information(_action_serializable:Action_Serializable):
 	skill_menu_information_tp_cost_value.text = _tp_cost_text
 	skill_menu_information_cooldown_value.text = _cooldown_text
 	#----------------------------------------------------------------------------
-	skill_menu_information_speed_value.text = str(_action_serializable.action_resource.speed)
+	skill_menu_information_affinity_value.text = str(_action_serializable.action_resource.affinity)+"%"
 	skill_menu_information_presition_value.text = str(_action_serializable.action_resource.presition)+"%"
 	#----------------------------------------------------------------------------
-	skill_menu_information_action_value.text = Get_Skill_Effect_Text(_action_serializable.action_resource)
-	skill_menu_information_target_value.text = Get_Target_Text(_action_serializable.action_resource)
+	skill_menu_information_speed_value.text = Get_Action_Speed_Text(_action_serializable.action_resource.speed)
+	skill_menu_information_power_value.text = Get_Action_Power_Text(_action_serializable.action_resource.value)
+	#----------------------------------------------------------------------------
+	skill_menu_information_action_value.text = Get_Action_Effect_Text(_action_serializable.action_resource)
+	skill_menu_information_target_value.text = Get_Action_Target_Text(_action_serializable.action_resource)
 	#----------------------------------------------------------------------------
 	Set_Status_Rates(_action_serializable.action_resource, skill_menu_information_status_name, skill_menu_information_status_value)
 	#----------------------------------------------------------------------------
@@ -1133,11 +1144,12 @@ func Set_Skill_Information(_action_serializable:Action_Serializable):
 	skill_menu_information_description_value.text += Blablabla()
 	skill_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
-func Get_Skill_Effect_Text(_action_resource:Action_Resource) -> String:
+func Get_Action_Effect_Text(_action_resource:Action_Resource) -> String:
 	var _s: String = ""
 	#-------------------------------------------------------------------------------
 	if(_action_resource.myEFFECT != Action_Resource.EFFECT.NONE):
-		_s += str(_action_resource.value)+" ("
+		#_s += str(_action_resource.value)+" "
+		#_s += "("
 		_s += Get_Tr_Action_Effect(_action_resource.myEFFECT)
 		#-------------------------------------------------------------------------------
 		if(_action_resource.myATRIBUTE != Action_Resource.ATRIBUTE.NONE):
@@ -1146,14 +1158,14 @@ func Get_Skill_Effect_Text(_action_resource:Action_Resource) -> String:
 		if(_action_resource.myELEMENT != Action_Resource.ELEMENT.NONE):
 			_s += " / " + Get_Tr_Element(_action_resource.myELEMENT)
 		#-------------------------------------------------------------------------------
-		_s += ")"
+		#_s += ")"
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
 		_s += "-"
 	return _s
 #-------------------------------------------------------------------------------
-func Get_Target_Text(_action_resource:Action_Resource) -> String:
+func Get_Action_Target_Text(_action_resource:Action_Resource) -> String:
 	var _s: String = ""
 	#-------------------------------------------------------------------------------
 	_s += Get_Tr_Action_Target_Name(_action_resource.myTARGET) + " "
@@ -1207,6 +1219,32 @@ func Get_Hold_Text_B(_action_serializable:Action_Serializable) -> String:
 		_hold_text = "["+str(_hold)+"/"+str(_max_hold)+"]"
 	#-------------------------------------------------------------------------------
 	return _hold_text
+#-------------------------------------------------------------------------------
+func Get_Action_Power_Text(_power:int) -> String:
+	var _s: String
+	#-------------------------------------------------------------------------------
+	if(_power == 0):
+		_s = "-"
+	#-------------------------------------------------------------------------------
+	else:
+		_s = str(_power)
+		#_s += "-"+Get_Tr_HP()
+	#-------------------------------------------------------------------------------
+	return _s
+#-------------------------------------------------------------------------------
+func Get_Action_Speed_Text(_power:int) -> String:
+	var _s: String
+	#-------------------------------------------------------------------------------
+	if(_power == 0):
+		_s = "-"
+	#-------------------------------------------------------------------------------
+	elif(_power > 0):
+		_s = "+"+str(_power)
+	#-------------------------------------------------------------------------------
+	else:
+		_s = str(_power)
+	#-------------------------------------------------------------------------------
+	return _s
 #-------------------------------------------------------------------------------
 func Get_TpCost_Text_A(_action_resource:Action_Resource) -> String:
 	var _tp_cost_text: String = "-"
@@ -1543,11 +1581,14 @@ func Set_Item_Consumable_Information(_action_serializable:Action_Serializable):
 	item_menu_consumable_information_tp_cost_value.text = _tp_cost_text
 	item_menu_consumable_information_cooldown_value.text = _cooldown_text
 	#----------------------------------------------------------------------------
-	item_menu_consumable_information_speed_value.text = str(_action_serializable.action_resource.speed)
+	item_menu_consumable_information_affinity_value.text = str(_action_serializable.action_resource.affinity)+"%"
 	item_menu_consumable_information_presition_value.text = str(_action_serializable.action_resource.presition)+"%"
 	#----------------------------------------------------------------------------
-	item_menu_consumable_information_action_value.text = Get_Skill_Effect_Text(_action_serializable.action_resource)
-	item_menu_consumable_information_target_value.text = Get_Target_Text(_action_serializable.action_resource)
+	item_menu_consumable_information_speed_value.text = Get_Action_Speed_Text(_action_serializable.action_resource.speed)
+	item_menu_consumable_information_power_value.text = Get_Action_Power_Text(_action_serializable.action_resource.value)
+	#----------------------------------------------------------------------------
+	item_menu_consumable_information_action_value.text = Get_Action_Effect_Text(_action_serializable.action_resource)
+	item_menu_consumable_information_target_value.text = Get_Action_Target_Text(_action_serializable.action_resource)
 	#----------------------------------------------------------------------------
 	Set_Status_Rates(_action_serializable.action_resource, item_menu_consumable_information_status_name, item_menu_consumable_information_status_value)
 	#----------------------------------------------------------------------------
@@ -3271,7 +3312,7 @@ func Set_Idiome():
 	#-------------------------------------------------------------------------------
 	pause_menu_fighter_button_title.text = String_With_2_Spaces(tr("pause_menu_fighter_button_title"))
 	#-------------------------------------------------------------------------------
-	tp_bar_name.text = Get_Tr_Tp()
+	tp_bar_name.text = Get_Tr_TP()
 	#-------------------------------------------------------------------------------
 	skill_menu_information_title.text = _information+":"
 	item_manu_information_title.text = _information+":"
@@ -3359,9 +3400,19 @@ func Set_Idiome():
 	statistics_menu_information_status_title.text = tr("status_effect_resistances")
 	statistics_menu_information_description_title.text = _description
 	statistics_menu_information_elemental_title.text = tr("elemental_rate")
-	statistics_menu_information_elemental_power_title.text = tr("power_text")
+	#-------------------------------------------------------------------------------
+	var _power: String = tr("power_text")
+	statistics_menu_information_elemental_power_title.text = _power
+	skill_menu_information_power_title.text = String_With_Asterisco_and_2_Points(_power)
+	item_menu_consumable_information_power_title.text = String_With_Asterisco_and_2_Points(_power)
+	#-------------------------------------------------------------------------------
 	statistics_menu_information_elemental_absorb_title.text = tr("absortion_text")
-	statistics_menu_information_elemental_affinity_title.text = tr("affinity_text")
+	#-------------------------------------------------------------------------------
+	var _affinity: String = tr("affinity_text")
+	statistics_menu_information_elemental_affinity_title.text = _affinity
+	skill_menu_information_affinity_title.text = String_With_Asterisco_and_2_Points(_affinity)
+	item_menu_consumable_information_affinity_title.text = String_With_Asterisco_and_2_Points(_affinity)
+	#-------------------------------------------------------------------------------
 	statistics_menu_information_elemental_repulsion_title.text = tr("repulsion_text")
 	#-------------------------------------------------------------------------------
 	for _i in ally_button_array.size():
@@ -3402,7 +3453,7 @@ func String_With_2_Spaces(_s:String) -> String:
 	return "  "+_s+"  "
 #-------------------------------------------------------------------------------
 func String_With_Asterisco_and_2_Points(_s:String) -> String:
-	return " * "+_s+":"
+	return "* "+_s+":"
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -5082,7 +5133,7 @@ func Do_Repeat_Action_1(_user:Fighter_Node, _target:Fighter_Node):
 		await Seconds(0.3)
 		#-------------------------------------------------------------------------------
 		for _i in _action_serializable.action_resource.repeat:
-			Do_Classic_RPG_Action(_user, _target)
+			B_Set_RPG_Calculation_5(_user, _target)
 			await Seconds(0.15)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -5114,7 +5165,7 @@ func Do_Repeat_Action_All(_user:Fighter_Node, _target_array:Array[Fighter_Node])
 			#-------------------------------------------------------------------------------
 			for _i in _action_serializable.action_resource.repeat:
 				var _target: Fighter_Node = _target_array[_j]
-				Do_Classic_RPG_Action(_user, _target)
+				B_Set_RPG_Calculation_5(_user, _target)
 				await Seconds(0.15)
 			#-------------------------------------------------------------------------------
 			#await Seconds(0.15)
@@ -5135,7 +5186,7 @@ func Do_Repeat_Action_Random(_user:Fighter_Node, _target_array:Array[Fighter_Nod
 		#-------------------------------------------------------------------------------
 		for _i in _action_serializable.action_resource.repeat:
 			var _target: Fighter_Node = _target_array.pick_random()
-			Do_Classic_RPG_Action(_user, _target)
+			B_Set_RPG_Calculation_5(_user, _target)
 			await Seconds(0.15)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -5149,91 +5200,191 @@ func Fail_Action_for_Lack_of_TP(_user:Fighter_Node):
 	dialogue_menu_value.text += " Pero no tenía suficiente PT."
 	await Seconds(0.3)
 #-------------------------------------------------------------------------------
-func Do_Classic_RPG_Action(_user:Fighter_Node, _target:Fighter_Node):
+#region CLASSIC RPG MATH FUNCTIONS
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_5(_user:Fighter_Node, _target:Fighter_Node):
 	var _action_serializable: Action_Serializable = _user.action_serializable
 	#-------------------------------------------------------------------------------
 	if(_action_serializable == null):
 		return
 	#-------------------------------------------------------------------------------
 	var _action_resource: Action_Resource = _action_serializable.action_resource
-	Set_Classic_RPG_Damage_Calculation_by_Action(_user, _target, _action_resource)
+	B_Set_RPG_Calculation_4(_user, _target, _action_resource)
 #-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_4(_user:Fighter_Node, _target:Fighter_Node, _action:Action_Resource):
+	B_Set_RPG_Calculation_3(_user, _target, _action.value, _action.presition, _action.affinity, _action.myATRIBUTE, _action.myELEMENT, _action.myEFFECT, _action.status_dictionary)
 #-------------------------------------------------------------------------------
-func Set_Classic_RPG_Damage_Calculation_by_Action(_user:Fighter_Node, _target:Fighter_Node, _action_resource: Action_Resource):
-	Set_Classic_RPG_Damage_Calculation_1(_user, _target, _action_resource.value, _action_resource.presition, _action_resource.myEFFECT, _action_resource.myATRIBUTE, _action_resource.myELEMENT, _action_resource.status_dictionary)
-#-------------------------------------------------------------------------------
-func Set_Classic_RPG_Damage_Calculation_1(_user:Fighter_Node, _target:Fighter_Node, _value:int, _presition:int, _effect:Action_Resource.EFFECT, _atribute:Action_Resource.ATRIBUTE, _element:Action_Resource.ELEMENT, _status_dictionary: Dictionary[StringName, int]):
+func B_Set_RPG_Calculation_3(_user:Fighter_Node, _target:Fighter_Node, _value:int, _presition:int, _affinity:int, _atribute:Action_Resource.ATRIBUTE, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _status_dictionary: Dictionary[StringName, int]):
 	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
 	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
 	#-------------------------------------------------------------------------------
-	var _user_presition_rate: int = Get_Presition_Rate(_user_serializable, _atribute)
-	var _target_evasion_rate: int = Get_Evasion_Rate(_target_serializable, _atribute)
+	match(_atribute):
+		Action_Resource.ATRIBUTE.NONE:
+			if(Get_Rate_100(_presition)):
+				B_Set_RPG_Calculation_2(_user, _target, _value, _affinity, _elemental, _effect, _status_dictionary)
+			#-------------------------------------------------------------------------------
+			else:
+				Flying_PopUp_Miss(_target)
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		Action_Resource.ATRIBUTE.PHYSICAL:
+			var _user_attack: int = Get_Physical_Attack(_user_serializable)
+			var _user_presition_rate: int = Get_Physical_Presition_Rate(_user_serializable)
+			var _target_defense: int = Get_Physical_Defense(_user_serializable)
+			var _target_evasion_rate: int = Get_Physical_Evasion_Rate(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_3_Part_2(_user, _target, _value, _presition, _affinity, _user_attack, _user_presition_rate, _target_defense, _target_evasion_rate, _elemental, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ATRIBUTE.MAGICAL:
+			var _user_attack: int = Get_Magical_Attack(_user_serializable)
+			var _user_presition_rate: int = Get_Magical_Presition_Rate(_user_serializable)
+			var _target_defense: int = Get_Magical_Defense(_user_serializable)
+			var _target_evasion_rate: int = Get_Magical_Evasion_Rate(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_3_Part_2(_user, _target, _value, _presition, _affinity, _user_attack, _user_presition_rate, _target_defense, _target_evasion_rate, _elemental, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_3_Part_2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _presition:int, _affinity:int, _user_attack:int, _user_presition_rate:int, _target_defense:int, _target_evasion_rate:int, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _status_dictionary: Dictionary[StringName, int]):
 	var _atribute_presition_calculation: int = _presition + _user_presition_rate - _target_evasion_rate
 	#-------------------------------------------------------------------------------
 	if(Get_Rate_100(_atribute_presition_calculation)):
-		var _user_element: Vector4i = Get_Fighter_Elemental_Stats(_user_serializable, _element)
-		var _target_element: Vector4i = Get_Fighter_Elemental_Stats(_target_serializable, _element)
-		#-------------------------------------------------------------------------------
-		var _elemental_presition_calculation: int = 100 + _user_element.z - _target_element.w
-		#-------------------------------------------------------------------------------
-		if(Get_Rate_100(_elemental_presition_calculation)):
-			Set_Classic_RPG_Damage_Calculation_0(_user, _target, _user_element, _target_element, _value, _presition, _effect, _atribute, _element, _status_dictionary)
-		#-------------------------------------------------------------------------------
-		else:
-			Set_Classic_RPG_Damage_Calculation_0(_target, _user, _target_element, _user_element, _value, _presition, _effect, _atribute, _element, _status_dictionary)
-			singleton.Play_SFX_Reflect()
-			Flying_PopUp(_target, "Reflect")
-		#-------------------------------------------------------------------------------
+		var _damage: float = (damage_scaling + float(_user_attack)) / damage_scaling
+		var _armor: float = armor_scaling / (armor_scaling + float(_target_defense))
+		var _final_value: int = int(float(_value) * _damage * _armor)
+		B_Set_RPG_Calculation_2(_user, _target, _final_value, _affinity, _elemental, _effect, _status_dictionary)
 	#-------------------------------------------------------------------------------
 	else:
-		Flying_PopUp(_target, "Miss")
-		singleton.Play_SFX_Miss()
+		Flying_PopUp_Miss(_target)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Classic_RPG_Damage_Calculation_0(_user:Fighter_Node, _target:Fighter_Node, _user_element:Vector4i, _target_element:Vector4i, _value:int, _presition:int, _effect:Action_Resource.EFFECT, _atribute:Action_Resource.ATRIBUTE, _element:Action_Resource.ELEMENT, _status_dictionary: Dictionary[StringName, int]):
+func Flying_PopUp_Miss(_user:Fighter_Node):
+	Flying_PopUp(_user, "Miss")
+	singleton.Play_SFX_Miss()
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _affinity:int, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _status_dictionary: Dictionary[StringName, int]):
 	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
 	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
 	#-------------------------------------------------------------------------------
-	if(_value != 0):
+	match(_elemental):
+		Action_Resource.ELEMENT.NONE:
+			#-------------------------------------------------------------------------------
+			if(Get_Rate_100(_affinity)):
+				B_Set_RPG_Calculation_1(_user, _target, _value, _effect, _status_dictionary)
+			#-------------------------------------------------------------------------------
+			else:
+				B_Set_RPG_Calculation_1(_target, _user, _value, _effect, _status_dictionary)
+				Flying_PopUp_Reflect(_target)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		match(_effect):
-			Action_Resource.EFFECT.DAMAGE:
-				var _elemental_value = Get_Classic_RPG_Damage_Calculation(_user_serializable, _target_serializable, _value, _atribute, _element)
-				var _final_value: int  = Get_RPG_Scaling(_elemental_value, _user_element.x, _target_element.y)
-				#-------------------------------------------------------------------------------
-				Change_Fighter_HP(_target, -_final_value)
-				singleton.Play_SFX_Damage()
+		Action_Resource.ELEMENT.NORMAL:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Normal(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Normal(_target_serializable)
 			#-------------------------------------------------------------------------------
-			Action_Resource.EFFECT.HEAL:
-				var _pharmacology: int = Get_Recovery_Effect(_user_serializable)
-				var _recoverty_effect: int = Get_Recovery_Effect(_target_serializable)
-				var _final_value: int = Get_RPG_Scaling(_value, _pharmacology, _recoverty_effect)
-				#-------------------------------------------------------------------------------
-				Change_Fighter_HP(_target, _final_value)
-				singleton.Play_SFX_Heal()
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.WATER:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Water(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Water(_target_serializable)
 			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.FIRE:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Fire(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Fire(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.EARTH:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Earth(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Earth(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.WIND:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Wind(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Wind(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.ICE:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Ice(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Ice(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.THUNDER:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Thunder(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Thunder(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.LIGHT:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Light(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Light(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ELEMENT.DARK:
+			var _user_element: Vector4i = Get_Fighter_Elemental_Stats_Dark(_user_serializable)
+			var _target_element: Vector4i = Get_Fighter_Elemental_Stats_Dark(_target_serializable)
+			#-------------------------------------------------------------------------------
+			B_Set_RPG_Calculation_2_Part2(_user, _target, _value, _affinity, _user_element, _target_element, _effect, _status_dictionary)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	Set_Classic_RPG_Calculated_Status_Effect_0(_user, _target, _status_dictionary)
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_2_Part2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _affinity:int, _user_element:Vector4i, _target_element:Vector4i, _effect:Action_Resource.EFFECT, _status_dictionary: Dictionary[StringName, int]):
+	var _elemental_presition_calculation: int = _affinity + _user_element.z - _target_element.w
+	#-------------------------------------------------------------------------------
+	if(Get_Rate_100(_elemental_presition_calculation)):
+		var _final_value: int  = Get_RPG_Scaling(_value, _user_element.x, _target_element.y)
+		B_Set_RPG_Calculation_1(_user, _target, _final_value, _effect, _status_dictionary)
+	#-------------------------------------------------------------------------------
+	else:
+		var _final_value: int  = Get_RPG_Scaling(_value, _target_element.x, _user_element.y)
+		B_Set_RPG_Calculation_1(_target, _user, _final_value, _effect, _status_dictionary)
+		Flying_PopUp_Reflect(_target)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Flying_PopUp_Reflect(_user:Fighter_Node):
+	singleton.Play_SFX_Reflect()
+	Flying_PopUp(_user, "Reflect")
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_1(_user:Fighter_Node, _target:Fighter_Node, _value:int, _effect:Action_Resource.EFFECT, _status_dictionary: Dictionary[StringName, int]):
+	#-------------------------------------------------------------------------------
+	match(_effect):
+		Action_Resource.EFFECT.NONE:
+			pass
+		#-------------------------------------------------------------------------------
+		Action_Resource.EFFECT.DAMAGE:
+			B_Set_RPG_Calculation_0_Damage(_target, _value)
+		#-------------------------------------------------------------------------------
+		Action_Resource.EFFECT.HEAL:
+			B_Set_RPG_Calculation_0_Heal(_user, _target, _value)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	B_Set_RPG_Calculation_0_Status_Effect(_user, _target, _status_dictionary)
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_0_Damage(_target:Fighter_Node, _value:int):
+	Change_Fighter_HP(_target, -_value)
+	singleton.Play_SFX_Damage()
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_0_Heal(_user:Fighter_Node, _target:Fighter_Node, _value:int):
+	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
+	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+	#-------------------------------------------------------------------------------
+	var _target_recovery_effect: int = Get_Recovery_Effect(_target_serializable)
+	var _user_pharmacology: int = Get_Recovery_Effect(_user_serializable)
+	var _final_value: int  = Get_RPG_Scaling(_value, _user_pharmacology, _target_recovery_effect)
+	#-------------------------------------------------------------------------------
+	Change_Fighter_HP(_target, _final_value)
+	singleton.Play_SFX_Heal()
 #-------------------------------------------------------------------------------
 func Get_RPG_Scaling(_value:int, _power:int, _absorb:int) -> int:
 	var _final_value: int = int( float(_value) * float(_power)/100 * float(_absorb)/100 )
 	return _final_value
 #-------------------------------------------------------------------------------
-func Add_Status(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource):
-	var _status_serializable_array: Array[Status_Serializable] = _user_serializable.status_serializable_array
-	#-------------------------------------------------------------------------------
-	for _i in _status_serializable_array.size():
-		#-------------------------------------------------------------------------------
-		if(_status_serializable_array[_i].status_resource == _status_resource):
-			return
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	var status_serializable: Status_Serializable = Create_Status_Serializable(_status_resource, _status_resource.max_turns+1)
-	_status_serializable_array.append(status_serializable)
-	return
-#-------------------------------------------------------------------------------
-func Set_Classic_RPG_Calculated_Status_Effect_0(_user:Fighter_Node, _target:Fighter_Node, _status_dictionary: Dictionary[StringName, int]):
+func B_Set_RPG_Calculation_0_Status_Effect(_user:Fighter_Node, _target:Fighter_Node, _status_dictionary: Dictionary[StringName, int]):
 	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
 	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
 	#-------------------------------------------------------------------------------
@@ -5251,6 +5402,19 @@ func Set_Classic_RPG_Calculated_Status_Effect_0(_user:Fighter_Node, _target:Figh
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Add_Status(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource):
+	var _status_serializable_array: Array[Status_Serializable] = _user_serializable.status_serializable_array
+	#-------------------------------------------------------------------------------
+	for _i in _status_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(_status_serializable_array[_i].status_resource == _status_resource):
+			return
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	var status_serializable: Status_Serializable = Create_Status_Serializable(_status_resource, _status_resource.max_turns+1)
+	_status_serializable_array.append(status_serializable)
+	return
+#-------------------------------------------------------------------------------
 func Has_Status(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource) -> bool:
 	var _status_serializable_array: Array[Status_Serializable] = _user_serializable.status_serializable_array
 	#-------------------------------------------------------------------------------
@@ -5266,16 +5430,6 @@ func Get_Status_Resource_Path(_string_name:StringName) -> String:
 	var _path: String = "res://Resources/Status/"+_string_name+".tres"
 	return _path
 #-------------------------------------------------------------------------------
-func Get_Classic_RPG_Damage_Calculation(_user_serializable:Fighter_Serializable, _target_serializable:Fighter_Serializable, _value:int, _atribute:Action_Resource.ATRIBUTE, _element:Action_Resource.ELEMENT) -> int:
-	var _user_attack: int = Get_Attack(_user_serializable, _atribute)
-	var _target_defense: int = Get_Defense(_target_serializable, _atribute)
-	#-------------------------------------------------------------------------------
-	var _damage: float = (damage_scaling + float(_user_attack)) / damage_scaling
-	var _armor: float = armor_scaling / (armor_scaling + float(_target_defense))
-	var _final_value: int = int(float(_value) * _damage * _armor)
-	#-------------------------------------------------------------------------------
-	return _final_value
-#-------------------------------------------------------------------------------
 func Get_Rate_100(_value:int) -> bool:
 	var _rate: int = randi_range(0, 100)
 	#-------------------------------------------------------------------------------
@@ -5286,92 +5440,6 @@ func Get_Rate_100(_value:int) -> bool:
 		return true
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Get_Attack(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
-	var _user_attack: int
-	#-------------------------------------------------------------------------------
-	match(_atribute):
-		Action_Resource.ATRIBUTE.PHYSICAL:
-			_user_attack = Get_Physical_Attack(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ATRIBUTE.MAGICAL:
-			_user_attack = Get_Magical_Attack(_user_serializable)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	return _user_attack
-#-------------------------------------------------------------------------------
-func Get_Defense(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
-	var _user_defense: int
-	#-------------------------------------------------------------------------------
-	match(_atribute):
-		Action_Resource.ATRIBUTE.PHYSICAL:
-			_user_defense = Get_Physical_Defense(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ATRIBUTE.MAGICAL:
-			_user_defense = Get_Magical_Defense(_user_serializable)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	return _user_defense
-#-------------------------------------------------------------------------------
-func Get_Presition_Rate(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
-	var _user_presition_rate: int
-	#-------------------------------------------------------------------------------
-	match(_atribute):
-		Action_Resource.ATRIBUTE.PHYSICAL:
-			_user_presition_rate = Get_Physical_Presition_Rate(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ATRIBUTE.MAGICAL:
-			_user_presition_rate = Get_Magical_Presition_Rate(_user_serializable)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	return _user_presition_rate
-#-------------------------------------------------------------------------------
-func Get_Evasion_Rate(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
-	var _user_evasion_rate: int
-	#-------------------------------------------------------------------------------
-	match(_atribute):
-		Action_Resource.ATRIBUTE.PHYSICAL:
-			_user_evasion_rate = Get_Physical_Evasion_Rate(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ATRIBUTE.MAGICAL:
-			_user_evasion_rate = Get_Magical_Evasion_Rate(_user_serializable)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	return _user_evasion_rate
-#-------------------------------------------------------------------------------
-func Get_Fighter_Elemental_Stats(_user_serializable:Fighter_Serializable, _element:Action_Resource.ELEMENT)->Vector4i:
-	var _user_element: Vector4i
-	#-------------------------------------------------------------------------------
-	match(_element):
-		Action_Resource.ELEMENT.NORMAL:
-			_user_element = Get_Fighter_Elemental_Stats_Normal(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.WATER:
-			_user_element = Get_Fighter_Elemental_Stats_Water(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.FIRE:
-			_user_element = Get_Fighter_Elemental_Stats_Fire(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.EARTH:
-			_user_element = Get_Fighter_Elemental_Stats_Earth(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.WIND:
-			_user_element = Get_Fighter_Elemental_Stats_Wind(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.ICE:
-			_user_element = Get_Fighter_Elemental_Stats_Ice(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.THUNDER:
-			_user_element = Get_Fighter_Elemental_Stats_Thunder(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.LIGHT:
-			_user_element = Get_Fighter_Elemental_Stats_Light(_user_serializable)
-		#-------------------------------------------------------------------------------
-		Action_Resource.ELEMENT.DARK:
-			_user_element = Get_Fighter_Elemental_Stats_Dark(_user_serializable)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	return _user_element
-#-------------------------------------------------------------------------------
 func Change_Fighter_HP(_target:Fighter_Node, _value:int):
 	_target.fighter_serializable_in_battle.hp += _value
 	var _max_hp: int = Get_Max_HP(_target.fighter_serializable_in_battle)
@@ -5380,6 +5448,8 @@ func Change_Fighter_HP(_target:Fighter_Node, _value:int):
 	_target.fighter_ui.hp_bar.value = _hp
 	_target.fighter_ui.hp_bar.max_value = _max_hp
 	Flying_PopUp_HP(_target, _value)
+#-------------------------------------------------------------------------------
+#endregion
 #-------------------------------------------------------------------------------
 func Show_Ally_Action(_fighter_node:Fighter_Node):
 	var _user_name: String = Get_Tr_Character_Name(_fighter_node.character_node.character_resource)
@@ -6590,8 +6660,11 @@ func Get_Tr_Action_Effect(_effect:Action_Resource.EFFECT) -> String:
 	var _effect_key: StringName = Action_Resource.EFFECT.keys()[_effect]
 	return tr("action_type_"+_effect_key)
 #-------------------------------------------------------------------------------
-func Get_Tr_Tp() -> String:
+func Get_Tr_TP() -> String:
 	return tr("tp_text")
+#-------------------------------------------------------------------------------
+func Get_Tr_HP() -> String:
+	return tr("hp_text")
 #-------------------------------------------------------------------------------
 func Get_Tr_CD() -> String:
 	return tr("cd_text")
@@ -6617,13 +6690,13 @@ func Get_Tr_Action_Target_Name(_myTARGET:Action_Resource.TARGET) -> String:
 	return _s
 #-------------------------------------------------------------------------------
 func Get_Tr_TP_Cost_Text(_tp:int) -> String:
-	return "("+str(_tp)+"-"+Get_Tr_Tp()+")"
+	return "("+str(_tp)+"-"+Get_Tr_TP()+")"
 #-------------------------------------------------------------------------------
 func Get_Tr_CD_Text(_cd:int) -> String:
 	return "("+str(_cd)+"-"+Get_Tr_CD()+")"
 #-------------------------------------------------------------------------------
 func Get_Fighter_Hp_Text(_hp:int, _max_hp:int) -> String:
-	var _s: String = str(_hp)+" / "+str(_max_hp)+" "+Get_Tr_Tp()
+	var _s: String = str(_hp)+" / "+str(_max_hp)+" "+Get_Tr_TP()
 	return _s
 #-------------------------------------------------------------------------------
 func Flying_PopUp_HP(_user:Fighter_Node, _value:int):
