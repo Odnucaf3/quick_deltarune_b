@@ -78,18 +78,23 @@ fighter_type_HEROE,Heroe,Hero
 fighter_type_WARRIOR,Guerrero,Warrior
 fighter_type_MAGICIAN,Mago,Mage
 fighter_type_PRIEST,Sacerdote,Priest
-name_character_ally_0,Harold,Harold
-title_character_ally_0,,
-description_character_ally_0,,
-name_character_ally_1,Therese,Therese
-title_character_ally_1,,
-description_character_ally_1,,
-name_character_ally_2,Marsha,Marsha
-title_character_ally_2,,
-description_character_ally_2,,
-name_character_ally_3,Lucius,Lucius
-title_character_ally_3,,
-description_character_ally_3,,
+name_character_actor1_1,Harold,Harold
+title_character_actor1_1,,
+description_character_actor1_1,,
+name_character_actor1_8,Therese,Therese
+title_character_actor1_8,,
+description_character_actor1_8,,
+name_character_actor2_7,Lucius,Lucius
+title_character_actor2_7,,
+description_character_actor2_7,,
+name_character_actor3_8,Marsha,Marsha
+title_character_actor3_8,,
+description_character_actor3_8,,
+name_character_monster_1,Murcielagón,Big Bat
+title_character_monster_1,-,-
+description_character_monster_1,,
+name_item_deadly_poison,Veneno Mortal,Deadly Poison
+description_item_deadly_poison,"Utilizalo, si quieren conocer lo que es la derrota.","Use it , if you want to know defeat."
 name_item_damage_0,Cóctel molotov,Molotov Cocktail
 description_item_damage_0,"Explota en llamas al ser arrojada contra un objeto. Es una de las herramientas de caza más antiguas disponibles en el taller.
 Desde la tragedia que asoló Old Yharnam, el fuego se ha convertido en un elemento fundamental en la caza de bestias y se cree que purifica.
@@ -209,8 +214,10 @@ name_ring_2,Anillo de Marsha,Marsha's Ring
 description_ring_2,-,-
 name_ring_3,Anillo de Lucius,Lucius's Ring
 description_ring_3,-,-
-name_key_0,Llave de Mazmorra,Dungeon Key
-description_key_0,-,-
+name_key_money,Monedas,Coins
+description_key_money,-,-
+name_key_1,Llave de Mazmorra,Dungeon Key
+description_key_1,-,-
 name_status_guard,Guardia,Guard
 description_status_guard,-,-
 name_status_death,Nockeado,Knokdown

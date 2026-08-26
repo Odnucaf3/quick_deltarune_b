@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://rj8wk0p7m1vh"]
 
-[ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/actor1_8.tscn" id="1_do45o"]
+[ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/character_actor1_8.tscn" id="1_do45o"]
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_ma215"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_pkj5u"]
-[ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter1_8.tres" id="3_cmy8s"]
+[ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter_actor1_8.tres" id="3_cmy8s"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="4_wfkfi"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="5_6cy3l"]
 
@@ -12,9 +12,9 @@ script = ExtResource("4_wfkfi")
 fighter_resource = ExtResource("3_cmy8s")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[node name="fighter1_8" type="Node2D" unique_id=1791539970 node_paths=PackedStringArray("character_node")]
+[node name="fighter_actor1_8" type="Node2D" unique_id=1791539970 node_paths=PackedStringArray("character_node")]
 script = ExtResource("1_ma215")
 fighter_serializable = SubResource("Resource_3em1u")
-character_node = NodePath("actor1_8")
+character_node = NodePath("character_actor1_8")
 
-[node name="actor1_8" parent="." unique_id=1388025439 instance=ExtResource("1_do45o")]
+[node name="character_actor1_8" parent="." unique_id=1388025439 instance=ExtResource("1_do45o")]

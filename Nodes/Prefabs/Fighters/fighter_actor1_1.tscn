@@ -6,12 +6,12 @@
 [ext_resource type="Resource" uid="uid://dnqwa4ac4201s" path="res://Resources/Equips/head_0.tres" id="4_0fglg"]
 [ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="5_rgjyi"]
 [ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="6_hnfnv"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter1_1.tres" id="7_ui50d"]
+[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_actor1_1.tres" id="7_ui50d"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_l7osr"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_127ya"]
 [ext_resource type="Resource" uid="uid://d32vm1s8fexwl" path="res://Resources/Status/status_damage_1.tres" id="10_eqvaq"]
 [ext_resource type="Resource" uid="uid://c526dyvk4potd" path="res://Resources/Status/status_damage_0.tres" id="11_4r6jp"]
-[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/actor1_1.tscn" id="12_25eqy"]
+[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="12_25eqy"]
 
 [sub_resource type="Resource" id="Resource_hf3yd"]
 script = ExtResource("2_8ooxm")
@@ -53,9 +53,9 @@ equip_serializable_array = Array[ExtResource("2_8ooxm")]([SubResource("Resource_
 status_serializable_array = Array[ExtResource("9_127ya")]([SubResource("Resource_7jpv4"), SubResource("Resource_5mijj")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[node name="fighter1_1" type="Node2D" unique_id=1625553253 node_paths=PackedStringArray("character_node")]
+[node name="fighter_actor1_1" type="Node2D" unique_id=1625553253 node_paths=PackedStringArray("character_node")]
 script = ExtResource("1_3pmha")
 fighter_serializable = SubResource("Resource_1d3vm")
-character_node = NodePath("actor1_1")
+character_node = NodePath("character_actor1_1")
 
-[node name="actor1_1" parent="." unique_id=1234637241 instance=ExtResource("12_25eqy")]
+[node name="character_actor1_1" parent="." unique_id=1234637241 instance=ExtResource("12_25eqy")]

@@ -2,19 +2,19 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_qusuq"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_cp55i"]
-[ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1_1.tscn" id="2_fenlt"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter1_1.tres" id="3_eu85f"]
+[ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1.tscn" id="2_fenlt"]
+[ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_monster_1.tres" id="3_krjvs"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="4_63hy0"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="5_nhp68"]
 
 [sub_resource type="Resource" id="Resource_3em1u"]
 script = ExtResource("4_63hy0")
-fighter_resource = ExtResource("3_eu85f")
+fighter_resource = ExtResource("3_krjvs")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[node name="fighter_monster1_1" type="Node2D" unique_id=1711747710 node_paths=PackedStringArray("character_node")]
+[node name="fighter_monster_1" type="Node2D" unique_id=1711747710 node_paths=PackedStringArray("character_node")]
 script = ExtResource("1_qusuq")
 fighter_serializable = SubResource("Resource_3em1u")
-character_node = NodePath("character_monster1_1")
+character_node = NodePath("character_monster_1")
 
-[node name="character_monster1_1" parent="." unique_id=1394058482 instance=ExtResource("2_fenlt")]
+[node name="character_monster_1" parent="." unique_id=1394058482 instance=ExtResource("2_fenlt")]

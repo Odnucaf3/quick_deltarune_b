@@ -9,7 +9,9 @@ icon = ExtResource("1_v6epm")
 max_hold = 2
 tp_cost = 5
 value = 7
-myELEMENT = 6
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 7
 repeat = 4
 status_dictionary = Dictionary[StringName, int]({
 &"status_damage_1": 15

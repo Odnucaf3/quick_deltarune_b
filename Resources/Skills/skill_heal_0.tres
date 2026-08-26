@@ -7,7 +7,7 @@
 script = ExtResource("1_5aqri")
 icon = ExtResource("1_n13y5")
 max_cooldown = 3
-myEFFECT = 1
+myEFFECT = 2
 myTARGET = 5
 status_dictionary = Dictionary[StringName, int]({
 &"guard": 100

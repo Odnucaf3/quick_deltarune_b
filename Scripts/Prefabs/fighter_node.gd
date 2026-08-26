@@ -12,5 +12,6 @@ var user_party: Array[Fighter_Node]
 var target: Fighter_Node
 var opponent_party: Array[Fighter_Node]
 #-------------------------------------------------------------------------------
+var pop_up_array: Array[Pop_Up_Node]
 var position_history: Array[Vector2]
 #-------------------------------------------------------------------------------

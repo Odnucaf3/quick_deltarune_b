@@ -36,6 +36,8 @@ var battle_box_limit_right: float
 @export var fighter_button_prefab: PackedScene
 @export var fighter_ally_ui_prefab: PackedScene
 @export var fighter_enemy_ui_prefab: PackedScene
+@export var ally_pop_up_prefab: PackedScene
+@export var enemy_pop_up_prefab: PackedScene
 #-------------------------------------------------------------------------------
 @export_category("Inventory")
 @export var item_consumable_inventory: Array[Action_Serializable]
@@ -406,6 +408,9 @@ const button_array_minimum_size_y: int = 42
 const button_array_font_size: int = 20
 var battle_order: int = 2
 var world_order: int = 0
+var was_status_effect_add_or_removed: bool
+#-------------------------------------------------------------------------------
+const pop_up_timer: float = 1.18
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -1062,7 +1067,7 @@ func Create_Skill_Button(_skill_serializable:Action_Serializable):
 	#-------------------------------------------------------------------------------
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	var _name: String = tr("name_"+singleton.get_resource_filename(_skill_serializable.action_resource))
+	var _name: String = Get_Tr_Skill_Name(_skill_serializable.action_resource)
 	_button.text = _name+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
@@ -1089,7 +1094,7 @@ func Create_Skill_Button(_skill_serializable:Action_Serializable):
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
-		_label2.text = Get_CD_Text(_skill_serializable.cooldown)+"  "
+		_label2.text = Get_Tr_CD_Text(_skill_serializable.cooldown)+"  "
 	#-------------------------------------------------------------------------------
 	_button.add_child(_label2)
 	#-------------------------------------------------------------------------------
@@ -1109,7 +1114,7 @@ func Set_Skill_Information(_action_serializable:Action_Serializable):
 	var _cooldown_text: String = Get_CoolDown_Text(_action_serializable)
 	#----------------------------------------------------------------------------
 	skill_menu_information_icon.texture = _action_serializable.action_resource.icon
-	skill_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_action_serializable.action_resource))
+	skill_menu_information_name.text = Get_Tr_Skill_Name(_action_serializable.action_resource)
 	#----------------------------------------------------------------------------
 	skill_menu_information_hold_value.text = _hold_text
 	#----------------------------------------------------------------------------
@@ -1124,31 +1129,34 @@ func Set_Skill_Information(_action_serializable:Action_Serializable):
 	#----------------------------------------------------------------------------
 	Set_Status_Rates(_action_serializable.action_resource, skill_menu_information_status_name, skill_menu_information_status_value)
 	#----------------------------------------------------------------------------
-	skill_menu_information_description_value.text = tr("description_"+singleton.get_resource_filename(_action_serializable.action_resource))
+	skill_menu_information_description_value.text = Get_Tr_Skill_Description(_action_serializable.action_resource)
 	skill_menu_information_description_value.text += Blablabla()
 	skill_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
 func Get_Skill_Effect_Text(_action_resource:Action_Resource) -> String:
 	var _s: String = ""
 	#-------------------------------------------------------------------------------
-	match(_action_resource.myEFFECT):
-		Action_Resource.EFFECT.DAMAGE:
-			_s += str(_action_resource.value)+" ("
-			_s += tr("action_type_DAMAGE") + " / "
-			_s += Get_Action_Atribute_Name(_action_resource.myATRIBUTE) + " / "
-			_s += Get_Action_Element_Name(_action_resource.myELEMENT)+")"
+	if(_action_resource.myEFFECT != Action_Resource.EFFECT.NONE):
+		_s += str(_action_resource.value)+" ("
+		_s += Get_Tr_Action_Effect(_action_resource.myEFFECT)
 		#-------------------------------------------------------------------------------
-		Action_Resource.EFFECT.HEAL:
-			_s += str(_action_resource.value)+" ("
-			_s += tr("action_type_HEAL") + ")"
+		if(_action_resource.myATRIBUTE != Action_Resource.ATRIBUTE.NONE):
+			_s += " / " + Get_Tr_Action_Atribute_Name(_action_resource.myATRIBUTE)
+		#-------------------------------------------------------------------------------
+		if(_action_resource.myELEMENT != Action_Resource.ELEMENT.NONE):
+			_s += " / " + Get_Tr_Element(_action_resource.myELEMENT)
+		#-------------------------------------------------------------------------------
+		_s += ")"
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	else:
+		_s += "-"
 	return _s
 #-------------------------------------------------------------------------------
 func Get_Target_Text(_action_resource:Action_Resource) -> String:
 	var _s: String = ""
 	#-------------------------------------------------------------------------------
-	_s += Get_Action_Target_Name(_action_resource.myTARGET) + " "
+	_s += Get_Tr_Action_Target_Name(_action_resource.myTARGET) + " "
 	_s += "(x"+str(_action_resource.repeat)+")"
 	#-------------------------------------------------------------------------------
 	return _s
@@ -1160,8 +1168,10 @@ func Set_Status_Rates(_action_resource:Action_Resource, _label_name:Label, _labe
 		_label_rate.text = ""
 		#-------------------------------------------------------------------------------
 		for _i in _action_resource.status_dictionary.size():
-			_label_name.text += "* "+tr("name_"+_action_resource.status_dictionary.keys()[_i])+"\n"
-			_label_rate.text += str(_action_resource.status_dictionary.values()[_i])+"%"+"\n"
+			var _key: StringName = _action_resource.status_dictionary.keys()[_i]
+			var _value: int = _action_resource.status_dictionary.values()[_i]
+			_label_name.text += "* "+Get_Tr_Status_Effect_Name_0(_key)+"\n"
+			_label_rate.text += str(_value)+"%"+"\n"
 		#-------------------------------------------------------------------------------
 		Remove_Last_Letter(_label_name)
 		Remove_Last_Letter(_label_rate)
@@ -1203,7 +1213,7 @@ func Get_TpCost_Text_A(_action_resource:Action_Resource) -> String:
 	var _tp_cost: int = _action_resource.tp_cost
 	#-------------------------------------------------------------------------------
 	if(_tp_cost > 0):
-		_tp_cost_text = Get_TP_Cost_Text(_tp_cost)
+		_tp_cost_text = Get_Tr_TP_Cost_Text(_tp_cost)
 	#-------------------------------------------------------------------------------
 	return _tp_cost_text
 #-------------------------------------------------------------------------------
@@ -1212,7 +1222,7 @@ func Get_TpCost_Text_B(_action_resource:Action_Resource) -> String:
 	var _tp_cost: int = _action_resource.tp_cost
 	#-------------------------------------------------------------------------------
 	if(_tp_cost > 0):
-		_tp_cost_text = Get_TP_Cost_Text(_tp_cost)
+		_tp_cost_text = Get_Tr_TP_Cost_Text(_tp_cost)
 	#-------------------------------------------------------------------------------
 	return _tp_cost_text
 #-------------------------------------------------------------------------------
@@ -1221,7 +1231,7 @@ func Get_CoolDown_Text(_action_serializable:Action_Serializable) -> String:
 	var _cooldown: int = _action_serializable.action_resource.max_cooldown
 	#-------------------------------------------------------------------------------
 	if(_cooldown>0):
-		_cooldown_text = Get_CD_Text(_cooldown)
+		_cooldown_text = Get_Tr_CD_Text(_cooldown)
 	#-------------------------------------------------------------------------------
 	else:
 		_cooldown_text = "-"
@@ -1525,7 +1535,7 @@ func Set_Item_Consumable_Information(_action_serializable:Action_Serializable):
 	var _stored_text: String = Get_Stored_Text(_action_serializable)
 	#----------------------------------------------------------------------------
 	item_menu_consumable_information_icon.texture = _action_serializable.action_resource.icon
-	item_menu_consumable_information_name.text = tr("name_"+singleton.get_resource_filename(_action_serializable.action_resource))
+	item_menu_consumable_information_name.text = Get_Tr_Consumable_Item_Name(_action_serializable.action_resource)
 	#----------------------------------------------------------------------------
 	item_menu_consumable_information_hold_value.text = _hold_text
 	item_menu_consumable_information_stored_value.text = _stored_text
@@ -1541,7 +1551,7 @@ func Set_Item_Consumable_Information(_action_serializable:Action_Serializable):
 	#----------------------------------------------------------------------------
 	Set_Status_Rates(_action_serializable.action_resource, item_menu_consumable_information_status_name, item_menu_consumable_information_status_value)
 	#----------------------------------------------------------------------------
-	item_menu_consumable_information_description_value.text = tr("description_"+singleton.get_resource_filename(_action_serializable.action_resource))
+	item_menu_consumable_information_description_value.text = Get_Tr_Consumable_Item_Description(_action_serializable.action_resource)
 	item_menu_consumable_information_description_value.text += Blablabla()
 	item_menu_consumable_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
@@ -1549,12 +1559,12 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	var _equip_resource: Equip_Resource = _equip_serializable.equip_resource
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_icon.texture = _equip_serializable.equip_resource.icon
-	item_menu_equip_information_name.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))
+	item_menu_equip_information_name.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 	item_menu_equip_information_stored_value.text = "["+str(_equip_serializable.stored)+"]"
-	item_menu_equip_information_class_value.text = Get_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
-	item_menu_equip_information_type_value.text = Get_Equip_Type(_equip_resource.myEQUIP_TYPE)
+	item_menu_equip_information_class_value.text = Get_Tr_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
+	item_menu_equip_information_type_value.text = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_statistics_name.text = ""
 	item_menu_equip_information_statistics_value.text = ""
@@ -1601,7 +1611,7 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	Show_Line_if_String_is_Empty(item_menu_equip_information_statistics_name)
 	Show_Line_if_String_is_Empty(item_menu_equip_information_statistics_value)
 	#-------------------------------------------------------------------------------
-	item_menu_equip_information_description_value.text = tr("description_"+singleton.get_resource_filename(_equip_serializable.equip_resource))
+	item_menu_equip_information_description_value.text = Get_Tr_Equip_Item_Description(_equip_serializable.equip_resource)
 	item_menu_equip_information_description_value.text += Blablabla()
 	item_menu_equip_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
@@ -1621,13 +1631,13 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		var _equip_resource: Equip_Resource = _equip_serializable.equip_resource
 		#-------------------------------------------------------------------------------
 		equip_menu_information_icon.texture = _equip_resource.icon
-		equip_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_equip_resource))
+		equip_menu_information_name.text = Get_Tr_Equip_Item_Name(_equip_resource)
 		#-------------------------------------------------------------------------------
 		equip_menu_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_inventory, _equip_resource)
 		equip_menu_information_stored_value.text = "["+str(_stored)+"]"
-		equip_menu_information_class_value.text = Get_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
-		equip_menu_information_type_value.text = Get_Equip_Type(_equip_resource.myEQUIP_TYPE)
+		equip_menu_information_class_value.text = Get_Tr_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
+		equip_menu_information_type_value.text = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
 		#-------------------------------------------------------------------------------
 		equip_menu_information_statistics_name.text = ""
 		equip_menu_information_statistics_value.text = ""
@@ -1674,7 +1684,7 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		Show_Line_if_String_is_Empty(equip_menu_information_statistics_name)
 		Show_Line_if_String_is_Empty(equip_menu_information_statistics_value)
 		#-------------------------------------------------------------------------------
-		equip_menu_information_description_value.text = tr("description_"+singleton.get_resource_filename(_equip_serializable.equip_resource))
+		equip_menu_information_description_value.text = Get_Tr_Equip_Item_Description(_equip_serializable.equip_resource)
 		equip_menu_information_description_value.text += Blablabla()
 		equip_menu_information_root.get_v_scroll_bar().value = 0
 		equip_menu_information_root.show()
@@ -1697,7 +1707,7 @@ func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	var _status_resource: Status_Resource = _status_serializable.status_resource
 	#-------------------------------------------------------------------------------
 	status_menu_information_icon.texture = _status_resource.icon
-	status_menu_information_name.text = tr("name_"+singleton.get_resource_filename(_status_resource))
+	status_menu_information_name.text = Get_Tr_Status_Effect_Name_1(_status_resource)
 	#-------------------------------------------------------------------------------
 	var _turns: int = clampi(_status_serializable.turns, 0, _status_resource.max_turns)
 	#-------------------------------------------------------------------------------
@@ -1752,7 +1762,7 @@ func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	Show_Line_if_String_is_Empty(status_menu_information_statistics_name)
 	Show_Line_if_String_is_Empty(status_menu_information_statistics_value)
 	#-------------------------------------------------------------------------------
-	status_menu_information_description_value.text = tr("description_"+singleton.get_resource_filename(_status_resource))
+	status_menu_information_description_value.text = Get_Tr_Status_Effect_Description(_status_resource)
 	status_menu_information_description_value.text += Blablabla()
 	status_menu_information_root.get_v_scroll_bar().value = 0
 	#-------------------------------------------------------------------------------
@@ -1785,7 +1795,7 @@ func Set_User_Status_Element_4_Stats(_element_type:Action_Resource.ELEMENT, _ele
 #-------------------------------------------------------------------------------
 func Set_Equip_Element_4_Stats(_name_label:Label, _element_type:Action_Resource.ELEMENT, _value_label:Label, _element:Vector4i):
 	#-------------------------------------------------------------------------------
-	var _element_name: String = Get_Action_Element_Name(_element_type)
+	var _element_name: String = Get_Tr_Element(_element_type)
 	if(_element.x != 0):
 		var _name: String = _element_name+" ("+tr("power_text")+")"
 		_name_label.text += String_With_Asterisco_and_2_Points(_name)+"\n"
@@ -1821,7 +1831,7 @@ func Set_Equip_Status_Resistance_Rate(_name_label:Label, _value_label:Label, _st
 	for _i in _status_dictionary.size():
 		var _key: StringName = _status_dictionary.keys()[_i]
 		var _value: int = _status_dictionary.values()[_i]
-		var _name: StringName = tr("name_"+_key)+" ("+tr("resistance_text")+")"
+		var _name: StringName = Get_Tr_Status_Effect_Name_0(_key)+" ("+tr("resistance_text")+")"
 		_name_label.text += String_With_Asterisco_and_2_Points(_name)+"\n"
 		_value_label.text += Get_Number_with_Sign(_value)+"%"+"\n"
 	#-------------------------------------------------------------------------------
@@ -1839,7 +1849,7 @@ func Set_Equip_Skills(_name_label:Label, _value_label:Label, _skill_resource_arr
 	#-------------------------------------------------------------------------------
 	for _i in _skill_resource_array.size():
 		_name_label.text += String_With_Asterisco_and_2_Points("+ "+tr("pause_menu_button_skill"))+"\n"
-		_value_label.text += tr("name_"+singleton.get_resource_filename(_skill_resource_array[_i]))+"\n"
+		_value_label.text += Get_Tr_Skill_Name(_skill_resource_array[_i])+"\n"
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_Number_with_Sign(_int:int) -> String:
@@ -1853,10 +1863,10 @@ func Get_Number_with_Sign(_int:int) -> String:
 #-------------------------------------------------------------------------------
 func Set_Item_Key_Information(_key_serializable:Key_Serializable):
 	item_menu_key_information_icon.texture = _key_serializable.key_resource.icon
-	item_menu_key_information_name.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))
+	item_menu_key_information_name.text = Get_Tr_Key_Item_Name(_key_serializable.key_resource)
 	#-------------------------------------------------------------------------------
 	item_menu_key_information_stored_value.text = "["+str(_key_serializable.stored)+"]"
-	item_menu_key_information_description_value.text = tr("description_"+singleton.get_resource_filename(_key_serializable.key_resource))
+	item_menu_key_information_description_value.text = Get_Tr_Key_Item_Description(_key_serializable.key_resource)
 	item_menu_key_information_description_value.text += Blablabla()
 	item_menu_key_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
@@ -1931,7 +1941,7 @@ func Pause_Item_Menu_Main_Button_Cancel():
 func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold:int, _cooldown:int) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))+"  "
+	_button.text = Get_Tr_Consumable_Item_Name(_item_serializable.action_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -1951,7 +1961,7 @@ func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold
 	if(_cooldown <= 0 or _item_serializable.action_resource.max_cooldown <= 0):
 		#-------------------------------------------------------------------------------
 		if(_item_serializable.action_resource.tp_cost > 0):
-			_label2.text += _font_size+Get_TP_Cost_Text(_item_serializable.action_resource.tp_cost)+"  "+_no_font_size
+			_label2.text += _font_size+Get_Tr_TP_Cost_Text(_item_serializable.action_resource.tp_cost)+"  "+_no_font_size
 		#-------------------------------------------------------------------------------
 		var _max_hold: int = _item_serializable.action_resource.max_hold
 		#-------------------------------------------------------------------------------
@@ -1967,7 +1977,7 @@ func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
-		var _s: String = _font_size+Get_CD_Text(_cooldown)+"  "+_no_font_size
+		var _s: String = _font_size+Get_Tr_CD_Text(_cooldown)+"  "+_no_font_size
 		#-------------------------------------------------------------------------------
 		if(_cooldown > _item_serializable.cooldown):
 			_label2.text = "[color="+hex_color_yellow+"]"+_s+"[/color]"
@@ -1983,7 +1993,7 @@ func Create_ConsumableItem_Button(_item_serializable: Action_Serializable, _hold
 func Create_EquipItem_Button(_equip_serializable: Equip_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
+	_button.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -2002,7 +2012,7 @@ func Create_EquipItem_Button(_equip_serializable: Equip_Serializable) -> Button:
 func Create_KeyItem_Button(_key_serializable: Key_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))+"  "
+	_button.text = Get_Tr_Key_Item_Name(_key_serializable.key_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -2044,7 +2054,7 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 			equip_menu_button_content.add_child(_button)
 			equip_menu_button_array.append(_button)
 			#-------------------------------------------------------------------------------
-			equip_menu_button_type.text += "* "+Get_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)+":  "+"\n"
+			equip_menu_button_type.text += "* "+Get_Tr_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)+":  "+"\n"
 		#-------------------------------------------------------------------------------
 		Remove_Last_Letter(equip_menu_button_type)
 		#-------------------------------------------------------------------------------
@@ -2185,14 +2195,14 @@ func Equip_Item_to_Fighter(_fighter_index:int, _equip_index:int, _equip_serializ
 	_equip_slot.equip_resource = _equip_serializable.equip_resource
 	_equip_slot.stored = 1
 	equip_menu_button_array[_equip_index].icon = _equip_serializable.equip_resource.icon
-	equip_menu_button_array[_equip_index].text = "  "+tr("name_"+singleton.get_resource_filename(_equip_slot.equip_resource))+"  "
+	equip_menu_button_array[_equip_index].text = "  "+Get_Tr_Equip_Item_Name(_equip_slot.equip_resource)+"  "
 #-------------------------------------------------------------------------------
 func Unequip_Item_to_Fighter(_fighter_index:int, _equip_index:int):
 	var _equip_slot: Equip_Serializable = ally_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
 	_equip_slot.equip_resource = null
 	_equip_slot.stored = 0
 	equip_menu_button_array[_equip_index].icon = null
-	equip_menu_button_array[_equip_index].text = "  ["+tr("equip_null")+"]  "
+	equip_menu_button_array[_equip_index].text = "  ["+Get_Tr_Equip_Null_Name()+"]  "
 #-------------------------------------------------------------------------------
 func Remove_Equip_Item_From_Inventory(_equip_resource:Equip_Resource, _remove:int):
 	#-------------------------------------------------------------------------------
@@ -2249,7 +2259,7 @@ func Create_EquipEmpty_Button() -> Button:
 	var _empty_button: Button = Button.new()
 	#-------------------------------------------------------------------------------
 	_empty_button.icon = null
-	_empty_button.text = "  ["+tr("equip_null")+"]  "
+	_empty_button.text = "  ["+Get_Tr_Equip_Null_Name()+"]  "
 	_empty_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_empty_button.custom_minimum_size.y = button_array_minimum_size_y
 	_empty_button.alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -2265,7 +2275,7 @@ func Create_EquipSlot_Button(_equip_serializable: Equip_Serializable) -> Button:
 	else:
 		_button = Button.new()
 		#-------------------------------------------------------------------------------
-		_button.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
+		_button.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)+"  "
 		_button.add_theme_font_size_override("font_size", button_array_font_size)
 		_button.custom_minimum_size.y = button_array_minimum_size_y
 		_button.alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -2324,7 +2334,7 @@ func Pause_Status_Menu_Set(_fighter_serializable: Fighter_Serializable, _cancel:
 func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_status_serializable.status_resource))+"  "
+	_button.text = Get_Tr_Status_Effect_Name_1(_status_serializable.status_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -2382,18 +2392,18 @@ func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializabl
 	#-------------------------------------------------------------------------------
 	singleton.Set_Button_WS_Up_Down(statistics_menu_button_0, _selected, _submit, _w, _s)
 	#-------------------------------------------------------------------------------
-	statistics_menu_information_fighter_face.texture = _fighter_node.character_node.character_resource.face
+	var _character: Character_Resource = _fighter_node.character_node.character_resource
+	statistics_menu_information_fighter_face.texture = _character.face
 	#-------------------------------------------------------------------------------
-	var _fighter_id: String = singleton.get_resource_filename(_fighter_node.character_node.character_resource)
-	statistics_menu_information_fighter_name.text = tr("name_"+_fighter_id)
-	statistics_menu_information_fighter_title.text = tr("title_"+_fighter_id)
+	statistics_menu_information_fighter_name.text = Get_Tr_Character_Name(_character)
+	statistics_menu_information_fighter_title.text = Get_Tr_Character_Title(_character)
 	#-------------------------------------------------------------------------------
 	var _max_hp: int = Get_Max_HP(_fighter_serializable)
 	statistics_menu_information_fighter_hp_value.text = Get_Fighter_Hp_Text(_max_hp, _max_hp)
 	statistics_menu_information_fighter_hp_slider.max_value = _max_hp
 	statistics_menu_information_fighter_hp_slider.value = _max_hp
 	#-------------------------------------------------------------------------------
-	statistics_menu_information_level_value.text = Get_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"\n"
+	statistics_menu_information_level_value.text = Get_Tr_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"\n"
 	statistics_menu_information_level_value.text += str(_fighter_serializable.level)+"\n"
 	var _max_experience: int = Get_Max_Experience(_fighter_serializable)
 	var _experience: int = clampi(_fighter_serializable.experience, 0, _max_experience-1)
@@ -2439,8 +2449,7 @@ func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializabl
 	Set_Fighter_Skill_List(_fighter_serializable)
 	Set_Fighter_Status_Resistance(_fighter_serializable)
 	Set_Fighter_All_Elemental_Rate(_fighter_serializable)
-	Set_Fighter_Description(_fighter_serializable.fighter_resource)
-	#-------------------------------------------------------------------------------
+	Set_Fighter_Description(_character)
 #-------------------------------------------------------------------------------
 func Set_Fighter_Base_Stat(_name:String, _int:int):
 	statistics_menu_information_base_stats_name.text += String_With_Asterisco_and_2_Points(tr(_name))+"\n"
@@ -2459,11 +2468,11 @@ func Set_Fighter_Equip_Stats(_equip_serializable_array:Array[Equip_Serializable]
 	statistics_menu_information_equip_value.text = ""
 	#-------------------------------------------------------------------------------
 	for _i in _equip_serializable_array.size():
-		var _name: String = Get_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)
+		var _name: String = Get_Tr_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)
 		var _value: String
 		#-------------------------------------------------------------------------------
 		if(_equip_serializable_array[_i].equip_resource != null): 
-			_value = tr("name_"+singleton.get_resource_filename(_equip_serializable_array[_i].equip_resource))
+			_value = Get_Tr_Equip_Item_Name(_equip_serializable_array[_i].equip_resource)
 		#-------------------------------------------------------------------------------
 		else:
 			_value = "-"
@@ -2484,7 +2493,7 @@ func Set_Fighter_Skill_List(_fighter_serializable:Fighter_Serializable):
 	statistics_menu_information_skill_name.text = ""
 	#-------------------------------------------------------------------------------
 	for _i in _skill_serializable_array.size():
-		statistics_menu_information_skill_name.text += "* "+tr("name_"+singleton.get_resource_filename(_skill_serializable_array[_i].action_resource))+"\n"
+		statistics_menu_information_skill_name.text += "* "+Get_Tr_Skill_Name(_skill_serializable_array[_i].action_resource)+"\n"
 	#-------------------------------------------------------------------------------
 	Remove_Last_Letter(statistics_menu_information_skill_name)
 	Show_Line_if_String_is_Empty(statistics_menu_information_skill_name)
@@ -2497,7 +2506,7 @@ func Set_Fighter_Status_Resistance(_fighter_serializable:Fighter_Serializable):
 		statistics_menu_information_status_value.text = ""
 		#-------------------------------------------------------------------------------
 		for _i in _dictionary.size():
-			statistics_menu_information_status_name.text = "* "+tr("name_"+_dictionary.keys()[_i])+"\n"
+			statistics_menu_information_status_name.text = "* "+Get_Tr_Status_Effect_Name_0(_dictionary.keys()[_i])+"\n"
 			statistics_menu_information_status_value.text = str(_dictionary.values()[_i])+"%"+"\n"
 		#-------------------------------------------------------------------------------
 		Remove_Last_Letter(statistics_menu_information_status_name)
@@ -2532,8 +2541,9 @@ func Set_Fighter_All_Elemental_Rate(_fighter_serializable:Fighter_Serializable):
 	Remove_Last_Letter(statistics_menu_information_elemental_repulsion_value)
 #-------------------------------------------------------------------------------
 func Set_Fighter_1_Elemental_Rate(_element_type:Action_Resource.ELEMENT, _element:Vector4i):
-	var _element_name: String = Action_Resource.ELEMENT.keys()[_element_type]
-	statistics_menu_information_elemental_type_name.text += String_With_Asterisco_and_2_Points(tr("element_"+_element_name))+"\n"
+	var _element_name: StringName = Get_Tr_Element(_element_type)
+	#-------------------------------------------------------------------------------
+	statistics_menu_information_elemental_type_name.text += String_With_Asterisco_and_2_Points(_element_name)+"\n"
 	statistics_menu_information_elemental_power_value.text += str(_element.x)+"%"+"\n"
 	statistics_menu_information_elemental_absorb_value.text += str(_element.y)+"%"+"\n"
 	statistics_menu_information_elemental_affinity_value.text += str(_element.z)+"%"+"\n"
@@ -2548,8 +2558,8 @@ func Show_Line_if_String_is_Empty(_label:Label):
 		_label.text = "-"
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Fighter_Description(_fighter_resource:Fighter_Resource):
-	statistics_menu_information_description_value.text = tr("description_"+singleton.get_resource_filename(_fighter_resource))
+func Set_Fighter_Description(_character_resource:Character_Resource):
+	statistics_menu_information_description_value.text = Get_Tr_Character_Description(_character_resource)
 	statistics_menu_information_description_value.text += Blablabla() 
 #-------------------------------------------------------------------------------
 func Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index:int):
@@ -3261,7 +3271,7 @@ func Set_Idiome():
 	#-------------------------------------------------------------------------------
 	pause_menu_fighter_button_title.text = String_With_2_Spaces(tr("pause_menu_fighter_button_title"))
 	#-------------------------------------------------------------------------------
-	tp_bar_name.text = tr("tp_text")
+	tp_bar_name.text = Get_Tr_Tp()
 	#-------------------------------------------------------------------------------
 	skill_menu_information_title.text = _information+":"
 	item_manu_information_title.text = _information+":"
@@ -3362,48 +3372,12 @@ func Set_Idiome():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Fighter_Button_Set_Information_and_Idiome(_fighter_button:Fighter_Button, _character_resource:Character_Resource, _fighter_serializable:Fighter_Serializable):
-	var _fighter_id: String = singleton.get_resource_filename(_character_resource)
-	_fighter_button.name_label.text = tr("name_"+_fighter_id)
-	_fighter_button.title_label.text = tr("title_"+_fighter_id)
-	_fighter_button.class_label.text = "["+Get_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"]"
+	_fighter_button.name_label.text = Get_Tr_Character_Name(_character_resource)
+	_fighter_button.title_label.text = Get_Tr_Character_Title(_character_resource)
+	_fighter_button.class_label.text = "["+Get_Tr_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"]"
 	_fighter_button.level_label.text = "[Level: "+str(_fighter_serializable.level)+"]"
 	#-------------------------------------------------------------------------------
 	_fighter_button.status_label.text = String_With_Asterisco_and_2_Points(tr("pause_menu_button_status"))+" "+str(_fighter_serializable.status_serializable_array.size())
-#-------------------------------------------------------------------------------
-func Get_Equip_Type(myEQUIP_TYPE:Equip_Resource.EQUIP_TYPE) -> String:
-	var _key: String = Equip_Resource.EQUIP_TYPE.keys()[myEQUIP_TYPE]
-	var _s: String = tr("equip_type_"+_key)
-	return _s
-#-------------------------------------------------------------------------------
-func Get_Fighter_Class_Type(_myFIGHTER_CLASS:Fighter_Resource.FIGHTER_CLASS) -> String:
-	var _key: StringName = Fighter_Resource.FIGHTER_CLASS.keys()[_myFIGHTER_CLASS]
-	var _s: String = tr("fighter_type_"+_key)
-	return _s
-#-------------------------------------------------------------------------------
-func Get_Action_Element_Name(_myELEMENT:Action_Resource.ELEMENT) -> String:
-	var _key: String = Action_Resource.ELEMENT.keys()[_myELEMENT]
-	var _s: String = tr("element_"+_key)
-	return _s
-#-------------------------------------------------------------------------------
-func Get_Action_Atribute_Name(_myATRIBUTE:Action_Resource.ATRIBUTE) -> String:
-	var _key: String = Action_Resource.ATRIBUTE.keys()[_myATRIBUTE]
-	var _s: String = tr("atribute_type_"+_key)
-	return _s
-#-------------------------------------------------------------------------------
-func Get_Action_Target_Name(_myTARGET:Action_Resource.TARGET) -> String:
-	var _key: String = Action_Resource.TARGET.keys()[_myTARGET]
-	var _s: String = tr("target_type_"+_key)
-	return _s
-#-------------------------------------------------------------------------------
-func Get_TP_Cost_Text(_tp:int) -> String:
-	return "("+str(_tp)+"-"+tr("tp_text")+")"
-#-------------------------------------------------------------------------------
-func Get_CD_Text(_cd:int) -> String:
-	return "("+str(_cd)+"-"+"CD"+")"
-#-------------------------------------------------------------------------------
-func Get_Fighter_Hp_Text(_hp:int, _max_hp:int) -> String:
-	var _s: String = str(_hp)+" / "+str(_max_hp)+" "+tr("hp_text")
-	return _s
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -3477,6 +3451,9 @@ func Debug_Information() -> void:
 	_s += Get_Alive_Fighter_and_Actions_Text("Ally", ally_party)
 	_s += "-------------------------------------------------------\n"
 	_s += Get_Alive_Fighter_and_Actions_Text("Enemy", enemy_party)
+	_s += "-------------------------------------------------------\n"
+	if(ally_party[0].fighter_serializable_in_battle != null):
+		_s += "evasion_rate: "+str(Get_Physical_Presition_Rate(ally_party[0].fighter_serializable_in_battle))+"\n"
 	_s += "-------------------------------------------------------\n"
 	#_s += "Enemy Bullets Enabled: " + str(enemyBullets_Enabled_Array.size())+"\n"
 	#_s += "Enemy Bullets Disabled: " + str(enemyBullets_Disabled_Array.size())+"\n"
@@ -3595,8 +3572,8 @@ func Dialogue_with_Face_0(_character_resource:Character_Resource, _value:String)
 	dialogue_menu_face.texture = _character_resource.face
 	dialogue_menu_audio.stream = _character_resource.voice
 	dialogue_menu_name.show()
-	#dialogue_menu_name.text = "[lb]"+_name+"[rb]:"
-	dialogue_menu_name.text = "[u]"+singleton.get_resource_filename(_character_resource)+":"+"[/u]"
+	#dialogue_menu_name.text = "[lb]"+Get_Tr_Character_Name(_character_resource)+"[rb]:"
+	dialogue_menu_name.text = "[u]"+Get_Tr_Character_Name(_character_resource)+":"+"[/u]"
 	dialogue_menu_value.visible_characters = 0
 	dialogue_index = 0
 	is_dialogue_skipped = false
@@ -3982,7 +3959,7 @@ func BuyMenu_ItemConsumable_Submit(_button:Button, _merchant_name: String, _item
 			singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	confirm_buy_menu_item_name.text = tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))
+	confirm_buy_menu_item_name.text = Get_Tr_Consumable_Item_Name(_item_serializable.action_resource)
 	confirm_buy_menu_item_icon.texture = _item_serializable.action_resource.icon
 	how_many_would_you_buy = 1
 	Print_How_Many_Do_You_Buy(_price, false, 99)
@@ -4048,7 +4025,7 @@ func BuyMenu_EquipItem_Submit(_button:Button, _merchant_name: String, _equip_ser
 			singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	confirm_buy_menu_item_name.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))
+	confirm_buy_menu_item_name.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)
 	confirm_buy_menu_item_icon.texture = _equip_serializable.equip_resource.icon
 	how_many_would_you_buy = 1
 	Print_How_Many_Do_You_Buy(_price, true, _equip_serializable.stored)
@@ -4114,7 +4091,7 @@ func BuyMenu_KeyItem_Submit(_button:Button, _merchant_name: String, _key_seriali
 			singleton.Common_Canceled()
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	confirm_buy_menu_item_name.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))
+	confirm_buy_menu_item_name.text = Get_Tr_Key_Item_Name(_key_serializable.key_resource)
 	confirm_buy_menu_item_icon.texture = _key_serializable.key_resource.icon
 	how_many_would_you_buy = 1
 	Print_How_Many_Do_You_Buy(_price, true, _key_serializable.stored)
@@ -4176,7 +4153,7 @@ func Change_KeyItem_Hold_Label(_key_serializable: Key_Serializable, _button:Butt
 func Create_ConsumableItem_InMarket_Button(_item_serializable: Action_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_item_serializable.action_resource))+"  "
+	_button.text = Get_Tr_Consumable_Item_Name(_item_serializable.action_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -4199,7 +4176,7 @@ func Create_ConsumableItem_InMarket_Button(_item_serializable: Action_Serializab
 func Create_EquipItem_InMarket_Button(_equip_serializable: Equip_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_equip_serializable.equip_resource))+"  "
+	_button.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -4220,7 +4197,7 @@ func Create_EquipItem_InMarket_Button(_equip_serializable: Equip_Serializable) -
 func Create_KeyItem_InMarket_Button(_key_serializable: Key_Serializable) -> Button:
 	var _button: Button = Button.new()
 	#-------------------------------------------------------------------------------
-	_button.text = tr("name_"+singleton.get_resource_filename(_key_serializable.key_resource))+"  "
+	_button.text = Get_Tr_Key_Item_Name(_key_serializable.key_resource)+"  "
 	_button.add_theme_font_size_override("font_size", button_array_font_size)
 	_button.custom_minimum_size.y = button_array_minimum_size_y
 	_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -4452,9 +4429,21 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 		var _hp: int = _max_hp
 		#-------------------------------------------------------------------------------
 		_fighter_serializable.hp = _max_hp
-		_fighter_node_array[_i].fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
-		_fighter_node_array[_i].fighter_ui.hp_bar.max_value = _max_hp
-		_fighter_node_array[_i].fighter_ui.hp_bar.value = _hp
+		#-------------------------------------------------------------------------------
+		var _fighter_ui: Fighter_UI = _fighter_node_array[_i].fighter_ui
+		_fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
+		_fighter_ui.hp_bar.max_value = _max_hp
+		_fighter_ui.hp_bar.value = _hp
+		#-------------------------------------------------------------------------------
+		_fighter_ui.global_position = Get_Position_in_Canvas_Layer(_fighter_node_array[_i].global_position)
+		#-------------------------------------------------------------------------------
+		var _name: String = Get_Tr_Character_Name(_fighter_node_array[_i].character_node.character_resource)
+		var _level: String = "[Lv."+str(_fighter_node_array[_i].fighter_serializable_in_battle.level)+"]"
+		_fighter_ui.button.text = "  "+_name+" "+_level+"  "
+		#-------------------------------------------------------------------------------
+		_fighter_ui.button.show()
+		_fighter_ui.button_root.hide()
+		_fighter_ui.dialogue_root.hide()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_its_Ally_and_Enemy_Parties():
@@ -4550,7 +4539,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	#-------------------------------------------------------------------------------
 	await _tween.finished
 #-------------------------------------------------------------------------------
-func Create_All_Fighters_UI():
+func Create_All_Fighter_UI():
 	#-------------------------------------------------------------------------------
 	for _i in ally_party.size():
 		Create_Fighter_UI(ally_party[_i], fighter_ally_ui_prefab)
@@ -4581,13 +4570,8 @@ func Show_All_Fighters_UI():
 #-------------------------------------------------------------------------------
 func Create_Fighter_UI(_fighter_node:Fighter_Node, _fighter_ui_prefab:PackedScene):
 	var _fighter_ui: Fighter_UI = _fighter_ui_prefab.instantiate() as Fighter_UI
-	battle_ui.add_child(_fighter_ui)
-	_fighter_ui.global_position = Get_Position_in_Canvas_Layer(_fighter_node.global_position)
 	_fighter_node.fighter_ui = _fighter_ui
-	_fighter_ui.button.text = "  "+tr("name_"+singleton.get_resource_filename(_fighter_node.fighter_serializable.fighter_resource))+"  "
-	_fighter_ui.button.show()
-	_fighter_ui.button_root.hide()
-	_fighter_ui.dialogue_root.hide()
+	battle_ui.add_child(_fighter_ui)
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -4629,7 +4613,7 @@ func BattleMenu_Cancel():
 	else:
 		var _tp: int = Get_Future_TP()
 		Set_TP_Bar(_tp)
-		Set_Lock_On_Position()
+		Set_Lock_On_Position(_alive_ally_party[current_fighter_turn])
 		_alive_ally_party[current_fighter_turn].action_serializable = null
 		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
 		singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
@@ -4671,7 +4655,8 @@ func Escape_Menu_No_Button_Common():
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 	current_fighter_turn = 0
 	lock_on.show()
-	Set_Lock_On_Position()
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	Set_Lock_On_Position(_alive_party[current_fighter_turn])
 #-------------------------------------------------------------------------------
 #region BATTLE STATE-MACHINE
 #-------------------------------------------------------------------------------
@@ -4694,7 +4679,7 @@ func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	Set_Inventory_When_Enter_Battle()
 	#-------------------------------------------------------------------------------
-	Create_All_Fighters_UI()
+	Create_All_Fighter_UI()
 	Set_Fighter_Before_Battle(ally_party)
 	Set_Fighter_Before_Battle(enemy_party)
 	Set_All_Fighters_its_Ally_and_Enemy_Parties()
@@ -4708,7 +4693,8 @@ func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	current_fighter_turn = 0
 	lock_on.show()
-	Set_Lock_On_Position()
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	Set_Lock_On_Position(_alive_party[current_fighter_turn])
 	#-------------------------------------------------------------------------------
 	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
 	BattleMenu_Set(_alive_ally_party[current_fighter_turn])
@@ -4736,7 +4722,8 @@ func You_Retry():
 	#-------------------------------------------------------------------------------
 	current_fighter_turn = 0
 	lock_on.show()
-	Set_Lock_On_Position()
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	Set_Lock_On_Position(_alive_party[current_fighter_turn])
 	#-------------------------------------------------------------------------------
 	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
 	BattleMenu_Set(_alive_ally_party[current_fighter_turn])
@@ -4983,8 +4970,8 @@ func After_Target_Select_Actions(_user:Fighter_Node, _action_serializable:Action
 	singleton.Common_Submited()
 	#-------------------------------------------------------------------------------
 	current_fighter_turn +=1
-	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
-	var _max: int = _alive_ally_party.size()-1
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	var _max: int = _alive_party.size()-1
 	#-------------------------------------------------------------------------------
 	if(current_fighter_turn > _max):
 		Set_TP_Bar(tp)
@@ -4992,8 +4979,8 @@ func After_Target_Select_Actions(_user:Fighter_Node, _action_serializable:Action
 		next_signal.emit()
 	#-------------------------------------------------------------------------------
 	else:
-		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
-		Open_Battle_Menu()
+		BattleMenu_Set(_alive_party[current_fighter_turn])
+		Open_Battle_Menu(_alive_party[current_fighter_turn])
 		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -5042,6 +5029,7 @@ func Do_Ally_Actions():
 		#-------------------------------------------------------------------------------
 		if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
 			await Do_Ally_Action(_alive_ally_party[_i])
+			await Seconds(pop_up_timer-0.3)
 		#-------------------------------------------------------------------------------
 		Set_Battle_State()
 	#-------------------------------------------------------------------------------
@@ -5101,7 +5089,6 @@ func Do_Repeat_Action_1(_user:Fighter_Node, _target:Fighter_Node):
 	else:
 		await Fail_Action_for_Lack_of_TP(_user)
 	#-------------------------------------------------------------------------------
-	await Seconds(0.3)
 #-------------------------------------------------------------------------------
 func Set_TP_Bar_and_Action_Cost(_action_serializable:Action_Serializable, _tp_cost:int):
 	tp -= _tp_cost
@@ -5126,7 +5113,8 @@ func Do_Repeat_Action_All(_user:Fighter_Node, _target_array:Array[Fighter_Node])
 		for _j in _target_array.size():
 			#-------------------------------------------------------------------------------
 			for _i in _action_serializable.action_resource.repeat:
-				Do_Classic_RPG_Action(_user, _target_array[_j])
+				var _target: Fighter_Node = _target_array[_j]
+				Do_Classic_RPG_Action(_user, _target)
 				await Seconds(0.15)
 			#-------------------------------------------------------------------------------
 			#await Seconds(0.15)
@@ -5135,7 +5123,6 @@ func Do_Repeat_Action_All(_user:Fighter_Node, _target_array:Array[Fighter_Node])
 	else:
 		await Fail_Action_for_Lack_of_TP(_user)
 	#-------------------------------------------------------------------------------
-	await Seconds(0.3)
 #-------------------------------------------------------------------------------
 func Do_Repeat_Action_Random(_user:Fighter_Node, _target_array:Array[Fighter_Node]):
 	var _action_serializable: Action_Serializable = _user.action_serializable
@@ -5155,7 +5142,6 @@ func Do_Repeat_Action_Random(_user:Fighter_Node, _target_array:Array[Fighter_Nod
 	else:
 		await Fail_Action_for_Lack_of_TP(_user)
 	#-------------------------------------------------------------------------------
-	await Seconds(0.3)
 #-------------------------------------------------------------------------------
 func Fail_Action_for_Lack_of_TP(_user:Fighter_Node):
 	Show_Ally_Action(_user)
@@ -5169,42 +5155,136 @@ func Do_Classic_RPG_Action(_user:Fighter_Node, _target:Fighter_Node):
 	if(_action_serializable == null):
 		return
 	#-------------------------------------------------------------------------------
+	var _action_resource: Action_Resource = _action_serializable.action_resource
+	Set_Classic_RPG_Damage_Calculation_by_Action(_user, _target, _action_resource)
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Classic_RPG_Damage_Calculation_by_Action(_user:Fighter_Node, _target:Fighter_Node, _action_resource: Action_Resource):
+	Set_Classic_RPG_Damage_Calculation_1(_user, _target, _action_resource.value, _action_resource.presition, _action_resource.myEFFECT, _action_resource.myATRIBUTE, _action_resource.myELEMENT, _action_resource.status_dictionary)
+#-------------------------------------------------------------------------------
+func Set_Classic_RPG_Damage_Calculation_1(_user:Fighter_Node, _target:Fighter_Node, _value:int, _presition:int, _effect:Action_Resource.EFFECT, _atribute:Action_Resource.ATRIBUTE, _element:Action_Resource.ELEMENT, _status_dictionary: Dictionary[StringName, int]):
 	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
 	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
-	var _action_resource: Action_Resource = _action_serializable.action_resource
 	#-------------------------------------------------------------------------------
-	match(_action_resource.myEFFECT):
-		Action_Resource.EFFECT.DAMAGE:
-			#-------------------------------------------------------------------------------
-			if(_action_resource.value != 0):
-				var _final_value = Get_Classic_RPG_Damage_Calculation(_user_serializable, _target_serializable, _action_resource.value, _action_resource.myATRIBUTE, _action_resource.myELEMENT)
+	var _user_presition_rate: int = Get_Presition_Rate(_user_serializable, _atribute)
+	var _target_evasion_rate: int = Get_Evasion_Rate(_target_serializable, _atribute)
+	var _atribute_presition_calculation: int = _presition + _user_presition_rate - _target_evasion_rate
+	#-------------------------------------------------------------------------------
+	if(Get_Rate_100(_atribute_presition_calculation)):
+		var _user_element: Vector4i = Get_Fighter_Elemental_Stats(_user_serializable, _element)
+		var _target_element: Vector4i = Get_Fighter_Elemental_Stats(_target_serializable, _element)
+		#-------------------------------------------------------------------------------
+		var _elemental_presition_calculation: int = 100 + _user_element.z - _target_element.w
+		#-------------------------------------------------------------------------------
+		if(Get_Rate_100(_elemental_presition_calculation)):
+			Set_Classic_RPG_Damage_Calculation_0(_user, _target, _user_element, _target_element, _value, _presition, _effect, _atribute, _element, _status_dictionary)
+		#-------------------------------------------------------------------------------
+		else:
+			Set_Classic_RPG_Damage_Calculation_0(_target, _user, _target_element, _user_element, _value, _presition, _effect, _atribute, _element, _status_dictionary)
+			singleton.Play_SFX_Reflect()
+			Flying_PopUp(_target, "Reflect")
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		Flying_PopUp(_target, "Miss")
+		singleton.Play_SFX_Miss()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Classic_RPG_Damage_Calculation_0(_user:Fighter_Node, _target:Fighter_Node, _user_element:Vector4i, _target_element:Vector4i, _value:int, _presition:int, _effect:Action_Resource.EFFECT, _atribute:Action_Resource.ATRIBUTE, _element:Action_Resource.ELEMENT, _status_dictionary: Dictionary[StringName, int]):
+	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
+	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+	#-------------------------------------------------------------------------------
+	if(_value != 0):
+		#-------------------------------------------------------------------------------
+		match(_effect):
+			Action_Resource.EFFECT.DAMAGE:
+				var _elemental_value = Get_Classic_RPG_Damage_Calculation(_user_serializable, _target_serializable, _value, _atribute, _element)
+				var _final_value: int  = Get_RPG_Scaling(_elemental_value, _user_element.x, _target_element.y)
 				#-------------------------------------------------------------------------------
 				Change_Fighter_HP(_target, -_final_value)
 				singleton.Play_SFX_Damage()
 			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		Action_Resource.EFFECT.HEAL:
-			#-------------------------------------------------------------------------------
-			if(_action_resource.value != 0):
-				var _final_value = _action_resource.value
+			Action_Resource.EFFECT.HEAL:
+				var _pharmacology: int = Get_Recovery_Effect(_user_serializable)
+				var _recoverty_effect: int = Get_Recovery_Effect(_target_serializable)
+				var _final_value: int = Get_RPG_Scaling(_value, _pharmacology, _recoverty_effect)
 				#-------------------------------------------------------------------------------
 				Change_Fighter_HP(_target, _final_value)
 				singleton.Play_SFX_Heal()
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	Set_Classic_RPG_Calculated_Status_Effect_0(_user, _target, _status_dictionary)
+#-------------------------------------------------------------------------------
+func Get_RPG_Scaling(_value:int, _power:int, _absorb:int) -> int:
+	var _final_value: int = int( float(_value) * float(_power)/100 * float(_absorb)/100 )
+	return _final_value
+#-------------------------------------------------------------------------------
+func Add_Status(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource):
+	var _status_serializable_array: Array[Status_Serializable] = _user_serializable.status_serializable_array
+	#-------------------------------------------------------------------------------
+	for _i in _status_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(_status_serializable_array[_i].status_resource == _status_resource):
+			return
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	var status_serializable: Status_Serializable = Create_Status_Serializable(_status_resource, _status_resource.max_turns+1)
+	_status_serializable_array.append(status_serializable)
+	return
+#-------------------------------------------------------------------------------
+func Set_Classic_RPG_Calculated_Status_Effect_0(_user:Fighter_Node, _target:Fighter_Node, _status_dictionary: Dictionary[StringName, int]):
+	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
+	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+	#-------------------------------------------------------------------------------
+	for _i in _status_dictionary.size():
+		var _key: StringName = _status_dictionary.keys()[_i]
+		var _value: int = _status_dictionary.values()[_i]
+		#-------------------------------------------------------------------------------
+		var status_resource_path: String = Get_Status_Resource_Path(_key)
+		var _status_resource: Status_Resource = load(status_resource_path) as Status_Resource
+		#-------------------------------------------------------------------------------
+		if(!Has_Status(_target_serializable, _status_resource) and Get_Rate_100(_value)):
+			Add_Status(_target_serializable, _status_resource)
+			var _name: String = Get_Tr_Status_Effect_Name_0(_key)
+			Flying_PopUp(_target, "+"+_name)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Has_Status(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource) -> bool:
+	var _status_serializable_array: Array[Status_Serializable] = _user_serializable.status_serializable_array
+	#-------------------------------------------------------------------------------
+	for _i in _status_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(_status_serializable_array[_i].status_resource == _status_resource):
+			return true
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return false
+#-------------------------------------------------------------------------------
+func Get_Status_Resource_Path(_string_name:StringName) -> String:
+	var _path: String = "res://Resources/Status/"+_string_name+".tres"
+	return _path
 #-------------------------------------------------------------------------------
 func Get_Classic_RPG_Damage_Calculation(_user_serializable:Fighter_Serializable, _target_serializable:Fighter_Serializable, _value:int, _atribute:Action_Resource.ATRIBUTE, _element:Action_Resource.ELEMENT) -> int:
 	var _user_attack: int = Get_Attack(_user_serializable, _atribute)
 	var _target_defense: int = Get_Defense(_target_serializable, _atribute)
 	#-------------------------------------------------------------------------------
-	var _user_element: Vector4i = Get_Fighter_Elemental_Stats(_user_serializable, _element)
-	var _target_element: Vector4i = Get_Fighter_Elemental_Stats(_target_serializable, _element)
-	#-------------------------------------------------------------------------------
 	var _damage: float = (damage_scaling + float(_user_attack)) / damage_scaling
 	var _armor: float = armor_scaling / (armor_scaling + float(_target_defense))
-	var _final_value = int(float(_value) * _damage * _armor)
+	var _final_value: int = int(float(_value) * _damage * _armor)
+	#-------------------------------------------------------------------------------
 	return _final_value
+#-------------------------------------------------------------------------------
+func Get_Rate_100(_value:int) -> bool:
+	var _rate: int = randi_range(0, 100)
+	#-------------------------------------------------------------------------------
+	if(_value < _rate):
+		return false
+	#-------------------------------------------------------------------------------
+	else:
+		return true
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_Attack(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
 	var _user_attack: int
@@ -5231,6 +5311,32 @@ func Get_Defense(_user_serializable:Fighter_Serializable, _atribute:Action_Resou
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return _user_defense
+#-------------------------------------------------------------------------------
+func Get_Presition_Rate(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
+	var _user_presition_rate: int
+	#-------------------------------------------------------------------------------
+	match(_atribute):
+		Action_Resource.ATRIBUTE.PHYSICAL:
+			_user_presition_rate = Get_Physical_Presition_Rate(_user_serializable)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ATRIBUTE.MAGICAL:
+			_user_presition_rate = Get_Magical_Presition_Rate(_user_serializable)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return _user_presition_rate
+#-------------------------------------------------------------------------------
+func Get_Evasion_Rate(_user_serializable:Fighter_Serializable, _atribute:Action_Resource.ATRIBUTE)->int:
+	var _user_evasion_rate: int
+	#-------------------------------------------------------------------------------
+	match(_atribute):
+		Action_Resource.ATRIBUTE.PHYSICAL:
+			_user_evasion_rate = Get_Physical_Evasion_Rate(_user_serializable)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ATRIBUTE.MAGICAL:
+			_user_evasion_rate = Get_Magical_Evasion_Rate(_user_serializable)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return _user_evasion_rate
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats(_user_serializable:Fighter_Serializable, _element:Action_Resource.ELEMENT)->Vector4i:
 	var _user_element: Vector4i
@@ -5273,9 +5379,10 @@ func Change_Fighter_HP(_target:Fighter_Node, _value:int):
 	_target.fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
 	_target.fighter_ui.hp_bar.value = _hp
 	_target.fighter_ui.hp_bar.max_value = _max_hp
+	Flying_PopUp_HP(_target, _value)
 #-------------------------------------------------------------------------------
 func Show_Ally_Action(_fighter_node:Fighter_Node):
-	var _user_name: String = tr("name_"+singleton.get_resource_filename(_fighter_node.character_node.character_resource))
+	var _user_name: String = Get_Tr_Character_Name(_fighter_node.character_node.character_resource)
 	var _s: String = "* "+Text_Color_Yellow(_user_name)+" utiliza "
 	#-------------------------------------------------------------------------------
 	if(_fighter_node.action_serializable == null):
@@ -5283,7 +5390,7 @@ func Show_Ally_Action(_fighter_node:Fighter_Node):
 	#-------------------------------------------------------------------------------
 	else:
 		var _action_resource:Action_Resource = _fighter_node.action_serializable.action_resource
-		var _action_name: String = tr("name_"+singleton.get_resource_filename(_action_resource))
+		var _action_name: String = Get_Tr_Action_Name(_action_resource)
 		_s+= Text_Color_Orange(_action_name)
 	#-------------------------------------------------------------------------------
 	match(_fighter_node.action_serializable.action_resource.myTARGET):
@@ -5333,7 +5440,7 @@ func Get_Target_Name(_target:Fighter_Node) -> String:
 		_s = "Nadie."
 	#-------------------------------------------------------------------------------
 	else:
-		var _target_name:String = tr("name_"+singleton.get_resource_filename(_target.character_node.character_resource))
+		var _target_name:String = Get_Tr_Character_Name(_target.character_node.character_resource)
 		_s = _target_name
 	#-------------------------------------------------------------------------------
 	return _s
@@ -5353,8 +5460,7 @@ func Do_Enemy_Actions():
 	#-------------------------------------------------------------------------------
 	Set_and_Hide_Battle_Box()
 	Decrease_Item_Cooldown_by_1()
-	Decrease_Status_Effect_Turn_by_1(ally_party)
-	Decrease_Status_Effect_Turn_by_1(enemy_party)
+	await Decrease_All_Status_Effect_Turn_by_1()
 	Decrease_Skill_Cooldown_by_1(ally_party)
 	Decrease_Skill_Cooldown_by_1(enemy_party)
 	#-------------------------------------------------------------------------------
@@ -5364,39 +5470,55 @@ func Do_Enemy_Actions():
 	After_Enemy_Actions()
 #-------------------------------------------------------------------------------
 func Decrease_Item_Cooldown_by_1():
+	var _item_serializable_array: Array[Action_Serializable] = item_consumable_inventory_in_battle
 	#-------------------------------------------------------------------------------
-	for _i in range(item_consumable_inventory_in_battle.size()-1, -1, -1):
-		item_consumable_inventory_in_battle[_i].cooldown -= 1
+	for _i in range(_item_serializable_array.size()-1, -1, -1):
+		_item_serializable_array[_i].cooldown -= 1
 		#-------------------------------------------------------------------------------
-		if(item_consumable_inventory_in_battle[_i].cooldown < 0):
-			item_consumable_inventory_in_battle[_i].cooldown = 0
+		if(_item_serializable_array[_i].cooldown < 0):
+			_item_serializable_array[_i].cooldown = 0
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Decrease_Skill_Cooldown_by_1(fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in fighter_node_array.size():
-		var _skill_array: Array[Action_Serializable] = Get_Skill(fighter_node_array[_i].fighter_serializable_in_battle)
+		var _skill_serializable_array: Array[Action_Serializable] = Get_Skill(fighter_node_array[_i].fighter_serializable_in_battle)
 		#-------------------------------------------------------------------------------
-		for _j in _skill_array.size():
-			_skill_array[_j].cooldown -= 1
+		for _j in _skill_serializable_array.size():
+			_skill_serializable_array[_j].cooldown -= 1
 			#-------------------------------------------------------------------------------
-			if(_skill_array[_j].cooldown < 0):
-				_skill_array[_j].cooldown = 0
+			if(_skill_serializable_array[_j].cooldown < 0):
+				_skill_serializable_array[_j].cooldown = 0
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Decrease_Status_Effect_Turn_by_1(fighter_node_array:Array[Fighter_Node]):
+func Decrease_All_Status_Effect_Turn_by_1():
+	was_status_effect_add_or_removed = false
+	Decrease_Status_Effect_Turn_by_1(ally_party)
+	Decrease_Status_Effect_Turn_by_1(enemy_party)
 	#-------------------------------------------------------------------------------
-	for _i in fighter_node_array.size():
-		var _status_array: Array[Status_Serializable] = fighter_node_array[_i].fighter_serializable_in_battle.status_serializable_array
+	if(was_status_effect_add_or_removed):
+		await Seconds(pop_up_timer)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Decrease_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	for _i in _fighter_node_array.size():
+		var _status_serializable_array: Array[Status_Serializable] = _fighter_node_array[_i].fighter_serializable_in_battle.status_serializable_array
 		#-------------------------------------------------------------------------------
-		for _j in range(_status_array.size()-1,-1,-1):
-			_status_array[_j].turns -= 1
+		for _j in range(_status_serializable_array.size()-1,-1,-1):
 			#-------------------------------------------------------------------------------
-			if(_status_array[_j].turns <= 0):
-				_status_array.remove_at(_j)
+			if(!_status_serializable_array[_j].status_resource.is_infinite):
+				_status_serializable_array[_j].turns -= 1
+				#-------------------------------------------------------------------------------
+				if(_status_serializable_array[_j].turns <= 0):
+					var _name: String = Get_Tr_Status_Effect_Name_1(_status_serializable_array[_j].status_resource)
+					Flying_PopUp(_fighter_node_array[_i], "-"+_name)
+					_status_serializable_array.remove_at(_j)
+					was_status_effect_add_or_removed = true
+				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -5419,15 +5541,15 @@ func Battle_Background_Dark_Fade_Common(_color:Color):
 #-------------------------------------------------------------------------------
 func After_Enemy_Actions():
 	Set_All_Fighters_Actions_to_Null()
-	lock_on.show()
 	#-------------------------------------------------------------------------------
 	Set_Battle_State()
 	#-------------------------------------------------------------------------------
 	if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
-		var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+		var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
 		current_fighter_turn = 0
-		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
-		Open_Battle_Menu()
+		BattleMenu_Set(_alive_party[current_fighter_turn])
+		lock_on.show()
+		Open_Battle_Menu(_alive_party[current_fighter_turn])
 		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -5454,8 +5576,8 @@ func Hide_Enemy_Dialogue():
 		enemy_party[_i].fighter_ui.dialogue_root.hide()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Open_Battle_Menu():
-	Set_Lock_On_Position()
+func Open_Battle_Menu(_user:Fighter_Node):
+	Set_Lock_On_Position(_user)
 	battle_menu.show()
 	dialogue_menu.show()
 	Hide_All_Targets()
@@ -5526,7 +5648,7 @@ func BattleMenu_Skill_Target_Set(_button:Button, _user:Fighter_Node, _action_ser
 			BattleMenu_Skill_Target_Set_All(_button, _user, _action_serializable, _alive_ally_party)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.USER:
-			var _alive_ally_party:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle([ally_party[current_fighter_turn]])
+			var _alive_ally_party:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle([_user])
 			BattleMenu_Skill_Target_Set_1(_button, _user, _action_serializable, _alive_ally_party)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_DOWN_1:
@@ -6077,9 +6199,8 @@ func Get_Position_in_Canvas_Layer(_global_position:Vector2) -> Vector2:
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
-func Set_Lock_On_Position():
-	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
-	lock_on.global_position = _alive_ally_party[current_fighter_turn].character_node.global_position
+func Set_Lock_On_Position(_fighter_node:Fighter_Node):
+	lock_on.global_position = _fighter_node.character_node.global_position
 	lock_on.global_position.y -= 20
 #-------------------------------------------------------------------------------
 func Re_Open_Battle_Menu():
@@ -6119,7 +6240,7 @@ func Get_Status_Serializable_Array(_fighter_serializable:Fighter_Serializable) -
 	_status_serializable_array.append_array(_fighter_serializable.status_serializable_array)
 	#-------------------------------------------------------------------------------
 	if(_fighter_serializable.hp <= 0):
-		var _death_serializable: Status_Serializable = Create_Status_Serializable(death_status_resource)
+		var _death_serializable: Status_Serializable = Create_Status_Serializable(death_status_resource, 0)
 		_status_serializable_array.append(_death_serializable)
 	#-------------------------------------------------------------------------------
 	return _status_serializable_array
@@ -6269,11 +6390,11 @@ func Duplicate_Status_Serializable(_status_serializable_old:Status_Serializable)
 	#-------------------------------------------------------------------------------
 	return _status_serializable_new
 #-------------------------------------------------------------------------------
-func Create_Status_Serializable(_status_resource:Status_Resource) -> Status_Serializable:
+func Create_Status_Serializable(_status_resource:Status_Resource, _turns:int) -> Status_Serializable:
 	var _status_serializable_new: Status_Serializable = Status_Serializable.new()
 	#-------------------------------------------------------------------------------
 	_status_serializable_new.status_resource = _status_resource
-	_status_serializable_new.turns = 1
+	_status_serializable_new.turns = _turns
 	#-------------------------------------------------------------------------------
 	_status_serializable_new.skill_serializable_array.clear()
 	#-------------------------------------------------------------------------------
@@ -6383,8 +6504,10 @@ func Get_Future_TP() -> int:
 	var _max_tp: int = Get_Max_Tp()
 	_tp = clampi(_tp, 0, _max_tp)
 	#-------------------------------------------------------------------------------
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_party)
+	#-------------------------------------------------------------------------------
 	for _i in current_fighter_turn:
-		_tp -= Get_Action_TP_Cost(ally_party[_i].action_serializable)
+		_tp -= Get_Action_TP_Cost(_alive_party[_i].action_serializable)
 	#-------------------------------------------------------------------------------
 	return _tp
 #-------------------------------------------------------------------------------
@@ -6400,14 +6523,181 @@ func Get_Future_Hold(_action_serializable:Action_Serializable) -> int:
 	return _hold
 #-------------------------------------------------------------------------------
 func Get_Future_Cooldown(_action_serializable:Action_Serializable) -> int:
-	var _cooldown: int = 0
+	var _cooldown: int = _action_serializable.cooldown
 	#-------------------------------------------------------------------------------
 	for _j in current_fighter_turn:
 		#-------------------------------------------------------------------------------
 		if(_action_serializable.action_resource == ally_party[_j].action_serializable.action_resource):
-			_cooldown += _action_serializable.action_resource.max_cooldown
+			_cooldown = _action_serializable.action_resource.max_cooldown
 			return _cooldown
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return _cooldown
+#-------------------------------------------------------------------------------
+func Get_Tr_Action_Name(_action_resource:Action_Resource) -> String:
+	return tr("name_"+singleton.get_resource_filename(_action_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Skill_Name(_skill_resource:Action_Resource) -> String:
+	return tr("name_"+singleton.get_resource_filename(_skill_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Skill_Description(_skill_resource:Action_Resource) -> String:
+	return tr("description_"+singleton.get_resource_filename(_skill_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Consumable_Item_Name(_item_resource:Action_Resource) -> String:
+	return tr("name_"+singleton.get_resource_filename(_item_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Consumable_Item_Description(_item_resource:Action_Resource) -> String:
+	return tr("description_"+singleton.get_resource_filename(_item_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Equip_Item_Name(_equip_resource:Equip_Resource) -> String:
+	return tr("name_"+singleton.get_resource_filename(_equip_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Equip_Null_Name() -> String:
+	return tr("equip_null")
+#-------------------------------------------------------------------------------
+func Get_Tr_Equip_Item_Description(_equip_resource:Equip_Resource) -> String:
+	return tr("description_"+singleton.get_resource_filename(_equip_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Key_Item_Name(_key_resource:Key_Resource) -> String:
+	return tr("name_"+singleton.get_resource_filename(_key_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Key_Item_Description(_key_resource:Key_Resource) -> String:
+	return tr("description_"+singleton.get_resource_filename(_key_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Status_Effect_Name_1(_status_resource:Status_Resource) -> String:
+	return Get_Tr_Status_Effect_Name_0(singleton.get_resource_filename(_status_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Status_Effect_Name_0(_key:StringName) -> String:
+	return tr("name_"+_key)
+#-------------------------------------------------------------------------------
+func Get_Tr_Status_Effect_Description(_status_resource:Status_Resource) -> String:
+	return tr("description_"+singleton.get_resource_filename(_status_resource))
+#-------------------------------------------------------------------------------
+func Get_Tr_Character_Name(_character:Character_Resource) -> String:
+	return tr("name_"+singleton.get_resource_filename(_character))
+#-------------------------------------------------------------------------------
+func Get_Tr_Character_Title(_character:Character_Resource) -> String:
+	return tr("title_"+singleton.get_resource_filename(_character))
+#-------------------------------------------------------------------------------
+func Get_Tr_Character_Description(_character:Character_Resource) -> String:
+	return tr("description_"+singleton.get_resource_filename(_character))
+#-------------------------------------------------------------------------------
+func Get_Tr_Element(_element_type:Action_Resource.ELEMENT) -> String:
+	var _element_key: StringName = Action_Resource.ELEMENT.keys()[_element_type]
+	return tr("element_"+_element_key)
+#-------------------------------------------------------------------------------
+func Get_Tr_Action_Effect(_effect:Action_Resource.EFFECT) -> String:
+	var _effect_key: StringName = Action_Resource.EFFECT.keys()[_effect]
+	return tr("action_type_"+_effect_key)
+#-------------------------------------------------------------------------------
+func Get_Tr_Tp() -> String:
+	return tr("tp_text")
+#-------------------------------------------------------------------------------
+func Get_Tr_CD() -> String:
+	return tr("cd_text")
+#-------------------------------------------------------------------------------
+func Get_Tr_Equip_Type(myEQUIP_TYPE:Equip_Resource.EQUIP_TYPE) -> String:
+	var _key: String = Equip_Resource.EQUIP_TYPE.keys()[myEQUIP_TYPE]
+	var _s: String = tr("equip_type_"+_key)
+	return _s
+#-------------------------------------------------------------------------------
+func Get_Tr_Fighter_Class_Type(_myFIGHTER_CLASS:Fighter_Resource.FIGHTER_CLASS) -> String:
+	var _key: StringName = Fighter_Resource.FIGHTER_CLASS.keys()[_myFIGHTER_CLASS]
+	var _s: String = tr("fighter_type_"+_key)
+	return _s
+#-------------------------------------------------------------------------------
+func Get_Tr_Action_Atribute_Name(_myATRIBUTE:Action_Resource.ATRIBUTE) -> String:
+	var _key: String = Action_Resource.ATRIBUTE.keys()[_myATRIBUTE]
+	var _s: String = tr("atribute_type_"+_key)
+	return _s
+#-------------------------------------------------------------------------------
+func Get_Tr_Action_Target_Name(_myTARGET:Action_Resource.TARGET) -> String:
+	var _key: String = Action_Resource.TARGET.keys()[_myTARGET]
+	var _s: String = tr("target_type_"+_key)
+	return _s
+#-------------------------------------------------------------------------------
+func Get_Tr_TP_Cost_Text(_tp:int) -> String:
+	return "("+str(_tp)+"-"+Get_Tr_Tp()+")"
+#-------------------------------------------------------------------------------
+func Get_Tr_CD_Text(_cd:int) -> String:
+	return "("+str(_cd)+"-"+Get_Tr_CD()+")"
+#-------------------------------------------------------------------------------
+func Get_Fighter_Hp_Text(_hp:int, _max_hp:int) -> String:
+	var _s: String = str(_hp)+" / "+str(_max_hp)+" "+Get_Tr_Tp()
+	return _s
+#-------------------------------------------------------------------------------
+func Flying_PopUp_HP(_user:Fighter_Node, _value:int):
+	var _s:String = Get_Number_with_Sign(_value) + " HP"
+	await Flying_PopUp(_user, _s)
+#-------------------------------------------------------------------------------
+func Flying_PopUp(_user:Fighter_Node, _s:String):
+	var _is_enemy:bool
+	#-------------------------------------------------------------------------------
+	if(ally_party.has(_user)):
+		_is_enemy = false
+	#-------------------------------------------------------------------------------
+	else:
+		_is_enemy = true
+	#-------------------------------------------------------------------------------
+	var _popup: Pop_Up_Node = Spawn_Label_in_User(_user, _is_enemy)
+	await Flying_PopUp_Actions(_popup, _s, _is_enemy)
+#-------------------------------------------------------------------------------
+func Spawn_Label_in_User(_user:Fighter_Node, _is_enemy:bool) -> Pop_Up_Node:
+	#-------------------------------------------------------------------------------
+	for _i in _user.pop_up_array.size():
+		#-------------------------------------------------------------------------------
+		if(_user.pop_up_array[_i] == null):
+			var _popup: Pop_Up_Node = Spawn_Label_in_User_2(_user, _is_enemy, _i)
+			_user.pop_up_array[_i] = _popup
+			return _popup
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	var _popup_2: Pop_Up_Node = Spawn_Label_in_User_2(_user, _is_enemy, _user.pop_up_array.size())
+	_user.pop_up_array.append(_popup_2)
+	return _popup_2
+#-------------------------------------------------------------------------------
+func Spawn_Label_in_User_2(_user:Fighter_Node, _is_enemy:bool, _index:int) -> Pop_Up_Node:
+	var _popup: Pop_Up_Node
+	#-------------------------------------------------------------------------------
+	if(_is_enemy):
+		_popup = enemy_pop_up_prefab.instantiate() as Pop_Up_Node
+	#-------------------------------------------------------------------------------
+	else:
+		_popup = ally_pop_up_prefab.instantiate() as Pop_Up_Node
+	#-------------------------------------------------------------------------------
+	var _global_position: Vector2 = _user.character_node.global_position
+	_popup.label.add_theme_font_size_override("font_size", 24)
+	_global_position.y -= 6.0 * camera.zoom.y * float(_index)
+	_popup.scale = Vector2.ONE/ camera.zoom
+	_user.add_child(_popup)
+	_popup.global_position = _global_position
+	return _popup
+#-------------------------------------------------------------------------------
+func Flying_PopUp_Actions(_popup:Pop_Up_Node, _s:String, _is_enemy:bool):
+	#-------------------------------------------------------------------------------
+	_popup.scale = Vector2.ONE /camera.zoom
+	_popup.label.text = _s
+	_popup.z_index = 10
+	#-------------------------------------------------------------------------------
+	var _x_pos: float
+	#-------------------------------------------------------------------------------
+	if(_is_enemy):
+		_x_pos = -35
+	#-------------------------------------------------------------------------------
+	else:
+		_x_pos = 35
+	#-------------------------------------------------------------------------------
+	var _tween: Tween = create_tween()
+	_tween.tween_property(_popup, "position", _popup.position + Vector2(_x_pos, -15), 0.12)
+	_tween.tween_property(_popup, "position", _popup.position + Vector2(_x_pos, 0), 0.12)
+	_tween.tween_property(_popup, "position", _popup.position + Vector2(_x_pos, -5), 0.12)
+	_tween.tween_property(_popup, "position", _popup.position + Vector2(_x_pos, 0), 0.12)
+	_tween.tween_interval(0.7)
+	#-------------------------------------------------------------------------------
+	_tween.tween_callback(func():
+		_popup.queue_free()
+	)
+	#-------------------------------------------------------------------------------
+	await _tween.finished
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

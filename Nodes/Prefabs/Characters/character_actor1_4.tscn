@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bb6hutg5kj3be"]
 
 [ext_resource type="Texture2D" uid="uid://dul3heq2qo5n" path="res://Assets/rpg_maker_mv/img/characters/Actor1.png" id="1_8mxbi"]
+[ext_resource type="Script" uid="uid://cll6ilrja3wgu" path="res://Scripts/Prefabs/character_node.gd" id="1_fjgfr"]
+[ext_resource type="Resource" uid="uid://13mkeix0571g" path="res://Resources/Characters/character_actor1_4.tres" id="2_t22cw"]
 
 [sub_resource type="Animation" id="Animation_xm4vn"]
 resource_name = "Idle"
@@ -180,7 +182,11 @@ nodes/base_TimeScale/node = SubResource("AnimationNodeTimeScale_acn20")
 nodes/base_TimeScale/position = Vector2(80, 100)
 node_connections = [&"output", 0, &"base_TimeScale", &"base_TimeScale", 0, &"base_StateMachine"]
 
-[node name="actor1_4" type="Node2D" unique_id=554320397]
+[node name="character_actor1_4" type="Node2D" unique_id=554320397 node_paths=PackedStringArray("animation_tree", "pivot")]
+script = ExtResource("1_fjgfr")
+character_resource = ExtResource("2_t22cw")
+animation_tree = NodePath("AnimationTree")
+pivot = NodePath("pivot")
 
 [node name="pivot" type="Node2D" parent="." unique_id=917643106]
 

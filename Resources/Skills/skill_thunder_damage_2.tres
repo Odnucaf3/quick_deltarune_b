@@ -9,10 +9,12 @@ icon = ExtResource("1_x2msc")
 max_hold = 2
 tp_cost = 5
 value = 7
-myELEMENT = 6
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 7
 myTARGET = 2
 repeat = 4
 status_dictionary = Dictionary[StringName, int]({
-&"status_damage_1": 15
+&"status_damage_1": 100
 })
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

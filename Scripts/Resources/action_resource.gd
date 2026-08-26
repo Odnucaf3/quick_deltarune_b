@@ -1,9 +1,9 @@
 extends Resource
 class_name Action_Resource
 #-------------------------------------------------------------------------------
-enum ATRIBUTE{PHYSICAL, MAGICAL}
-enum ELEMENT{NORMAL, WATER, FIRE, EARTH, WIND, ICE, THUNDER, LIGHT, DARK}
-enum EFFECT{DAMAGE, HEAL}
+enum ATRIBUTE{NONE, PHYSICAL, MAGICAL}
+enum ELEMENT{NONE, NORMAL, WATER, FIRE, EARTH, WIND, ICE, THUNDER, LIGHT, DARK}
+enum EFFECT{NONE, DAMAGE, HEAL}
 enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USER, ALLY_DOWN_1, ALLY_DOWN_ALL}
 #-------------------------------------------------------------------------------
 @export_category("Action Stats")

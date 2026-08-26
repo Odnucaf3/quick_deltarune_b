@@ -7,30 +7,34 @@
 [ext_resource type="Resource" uid="uid://cr4xvgoj13wav" path="res://Resources/Status/death.tres" id="4_c6toy"]
 [ext_resource type="PackedScene" uid="uid://opymv7weatpj" path="res://Nodes/Prefabs/ui/ally_fighter_ui.tscn" id="5_r4og7"]
 [ext_resource type="PackedScene" uid="uid://cwyf6jru36e8y" path="res://Nodes/Prefabs/ui/enemy_fighter_ui.tscn" id="6_xm4vn"]
+[ext_resource type="PackedScene" uid="uid://dc16vjgjwtrrh" path="res://Nodes/Prefabs/ui/ally_pop_up_node.tscn" id="8_5lr35"]
 [ext_resource type="Texture2D" uid="uid://chxaf10imxbm4" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_85.png" id="9_8m6hh"]
+[ext_resource type="PackedScene" uid="uid://d1las7hqe1ppw" path="res://Nodes/Prefabs/ui/enemy_pop_up_node.tscn" id="9_8wyqk"]
 [ext_resource type="Texture2D" uid="uid://ssbbdf2f4b61" path="res://Assets/rpg_maker_mv/img/battlebacks1/Grassland.png" id="11_r4og7"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter1_1.tres" id="12_hf3yd"]
+[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_actor1_1.tres" id="12_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://dgojjdoocby4g" path="res://Assets/rpg_maker_mv/img/battlebacks2/Grassland.png" id="12_xm4vn"]
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="16_0t8i2"]
 [ext_resource type="Script" uid="uid://dosow2j1xm5y3" path="res://Scripts/Resources/key_serializable.gd" id="16_ql07v"]
-[ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_0.tres" id="17_hf3yd"]
+[ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_money.tres" id="17_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
-[ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter1_8.tres" id="19_8m6hh"]
+[ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter_actor1_8.tres" id="19_8m6hh"]
 [ext_resource type="Script" uid="uid://b6atomspo0raj" path="res://Scripts/game_system/rooms/debug_room.gd" id="21_gijw1"]
-[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter2_7.tres" id="21_ngqpa"]
+[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter_actor2_7.tres" id="21_ngqpa"]
 [ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="22_0ol08"]
-[ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter3_8.tscn" id="22_5rrxs"]
-[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter3_8.tres" id="22_shqvj"]
-[ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter2_7.tscn" id="23_jvut7"]
-[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/actor3_8.tscn" id="24_5rrxs"]
+[ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter_actor3_8.tscn" id="22_5rrxs"]
+[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_actor3_8.tres" id="22_shqvj"]
+[ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter_actor2_7.tscn" id="23_jvut7"]
+[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_actor3_8.tscn" id="24_5rrxs"]
+[ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="24_8wyqk"]
 [ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="24_altm3"]
+[ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="25_j7ao1"]
 [ext_resource type="Resource" uid="uid://1ittax2epliw" path="res://Resources/Items/item_damage_0.tres" id="25_otuwt"]
-[ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/actor2_7.tscn" id="26_jvut7"]
+[ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_actor2_7.tscn" id="26_jvut7"]
 [ext_resource type="Resource" uid="uid://6snkwbnrq70e" path="res://Resources/Items/item_damage_1.tres" id="26_w2ngq"]
-[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/actor1_1.tscn" id="27_0ol08"]
+[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="27_b6a3y"]
 [ext_resource type="Resource" uid="uid://bg53x77yko4ip" path="res://Resources/Equips/ring_3.tres" id="28_hklgd"]
-[ext_resource type="PackedScene" uid="uid://4evqnt3jxeef" path="res://Nodes/Prefabs/Fighters/fighter1_6.tscn" id="28_jvut7"]
+[ext_resource type="Resource" uid="uid://buw4urkkcygf1" path="res://Resources/Items/item_deadly_poison.tres" id="29_206if"]
 [ext_resource type="Resource" uid="uid://cfn6jkj7set5x" path="res://Resources/Equips/body_3.tres" id="29_c6toy"]
 [ext_resource type="Resource" uid="uid://ckw37s74f5y6" path="res://Resources/Equips/head_3.tres" id="30_en4w2"]
 [ext_resource type="Texture2D" uid="uid://dat3yglb4a0lr" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_A2.png" id="30_n53vq"]
@@ -38,16 +42,15 @@
 [ext_resource type="Texture2D" uid="uid://bd8wsbia6rebq" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_B.png" id="30_p24l3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
 [ext_resource type="Resource" uid="uid://bu6ef5g4orqw" path="res://Resources/Equips/weapon_3.tres" id="31_gijw1"]
-[ext_resource type="PackedScene" uid="uid://rj8wk0p7m1vh" path="res://Nodes/Prefabs/Fighters/fighter1_8.tscn" id="32_acn20"]
+[ext_resource type="PackedScene" uid="uid://rj8wk0p7m1vh" path="res://Nodes/Prefabs/Fighters/fighter_actor1_8.tscn" id="32_acn20"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="32_gijw1"]
 [ext_resource type="Texture2D" uid="uid://cnyjkhhss7xp4" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_A5.png" id="33_ngqpa"]
 [ext_resource type="Theme" uid="uid://drphpbb8kep0x" path="res://Themes/title_label_theme.tres" id="34_206if"]
 [ext_resource type="Theme" uid="uid://cof2v378gb86t" path="res://Themes/tp_bar_theme.tres" id="35_4yjru"]
-[ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter1_1.tscn" id="35_n53vq"]
-[ext_resource type="PackedScene" uid="uid://dwe23u11yf586" path="res://Nodes/Prefabs/Characters/actor1_6.tscn" id="36_0t8i2"]
+[ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_actor1_1.tscn" id="35_n53vq"]
 [ext_resource type="Theme" uid="uid://dkaas12c836ew" path="res://Themes/tab_theme.tres" id="36_5668i"]
-[ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/actor1_8.tscn" id="36_altm3"]
-[ext_resource type="PackedScene" uid="uid://coq254ffrmvdd" path="res://Nodes/Prefabs/Fighters/fighter_monster_1_1.tscn" id="37_altm3"]
+[ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/character_actor1_8.tscn" id="36_altm3"]
+[ext_resource type="PackedScene" uid="uid://coq254ffrmvdd" path="res://Nodes/Prefabs/Fighters/fighter_monster_1.tscn" id="37_altm3"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
 [ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
@@ -59,6 +62,7 @@
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
 [ext_resource type="Texture2D" uid="uid://bbykhvbevkk6r" path="res://Assets/rpg_maker_mv/img/faces/Actor1_8.png" id="49_6yqg2"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
+[ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_monster_1.tres" id="52_biyce"]
 [ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
 [ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="56_shqvj"]
@@ -218,6 +222,11 @@ metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 [sub_resource type="Resource" id="Resource_pkj5u"]
 script = ExtResource("24_altm3")
 action_resource = ExtResource("26_w2ngq")
+metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+
+[sub_resource type="Resource" id="Resource_dj2mq"]
+script = ExtResource("24_altm3")
+action_resource = ExtResource("29_206if")
 metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 
 [sub_resource type="Resource" id="Resource_f6puh"]
@@ -922,6 +931,18 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
 radius = 16.0
 
+[sub_resource type="Resource" id="Resource_biyce"]
+script = ExtResource("24_8wyqk")
+fighter_resource = ExtResource("12_hf3yd")
+level = 99
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[sub_resource type="Resource" id="Resource_7q7q6"]
+script = ExtResource("24_8wyqk")
+fighter_resource = ExtResource("52_biyce")
+level = 8
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_qeicn"]
 
 [sub_resource type="Animation" id="Animation_ql07v"]
@@ -1029,8 +1050,10 @@ death_status_resource = ExtResource("4_c6toy")
 fighter_button_prefab = ExtResource("2_0ol08")
 fighter_ally_ui_prefab = ExtResource("5_r4og7")
 fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
+ally_pop_up_prefab = ExtResource("8_5lr35")
+enemy_pop_up_prefab = ExtResource("9_8wyqk")
 money_inventory = SubResource("Resource_hdd08")
-ally_party = [NodePath("World_2D/player_characterbody2d/fighter1_1"), NodePath("World_2D/player_characterbody2d/fighter1_8"), NodePath("World_2D/player_characterbody2d/fighter2_7"), NodePath("World_2D/player_characterbody2d/fighter3_8")]
+ally_party = [NodePath("World_2D/player_characterbody2d/fighter_actor1_1"), NodePath("World_2D/player_characterbody2d/fighter_actor1_8"), NodePath("World_2D/player_characterbody2d/fighter_actor2_7"), NodePath("World_2D/player_characterbody2d/fighter_actor3_8")]
 lock_on = NodePath("World_2D/lock_on")
 player_characterbody2d = NodePath("World_2D/player_characterbody2d")
 player_interactable_by_action_area2d = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d")
@@ -1481,45 +1504,46 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d/player_interactable_by_action_area2d" unique_id=1893623121]
 shape = SubResource("CircleShape2D_aoydg")
 
-[node name="fighter1_1" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
+[node name="fighter_actor1_1" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
 y_sort_enabled = true
 
-[node name="fighter1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
+[node name="fighter_actor1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
 y_sort_enabled = true
 
-[node name="fighter2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
+[node name="fighter_actor2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
 y_sort_enabled = true
 
-[node name="fighter3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
+[node name="fighter_actor3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
 y_sort_enabled = true
 
 [node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "ally_3", "ally_3_character", "npc_3", "npc_3_character", "enemy_1", "enemy_1_fighter_array", "enemy_2", "enemy_2_fighter_array", "interactable", "room_limits")]
 y_sort_enabled = true
+position = Vector2(-1, 7)
 script = ExtResource("21_gijw1")
 ally_0 = NodePath("ally_0")
-ally_0_character = NodePath("ally_0/actor1_1")
+ally_0_character = NodePath("ally_0/character_actor1_1")
 ally_0_fighter_resouce = ExtResource("12_hf3yd")
 ally_0_fighter_prefab = ExtResource("35_n53vq")
 ally_1 = NodePath("ally_1")
-ally_1_character = NodePath("ally_1/actor1_8")
+ally_1_character = NodePath("ally_1/character_actor1_8")
 ally_1_fighter_resouce = ExtResource("19_8m6hh")
 ally_1_fighter_prefab = ExtResource("32_acn20")
 ally_2 = NodePath("ally_2")
-ally_2_character = NodePath("ally_2/actor2_7")
+ally_2_character = NodePath("ally_2/character_actor2_7")
 ally_2_fighter_resouce = ExtResource("21_ngqpa")
 ally_2_fighter_prefab = ExtResource("23_jvut7")
 ally_3 = NodePath("ally_3")
-ally_3_character = NodePath("ally_3/actor3_8")
+ally_3_character = NodePath("ally_3/character_actor3_8")
 ally_3_fighter_resouce = ExtResource("22_shqvj")
 ally_3_fighter_prefab = ExtResource("22_5rrxs")
 npc_3 = NodePath("npc_3")
-npc_3_character = NodePath("npc_3/actor1_6")
-npc_3_item_consumable_array = Array[ExtResource("24_altm3")]([SubResource("Resource_ma215"), SubResource("Resource_pkj5u")])
+npc_3_character = NodePath("npc_3/character_actor1_8")
+npc_3_item_consumable_array = Array[ExtResource("24_altm3")]([SubResource("Resource_ma215"), SubResource("Resource_pkj5u"), SubResource("Resource_dj2mq")])
 npc_3_item_equip_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_f6puh"), SubResource("Resource_l50s6"), SubResource("Resource_o2ox5"), SubResource("Resource_yagdq")])
 enemy_1 = NodePath("npc_4")
-enemy_1_fighter_array = [NodePath("npc_4/fighter1_6"), NodePath("npc_4/fighter_monster1_1"), NodePath("npc_4/fighter1_8"), NodePath("npc_4/fighter1_9")]
+enemy_1_fighter_array = [NodePath("npc_4/fighter_actor1_1"), NodePath("npc_4/fighter_actor1_2"), NodePath("npc_4/fighter_actor1_3"), NodePath("npc_4/fighter_actor1_4")]
 enemy_2 = NodePath("npc_5")
-enemy_2_fighter_array = [NodePath("npc_5/fighter_monster1_1"), NodePath("npc_5/fighter_monster1_2"), NodePath("npc_5/fighter_monster1_3")]
+enemy_2_fighter_array = [NodePath("npc_5/fighter_monster_1"), NodePath("npc_5/fighter_monster_2"), NodePath("npc_5/fighter_monster_3")]
 interactable = NodePath("Interactable")
 room_limits = NodePath("room_limits")
 
@@ -1607,7 +1631,7 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_0" unique_id=1611377659]
 shape = SubResource("CircleShape2D_lcbh6")
 
-[node name="actor1_1" parent="World_2D/room_00/ally_0" unique_id=1234637241 instance=ExtResource("27_0ol08")]
+[node name="character_actor1_1" parent="World_2D/room_00/ally_0" unique_id=1234637241 instance=ExtResource("27_0ol08")]
 
 [node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=726168508 node_paths=PackedStringArray("collider")]
 position = Vector2(48, -152)
@@ -1619,7 +1643,7 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1" unique_id=1352624756]
 shape = SubResource("CircleShape2D_lcbh6")
 
-[node name="actor1_8" parent="World_2D/room_00/ally_1" unique_id=1388025439 instance=ExtResource("36_altm3")]
+[node name="character_actor1_8" parent="World_2D/room_00/ally_1" unique_id=1388025439 instance=ExtResource("36_altm3")]
 
 [node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=899666073 node_paths=PackedStringArray("collider")]
 position = Vector2(80, -152)
@@ -1631,7 +1655,7 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2" unique_id=257041145]
 shape = SubResource("CircleShape2D_lcbh6")
 
-[node name="actor2_7" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
+[node name="character_actor2_7" parent="World_2D/room_00/ally_2" unique_id=650441401 instance=ExtResource("26_jvut7")]
 
 [node name="ally_3" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
 position = Vector2(112, -152)
@@ -1643,7 +1667,7 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_3" unique_id=451903423]
 shape = SubResource("CircleShape2D_3em1u")
 
-[node name="actor3_8" parent="World_2D/room_00/ally_3" unique_id=957001427 instance=ExtResource("24_5rrxs")]
+[node name="character_actor3_8" parent="World_2D/room_00/ally_3" unique_id=957001427 instance=ExtResource("24_5rrxs")]
 
 [node name="npc_3" type="Area2D" parent="World_2D/room_00" unique_id=1896668672 node_paths=PackedStringArray("collider")]
 position = Vector2(560, -136)
@@ -1655,7 +1679,7 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3" unique_id=839204334]
 shape = SubResource("CircleShape2D_5t6d6")
 
-[node name="actor1_6" parent="World_2D/room_00/npc_3" unique_id=1440330506 instance=ExtResource("36_0t8i2")]
+[node name="character_actor1_8" parent="World_2D/room_00/npc_3" unique_id=970880866 instance=ExtResource("36_altm3")]
 
 [node name="npc_4" type="Area2D" parent="World_2D/room_00" unique_id=303175137 node_paths=PackedStringArray("collider")]
 y_sort_enabled = true
@@ -1668,21 +1692,14 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_4" unique_id=849842313]
 shape = SubResource("CircleShape2D_5t6d6")
 
-[node name="fighter1_6" parent="World_2D/room_00/npc_4" unique_id=1370430890 instance=ExtResource("28_jvut7")]
-y_sort_enabled = true
+[node name="fighter_actor1_1" parent="World_2D/room_00/npc_4" unique_id=1443822142 instance=ExtResource("35_n53vq")]
 
-[node name="fighter_monster1_1" parent="World_2D/room_00/npc_4" unique_id=1711747710 instance=ExtResource("37_altm3")]
-visible = false
+[node name="fighter_actor1_2" parent="World_2D/room_00/npc_4" unique_id=337559296 instance=ExtResource("35_n53vq")]
 
-[node name="fighter1_8" parent="World_2D/room_00/npc_4" unique_id=232465966 instance=ExtResource("28_jvut7")]
-visible = false
-y_sort_enabled = true
-position = Vector2(-16, -8)
+[node name="fighter_actor1_3" parent="World_2D/room_00/npc_4" unique_id=751674218 instance=ExtResource("35_n53vq")]
 
-[node name="fighter1_9" parent="World_2D/room_00/npc_4" unique_id=1418258395 instance=ExtResource("28_jvut7")]
-visible = false
-y_sort_enabled = true
-position = Vector2(0, -24)
+[node name="fighter_actor1_4" parent="World_2D/room_00/npc_4" unique_id=1465251652 instance=ExtResource("35_n53vq")]
+fighter_serializable = SubResource("Resource_biyce")
 
 [node name="npc_5" type="Area2D" parent="World_2D/room_00" unique_id=447749122 node_paths=PackedStringArray("collider")]
 y_sort_enabled = true
@@ -1695,18 +1712,19 @@ collider = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_5" unique_id=1765939678]
 shape = SubResource("CircleShape2D_5t6d6")
 
-[node name="fighter_monster1_1" parent="World_2D/room_00/npc_5" unique_id=1761640521 instance=ExtResource("37_altm3")]
+[node name="fighter_monster_1" parent="World_2D/room_00/npc_5" unique_id=1761640521 instance=ExtResource("37_altm3")]
 y_sort_enabled = true
 
-[node name="fighter_monster1_2" parent="World_2D/room_00/npc_5" unique_id=1115349431 instance=ExtResource("37_altm3")]
+[node name="fighter_monster_2" parent="World_2D/room_00/npc_5" unique_id=1115349431 instance=ExtResource("37_altm3")]
 visible = false
 y_sort_enabled = true
 position = Vector2(-16, -16)
 
-[node name="fighter_monster1_3" parent="World_2D/room_00/npc_5" unique_id=1774819991 instance=ExtResource("37_altm3")]
+[node name="fighter_monster_3" parent="World_2D/room_00/npc_5" unique_id=1774819991 instance=ExtResource("37_altm3")]
 visible = false
 y_sort_enabled = true
 position = Vector2(16, -16)
+fighter_serializable = SubResource("Resource_7q7q6")
 
 [node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
 position = Vector2(-24, 24)

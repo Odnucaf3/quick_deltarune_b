@@ -8,5 +8,6 @@ script = ExtResource("1_g3728")
 icon = ExtResource("1_n5ee5")
 max_cooldown = 3
 value = 15
+myEFFECT = 1
 myTARGET = 2
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

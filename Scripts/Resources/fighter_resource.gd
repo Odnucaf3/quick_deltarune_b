@@ -3,7 +3,7 @@ class_name Fighter_Resource
 enum FIGHTER_CLASS{EVERYONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
 #-------------------------------------------------------------------------------
 @export_category("Fighter Stats")
-@export var myFIGHTER_CLASS: FIGHTER_CLASS = FIGHTER_CLASS.WARRIOR
+@export var myFIGHTER_CLASS: FIGHTER_CLASS
 #-------------------------------------------------------------------------------
 @export_category("Base Stats")
 @export var max_hp: int = 100

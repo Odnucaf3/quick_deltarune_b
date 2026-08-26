@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cll6ilrja3wgu" path="res://Scripts/Prefabs/character_node.gd" id="1_nknv5"]
 [ext_resource type="Texture2D" uid="uid://dul3heq2qo5n" path="res://Assets/rpg_maker_mv/img/characters/Actor1.png" id="2_0g2qp"]
-[ext_resource type="Resource" uid="uid://da42l3ohlicnw" path="res://Resources/Characters/actor1_8.tres" id="2_bof5o"]
+[ext_resource type="Resource" uid="uid://da42l3ohlicnw" path="res://Resources/Characters/character_actor1_8.tres" id="2_bof5o"]
 [ext_resource type="Texture2D" uid="uid://bqxl5ee2d1m78" path="res://Assets/rpg_maker_mv/img/sv_actors/Actor1_8.png" id="3_ynogl"]
 
 [sub_resource type="Animation" id="Animation_altm3"]
@@ -432,7 +432,7 @@ nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_gijw1")
 nodes/base_StateMachine/position = Vector2(-240, 40)
 node_connections = [&"output", 0, &"base_StateMachine"]
 
-[node name="actor1_8" type="Node2D" unique_id=1388025439 node_paths=PackedStringArray("animation_tree", "pivot")]
+[node name="character_actor1_8" type="Node2D" unique_id=1388025439 node_paths=PackedStringArray("animation_tree", "pivot")]
 script = ExtResource("1_nknv5")
 character_resource = ExtResource("2_bof5o")
 animation_tree = NodePath("AnimationTree")

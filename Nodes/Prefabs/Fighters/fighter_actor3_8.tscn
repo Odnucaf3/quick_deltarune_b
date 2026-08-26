@@ -6,11 +6,11 @@
 [ext_resource type="Resource" uid="uid://dm0biwixci8ld" path="res://Resources/Equips/head_2.tres" id="4_nbthl"]
 [ext_resource type="Resource" uid="uid://bjkiw85wiedy4" path="res://Resources/Equips/body_2.tres" id="5_8hgup"]
 [ext_resource type="Resource" uid="uid://drt5t03gqef2" path="res://Resources/Equips/ring_2.tres" id="6_o0fwv"]
-[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter3_8.tres" id="7_apdi8"]
+[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_actor3_8.tres" id="7_apdi8"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_urbvg"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_ih5rp"]
 [ext_resource type="Resource" uid="uid://cp3wtney3ld27" path="res://Resources/Status/status_heal_0.tres" id="10_m5fk7"]
-[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/actor3_8.tscn" id="10_nrq7x"]
+[ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_actor3_8.tscn" id="10_nrq7x"]
 
 [sub_resource type="Resource" id="Resource_5dha6"]
 script = ExtResource("2_fnmow")
@@ -47,9 +47,9 @@ equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_
 status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[node name="fighter3_8" type="Node2D" unique_id=1861804174 node_paths=PackedStringArray("character_node")]
+[node name="fighter_actor3_8" type="Node2D" unique_id=1861804174 node_paths=PackedStringArray("character_node")]
 script = ExtResource("1_nbjdn")
 fighter_serializable = SubResource("Resource_25p7l")
-character_node = NodePath("actor3_8")
+character_node = NodePath("character_actor3_8")
 
-[node name="actor3_8" parent="." unique_id=957001427 instance=ExtResource("10_nrq7x")]
+[node name="character_actor3_8" parent="." unique_id=957001427 instance=ExtResource("10_nrq7x")]

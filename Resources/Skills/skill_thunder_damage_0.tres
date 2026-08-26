@@ -9,9 +9,11 @@ icon = ExtResource("1_8x1rp")
 tp_cost = 25
 max_cooldown = 1
 value = 8
-myELEMENT = 6
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 7
 repeat = 2
 status_dictionary = Dictionary[StringName, int]({
-&"status_damage_1": 15
+&"status_damage_1": 50
 })
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

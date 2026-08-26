@@ -16,6 +16,7 @@ const cancelInput: String = "ui_cancel"
 @export var audioStreamPlayer_escape_battle: AudioStreamPlayer
 @export var audioStreamPlayer_damage: AudioStreamPlayer
 @export var audioStreamPlayer_reflect: AudioStreamPlayer
+@export var audioStreamPlayer_miss: AudioStreamPlayer
 @export var audioStreamPlayer_heal: AudioStreamPlayer
 #-------------------------------------------------------------------------------
 @export_category("BGM")
@@ -445,6 +446,9 @@ func Play_SFX_Damage() -> void:
 #-------------------------------------------------------------------------------
 func Play_SFX_Reflect() -> void:
 	audioStreamPlayer_reflect.play()
+#-------------------------------------------------------------------------------
+func Play_SFX_Miss() -> void:
+	audioStreamPlayer_miss.play()
 #-------------------------------------------------------------------------------
 func Play_SFX_Heal() -> void:
 	audioStreamPlayer_heal.play()
