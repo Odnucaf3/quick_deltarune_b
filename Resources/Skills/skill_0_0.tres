@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://crf420awv7t56"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_4coga"]
+[ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="1_5435v"]
+[ext_resource type="PackedScene" uid="uid://d24ttekulgdr5" path="res://Nodes/Prefabs/Animations/normal_attack.tscn" id="1_qvivh"]
+
+[resource]
+script = ExtResource("1_4coga")
+animation_prefab = ExtResource("1_qvivh")
+icon = ExtResource("1_5435v")
+value = 15
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 1
+can_critic = true
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

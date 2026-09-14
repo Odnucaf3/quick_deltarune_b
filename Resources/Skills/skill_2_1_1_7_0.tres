@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://du4nnssbthtxk"]
+
+[ext_resource type="PackedScene" uid="uid://dlr64n0kb6ouo" path="res://Nodes/Prefabs/Animations/v_slash.tscn" id="1_6qy25"]
+[ext_resource type="Texture2D" uid="uid://bsth1c7j88822" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_67.png" id="1_8x1rp"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_se5s8"]
+
+[resource]
+script = ExtResource("1_se5s8")
+animation_prefab = ExtResource("1_6qy25")
+icon = ExtResource("1_8x1rp")
+tp_cost = 25
+max_cooldown = 1
+value = 8
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 7
+can_critic = true
+repeat = 2
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

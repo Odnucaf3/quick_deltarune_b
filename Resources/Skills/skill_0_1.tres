@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://cklwpm2pg1tyr"]
+
+[ext_resource type="PackedScene" uid="uid://d24ttekulgdr5" path="res://Nodes/Prefabs/Animations/normal_attack.tscn" id="1_rrwgi"]
+[ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="2_bblcg"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="3_0i4t6"]
+
+[resource]
+script = ExtResource("3_0i4t6")
+animation_prefab = ExtResource("1_rrwgi")
+icon = ExtResource("2_bblcg")
+speed = 1
+value = 15
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 1
+can_critic = true
+remove_status_dictionary = Dictionary[StringName, int]({
+&"status_1": 100
+})
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

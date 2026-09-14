@@ -72,7 +72,7 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 	singleton.game_system.Stop_Moving()
 	singleton.game_system.Dialogue_Open()
 	#-------------------------------------------------------------------------------
-	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_party[0].character_node.character_resource
+	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_character_party[0].character_resource
 	#-------------------------------------------------------------------------------
 	var _index: int = singleton.game_system.Get_Fighter_Node_Index(_fighter_resource)
 	#-------------------------------------------------------------------------------
@@ -87,7 +87,8 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 				await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, "* Ok, voy a ir con vos.")
 				var _fighter_ally_1: Fighter_Node = _fighter_prefab.instantiate() as Fighter_Node
 				singleton.game_system.player_characterbody2d.add_child(_fighter_ally_1)
-				singleton.game_system.ally_party.append(_fighter_ally_1)
+				singleton.game_system.ally_fighter_party.append(_fighter_ally_1)
+				_fighter_ally_1.hide()
 				singleton.game_system.Set_Fighter_0()
 				_character_node.modulate.a = 105.0/255.0
 			#-------------------------------------------------------------------------------
@@ -107,11 +108,11 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 		match(singleton.game_system.dialogue_option_index):
 			0:
 				#-------------------------------------------------------------------------------
-				if(singleton.game_system.ally_party.size() > 1):
+				if(singleton.game_system.ally_fighter_party.size() > 1):
 					singleton.game_system.Close_Dialogue_Options()
 					await singleton.game_system.Dialogue_with_Face(_character_node.character_resource, "* Ok, voy a estar acá si me necesitas.")
-					singleton.game_system.ally_party[_index].queue_free()
-					singleton.game_system.ally_party.remove_at(_index)
+					singleton.game_system.ally_fighter_party[_index].queue_free()
+					singleton.game_system.ally_fighter_party.remove_at(_index)
 					singleton.game_system.Set_Fighter_0()
 					_character_node.modulate.a = 1.0
 				#-------------------------------------------------------------------------------
@@ -131,7 +132,7 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 #-------------------------------------------------------------------------------
 func NPC_3_Talk():
 	#-------------------------------------------------------------------------------
-	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_party[0].character_node.character_resource
+	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_character_party[0].character_resource
 	singleton.game_system.Disable_Pause_Input()
 	singleton.game_system.Stop_Moving()
 	singleton.game_system.Dialogue_Open()
@@ -184,13 +185,13 @@ func NPC_3_Talk():
 	singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Set_Enemy(_imteractable_script:Interactable_Script, _fighter_array: Array[Fighter_Node]):
-	_imteractable_script.interactable_by_action = func(): NPC_4_Talk(_fighter_array)
+func Set_Enemy(_imteractable_script:Interactable_Script, _array_fighter_array:Array[Fighter_Node]):
+	_imteractable_script.interactable_by_action = func(): NPC_4_Talk(_array_fighter_array)
 #-------------------------------------------------------------------------------
-func NPC_4_Talk(_fighter_array: Array[Fighter_Node]):
-	var _character_resource:Character_Resource = _fighter_array[0].character_node.character_resource
+func NPC_4_Talk(_array_fighter_array:Array[Fighter_Node]):
+	var _character_resource:Character_Resource = _array_fighter_array[0].character_resource
 	#-------------------------------------------------------------------------------
-	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_party[0].character_node.character_resource
+	var _player_1_character_resource: Character_Resource = singleton.game_system.ally_character_party[0].character_resource
 	singleton.game_system.Disable_Pause_Input()
 	singleton.game_system.Stop_Moving()
 	singleton.game_system.Dialogue_Open()
@@ -208,7 +209,7 @@ func NPC_4_Talk(_fighter_array: Array[Fighter_Node]):
 			#-------------------------------------------------------------------------------
 			await singleton.game_system.Dialogue_Close()
 			singleton.game_system.Dialogue_0("* The Battle Began!")
-			await Enter_Battle(_fighter_array)
+			await Enter_Battle(_array_fighter_array)
 		#-------------------------------------------------------------------------------
 		1:
 			singleton.game_system.Close_Dialogue_Options()
@@ -232,26 +233,24 @@ func Interactable_Action():
 	singleton.game_system.Enable_Pause_Input()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
-	await singleton.game_system.Enter_Battle(_array_enemy_party)
-	#singleton.game_system.myBATTLE_STATE = Game_System.BATTLE_STATE.YOU_LOSE
-	await Loop_Battle(_array_enemy_party)
+func Enter_Battle(_array_fighter_array:Array[Fighter_Node]):
+	await singleton.game_system.Enter_Battle(_array_fighter_array)
+	await Loop_Battle(_array_fighter_array)
 #-------------------------------------------------------------------------------
-func Loop_Battle(_array_enemy_party:Array[Fighter_Node]):
+func Loop_Battle(_array_fighter_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	while(singleton.game_system.myBATTLE_STATE == Game_System.BATTLE_STATE.STILL_FIGHTING):
 		await singleton.game_system.Re_Open_Battle_Menu()
 		await singleton.game_system.Do_Ally_Actions()
 		await singleton.game_system.Do_Enemy_Actions()
 	#-------------------------------------------------------------------------------
-	await After_Battle(_array_enemy_party)
+	await After_Battle(_array_fighter_array)
 #-------------------------------------------------------------------------------
-func After_Battle(_array_enemy_party:Array[Fighter_Node]):
+func After_Battle(_array_fighter_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	match(singleton.game_system.myBATTLE_STATE):
 		Game_System.BATTLE_STATE.YOU_WIN:
 			await singleton.game_system.Win_Effect()
-			Hide_Other_Fighters(_array_enemy_party)
 			await singleton.game_system.You_Win()
 			await singleton.game_system.Dialogue_Close()
 			singleton.game_system.Enable_Pause_Input()
@@ -261,11 +260,11 @@ func After_Battle(_array_enemy_party:Array[Fighter_Node]):
 			#-------------------------------------------------------------------------------
 			match(singleton.game_system.myLOSE_STATE):
 				Game_System.LOSE_STATE.YOU_RETRY:
-					await You_Retry(_array_enemy_party)
+					await You_Retry(_array_fighter_array)
 					await singleton.game_system.Dialogue_Close()
 				#-------------------------------------------------------------------------------
 				Game_System.LOSE_STATE.YOU_ESCAPE_TO_SAVEPOINT:
-					await You_Escape_to_SavePoint(_array_enemy_party)
+					await You_Escape_to_SavePoint()
 					await singleton.game_system.Dialogue_Close()
 					singleton.game_system.Enable_Pause_Input()
 				#-------------------------------------------------------------------------------
@@ -276,34 +275,25 @@ func After_Battle(_array_enemy_party:Array[Fighter_Node]):
 		#-------------------------------------------------------------------------------
 		Game_System.BATTLE_STATE.YOU_ESCAPE:
 			await singleton.game_system.Escape_Effect()
-			Hide_Other_Fighters(_array_enemy_party)
 			await singleton.game_system.You_Escape()
 			await singleton.game_system.Dialogue_Close()
 			singleton.game_system.Enable_Pause_Input()
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func You_Retry(_array_enemy_party:Array[Fighter_Node]):
+func You_Retry(_array_fighter_array:Array[Fighter_Node]):
 	singleton.game_system.lose_menu.hide()
 	singleton.Common_Submited()
 	await singleton.game_system.You_Retry()
-	#singleton.game_system.myBATTLE_STATE = Game_System.BATTLE_STATE.YOU_LOSE
-	await Loop_Battle(_array_enemy_party)
+	await Loop_Battle(_array_fighter_array)
 #-------------------------------------------------------------------------------
-func You_Escape_to_SavePoint(_array_enemy_party:Array[Fighter_Node]):
+func You_Escape_to_SavePoint():
 	singleton.game_system.next_signal.emit()
 	singleton.game_system.lose_menu.hide()
 	singleton.Common_Submited()
 	await singleton.game_system.Escape_Effect()
-	Hide_Other_Fighters(_array_enemy_party)
 	await singleton.game_system.You_Escape_to_SavePoint()
 #-------------------------------------------------------------------------------
 func You_Give_Up():
 	singleton.game_system.You_Give_Up()
-#-------------------------------------------------------------------------------
-func Hide_Other_Fighters(_array_enemy_party:Array[Fighter_Node]):
-	#-------------------------------------------------------------------------------
-	for _i in range(1, _array_enemy_party.size()):
-		_array_enemy_party[_i].hide()
-	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

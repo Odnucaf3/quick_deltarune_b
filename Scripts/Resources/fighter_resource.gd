@@ -1,6 +1,6 @@
 extends Resource
 class_name Fighter_Resource
-enum FIGHTER_CLASS{EVERYONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
+enum FIGHTER_CLASS{NONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
 #-------------------------------------------------------------------------------
 @export_category("Fighter Stats")
 @export var myFIGHTER_CLASS: FIGHTER_CLASS
@@ -46,7 +46,7 @@ enum FIGHTER_CLASS{EVERYONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
 @export var status_resistance_dictionary: Dictionary[StringName, int]
 #-------------------------------------------------------------------------------
 @export_category("Skills")
-@export var skill_resource_array: Array[Action_Resource]
+@export var add_skill_resource_array: Array[Action_Resource]
 #-------------------------------------------------------------------------------
 func _init():
 	resource_local_to_scene = false

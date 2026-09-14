@@ -183,21 +183,21 @@ func Set_Idiome(_index:int):
 	var _idiomes:PackedStringArray = TranslationServer.get_loaded_locales()
 	TranslationServer.set_locale(_idiomes[_index])
 	#-------------------------------------------------------------------------------
-	title.text = tr("option_menu_title_label")
+	title.text = tr("text_option_menu")
 	#-------------------------------------------------------------------------------
-	idiome_label.text = "* "+tr("option_menu_idiome_label")+":  "
+	idiome_label.text = "* "+tr("text_idiome")+":  "
 	#-------------------------------------------------------------------------------
-	resolution_label.text = "* "+tr("option_menu_resolution_label")+":  "
-	fullscreen_label.text = "* "+tr("option_menu_fullscreen_label")+":  "
-	borderless_label.text = "* "+tr("option_menu_borderless_label")+":  "
+	resolution_label.text = "* "+tr("text_resolution")+":  "
+	fullscreen_label.text = "* "+tr("text_fullscreen")+":  "
+	borderless_label.text = "* "+tr("text_borderless")+":  "
 	#-------------------------------------------------------------------------------
-	vsync_label.text = "* "+tr("option_menu_vsync_label")+":  "
+	vsync_label.text = "* "+tr("text_vsync")+":  "
 	#-------------------------------------------------------------------------------
-	master_label.text = "* "+tr("option_menu_master_label")+":  "
-	sfx_label.text = "* "+tr("option_menu_sfx_label")+":  "
-	bgm_label.text = "* "+tr("option_menu_bgm_label")+":  "
+	master_label.text = "* "+tr("text_volume_master")+":  "
+	sfx_label.text = "* "+tr("text_volume_sfx")+":  "
+	bgm_label.text = "* "+tr("text_volume_bgm")+":  "
 	#-------------------------------------------------------------------------------
-	back.text = "  "+tr("option_menu_back_button")+"  "
+	back.text = "  "+tr("text_back")+"  "
 #endregion
 #-------------------------------------------------------------------------------
 #region FULLSCREEN SETTINGS

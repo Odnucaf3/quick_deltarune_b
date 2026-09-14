@@ -137,17 +137,17 @@ func Option_Menu_Back_Button_Common() -> void:
 #-------------------------------------------------------------------------------
 func Set_Idiome():
 	#-------------------------------------------------------------------------------
-	title_menu_label.text = "  "+tr("title_menu_title")+"  "
+	title_menu_label.text = "  "+tr("text_game_title")+"  "
 	#-------------------------------------------------------------------------------
-	title_menu_button_start.text = "  "+tr("title_menu_start_button")+"  "
-	title_menu_button_options.text = "  "+tr("options_button")+"  "
+	title_menu_button_start.text = "  "+tr("text_start")+"  "
+	title_menu_button_options.text = "  "+tr("text_options")+"  "
 	#-------------------------------------------------------------------------------
-	var _credits: String = tr("title_menu_credits_button")
+	var _credits: String = tr("text_credits")
 	title_menu_button_credits.text = "  "+_credits+"  "
 	credits_menu_button_0.text = "  "+_credits+"  "
 	#credits_menu_richtext.text = tr("credits_menu_richtext")
 	#-------------------------------------------------------------------------------
-	title_menu_button_quit.text = "  "+tr("title_menu_quit_button")+"  "
+	title_menu_button_quit.text = "  "+tr("text_quit_game")+"  "
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #endregion

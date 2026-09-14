@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Fighter_Resource" format=3 uid="uid://uy6dxv70r723"]
+
+[ext_resource type="Script" uid="uid://nvm68ow83k0c" path="res://Scripts/Resources/fighter_resource.gd" id="1_ofp85"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_hb14b"]
+[ext_resource type="Resource" uid="uid://crf420awv7t56" path="res://Resources/Skills/skill_0_0.tres" id="3_8b5t3"]
+[ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/skill_1_0.tres" id="4_m1728"]
+
+[resource]
+script = ExtResource("1_ofp85")
+myFIGHTER_CLASS = 4
+physical_presition_rate = -20
+physical_evasion_rate = -20
+add_skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("3_8b5t3"), ExtResource("4_m1728")])
+metadata/_custom_type_script = "uid://nvm68ow83k0c"

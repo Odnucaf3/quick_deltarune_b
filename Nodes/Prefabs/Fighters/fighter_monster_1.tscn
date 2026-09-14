@@ -2,19 +2,203 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_qusuq"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_cp55i"]
-[ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1.tscn" id="2_fenlt"]
-[ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_monster_1.tres" id="3_krjvs"]
+[ext_resource type="Resource" uid="uid://buc4v5pr6bu4m" path="res://Resources/Characters/character_1_0.tres" id="2_x82ga"]
+[ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_0_0.tres" id="3_krjvs"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="4_63hy0"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="5_nhp68"]
+[ext_resource type="Texture2D" uid="uid://fhdo5upeivy" path="res://Assets/rpg_maker_mv/img/sv_enemies/Bat.png" id="6_krjvs"]
 
 [sub_resource type="Resource" id="Resource_3em1u"]
 script = ExtResource("4_63hy0")
 fighter_resource = ExtResource("3_krjvs")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[node name="fighter_monster_1" type="Node2D" unique_id=1711747710 node_paths=PackedStringArray("character_node")]
-script = ExtResource("1_qusuq")
-fighter_serializable = SubResource("Resource_3em1u")
-character_node = NodePath("character_monster_1")
+[sub_resource type="Animation" id="Animation_x82ga"]
+resource_name = "Hurt"
+length = 0.6000066979594528
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.20000002, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(20, 0), Vector2(-10, 0), Vector2(0, 0)]
+}
 
-[node name="character_monster_1" parent="." unique_id=1394058482 instance=ExtResource("2_fenlt")]
+[sub_resource type="Animation" id="Animation_4pwq6"]
+resource_name = "Idle"
+length = 0.5714428826883435
+loop_mode = 1
+step = 0.14285715
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2857143, 0.5714286),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(-24, -72), Vector2(-24, -72), Vector2(-24, -72)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2857143, 0.5714286),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, 0.15506744), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2857143, 0.5714286),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.4778481), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bf2d7"]
+resource_name = "Miss"
+length = 0.6000066979594528
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jnkbr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-24, -72)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xtpjr"]
+_data = {
+&"Hurt": SubResource("Animation_x82ga"),
+&"Idle": SubResource("Animation_4pwq6"),
+&"Miss": SubResource("Animation_bf2d7"),
+&"RESET": SubResource("Animation_jnkbr")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8iapp"]
+animation = &"Hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jtjx0"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bhjae"]
+animation = &"Miss"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l17bb"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7s701"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_u32xy"]
+allow_transition_to_self = true
+states/Hurt/node = SubResource("AnimationNodeAnimation_8iapp")
+states/Hurt/position = Vector2(374, -1)
+states/Idle/node = SubResource("AnimationNodeAnimation_jtjx0")
+states/Idle/position = Vector2(374, 100)
+states/Miss/node = SubResource("AnimationNodeAnimation_bhjae")
+states/Miss/position = Vector2(374, 204)
+transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_l17bb"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_7s701")]
+graph_offset = Vector2(-53, 26)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
+graph_offset = Vector2(-50, 71)
+nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_u32xy")
+nodes/base_StateMachine/position = Vector2(-40, 100)
+node_connections = [&"output", 0, &"base_StateMachine"]
+
+[node name="fighter_monster_1" type="Node2D" unique_id=1711747710 node_paths=PackedStringArray("animation_tree", "pivot")]
+script = ExtResource("1_qusuq")
+character_resource = ExtResource("2_x82ga")
+fighter_serializable = SubResource("Resource_3em1u")
+animation_tree = NodePath("AnimationTree")
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node2D" parent="." unique_id=478944608]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot" unique_id=1982685399]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_krjvs")
+offset = Vector2(-24, -72)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=941712500]
+libraries/ = SubResource("AnimationLibrary_xtpjr")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=259010437]
+tree_root = SubResource("AnimationNodeBlendTree_3em1u")
+anim_player = NodePath("../AnimationPlayer")

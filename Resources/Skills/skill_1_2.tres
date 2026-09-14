@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://dwiewpkun524s"]
+
+[ext_resource type="Texture2D" uid="uid://dau8th2ohedye" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_82.png" id="1_jo610"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_1reo5"]
+
+[resource]
+script = ExtResource("2_1reo5")
+icon = ExtResource("1_jo610")
+max_cooldown = 3
+myTARGET = 5
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

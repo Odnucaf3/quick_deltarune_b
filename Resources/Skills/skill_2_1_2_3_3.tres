@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://dhei3kcl302gt"]
+
+[ext_resource type="Texture2D" uid="uid://bsth1c7j88822" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_67.png" id="1_u8io2"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_vsila"]
+
+[resource]
+script = ExtResource("2_vsila")
+icon = ExtResource("1_u8io2")
+max_hold = 2
+tp_cost = 5
+value = 7
+myEFFECT = 1
+myATRIBUTE = 1
+myELEMENT = 7
+myTARGET = 2
+repeat = 4
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

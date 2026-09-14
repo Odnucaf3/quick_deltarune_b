@@ -47,7 +47,10 @@ class_name Status_Resource
 @export var status_resistance_dictionary: Dictionary[StringName, int]
 #-------------------------------------------------------------------------------
 @export_category("Skills")
-@export var skill_resource_array: Array[Action_Resource]
+@export var add_skill_resource_array: Array[Action_Resource]
+@export var remove_skill_resource_array: Array[Action_Resource]
+#	x=hold,y=cooldown,z=tp_cost
+@export var modifie_skill_resource_dictionary: Dictionary[Action_Resource, Vector3i]
 #-------------------------------------------------------------------------------
 func _init():
 	resource_local_to_scene = false

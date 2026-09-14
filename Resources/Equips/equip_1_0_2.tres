@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://cpm8srwdm1g71"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_jtbow"]
+[ext_resource type="Texture2D" uid="uid://or07leaiqrvq" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_132.png" id="2_gt1yk"]
+[ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="2_qk6xj"]
+[ext_resource type="Resource" uid="uid://dfa1o2oxpnj2m" path="res://Resources/Skills/skill_2_1_1_7_1.tres" id="3_ggqij"]
+
+[resource]
+script = ExtResource("2_qk6xj")
+icon = ExtResource("2_gt1yk")
+myEQUIP_TYPE = 1
+myFIGHTER_CLASS = 1
+status_resistance_dictionary = Dictionary[StringName, int]({
+&"status_2": 45
+})
+modifie_skill_resource_dictionary = Dictionary[ExtResource("1_jtbow"), Vector3i]({
+ExtResource("3_ggqij"): Vector3i(12, -11, -17)
+})
+metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

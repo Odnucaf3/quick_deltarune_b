@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://kkkanlmssngy"]
+
+[ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="1_eey8p"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_c84wn"]
+
+[resource]
+script = ExtResource("2_c84wn")
+icon = ExtResource("1_eey8p")
+speed = 1
+presition = 50
+myTARGET = 6
+remove_status_dictionary = Dictionary[StringName, int]({
+&"status_3": 75
+})
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

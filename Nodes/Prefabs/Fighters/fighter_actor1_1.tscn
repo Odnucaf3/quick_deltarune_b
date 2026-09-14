@@ -2,60 +2,200 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_3pmha"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_8ooxm"]
-[ext_resource type="Resource" uid="uid://d35ei50cimw18" path="res://Resources/Equips/weapon_0.tres" id="3_eqfro"]
-[ext_resource type="Resource" uid="uid://dnqwa4ac4201s" path="res://Resources/Equips/head_0.tres" id="4_0fglg"]
-[ext_resource type="Resource" uid="uid://cxtuqbu4tbqu0" path="res://Resources/Equips/body_0.tres" id="5_rgjyi"]
-[ext_resource type="Resource" uid="uid://eqq4ohxxujty" path="res://Resources/Equips/ring_0.tres" id="6_hnfnv"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_actor1_1.tres" id="7_ui50d"]
+[ext_resource type="Resource" uid="uid://3nxji4d0bf43" path="res://Resources/Characters/character_0_0.tres" id="2_j8mf4"]
+[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_1_0.tres" id="7_ui50d"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_l7osr"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_127ya"]
-[ext_resource type="Resource" uid="uid://d32vm1s8fexwl" path="res://Resources/Status/status_damage_1.tres" id="10_eqvaq"]
-[ext_resource type="Resource" uid="uid://c526dyvk4potd" path="res://Resources/Status/status_damage_0.tres" id="11_4r6jp"]
-[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="12_25eqy"]
+[ext_resource type="Texture2D" uid="uid://d5sa51137lad" path="res://Assets/rpg_maker_mv/img/sv_actors/Actor1_1.png" id="12_k4s2r"]
 
 [sub_resource type="Resource" id="Resource_hf3yd"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("3_eqfro")
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_ql07v"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("4_0fglg")
 myEQUIP_TYPE = 1
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_xkpdv"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("5_rgjyi")
 myEQUIP_TYPE = 2
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_pclkw"]
 script = ExtResource("2_8ooxm")
-equip_resource = ExtResource("6_hnfnv")
 myEQUIP_TYPE = 3
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_7jpv4"]
-script = ExtResource("9_127ya")
-status_resource = ExtResource("10_eqvaq")
-metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
-
-[sub_resource type="Resource" id="Resource_5mijj"]
-script = ExtResource("9_127ya")
-status_resource = ExtResource("11_4r6jp")
-metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
 
 [sub_resource type="Resource" id="Resource_1d3vm"]
 script = ExtResource("8_l7osr")
 fighter_resource = ExtResource("7_ui50d")
 equip_serializable_array = Array[ExtResource("2_8ooxm")]([SubResource("Resource_hf3yd"), SubResource("Resource_ql07v"), SubResource("Resource_xkpdv"), SubResource("Resource_pclkw")])
-status_serializable_array = Array[ExtResource("9_127ya")]([SubResource("Resource_7jpv4"), SubResource("Resource_5mijj")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[node name="fighter_actor1_1" type="Node2D" unique_id=1625553253 node_paths=PackedStringArray("character_node")]
-script = ExtResource("1_3pmha")
-fighter_serializable = SubResource("Resource_1d3vm")
-character_node = NodePath("character_actor1_1")
+[sub_resource type="Animation" id="Animation_j8mf4"]
+resource_name = "Hurt"
+length = 0.6000066979594528
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [36, 37, 38]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(20, 0), Vector2(-10, 0), Vector2(0, 0)]
+}
 
-[node name="character_actor1_1" parent="." unique_id=1234637241 instance=ExtResource("12_25eqy")]
+[sub_resource type="Animation" id="Animation_yptn7"]
+resource_name = "Idle"
+length = 0.5714428826883435
+loop_mode = 1
+step = 0.14285715
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857146),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="Animation" id="Animation_c1w8j"]
+resource_name = "Miss"
+length = 0.6000066979594528
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [45, 46, 47]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qbbkm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4lull"]
+_data = {
+&"Hurt": SubResource("Animation_j8mf4"),
+&"Idle": SubResource("Animation_yptn7"),
+&"Miss": SubResource("Animation_c1w8j"),
+&"RESET": SubResource("Animation_qbbkm")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k4s2r"]
+animation = &"Hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j8mf4"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yptn7"]
+animation = &"Miss"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c1w8j"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qbbkm"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_gfpqv"]
+allow_transition_to_self = true
+states/Hurt/node = SubResource("AnimationNodeAnimation_k4s2r")
+states/Hurt/position = Vector2(361, 8)
+states/Idle/node = SubResource("AnimationNodeAnimation_j8mf4")
+states/Idle/position = Vector2(361, 100)
+states/Miss/node = SubResource("AnimationNodeAnimation_yptn7")
+states/Miss/position = Vector2(361, 205)
+transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_c1w8j"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_qbbkm")]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aoydg"]
+graph_offset = Vector2(-486.0029, -14.675915)
+nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_gfpqv")
+nodes/base_StateMachine/position = Vector2(-120, 60)
+node_connections = [&"output", 0, &"base_StateMachine"]
+
+[node name="fighter_actor1_1" type="Node2D" unique_id=1625553253 node_paths=PackedStringArray("animation_tree", "pivot")]
+script = ExtResource("1_3pmha")
+character_resource = ExtResource("2_j8mf4")
+fighter_serializable = SubResource("Resource_1d3vm")
+animation_tree = NodePath("AnimationTree")
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node2D" parent="." unique_id=1664150683]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot" unique_id=2009140151]
+texture = ExtResource("12_k4s2r")
+offset = Vector2(0, -32)
+flip_h = true
+hframes = 9
+vframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2020662977]
+libraries/ = SubResource("AnimationLibrary_4lull")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1982403090]
+tree_root = SubResource("AnimationNodeBlendTree_aoydg")
+anim_player = NodePath("../AnimationPlayer")

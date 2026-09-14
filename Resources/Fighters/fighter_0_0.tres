@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Fighter_Resource" format=3 uid="uid://bjqm63d3ctcaa"]
+
+[ext_resource type="Script" uid="uid://nvm68ow83k0c" path="res://Scripts/Resources/fighter_resource.gd" id="1_33a4s"]
+[ext_resource type="Resource" uid="uid://buc4v5pr6bu4m" path="res://Resources/Characters/character_1_0.tres" id="1_g3cdv"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_g3cdv"]
+
+[resource]
+script = ExtResource("1_33a4s")
+character_resource = ExtResource("1_g3cdv")
+metadata/_custom_type_script = "uid://nvm68ow83k0c"

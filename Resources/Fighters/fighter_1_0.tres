@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Fighter_Resource" format=3 uid="uid://blupr0mvegsco"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_k6by3"]
+[ext_resource type="Resource" uid="uid://crf420awv7t56" path="res://Resources/Skills/skill_0_0.tres" id="2_6evbv"]
+[ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/skill_1_0.tres" id="3_bectv"]
+[ext_resource type="Resource" uid="uid://bgkf1ugnqybm5" path="res://Resources/Skills/skill_2_1_1_7_3.tres" id="4_8mmsb"]
+[ext_resource type="Resource" uid="uid://dfa1o2oxpnj2m" path="res://Resources/Skills/skill_2_1_1_7_1.tres" id="5_cxc3m"]
+[ext_resource type="Resource" uid="uid://bqym1v4saijs6" path="res://Resources/Skills/skill_2_1_1_7_2.tres" id="6_as5qp"]
+[ext_resource type="Script" uid="uid://nvm68ow83k0c" path="res://Scripts/Resources/fighter_resource.gd" id="8_1qkvl"]
+
+[resource]
+script = ExtResource("8_1qkvl")
+myFIGHTER_CLASS = 1
+thunder = Vector4i(100, 100, 0, 200)
+add_skill_resource_array = Array[ExtResource("1_k6by3")]([ExtResource("2_6evbv"), ExtResource("3_bectv"), ExtResource("4_8mmsb"), ExtResource("5_cxc3m"), ExtResource("6_as5qp")])
+metadata/_custom_type_script = "uid://nvm68ow83k0c"

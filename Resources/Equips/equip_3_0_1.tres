@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://bj3cirf4tf4de"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_hdkva"]
+[ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="2_4p6bh"]
+[ext_resource type="Texture2D" uid="uid://cktgcfmra8b88" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_109.png" id="2_tfmtf"]
+
+[resource]
+script = ExtResource("2_4p6bh")
+icon = ExtResource("2_tfmtf")
+myFIGHTER_CLASS = 4
+status_resistance_dictionary = Dictionary[StringName, int]({
+&"status_1": 30
+})
+metadata/_custom_type_script = "uid://cs8s7xpq3y00s"
