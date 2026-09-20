@@ -6,7 +6,6 @@
 [resource]
 script = ExtResource("1_rc8e5")
 icon = ExtResource("1_v6epm")
-max_hold = 2
 tp_cost = 25
 value = 7
 myEFFECT = 1

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Equip_Resource" format=3 uid="uid://dhvbvytft23lh"]
+
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_njg13"]
+[ext_resource type="Resource" uid="uid://bi25mduw3pq75" path="res://Resources/Skills/skill_0_2.tres" id="2_njg13"]
+[ext_resource type="Texture2D" uid="uid://c6xg1pbaq0qgs" path="res://Assets/freebies_mv_ready_ace_icons/WeaponsA512/WeaponsA512_2.png" id="3_t7egb"]
+[ext_resource type="Resource" uid="uid://crf420awv7t56" path="res://Resources/Skills/skill_0_0.tres" id="4_78g35"]
+[ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="5_6yhrp"]
+
+[resource]
+script = ExtResource("5_6yhrp")
+icon = ExtResource("3_t7egb")
+myFIGHTER_CLASS = 1
+physical_attack = 15
+add_skill_resource_array = Array[ExtResource("1_njg13")]([ExtResource("2_njg13")])
+remove_skill_resource_array = Array[ExtResource("1_njg13")]([ExtResource("4_78g35")])
+metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

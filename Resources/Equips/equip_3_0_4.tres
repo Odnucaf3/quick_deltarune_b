@@ -2,7 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_k5mh4"]
 [ext_resource type="Script" uid="uid://cs8s7xpq3y00s" path="res://Scripts/Resources/equip_resource.gd" id="2_24jhm"]
+[ext_resource type="Texture2D" uid="uid://knpqt6ed360d" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_146.png" id="2_j7upb"]
 
 [resource]
 script = ExtResource("2_24jhm")
+icon = ExtResource("2_j7upb")
+myEQUIP_TYPE = 3
+myFIGHTER_CLASS = 4
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

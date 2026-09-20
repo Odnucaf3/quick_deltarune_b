@@ -8,9 +8,10 @@
 [resource]
 script = ExtResource("2_0n2sv")
 icon = ExtResource("2_8ld1n")
+myFIGHTER_CLASS = 1
 physical_attack = 12
 magical_attack = 4
 modifie_skill_resource_dictionary = Dictionary[ExtResource("1_h4l2i"), Vector3i]({
-ExtResource("2_aa7b3"): Vector3i(3, -1, -10)
+ExtResource("2_aa7b3"): Vector3i(0, 0, -10)
 })
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

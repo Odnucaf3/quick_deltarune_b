@@ -13,6 +13,7 @@
 [ext_resource type="Resource" uid="uid://c7j5fbttfegi6" path="res://Resources/Equips/equip_1_1_1.tres" id="11_gijw1"]
 [ext_resource type="Texture2D" uid="uid://ssbbdf2f4b61" path="res://Assets/rpg_maker_mv/img/battlebacks1/Grassland.png" id="11_r4og7"]
 [ext_resource type="Resource" uid="uid://cqwgiphrg5vfd" path="res://Resources/Equips/equip_1_0_1.tres" id="12_6yqg2"]
+[ext_resource type="Resource" uid="uid://dhvbvytft23lh" path="res://Resources/Equips/equip_1_2_1.tres" id="12_bvfqi"]
 [ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_1_0.tres" id="12_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://dgojjdoocby4g" path="res://Assets/rpg_maker_mv/img/battlebacks2/Grassland.png" id="12_xm4vn"]
 [ext_resource type="Resource" uid="uid://bj3cirf4tf4de" path="res://Resources/Equips/equip_3_0_1.tres" id="13_206if"]
@@ -34,6 +35,8 @@
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_actor2_7.tscn" id="26_jvut7"]
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="27_b6a3y"]
+[ext_resource type="Resource" uid="uid://cn8nur5gah7nb" path="res://Resources/Equips/equip_1_0_3.tres" id="29_stbc4"]
+[ext_resource type="Resource" uid="uid://cbmsclimsrwh0" path="res://Resources/Equips/equip_1_0_4.tres" id="30_bvfqi"]
 [ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="30_okou3"]
 [ext_resource type="Texture2D" uid="uid://bd8wsbia6rebq" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_B.png" id="30_p24l3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
@@ -41,26 +44,40 @@
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="32_gijw1"]
 [ext_resource type="Theme" uid="uid://drphpbb8kep0x" path="res://Themes/title_label_theme.tres" id="34_206if"]
 [ext_resource type="Theme" uid="uid://cof2v378gb86t" path="res://Themes/tp_bar_theme.tres" id="35_4yjru"]
+[ext_resource type="Resource" uid="uid://liedqs2kexn" path="res://Resources/Equips/equip_2_0_1.tres" id="35_h276b"]
 [ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_actor1_1.tscn" id="35_n53vq"]
 [ext_resource type="Theme" uid="uid://dkaas12c836ew" path="res://Themes/tab_theme.tres" id="36_5668i"]
 [ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/character_actor1_8.tscn" id="36_altm3"]
+[ext_resource type="Resource" uid="uid://dn7qdqjd5v8x6" path="res://Resources/Equips/equip_2_0_2.tres" id="36_brd8x"]
 [ext_resource type="TileSet" uid="uid://ci8hqmotb2vfk" path="res://TileSets/new_tile_set.tres" id="37_5668i"]
 [ext_resource type="PackedScene" uid="uid://coq254ffrmvdd" path="res://Nodes/Prefabs/Fighters/fighter_monster_1.tscn" id="37_altm3"]
+[ext_resource type="Resource" uid="uid://bjleqtsseo06b" path="res://Resources/Equips/equip_2_0_3.tres" id="37_ggk8j"]
 [ext_resource type="Texture2D" uid="uid://bs0gogac2glwr" path="res://Assets/tilesets_mv/Outside_A2_Godot_6.png" id="37_kthws"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
+[ext_resource type="Resource" uid="uid://be6xoc2bpx7mg" path="res://Resources/Equips/equip_2_0_4.tres" id="38_h1r7s"]
 [ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
+[ext_resource type="Resource" uid="uid://2r6p1baj0yeb" path="res://Resources/Equips/equip_3_0_2.tres" id="41_wdwx4"]
+[ext_resource type="Resource" uid="uid://cva8obeu5n41y" path="res://Resources/Equips/equip_3_0_3.tres" id="42_6avol"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
+[ext_resource type="Resource" uid="uid://driaspgavwmr3" path="res://Resources/Equips/equip_3_0_4.tres" id="43_tn53f"]
 [ext_resource type="Texture2D" uid="uid://dnp7htyab2ryr" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_209.png" id="44_0t8i2"]
 [ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="44_r4og7"]
 [ext_resource type="Texture2D" uid="uid://dcl7iyt5kjpwt" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_138.png" id="45_y1dyr"]
+[ext_resource type="Resource" uid="uid://c45wk5nerxj85" path="res://Resources/Equips/equip_4_0_1.tres" id="46_2hsyw"]
 [ext_resource type="Texture2D" uid="uid://b0ahrc6537fvk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_190.png" id="46_f8ljg"]
 [ext_resource type="Texture2D" uid="uid://cceadn16e18rp" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_242.png" id="47_8m6hh"]
+[ext_resource type="Resource" uid="uid://ky5lamr6qey3" path="res://Resources/Equips/equip_4_0_2.tres" id="47_g3we4"]
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
+[ext_resource type="Resource" uid="uid://y42250lba52x" path="res://Resources/Equips/equip_4_0_3.tres" id="48_psock"]
 [ext_resource type="Texture2D" uid="uid://bbykhvbevkk6r" path="res://Assets/rpg_maker_mv/img/faces/Actor1_8.png" id="49_6yqg2"]
+[ext_resource type="Resource" uid="uid://d3kwq4dentkn8" path="res://Resources/Equips/equip_4_0_4.tres" id="49_l0fxk"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
+[ext_resource type="Resource" uid="uid://cp3wtney3ld27" path="res://Resources/Status/status_7.tres" id="51_hp31v"]
 [ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_0_0.tres" id="52_biyce"]
 [ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1.tscn" id="53_j7ao1"]
 [ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
+[ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="54_brd8x"]
+[ext_resource type="Resource" uid="uid://buw4urkkcygf1" path="res://Resources/Items/item_1_0_0_0.tres" id="55_ggk8j"]
 [ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
 [ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="56_shqvj"]
 [ext_resource type="Texture2D" uid="uid://bpf0lfby516un" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_177.png" id="57_hdd08"]
@@ -79,17 +96,7 @@ metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_8ld1n"]
 script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("12_6yqg2")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_3ki4l"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("13_206if")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_rp41b"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("14_4yjru")
+equip_resource = ExtResource("12_bvfqi")
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_hdd08"]
@@ -234,20 +241,24 @@ radius = 8.0
 
 [sub_resource type="Resource" id="Resource_5668i"]
 script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("12_6yqg2")
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_4yjru"]
 script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("14_4yjru")
 myEQUIP_TYPE = 1
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_206if"]
 script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("29_stbc4")
 myEQUIP_TYPE = 2
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_6yqg2"]
 script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("30_bvfqi")
 myEQUIP_TYPE = 3
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
@@ -257,6 +268,104 @@ fighter_resource = ExtResource("12_hf3yd")
 level = 9
 equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_5668i"), SubResource("Resource_4yjru"), SubResource("Resource_206if"), SubResource("Resource_6yqg2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[sub_resource type="Resource" id="Resource_lefb6"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("35_h276b")
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_sbg61"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("36_brd8x")
+myEQUIP_TYPE = 1
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_t7nra"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("37_ggk8j")
+myEQUIP_TYPE = 2
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_p64jt"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("38_h1r7s")
+myEQUIP_TYPE = 3
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_i71nr"]
+script = ExtResource("24_8wyqk")
+fighter_resource = ExtResource("19_8m6hh")
+equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_lefb6"), SubResource("Resource_sbg61"), SubResource("Resource_t7nra"), SubResource("Resource_p64jt")])
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[sub_resource type="Resource" id="Resource_3mm48"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("13_206if")
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_qg0i1"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("41_wdwx4")
+myEQUIP_TYPE = 1
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_u5b14"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("42_6avol")
+myEQUIP_TYPE = 2
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_ouob3"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("43_tn53f")
+myEQUIP_TYPE = 3
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_m4vmq"]
+script = ExtResource("24_8wyqk")
+fighter_resource = ExtResource("21_ngqpa")
+equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_3mm48"), SubResource("Resource_qg0i1"), SubResource("Resource_u5b14"), SubResource("Resource_ouob3")])
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[sub_resource type="Resource" id="Resource_syx63"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("46_2hsyw")
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_i08r6"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("47_g3we4")
+myEQUIP_TYPE = 1
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_2awy3"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("48_psock")
+myEQUIP_TYPE = 2
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_b62cn"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("49_l0fxk")
+myEQUIP_TYPE = 3
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_2i5i2"]
+script = ExtResource("25_j7ao1")
+status_resource = ExtResource("51_hp31v")
+metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
+
+[sub_resource type="Resource" id="Resource_hmkdw"]
+script = ExtResource("24_8wyqk")
+fighter_resource = ExtResource("22_shqvj")
+equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_syx63"), SubResource("Resource_i08r6"), SubResource("Resource_2awy3"), SubResource("Resource_b62cn")])
+status_serializable_array = Array[ExtResource("25_j7ao1")]([SubResource("Resource_2i5i2")])
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[sub_resource type="Resource" id="Resource_3em1u"]
+script = ExtResource("54_brd8x")
+action_resource = ExtResource("55_ggk8j")
+metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ei7os"]
 texture = ExtResource("37_kthws")
@@ -894,7 +1003,7 @@ fighter_ally_ui_prefab = ExtResource("5_r4og7")
 fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
 ally_pop_up_prefab = ExtResource("8_5lr35")
 enemy_pop_up_prefab = ExtResource("9_8wyqk")
-item_equip_inventory = Array[ExtResource("27_b6a3y")]([SubResource("Resource_pbmux"), SubResource("Resource_8ld1n"), SubResource("Resource_3ki4l"), SubResource("Resource_rp41b")])
+item_equip_inventory = Array[ExtResource("27_b6a3y")]([SubResource("Resource_pbmux"), SubResource("Resource_8ld1n")])
 money_inventory = SubResource("Resource_hdd08")
 ally_fighter_party = [NodePath("World_2D/player_characterbody2d/fighter_actor1_1"), NodePath("World_2D/player_characterbody2d/fighter_actor1_8"), NodePath("World_2D/player_characterbody2d/fighter_actor2_7"), NodePath("World_2D/player_characterbody2d/fighter_actor3_8")]
 ally_character_party = [NodePath("World_2D/player_characterbody2d/character_actor1_1")]
@@ -1072,7 +1181,7 @@ equip_menu_information_description_value = NodePath("main_canvas_layer/equip_men
 statistics_menu = NodePath("main_canvas_layer/statistics_menu")
 statistics_menu_button_0 = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/HBoxContainer/statistics_menu_button_0")
 statistics_menu_information_root = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root")
-statistics_menu_information_fighter_face = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4/MarginContainer/statistics_menu_information_fighter_face")
+statistics_menu_information_fighter_face = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4/statistics_menu_information_fighter_face")
 statistics_menu_information_fighter_name = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4/VBoxContainer/statistics_menu_information_fighter_name")
 statistics_menu_information_fighter_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4/VBoxContainer/statistics_menu_information_fighter_title")
 statistics_menu_information_fighter_hp_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4/VBoxContainer/statistics_menu_information_fighter_hp_value")
@@ -1378,12 +1487,15 @@ fighter_serializable = SubResource("Resource_bvfqi")
 
 [node name="fighter_actor1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
 y_sort_enabled = true
+fighter_serializable = SubResource("Resource_i71nr")
 
 [node name="fighter_actor2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
 y_sort_enabled = true
+fighter_serializable = SubResource("Resource_m4vmq")
 
 [node name="fighter_actor3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
 y_sort_enabled = true
+fighter_serializable = SubResource("Resource_hmkdw")
 
 [node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "ally_3", "ally_3_character", "npc_3", "npc_3_character", "enemy_1", "enemy_1_fighter_array", "enemy_2", "enemy_2_fighter_array", "interactable", "room_limits")]
 y_sort_enabled = true
@@ -1407,6 +1519,7 @@ ally_3_fighter_resouce = ExtResource("22_shqvj")
 ally_3_fighter_prefab = ExtResource("22_5rrxs")
 npc_3 = NodePath("npc_3")
 npc_3_character = NodePath("npc_3/character_actor1_8")
+npc_3_item_consumable_array = Array[ExtResource("54_brd8x")]([SubResource("Resource_3em1u")])
 enemy_1 = NodePath("npc_4")
 enemy_1_fighter_array = [NodePath("npc_4/fighter_actor1_1"), NodePath("npc_4/fighter_actor1_2"), NodePath("npc_4/fighter_actor1_3"), NodePath("npc_4/fighter_actor1_4")]
 enemy_2 = NodePath("npc_5")
@@ -1824,10 +1937,12 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "Bla bla bla bla bla bla bla bla bla bla bla  bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla. "
+text = "[color=ffe500]asdsad[/color] asdasdasdasdasdasdasd [color=ffe500]asdsad[/color] "
 scroll_following = true
 scroll_following_visible_characters = true
+visible_characters = 29
 visible_characters_behavior = 1
+visible_ratio = 0.8055556
 
 [node name="dialogue_menu_audio" type="AudioStreamPlayer" parent="main_canvas_layer/dialogue_menu" unique_id=1671670082]
 stream = ExtResource("30_okou3")
@@ -2672,6 +2787,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="item_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1586744743]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4222,6 +4338,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="statistics_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=1643418800]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4309,10 +4426,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4" unique_id=336002304]
-layout_mode = 2
-
-[node name="statistics_menu_information_fighter_face" type="TextureRect" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4/MarginContainer" unique_id=1587923037]
+[node name="statistics_menu_information_fighter_face" type="TextureRect" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/name_and_level/HBoxContainer4" unique_id=1587923037]
 layout_mode = 2
 texture = ExtResource("44_r4og7")
 expand_mode = 3

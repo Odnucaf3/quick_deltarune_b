@@ -21,11 +21,21 @@ enum_EQUIP_TYPE_HEAD,Cabeza,Head
 enum_EQUIP_TYPE_NONE,-,-
 enum_EQUIP_TYPE_RING,Anillo,Ring
 enum_EQUIP_TYPE_WEAPON,Arma,Weapon
-enum_FIGHTER_CLASS_HEROE,Heroe,Hero
-enum_FIGHTER_CLASS_MAGICIAN,Mago,Mage
-enum_FIGHTER_CLASS_NONE,-,-
-enum_FIGHTER_CLASS_PRIEST,Sacerdote,Priest
-enum_FIGHTER_CLASS_WARRIOR,Guerrero,Warrior
+enum_FIGHTER_CLASS_HEROE_MALE,Heroe,Hero
+enum_FIGHTER_CLASS_HEROE_FEMALE,Heroina,Hero
+enum_FIGHTER_CLASS_HEROE_NONBINARY,Heroe,Hero
+enum_FIGHTER_CLASS_MAGICIAN_MALE,Mago,Mage
+enum_FIGHTER_CLASS_MAGICIAN_FEMALE,Maga,Mage
+enum_FIGHTER_CLASS_MAGICIAN_NONBINARY,Mage,Mage
+enum_FIGHTER_CLASS_NONE_MALE,-,-
+enum_FIGHTER_CLASS_NONE_FEMALE,-,-
+enum_FIGHTER_CLASS_NONE_NONBINARY,-,-
+enum_FIGHTER_CLASS_PRIEST_MALE,Sacerdote,Priest
+enum_FIGHTER_CLASS_PRIEST_FEMALE,Sacerdotisa,Priest
+enum_FIGHTER_CLASS_PRIEST_NONBINARY,Sacerdote,Priest
+enum_FIGHTER_CLASS_WARRIOR_MALE,Guerrero,Warrior
+enum_FIGHTER_CLASS_WARRIOR_FEMALE,Guerrera,Warrior
+enum_FIGHTER_CLASS_WARRIOR_NONBINARY,Guerrere,Warrior
 enum_TARGET_ALLY_1,1 Aliado,1 Ally
 enum_TARGET_ALLY_ALL,Todos los Aliados,All Allies
 enum_TARGET_ALLY_DOWN_1,1 Aliado Caido,1 Fallen Ally
@@ -60,6 +70,8 @@ resource_equip_1_0_4_a,Anillo de Harold,Harlod's Ring
 resource_equip_1_0_4_b,-,-
 resource_equip_1_1_1_a,Shotel,Shotel
 resource_equip_1_1_1_b,-,-
+resource_equip_1_2_1_a,Espada Vampírica,Vampire Sword
+resource_equip_1_2_1_b,-,-
 resource_equip_2_0_1_a, Espada de Therese,Harold's Helmet
 resource_equip_2_0_1_b,-,-
 resource_equip_2_0_2_a,Casco de Therese,Therese's Helmet
@@ -204,8 +216,8 @@ text_level,Nivel,Level
 text_luck,Suerte,Luck
 text_magical_attack,Ataque Mágico,Magical Attack
 text_magical_defense,Defensa Mágica,Magical Defense
-text_magical_evasion_rate,Tasa de Evasión Mágica,Magical Presition Rate
-text_magical_presition_rate,Tasa de Precisión Mágica,Magical Evasion Rate
+text_magical_evasion_rate,Tasa de Evasión Mágica,Magical Evasion Rate
+text_magical_presition_rate,Tasa de Precisión Mágica,Magical Presition Rate
 text_max_hp,PV Máximo,Maximum HP
 text_next,Siguente,Next
 text_no,No,No
@@ -217,8 +229,8 @@ text_pause_menu,Menú de Pause,Pause Menu
 text_pharmacology,Farmacología,Pharmacology
 text_physical_attack,Ataque Físico,Physical Attack
 text_physical_defense,Defensa Física,Physical Defense
-text_physical_evasion_rate,Tasa de Evasión Física,Physical Presition Rate
-text_physical_presition_rate,Tasa de Precisión Física,Physical Evasion Rate
+text_physical_evasion_rate,Tasa de Evasión Física,Physical Evasion Rate
+text_physical_presition_rate,Tasa de Precisión Física,Physical Presition Rate
 text_power,Poder,Power
 text_presition,Precisión,Presition
 text_properties,Propiedades,Properties

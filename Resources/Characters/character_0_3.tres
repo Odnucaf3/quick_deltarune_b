@@ -8,4 +8,5 @@
 script = ExtResource("1_s4rmm")
 face = ExtResource("1_185bm")
 voice = ExtResource("3_bl6ox")
+myGENDER = 1
 metadata/_custom_type_script = "uid://bhx63qkff2khj"

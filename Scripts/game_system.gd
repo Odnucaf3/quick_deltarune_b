@@ -390,10 +390,14 @@ var status_menu_button_array: Array[Button]
 var dialogue_menu_button_array: Array[Button]
 var dialogue_option_index: int
 var dialogue_index: int
+var dialogue_counter: int
+var dialogue_whole_text: String
+var dialogue_letter: String
 var is_dialogue_skipped: bool
 @export var button_next: Button
 signal next_signal
 var is_in_dialogue: bool = false
+var dialogue_tween: Tween
 #-------------------------------------------------------------------------------
 @export_category("Confirm Buy Menu")
 @export var confirm_buy_menu: Control
@@ -503,6 +507,7 @@ func _ready() -> void:
 	#-------------------------------------------------------------------------------
 	NormalMotion()
 	Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Idle")
+	B_Dialogue_Test()
 #-------------------------------------------------------------------------------
 func _physics_process(_delta: float) -> void:
 	tween_Array = get_tree().get_processed_tweens()
@@ -1626,7 +1631,7 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 	item_menu_equip_information_stored_value.text = "["+str(_equip_serializable.stored)+"]"
-	item_menu_equip_information_class_value.text = Get_Tr_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
+	item_menu_equip_information_class_value.text = Get_Tr_Fighter_Class(_equip_resource.myFIGHTER_CLASS)
 	item_menu_equip_information_type_value.text = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_statistics_name.text = ""
@@ -1702,7 +1707,7 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		equip_menu_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_inventory, _equip_resource)
 		equip_menu_information_stored_value.text = "["+str(_stored)+"]"
-		equip_menu_information_class_value.text = Get_Tr_Fighter_Class_Type(_equip_resource.myFIGHTER_CLASS)
+		equip_menu_information_class_value.text = Get_Tr_Fighter_Class(_equip_resource.myFIGHTER_CLASS)
 		equip_menu_information_type_value.text = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
 		#-------------------------------------------------------------------------------
 		equip_menu_information_statistics_name.text = ""
@@ -1866,26 +1871,27 @@ func Set_User_Status_Element_4_Stats(_element_type:Action_Resource.ELEMENT, _ele
 	Set_Equip_Element_4_Stats(status_menu_information_statistics_name, _element_type, status_menu_information_statistics_value, _element)
 #-------------------------------------------------------------------------------
 func Set_Equip_Element_4_Stats(_name_label:Label, _element_type:Action_Resource.ELEMENT, _value_label:Label, _element:Vector4i):
-	#-------------------------------------------------------------------------------
 	var _element_name: String = Get_Tr_Element(_element_type)
+	var element_title: String = tr("text_element")
+	#-------------------------------------------------------------------------------
 	if(_element.x != 0):
-		var _name: String = _element_name+" ("+tr("text_power")+")"
-		_name_label.text += String_With_Asterisco_and_2_Points(_name)+"\n"
+		var _power: String = "("+tr("text_power")+")"
+		_name_label.text += String_With_Asterisco_and_2_Points(element_title+" / "+_element_name+" "+_power)+"\n"
 		_value_label.text += Get_Number_with_Plus(_element.x)+"%"+"\n"
 	#-------------------------------------------------------------------------------
 	if(_element.y != 0):
-		var _name: String = _element_name+" ("+tr("text_absortion")+")"
-		_name_label.text += String_With_Asterisco_and_2_Points(_name)+"\n"
+		var _absorb: String = "("+tr("text_absortion")+")"
+		_name_label.text += String_With_Asterisco_and_2_Points(element_title+" / "+_element_name+" "+_absorb)+"\n"
 		_value_label.text += Get_Number_with_Plus(_element.y)+"%"+"\n"
 	#-------------------------------------------------------------------------------
 	if(_element.z != 0):
-		var _name: String = _element_name+" ("+tr("text_affinity")+")"
-		_name_label.text += String_With_Asterisco_and_2_Points(_name)+"\n"
+		var _affinity: String = "("+tr("text_affinity")+")"
+		_name_label.text += String_With_Asterisco_and_2_Points(element_title+" / "+_element_name+" "+_affinity)+"\n"
 		_value_label.text += Get_Number_with_Plus(_element.z)+"%"+"\n"
 	#-------------------------------------------------------------------------------
 	if(_element.w != 0):
-		var _name: String = _element_name+" ("+tr("text_repulsion")+")"
-		_name_label.text += String_With_Asterisco_and_2_Points(_name)+"\n"
+		var _repulsion: String = "("+tr("text_repulsion")+")"
+		_name_label.text += String_With_Asterisco_and_2_Points(element_title+" / "+_element_name+" "+_repulsion)+"\n"
 		_value_label.text += Get_Number_with_Plus(_element.w)+"%"+"\n"
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -2545,7 +2551,7 @@ func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializabl
 	statistics_menu_information_fighter_hp_slider.max_value = _max_hp
 	statistics_menu_information_fighter_hp_slider.value = _max_hp
 	#-------------------------------------------------------------------------------
-	statistics_menu_information_level_value.text = Get_Tr_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"\n"
+	statistics_menu_information_level_value.text = Get_Tr_Fighter_Class_and_Gender(_fighter_serializable.fighter_resource.myFIGHTER_CLASS, _fighter_node.character_resource.myGENDER)+"\n"
 	statistics_menu_information_level_value.text += str(_fighter_serializable.level)+"\n"
 	var _max_experience: int = Get_Max_Experience(_fighter_serializable)
 	var _experience: int = clampi(_fighter_serializable.experience, 0, _max_experience-1)
@@ -2716,6 +2722,7 @@ func Set_Fighter_Skill_List(_fighter_serializable:Fighter_Serializable):
 		var _uses_0: String
 		var _uses_1: String
 		var _max_hold: int = _skill_serializable_array[_i].action_resource.max_hold
+		var _hold: int = _skill_serializable_array[_i].hold
 		#-------------------------------------------------------------------------------
 		if(_modifier.x == 0):
 			_uses_1 = ""
@@ -2724,12 +2731,12 @@ func Set_Fighter_Skill_List(_fighter_serializable:Fighter_Serializable):
 				_uses_0 = "-"
 			#-------------------------------------------------------------------------------
 			else:
-				_uses_0 = "["+str(_max_hold)+"/"+str(_max_hold)+"]"
+				_uses_0 = "["+str(_hold)+"/"+str(_max_hold)+"]"
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		else:
 			_uses_1 = "("+Get_Number_with_Plus(_modifier.x)+") "
-			_uses_0 = "["+str(_max_hold)+"/"+str(_max_hold)+"]"
+			_uses_0 = "["+str(_hold)+"/"+str(_max_hold)+"]"
 		#-------------------------------------------------------------------------------
 		statistics_menu_information_skill_uses_value.text += _uses_1+_uses_0+"\n"
 	#-------------------------------------------------------------------------------
@@ -4062,7 +4069,7 @@ func Set_Idiome():
 func Fighter_Button_Set_Information_and_Idiome(_fighter_button:Fighter_Button, _character_resource:Character_Resource, _fighter_serializable:Fighter_Serializable):
 	_fighter_button.name_label.text = Get_Tr_Character_Name(_character_resource)
 	_fighter_button.title_label.text = Get_Tr_Character_Title(_character_resource)
-	_fighter_button.class_label.text = "["+Get_Tr_Fighter_Class_Type(_fighter_serializable.fighter_resource.myFIGHTER_CLASS)+"]"
+	_fighter_button.class_label.text = "["+Get_Tr_Fighter_Class_and_Gender(_fighter_serializable.fighter_resource.myFIGHTER_CLASS, _character_resource.myGENDER)+"]"
 	_fighter_button.level_label.text = "[Level: "+str(_fighter_serializable.level)+"]"
 	#-------------------------------------------------------------------------------
 	_fighter_button.status_label.text = String_With_Asterisco_and_2_Points(tr("text_status_effects"))+" "+str(_fighter_serializable.status_serializable_array.size())
@@ -4144,6 +4151,7 @@ func Debug_Information() -> void:
 	_s += "-------------------------------------------------------\n"
 	_s += "* Grab Focus: " + str(get_viewport().gui_get_focus_owner())+"\n"
 	_s += "* All Tweens: "+str(tween_Array.size())+"\n"
+	_s += "* Dialogue Tween: "+str(dialogue_tween)+"\n"
 	_s += "-------------------------------------------------------\n"
 	_s += "* myGAME_STATE: " + GAME_STATE.keys()[myGAME_STATE]+"\n"
 	_s += "* myBATTLE_STATE: " + BATTLE_STATE.keys()[myBATTLE_STATE]+"\n"
@@ -4219,6 +4227,161 @@ func Set_DebugInfo() -> void:
 #-------------------------------------------------------------------------------
 #region DIALOGUE FUNCTIONS
 #-------------------------------------------------------------------------------
+func B_Dialogue_Test():
+	Dialogue_Enter()
+	await Seconds(0.3)
+	Dialogue_Open()
+	var _character: Character_Resource = ally_fighter_party[0].character_resource
+	await Dialogue_with_Face(_character, "* Hello, this is a B test dialogue.")
+	await Dialogue("* This dialogue text, uses Tweens instead of loops.")
+	await Dialogue_with_Face(_character, "* And now... im gonna test if this is better or the other.")
+	await Dialogue("* I am the original                                                  Star Walker.")
+	Dialogue_Close_and_Exit()
+#-------------------------------------------------------------------------------
+func Dialogue_Enter():
+	player_interactable_by_action_collider.disabled = true
+	is_in_dialogue = true
+	Disable_Pause_Input()
+	Stop_Moving()
+#-------------------------------------------------------------------------------
+func Dialogue_Open():
+	dialogue_menu.show()
+	button_next.show()
+#-------------------------------------------------------------------------------
+func Dialogue_Enter_and_Open():
+	Dialogue_Enter()
+	Dialogue_Open()
+#-------------------------------------------------------------------------------
+func Dialogue_Close():
+	dialogue_menu.hide()
+	button_next.hide()
+#-------------------------------------------------------------------------------
+func Dialogue_Exit():
+	player_interactable_by_action_collider.disabled = false
+	is_in_dialogue = false
+	Enable_Pause_Input()
+#-------------------------------------------------------------------------------
+func Dialogue_Close_and_Exit():
+	Dialogue_Close()
+	Dialogue_Exit()
+#-------------------------------------------------------------------------------
+func Dialogue_with_Face_0(_character_resource:Character_Resource, _text:String):
+	Dialogue_with_Face_Common(_character_resource, _text)
+	await Dialogue_Skip(_text)
+#-------------------------------------------------------------------------------
+func Dialogue_with_Face_Override(_character_resource:Character_Resource, _text:String):
+	Dialogue_with_Face_Common(_character_resource, _text)
+	await Dialogue_Tween_Override()
+#-------------------------------------------------------------------------------
+func Dialogue_with_Face_Common(_character_resource:Character_Resource, _text:String):
+	dialogue_menu_name.text = "[u]"+Get_Tr_Character_Name(_character_resource)+":[u]"
+	dialogue_menu_name.show()
+	dialogue_menu_face.texture = _character_resource.face
+	dialogue_menu_face.show()
+	dialogue_menu_audio.stream = _character_resource.voice
+	dialogue_menu_value.text = _text
+	dialogue_menu_value.visible_characters = 0
+	#-------------------------------------------------------------------------------
+	is_dialogue_skipped = false
+	dialogue_index = 0
+	dialogue_counter = 0
+#-------------------------------------------------------------------------------
+func Dialogue_with_Face(_character_resource:Character_Resource, _text:String):
+	await Dialogue_with_Face_0(_character_resource, _text)
+	await Next_Button_Set()
+#-------------------------------------------------------------------------------
+func Dialogue_Null():
+	dialogue_menu_name.text = ""
+	dialogue_menu_name.hide()
+	dialogue_menu_face.texture = null
+	dialogue_menu_face.hide()
+	dialogue_menu_audio.stream = null
+	dialogue_menu_value.text = ""
+	dialogue_menu_value.visible_characters = -1
+	#-------------------------------------------------------------------------------
+	is_dialogue_skipped = false
+	dialogue_index = 0
+	dialogue_counter = 0
+#-------------------------------------------------------------------------------
+func Dialogue_0(_text:String):
+	Dialogue_Common(_text)
+	await Dialogue_Skip(_text)
+#-------------------------------------------------------------------------------
+func Dialogue_Override(_text:String):
+	Dialogue_Common(_text)
+	await Dialogue_Tween_Override()
+#-------------------------------------------------------------------------------
+func Dialogue_Tween_Override():
+	#-------------------------------------------------------------------------------
+	if(dialogue_tween.is_valid()):
+		dialogue_tween.kill()
+		dialogue_tween.finished.emit()
+	#-------------------------------------------------------------------------------
+	await Dialogue_Tween()
+#-------------------------------------------------------------------------------
+func Dialogue_Common(_text:String):
+	dialogue_menu_name.text = ""
+	dialogue_menu_name.hide()
+	dialogue_menu_face.texture = null
+	dialogue_menu_face.hide()
+	dialogue_menu_audio.stream = ally_fighter_party[0].character_resource.voice
+	dialogue_menu_value.text = _text
+	dialogue_menu_value.visible_characters = 0
+	#-------------------------------------------------------------------------------
+	is_dialogue_skipped = false
+	dialogue_index = 0
+	dialogue_counter = 0
+#-------------------------------------------------------------------------------
+func Dialogue(_text:String):
+	await Dialogue_0(_text)
+	await Next_Button_Set()
+#-------------------------------------------------------------------------------
+func Dialogue_Skip(_text:String):
+	Skip_Dialogue_Button_Set()
+	await Dialogue_Tween()
+#-------------------------------------------------------------------------------
+func Dialogue_Tween():
+	dialogue_tween = create_tween()
+	dialogue_tween.set_loops()
+	#IMPORTANTE: Tengo que trabajar con una versión del dialogo sin bbcode porque el analisis letra a letra considera lo que está entre [].
+	dialogue_whole_text = dialogue_menu_value.get_parsed_text()
+	dialogue_tween.tween_callback(func():Dialogue_Loop_Logic())
+	#-------------------------------------------------------------------------------
+	dialogue_tween.tween_interval(0.03)
+	#-------------------------------------------------------------------------------
+	await dialogue_tween.finished
+#-------------------------------------------------------------------------------
+func Dialogue_Loop_Logic():
+	#-------------------------------------------------------------------------------
+	if(dialogue_counter > 0):
+		dialogue_counter -= 1
+		return
+	#-------------------------------------------------------------------------------
+	dialogue_letter = dialogue_whole_text[dialogue_index]
+	#-------------------------------------------------------------------------------
+	while(dialogue_letter == " "):
+		dialogue_index += 1
+		dialogue_menu_value.visible_characters = dialogue_index
+		dialogue_letter = dialogue_whole_text[dialogue_index]
+	#-------------------------------------------------------------------------------
+	dialogue_index += 1
+	dialogue_menu_value.visible_characters = dialogue_index
+	dialogue_menu_audio.pitch_scale = randf_range(0.95, 1.05)
+	dialogue_menu_audio.play()
+	#-------------------------------------------------------------------------------
+	match(dialogue_letter):
+		".":
+			dialogue_counter = 14
+		#-------------------------------------------------------------------------------
+		",":
+			dialogue_counter = 7
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(dialogue_index >= dialogue_whole_text.length()):
+		dialogue_tween.kill()
+		dialogue_tween.finished.emit()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 func Next_Button_Set():
 	#-------------------------------------------------------------------------------
 	var _w: Callable = func():
@@ -4241,153 +4404,12 @@ func Skip_Dialogue_Button_Set():
 	var _s: Callable = func(): pass
 	#-------------------------------------------------------------------------------
 	var _submit:Callable = func():
-		is_dialogue_skipped = true
+		dialogue_tween.kill()
+		dialogue_tween.finished.emit()
+		dialogue_menu_value.visible_characters = dialogue_menu_value.text.length()
 	#-------------------------------------------------------------------------------
 	singleton.Set_Dialogue_Button(button_next, _submit, _w, _s)
 	singleton.Move_to_Button(button_next)
-#-------------------------------------------------------------------------------
-func Dialogue(_value:String):
-	await Dialogue_0(_value)
-	await Next_Button_Set()
-#-------------------------------------------------------------------------------
-func Dialogue_0(_value:String):
-	player_interactable_by_action_collider.disabled = true
-	dialogue_menu_face.hide()
-	var _character_resource: Character_Resource = ally_fighter_party[0].character_resource
-	dialogue_menu_audio.stream = _character_resource.voice
-	dialogue_menu_name.text = ""
-	dialogue_menu_name.hide()
-	dialogue_menu_value.visible_characters = 0
-	dialogue_index = 0
-	is_dialogue_skipped = false
-	#-------------------------------------------------------------------------------
-	Skip_Dialogue_Button_Set()
-	await Dialogue_Effect_Puntiation(_value)
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Dialogue_with_Face(_character_resource:Character_Resource, _value:String):
-	await Dialogue_with_Face_0(_character_resource, _value)
-	await Next_Button_Set()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Dialogue_with_Face_0(_character_resource:Character_Resource, _value:String):
-	player_interactable_by_action_collider.disabled = true
-	dialogue_menu_face.show()
-	dialogue_menu_face.texture = _character_resource.face
-	dialogue_menu_audio.stream = _character_resource.voice
-	dialogue_menu_name.show()
-	#dialogue_menu_name.text = "[lb]"+Get_Tr_Character_Name(_character_resource)+"[rb]:"
-	dialogue_menu_name.text = "[u]"+Get_Tr_Character_Name(_character_resource)+":"+"[/u]"
-	dialogue_menu_value.visible_characters = 0
-	dialogue_index = 0
-	is_dialogue_skipped = false
-	#-------------------------------------------------------------------------------
-	Skip_Dialogue_Button_Set()
-	await Dialogue_Effect_Puntiation(_value)
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Set_Dialogue_with_Face(_character_resource:Character_Resource):
-	dialogue_menu_face.show()
-	dialogue_menu_face.texture = _character_resource.face
-	dialogue_menu_audio.stream = _character_resource.voice
-	dialogue_menu_name.show()
-	#dialogue_menu_name.text = "[lb]"+_name+"[rb]:"
-	dialogue_menu_name.text = "[u]"+singleton.get_resource_filename(_character_resource)+":"+"[/u]"
-	dialogue_menu_value.text = ""
-	dialogue_menu_value.visible_characters = 0
-	dialogue_index = 0
-	is_dialogue_skipped = false
-	#-------------------------------------------------------------------------------
-	Skip_Dialogue_Button_Set()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Dialogue_Effect(_text:String):
-	await Dialogue_Effect_Timer(_text, 1)
-#-------------------------------------------------------------------------------
-func Dialogue_Effect_Timer(_text:String, _timer:int):
-	dialogue_menu_value.text += _text
-	var _length: int = dialogue_menu_value.text.length()
-	#-------------------------------------------------------------------------------
-	for _i in _length-1:
-		#-------------------------------------------------------------------------------
-		if(is_dialogue_skipped):
-			dialogue_index = _length
-			dialogue_menu_value.visible_characters = _length
-			return
-		#-------------------------------------------------------------------------------
-		var _letter: String = dialogue_menu_value.text[dialogue_index]
-		#-------------------------------------------------------------------------------
-		dialogue_index += 1
-		dialogue_menu_value.visible_characters = dialogue_index
-		#-------------------------------------------------------------------------------
-		if(_letter != " "):
-			dialogue_menu_audio.pitch_scale = randf_range(0.95, 1.05)
-			dialogue_menu_audio.play()
-			await Dialogue_Pause(_timer)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	dialogue_index = _length
-	dialogue_menu_value.visible_characters = _length
-	await Dialogue_Pause(1)
-#-------------------------------------------------------------------------------
-func Dialogue_Effect_Puntiation(_text:String):
-	dialogue_menu_value.text = _text
-	var _length: int = dialogue_menu_value.text.length()
-	#-------------------------------------------------------------------------------
-	for _i in _length-1:
-		#-------------------------------------------------------------------------------
-		if(is_dialogue_skipped):
-			dialogue_index = _length
-			dialogue_menu_value.visible_characters = _length
-			return
-		#-------------------------------------------------------------------------------
-		var _letter: String = dialogue_menu_value.text[dialogue_index]
-		#-------------------------------------------------------------------------------
-		dialogue_index += 1
-		dialogue_menu_value.visible_characters = dialogue_index
-		#-------------------------------------------------------------------------------
-		if(_letter != " "):
-			dialogue_menu_audio.pitch_scale = randf_range(0.95, 1.05)
-			dialogue_menu_audio.play()
-			#-------------------------------------------------------------------------------
-			if(_letter == "." or _letter == "?" or _letter == "!"):
-				await Dialogue_Pause(14)
-			#-------------------------------------------------------------------------------
-			elif(_letter == "," or _letter == ";"):
-				await Dialogue_Pause(7)
-			#-------------------------------------------------------------------------------
-			else:
-				await Dialogue_Pause(1)
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	dialogue_index = _length
-	dialogue_menu_value.visible_characters = _length
-	await Dialogue_Pause(1)
-#-------------------------------------------------------------------------------
-func Dialogue_Pause(_timer:int):
-	#-------------------------------------------------------------------------------
-	for _i in _timer:
-		#-------------------------------------------------------------------------------
-		if(is_dialogue_skipped):
-			return
-		#-------------------------------------------------------------------------------
-		await Seconds(0.03)
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Dialogue_Open():
-	button_next.show()
-	singleton.Move_to_Button(button_next)
-	is_in_dialogue = true
-	dialogue_menu.show()
-#-------------------------------------------------------------------------------
-func Dialogue_Close():
-	Dialogue_Close_0()
-	player_interactable_by_action_collider.disabled = false
-	is_in_dialogue = false
-#-------------------------------------------------------------------------------
-func Dialogue_Close_0():
-	button_next.hide()
-	dialogue_menu.hide()
 #-------------------------------------------------------------------------------
 func Disable_Pause_Input():
 	main_canvas_layer.nothing_cancel = func(): pass
@@ -4401,6 +4423,14 @@ func Stop_Moving():
 		Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Idle")
 		ally_character_party[_i].is_moving = false
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Dialogue_with_Face_with_Options(_character_resource:Character_Resource, _text:String, _array_string:Array[String]):
+	await Dialogue_with_Face_0(_character_resource, _text)
+	await Open_Dialogue_Options(_array_string)
+#-------------------------------------------------------------------------------
+func Dialogue_with_Options(_text:String, _array_string:Array[String]):
+	await Dialogue_0(_text)
+	await Open_Dialogue_Options(_array_string)
 #-------------------------------------------------------------------------------
 func Open_Dialogue_Options(_array_string:Array[String]):
 	button_next.hide()
@@ -4429,6 +4459,8 @@ func Open_Dialogue_Options(_array_string:Array[String]):
 		singleton.Move_to_Button(dialogue_menu_button_array[0])
 		singleton.Button_Array_Set_Vertical_Navigation(dialogue_menu_button_array)
 	#-------------------------------------------------------------------------------
+	await next_signal
+	Close_Dialogue_Options()
 #-------------------------------------------------------------------------------
 func Close_Dialogue_Options():
 	button_next.show()
@@ -5380,6 +5412,7 @@ func Enter_and_Retry_Battle_Common_1():
 	#-------------------------------------------------------------------------------
 	tp = 50
 	Set_TP_Bar(tp)
+	Dialogue_Null()
 	#-------------------------------------------------------------------------------
 	Set_Inventory_When_Enter_Battle()
 	#-------------------------------------------------------------------------------
@@ -5445,6 +5478,7 @@ func You_Lose():
 	battle_menu.hide()
 	lock_on.hide()
 	dialogue_menu.show()
+	Dialogue_Null()
 	#-------------------------------------------------------------------------------
 	var _retry_submit: Callable = func():Lose_Menu_Retry_Button_Submit()
 	var _go_to_savepoint_submit: Callable = func():Lose_Menu_Go_To_SavePoint_Button_Submit()
@@ -5494,6 +5528,7 @@ func You_Escape_to_SavePoint():
 	await Escape_Common()
 #-------------------------------------------------------------------------------
 func Escape_Common():
+	is_in_dialogue = false
 	battle_background_root.hide()
 	tp_bar.hide()
 	dialogue_menu.hide()
@@ -5722,7 +5757,7 @@ func Do_Ally_Action_1(_user:Fighter_Node):
 		var _tp_cost: int = Get_Tp_Cost_of_Action(_user, _action_serializable)
 		#-------------------------------------------------------------------------------
 		if(tp >= _tp_cost):
-			Show_Ally_Action(_user)
+			await Show_Ally_Action(_user)
 			await Seconds(0.3)
 			Set_TP_Bar_and_Action_Cost(_action_serializable, _tp_cost)
 			#-------------------------------------------------------------------------------
@@ -5764,14 +5799,14 @@ func Fail_Action_for_Lack_of_TP(_user:Fighter_Node):
 	Show_Ally_Action(_user)
 	await Seconds(0.3)
 	dialogue_menu_value.text += " Pero no tenía suficiente PT."
+	await Dialogue_Tween_Override()
 	await Seconds(0.3)
 #-------------------------------------------------------------------------------
 func Fail_Action_for_Lack_of_Action(_user:Fighter_Node):
 	var _character_resource: Character_Resource = _user.character_resource
 	var _user_name: String = Get_Tr_Character_Name(_character_resource)
 	var _s: String = "* "+Text_Color_Yellow(_user_name)+" no pude hacer una acción."
-	dialogue_menu_value.visible_characters = -1
-	dialogue_menu_value.text = _s
+	await Dialogue_Override(_s)
 	await Seconds(0.6)
 #-------------------------------------------------------------------------------
 func Do_Ally_Action_0(_user:Fighter_Node):
@@ -6026,6 +6061,9 @@ func B_Set_RPG_Calculation_0(_user:Fighter_Node, _target:Fighter_Node, _value:in
 		Action_Resource.EFFECT.HEAL:
 			B_Set_RPG_Calculation_0_Heal(_user, _target, _value)
 		#-------------------------------------------------------------------------------
+		Action_Resource.EFFECT.DRAIN:
+			B_Set_RPG_Calculation_0_Drain(_user, _target, _value)
+		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	B_Set_RPG_Calculation_0_Status_Effect(_user, _target, _remove_status_dictionary, _add_status_dictionary)
 #-------------------------------------------------------------------------------
@@ -6050,6 +6088,13 @@ func B_Set_RPG_Calculation_0_Heal(_user:Fighter_Node, _target:Fighter_Node, _val
 func Change_Fighter_HP_by_Heal(_target:Fighter_Node, _value:int):
 	Change_Fighter_HP(_target, _value)
 	singleton.Play_SFX_Heal()
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_0_Drain(_user:Fighter_Node, _target:Fighter_Node, _value:int):
+	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
+	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+	#-------------------------------------------------------------------------------
+	Change_Fighter_HP_by_Heal(_user, _value)
+	Change_Fighter_HP_by_Damage(_target, _value)
 #-------------------------------------------------------------------------------
 func Get_RPG_Scaling(_value:int, _power:int, _absorb:int) -> int:
 	var _final_value: int = int( float(_value) * float(_power)/100 * float(_absorb)/100 )
@@ -6201,8 +6246,8 @@ func Show_Ally_Action(_fighter_node:Fighter_Node):
 		Action_Resource.TARGET.ALLY_DOWN_ALL:
 			_s += " con "+Text_Color_Yellow("Todos los Aliados Caidos")+"."
 		#-------------------------------------------------------------------------------
-	dialogue_menu_value.text = _s
-	dialogue_menu_value.visible_characters = -1
+	#-------------------------------------------------------------------------------
+	await Dialogue_Override(_s)
 #-------------------------------------------------------------------------------
 func Text_Color_Yellow(_s:String) -> String:
 	return "[color="+hex_color_yellow+"]"+_s+"[/color]"
@@ -6292,13 +6337,13 @@ func Apply_Fighter_HP_Recovery_Effect(_fighter_node_array:Array[Fighter_Node]):
 			singleton.Play_SFX_Damage()
 			Change_Fighter_HP_by_Damage(_fighter_node_array[_i], _hp_recovery)
 			was_status_effect_add_or_removed = true
-			await Seconds(0.3)
+			await Seconds(0.1)
 		#-------------------------------------------------------------------------------
 		elif(_hp_recovery > 0):
 			Change_Fighter_HP_by_Heal(_fighter_node_array[_i], _hp_recovery)
 			singleton.Play_SFX_Heal()
 			was_status_effect_add_or_removed = true
-			await Seconds(0.3)
+			await Seconds(0.1)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -6356,7 +6401,6 @@ func Decrease_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
 				if(_status_serializable_array[_j].turns <= 0):
 					Flying_PopUp_Remove_Status_1(_fighter_node_array[_i], _status_serializable_array[_j].status_resource)
 					_status_serializable_array.remove_at(_j)
-					#await Seconds(0.3)
 					_b = true
 					was_status_effect_add_or_removed = true
 				#-------------------------------------------------------------------------------
@@ -6364,7 +6408,7 @@ func Decrease_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
 		#-------------------------------------------------------------------------------
 		if(_b):
 			singleton.Play_SFX_Status_Remove()
-			await Seconds(0.3)
+			await Seconds(0.1)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -7474,9 +7518,14 @@ func Get_Tr_Equip_Type(myEQUIP_TYPE:Equip_Resource.EQUIP_TYPE) -> String:
 	var _s: String = tr("enum_EQUIP_TYPE_"+_key)
 	return _s
 #-------------------------------------------------------------------------------
-func Get_Tr_Fighter_Class_Type(_myFIGHTER_CLASS:Fighter_Resource.FIGHTER_CLASS) -> String:
-	var _key: StringName = Fighter_Resource.FIGHTER_CLASS.keys()[_myFIGHTER_CLASS]
-	var _s: String = tr("enum_FIGHTER_CLASS_"+_key)
+func Get_Tr_Fighter_Class(_myFIGHTER_CLASS:Fighter_Resource.FIGHTER_CLASS) -> String:
+	var _s: String = Get_Tr_Fighter_Class_and_Gender(_myFIGHTER_CLASS, Character_Resource.GENDER.MALE)
+	return _s
+#-------------------------------------------------------------------------------
+func Get_Tr_Fighter_Class_and_Gender(_myFIGHTER_CLASS:Fighter_Resource.FIGHTER_CLASS, _myGENDER: Character_Resource.GENDER) -> String:
+	var _class: StringName = Fighter_Resource.FIGHTER_CLASS.keys()[_myFIGHTER_CLASS]
+	var _gender: StringName = Character_Resource.GENDER.keys()[_myGENDER]
+	var _s: String = tr("enum_FIGHTER_CLASS_"+_class+"_"+_gender)
 	return _s
 #-------------------------------------------------------------------------------
 func Get_Tr_Action_Atribute_Name(_myATRIBUTE:Action_Resource.ATRIBUTE) -> String:
