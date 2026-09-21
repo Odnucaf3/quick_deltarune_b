@@ -40,6 +40,23 @@ equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_
 status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
+[sub_resource type="Animation" id="Animation_g07ib"]
+resource_name = "Down"
+length = 0.2000066770978272
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [51, 52, 53]
+}
+
 [sub_resource type="Animation" id="Animation_3bm2e"]
 resource_name = "Hurt"
 length = 0.6000066979594528
@@ -47,26 +64,26 @@ step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:position")
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.20000002, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(20, 0), Vector2(-10, 0), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("pivot/Sprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [36, 38, 37]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/anchor:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.20000002, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-30, 0), Vector2(20, 0), Vector2(-10, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_kq1hd"]
@@ -77,7 +94,7 @@ step = 0.14285715
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -94,7 +111,7 @@ step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -106,7 +123,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/path = NodePath("pivot/anchor:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -121,7 +138,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -133,7 +150,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/path = NodePath("pivot/anchor:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -145,13 +162,20 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_reqn5"]
 _data = {
+&"Down": SubResource("Animation_g07ib"),
 &"Hurt": SubResource("Animation_3bm2e"),
 &"Idle": SubResource("Animation_kq1hd"),
 &"Miss": SubResource("Animation_lbfjq"),
 &"RESET": SubResource("Animation_x2g7y")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xh1jj"]
+animation = &"Down"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m6xjl"]
+animation = &"Hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rrkcv"]
 animation = &"Hurt"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fassy"]
@@ -170,8 +194,12 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0m7qj"]
 allow_transition_to_self = true
+states/Down/node = SubResource("AnimationNodeAnimation_xh1jj")
+states/Down/position = Vector2(512, 100)
 states/Hurt/node = SubResource("AnimationNodeAnimation_m6xjl")
 states/Hurt/position = Vector2(359, -12)
+states/Hurt_2/node = SubResource("AnimationNodeAnimation_rrkcv")
+states/Hurt_2/position = Vector2(512, -12)
 states/Idle/node = SubResource("AnimationNodeAnimation_fassy")
 states/Idle/position = Vector2(359, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_i8v35")
@@ -191,10 +219,15 @@ character_resource = ExtResource("2_3bm2e")
 fighter_serializable = SubResource("Resource_25p7l")
 animation_tree = NodePath("AnimationTree")
 pivot = NodePath("pivot")
+disapears_after_death = false
 
 [node name="pivot" type="Node2D" parent="." unique_id=1470516531]
 
-[node name="Sprite2D" type="Sprite2D" parent="pivot" unique_id=1528513859]
+[node name="anchor" type="Node2D" parent="pivot" unique_id=2113040679]
+scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot/anchor" unique_id=1528513859]
+scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("11_6pgwn")
 offset = Vector2(0, -32)
 flip_h = true

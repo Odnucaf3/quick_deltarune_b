@@ -18,3 +18,5 @@ var opponent_party: Array[Fighter_Node]
 var pop_up_array: Array[Pop_Up_Node]
 #-------------------------------------------------------------------------------
 var is_facing_left: bool = false
+@export var disapears_after_death: bool = true
+var is_down: bool = false

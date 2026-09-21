@@ -68,7 +68,6 @@ var isSlowMotion: bool = false
 var deltaTimeScale: float = 1.0
 var input_dir: Vector2
 var input_dir_normal: Vector2
-var dead_zone: float = 0.001
 const state_machine_layer_1: String = "base"
 #-------------------------------------------------------------------------------
 const damage_scaling: float = 100
@@ -387,12 +386,15 @@ var status_menu_button_array: Array[Button]
 @export var dialogue_menu_value: RichTextLabel
 @export var dialogue_menu_button_content: VBoxContainer
 @export var dialogue_menu_audio: AudioStreamPlayer
+@export var dialogue_sfx_narrator: AudioStream
 var dialogue_menu_button_array: Array[Button]
 var dialogue_option_index: int
 var dialogue_index: int
 var dialogue_counter: int
 var dialogue_whole_text: String
 var dialogue_letter: String
+var command_position: int = -1
+var command_executed: bool = false
 var is_dialogue_skipped: bool
 @export var button_next: Button
 signal next_signal
@@ -428,6 +430,7 @@ const button_array_font_size: int = 20
 var battle_order: int = 2
 var world_order: int = 0
 var was_status_effect_add_or_removed: bool
+var was_fighter_removed_from_battle: bool
 #-------------------------------------------------------------------------------
 const pop_up_timer: float = 1.18
 #-------------------------------------------------------------------------------
@@ -506,7 +509,6 @@ func _ready() -> void:
 	Set_Fighter_0()
 	#-------------------------------------------------------------------------------
 	NormalMotion()
-	Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Idle")
 	B_Dialogue_Test()
 #-------------------------------------------------------------------------------
 func _physics_process(_delta: float) -> void:
@@ -529,7 +531,6 @@ func _physics_process(_delta: float) -> void:
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			Player_Movement()
-			Followers_Movement()
 		#-------------------------------------------------------------------------------
 		GAME_STATE.IN_BATTLE:
 			Hitbox_Movement()
@@ -547,160 +548,46 @@ func Player_Movement():
 	var _run_flag: bool = Input.is_action_pressed("Input_Run")
 	input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	#-------------------------------------------------------------------------------
-	if(abs(input_dir.x) < dead_zone):
-		input_dir.x = 0
-	#-------------------------------------------------------------------------------
-	if(abs(input_dir.y) < dead_zone):
-		input_dir.y = 0
-	#-------------------------------------------------------------------------------
-	if(ally_character_party[0].is_moving):
+	if(input_dir.length() > 0.5):
 		#-------------------------------------------------------------------------------
-		if(input_dir == Vector2.ZERO):
-			Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Idle")
-			ally_character_party[0].is_moving = false
-			input_dir_normal = Vector2.ZERO
-			return
+		if(_run_flag):
+			Set_Dir_Anim_Move(ally_character_party[0], 2.0, 250)
 		#-------------------------------------------------------------------------------
 		else:
-			input_dir_normal = input_dir.normalized()
-			#-------------------------------------------------------------------------------
-			if(ally_character_party[0].is_running):
-				var _new_velocity: Vector2 = input_dir_normal * 200.0 * deltaTimeScale
-				player_characterbody2d.velocity = _new_velocity
-				#-------------------------------------------------------------------------------
-				if(!_run_flag):
-					Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Walk")
-					ally_character_party[0].is_running = false
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			else:
-				var _new_velocity: Vector2 = input_dir_normal * 70.0 * deltaTimeScale
-				player_characterbody2d.velocity = _new_velocity
-				#-------------------------------------------------------------------------------
-				if(_run_flag):
-					Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Run")
-					ally_character_party[0].is_running = true
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			if(ally_character_party[0].is_facing_left):
-				if(input_dir_normal.x > 0):
-					Face_Character_Left(ally_character_party[0], false)
-					return
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			else:
-				if(input_dir_normal.x < 0):
-					Face_Character_Left(ally_character_party[0], true)
-					return
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
+			Set_Dir_Anim_Move(ally_character_party[0], 1.0, 100)
 		#-------------------------------------------------------------------------------
-		Set_Fighter_Position_History(ally_character_party[0])
 	#-------------------------------------------------------------------------------
 	else:
-		#-------------------------------------------------------------------------------
-		if(input_dir != Vector2.ZERO):
-			#-------------------------------------------------------------------------------
-			if(_run_flag):
-				Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Run")
-				ally_character_party[0].is_running = true
-			#-------------------------------------------------------------------------------
-			else:
-				Animation_StateMachine_Set(ally_character_party[0].animation_tree, state_machine_layer_1, "Walk")
-				ally_character_party[0].is_running = false
-			#-------------------------------------------------------------------------------
-			ally_character_party[0].is_moving = true
-			#-------------------------------------------------------------------------------
-			if(input_dir.x > 0):
-				Face_Character_Left(ally_character_party[0], false)
-			#-------------------------------------------------------------------------------
-			elif(input_dir.x < 0):
-				Face_Character_Left(ally_character_party[0], true)
-			#-------------------------------------------------------------------------------
-			return
-		#-------------------------------------------------------------------------------
-		else:
-			var _new_velocity: Vector2 = Vector2.ZERO
-			player_characterbody2d.velocity = _new_velocity
-		#-------------------------------------------------------------------------------
+		Set_Character_Anim_Idle(ally_character_party[0])
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Character_Anim_Idle(_character_node:Character_Node):
+	AnimationTree_BlendSpace2D_Set(_character_node.animation_tree, _character_node.locomotion, _character_node.input_anim_idle)
+#-------------------------------------------------------------------------------
+func Set_Dir_Anim_Move(_character_node:Character_Node, _f:float, _velocity:float):
+	var _dead_zone: float = 0.2
+	#-------------------------------------------------------------------------------
+	if(input_dir.y < -_dead_zone):
+		_character_node.input_anim_move = Vector2(0, -_f)
+		_character_node.input_anim_idle = Vector2(0, -0.5)
+	#-------------------------------------------------------------------------------
+	elif(input_dir.y > _dead_zone):
+		_character_node.input_anim_move = Vector2(0, _f)
+		_character_node.input_anim_idle = Vector2(0, 0.5)
+	#-------------------------------------------------------------------------------
+	elif(input_dir.x < -_dead_zone):
+		_character_node.input_anim_move = Vector2(-_f, 0)
+		_character_node.input_anim_idle = Vector2(-0.5, 0)
+	#-------------------------------------------------------------------------------
+	elif(input_dir.x > _dead_zone):
+		_character_node.input_anim_move = Vector2(_f, 0)
+		_character_node.input_anim_idle = Vector2(0.5, 0)
+	#-------------------------------------------------------------------------------
+	AnimationTree_BlendSpace2D_Set(ally_character_party[0].animation_tree, ally_character_party[0].locomotion, _character_node.input_anim_move)
+	input_dir.normalized()
+	var _new_velocity: Vector2 = input_dir * _velocity
+	player_characterbody2d.velocity = _new_velocity
 	player_characterbody2d.move_and_slide()
-#-------------------------------------------------------------------------------
-func Set_Fighter_Position_History(_character_node:Character_Node):
-	_character_node.position_history.push_front(_character_node.global_position)
-	#-------------------------------------------------------------------------------
-	if(_character_node.position_history.size() > 300):
-		_character_node.position_history.pop_back()
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Followers_Movement():
-	var _run_flag: bool = Input.is_action_pressed("Input_Run")
-	#-------------------------------------------------------------------------------
-	for _i in range(1, ally_character_party.size()):
-		var _distance: float = 20
-		#-------------------------------------------------------------------------------
-		if(ally_character_party[_i].global_position.distance_to(ally_character_party[_i-1].global_position) > _distance):
-			var _x: float = ally_character_party[_i].global_position.x - ally_character_party[_i-1].global_position.x
-			var _y: float = ally_character_party[_i].global_position.y - ally_character_party[_i-1].global_position.y
-			var _dir: float = atan2(_y, _x)
-			var _x2: float = _distance * cos(_dir)
-			var _y2: float = _distance * sin(_dir)
-			var _new_position: Vector2 = ally_character_party[_i-1].global_position + Vector2(_x2, _y2)
-			#-------------------------------------------------------------------------------
-			if(ally_character_party[_i].is_moving):
-				ally_character_party[_i].global_position = lerp(ally_character_party[_i].global_position, _new_position, 0.1*deltaTimeScale)
-				#-------------------------------------------------------------------------------
-				if(ally_character_party[_i].global_position.distance_to(_new_position) < 5):
-					Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Idle")
-					ally_character_party[_i].is_moving = false
-				#-------------------------------------------------------------------------------
-				else:
-					if(ally_character_party[_i].is_running):
-						#-------------------------------------------------------------------------------
-						if(!_run_flag):
-							Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Walk")
-							ally_character_party[_i].is_running = false
-						#-------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------
-					else:
-						#-------------------------------------------------------------------------------
-						if(_run_flag):
-							Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Run")
-							ally_character_party[_i].is_running = true
-						#-------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------
-					Set_Fighter_Position_History(ally_character_party[_i])
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			else:
-				#-------------------------------------------------------------------------------
-				if(ally_character_party[_i].global_position.distance_to(_new_position) > 10):
-					#-------------------------------------------------------------------------------
-					if(_run_flag):
-						Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Run")
-						ally_character_party[_i].is_running = true
-					#-------------------------------------------------------------------------------
-					else:
-						Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Walk")
-						ally_character_party[_i].is_running = false
-					#-------------------------------------------------------------------------------
-					ally_character_party[_i].is_moving = true
-				#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		if(ally_character_party[_i].is_facing_left):
-			#-------------------------------------------------------------------------------
-			if(ally_character_party[_i].global_position < ally_character_party[_i-1].global_position):
-				Face_Character_Left(ally_character_party[_i], false)
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		else:
-			#-------------------------------------------------------------------------------
-			if(ally_character_party[_i].global_position > ally_character_party[_i-1].global_position):
-				Face_Character_Left(ally_character_party[_i], true)
-			#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -4108,27 +3995,52 @@ func String_With_Asterisco_and_2_Points(_s:String) -> String:
 #-------------------------------------------------------------------------------
 #region ANIMATION FUNCTIONS
 #-------------------------------------------------------------------------------
-func Animation_StateMachine_Set(_animation_tree:AnimationTree, _state_machine:String, _anim:String):
+func AnimationTree_BlendSpace1D_Set(_animation_tree:AnimationTree, _s:StringName, _f:float) -> void:
+	_animation_tree["parameters/"+_s+"_BlendSpace1D/blend_position"] = _f
+#-------------------------------------------------------------------------------
+func AnimationTree_BlendSpace1D_Get(_animation_tree:AnimationTree, _s:StringName) -> float:
+	return _animation_tree["parameters/"+_s+"_BlendSpace1D/blend_position"]
+#-------------------------------------------------------------------------------
+func AnimationTree_BlendSpace2D_Set(_animation_tree:AnimationTree, _s:StringName, _v2:Vector2) -> void:
+	_animation_tree["parameters/"+_s+"_BlendSpace2D/blend_position"] = _v2
+#-------------------------------------------------------------------------------
+func AnimationTree_BlendSpace2D_Get(_animation_tree:AnimationTree, _s:StringName) -> float:
+	return _animation_tree["parameters/"+_s+"_BlendSpace2D/blend_position"]
+#-------------------------------------------------------------------------------
+func AnimationTree_BlendSpace2D_Weight(_animation_tree:AnimationTree, _s:StringName, _f:float, _weight:float) -> void:
+	var _value: float = AnimationTree_BlendSpace2D_Get(_animation_tree, _s)
+	AnimationTree_BlendSpace2D_Set(_animation_tree, _s, lerp(_value, _f, _weight))
+#-------------------------------------------------------------------------------
+func AnimationTree_OneShot_Set(_animation_tree:AnimationTree, _s:StringName, _b:bool) -> void:
+	var _path: String = "parameters/"+_s+"_OneShot/request"
+	#-------------------------------------------------------------------------------
+	if(_b):
+		_animation_tree[_path] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	#-------------------------------------------------------------------------------
+	else:
+		_animation_tree[_path] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func AnimationTree_OneShot_Get(_animation_tree:AnimationTree, _s:StringName) -> bool:
+	return _animation_tree["parameters/"+_s+"_OneShot/active"]
+#-------------------------------------------------------------------------------
+func AnimationTree_TimeSeek(_animation_tree:AnimationTree, _anim:String, _f:float) -> void:
+	_animation_tree["parameters/"+_anim+"_TimeSeek/seek_request"] = _f
+#-------------------------------------------------------------------------------
+func AnimationTree_TimeScale(_animation_tree:AnimationTree, _anim:String, _f:float) -> void:
+	_animation_tree["parameters/"+_anim+"_TimeScale/scale"] = _f
+#-------------------------------------------------------------------------------
+func AnimationTree_Transition_Set(_animation_tree:AnimationTree, _state_machine:String, _anim:String):
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
 	_playback.call_deferred("travel", _anim)
 #-------------------------------------------------------------------------------
-func Animation_StateMachine_Get(_animation_tree:AnimationTree, _state_machine:String) -> StringName:
+func AnimationTree_Transition_Get(_animation_tree:AnimationTree, _state_machine:String) -> StringName:
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
 	return _playback.get_current_node()
 #-------------------------------------------------------------------------------
-func Animation_StateMachine_Reply(_animation_tree:AnimationTree, _state_machine:String):
+func AnimationTree_Transition_Reply(_animation_tree:AnimationTree, _state_machine:String):
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
 	_playback.call_deferred("travel", _playback.get_current_node())
-#-------------------------------------------------------------------------------
-func Face_Character_Left(_user:Character_Node, _b:bool):
-	#-------------------------------------------------------------------------------
-	if(_b):
-		_user.pivot.scale.x = -1
-	#-------------------------------------------------------------------------------
-	else:
-		_user.pivot.scale.x = 1
-	#-------------------------------------------------------------------------------
-	_user.is_facing_left = _b
 #-------------------------------------------------------------------------------
 func Face_Fighter_Left(_user:Fighter_Node, _b:bool):
 	#-------------------------------------------------------------------------------
@@ -4233,7 +4145,7 @@ func B_Dialogue_Test():
 	Dialogue_Open()
 	var _character: Character_Resource = ally_fighter_party[0].character_resource
 	await Dialogue_with_Face(_character, "* Hello, this is a B test dialogue.")
-	await Dialogue("* This dialogue text, uses Tweens instead of loops.")
+	await Dialogue("* This dialogue text, uses Tweens [delay=5] instead of loops.")
 	await Dialogue_with_Face(_character, "* And now... im gonna test if this is better or the other.")
 	await Dialogue("* I am the original                                                  Star Walker.")
 	Dialogue_Close_and_Exit()
@@ -4311,20 +4223,30 @@ func Dialogue_Override(_text:String):
 	Dialogue_Common(_text)
 	await Dialogue_Tween_Override()
 #-------------------------------------------------------------------------------
+func Dialogue_Tween_Replay():
+	dialogue_menu_value.visible_characters = 0
+	is_dialogue_skipped = false
+	dialogue_index = 0
+	dialogue_counter = 0
+	await Dialogue_Tween_Override()
+#-------------------------------------------------------------------------------
 func Dialogue_Tween_Override():
+	Dialogue_Tween_Cancel()
+	await Dialogue_Tween()
+#-------------------------------------------------------------------------------
+func Dialogue_Tween_Cancel():
 	#-------------------------------------------------------------------------------
 	if(dialogue_tween.is_valid()):
 		dialogue_tween.kill()
 		dialogue_tween.finished.emit()
 	#-------------------------------------------------------------------------------
-	await Dialogue_Tween()
 #-------------------------------------------------------------------------------
 func Dialogue_Common(_text:String):
 	dialogue_menu_name.text = ""
 	dialogue_menu_name.hide()
 	dialogue_menu_face.texture = null
 	dialogue_menu_face.hide()
-	dialogue_menu_audio.stream = ally_fighter_party[0].character_resource.voice
+	dialogue_menu_audio.stream = dialogue_sfx_narrator
 	dialogue_menu_value.text = _text
 	dialogue_menu_value.visible_characters = 0
 	#-------------------------------------------------------------------------------
@@ -4343,8 +4265,10 @@ func Dialogue_Skip(_text:String):
 func Dialogue_Tween():
 	dialogue_tween = create_tween()
 	dialogue_tween.set_loops()
+	#-------------------------------------------------------------------------------
 	#IMPORTANTE: Tengo que trabajar con una versión del dialogo sin bbcode porque el analisis letra a letra considera lo que está entre [].
 	dialogue_whole_text = dialogue_menu_value.get_parsed_text()
+	#-------------------------------------------------------------------------------
 	dialogue_tween.tween_callback(func():Dialogue_Loop_Logic())
 	#-------------------------------------------------------------------------------
 	dialogue_tween.tween_interval(0.03)
@@ -4366,7 +4290,7 @@ func Dialogue_Loop_Logic():
 	#-------------------------------------------------------------------------------
 	dialogue_index += 1
 	dialogue_menu_value.visible_characters = dialogue_index
-	dialogue_menu_audio.pitch_scale = randf_range(0.95, 1.05)
+	#dialogue_menu_audio.pitch_scale = randf_range(0.95, 1.05)
 	dialogue_menu_audio.play()
 	#-------------------------------------------------------------------------------
 	match(dialogue_letter):
@@ -4420,8 +4344,7 @@ func Enable_Pause_Input():
 func Stop_Moving():
 	#-------------------------------------------------------------------------------
 	for _i in ally_character_party.size():
-		Animation_StateMachine_Set(ally_character_party[_i].animation_tree, state_machine_layer_1, "Idle")
-		ally_character_party[_i].is_moving = false
+		Set_Character_Anim_Idle(ally_character_party[_i])
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Dialogue_with_Face_with_Options(_character_resource:Character_Resource, _text:String, _array_string:Array[String]):
@@ -5161,6 +5084,8 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 		var _fighter_serializable: Fighter_Serializable = _fighter_node_array[_i].fighter_serializable_in_battle
 		Set_Skill(_fighter_serializable)
 		#-------------------------------------------------------------------------------
+		_fighter_node_array[_i].is_down = false
+		#-------------------------------------------------------------------------------
 		var _max_hp: int = Get_Max_HP(_fighter_serializable)
 		var _hp: int = _max_hp
 		#-------------------------------------------------------------------------------
@@ -5224,7 +5149,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	#-------------------------------------------------------------------------------
 	for _i in ally_fighter_party.size():
 		Face_Fighter_Left(ally_fighter_party[_i], false)
-		Animation_StateMachine_Set(ally_fighter_party[_i].animation_tree, state_machine_layer_1, "Idle")
+		AnimationTree_Transition_Set(ally_fighter_party[_i].animation_tree, state_machine_layer_1, "Idle")
 		ally_fighter_party[_i].z_index = battle_order
 		ally_fighter_party[_i].show()
 		#-------------------------------------------------------------------------------
@@ -5242,7 +5167,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	#-------------------------------------------------------------------------------
 	for _i in enemy_fighter_party.size():	
 		Face_Fighter_Left(enemy_fighter_party[_i], true)
-		Animation_StateMachine_Set(enemy_fighter_party[_i].animation_tree, state_machine_layer_1, "Idle")
+		AnimationTree_Transition_Set(enemy_fighter_party[_i].animation_tree, state_machine_layer_1, "Idle")
 		enemy_fighter_party[_i].z_index = battle_order
 		enemy_fighter_party[_i].show()
 		#-------------------------------------------------------------------------------
@@ -5379,8 +5304,6 @@ func Escape_Menu_No_Button_Common():
 #region BATTLE STATE-MACHINE
 #-------------------------------------------------------------------------------
 func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
-	enemy_fighter_party = _array_enemy_party
-	#-------------------------------------------------------------------------------
 	myGAME_STATE = GAME_STATE.IN_BATTLE
 	myBATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
 	player_interactable_by_action_collider.disabled = true
@@ -5393,19 +5316,30 @@ func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
 	Set_Battle_Background()
 	tp_bar.show()
 	dialogue_menu.show()
+	Add_Enemy_Party(_array_enemy_party)
 	Create_All_Fighter_UI()
 	#-------------------------------------------------------------------------------
 	await Enter_and_Retry_Battle_Common_1()
 	singleton.Play_BGM_Battle1()
 	await Enter_and_Retry_Battle_Common_2()
 #-------------------------------------------------------------------------------
-func You_Retry():
+func You_Retry(_array_enemy_party:Array[Fighter_Node]):
 	myBATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
+	Add_Enemy_Party(_array_enemy_party)
+	Show_All_Fighters_UI()
 	#-------------------------------------------------------------------------------
 	await Fade_Out_Override()
 	#-------------------------------------------------------------------------------
 	await Enter_and_Retry_Battle_Common_1()
 	await Enter_and_Retry_Battle_Common_2()
+#-------------------------------------------------------------------------------
+func Add_Enemy_Party(_array_enemy_party:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	enemy_fighter_party.clear()
+	#-------------------------------------------------------------------------------
+	for _i in _array_enemy_party.size():
+		enemy_fighter_party.append(_array_enemy_party[_i])
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Enter_and_Retry_Battle_Common_1():
 	await Fade_Out_Override()
@@ -5427,6 +5361,7 @@ func Enter_and_Retry_Battle_Common_1():
 #-------------------------------------------------------------------------------
 func Enter_and_Retry_Battle_Common_2():
 	await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
+	await Kill_All_Fighter_Array_and_Reposition_1()
 	#-------------------------------------------------------------------------------
 	battle_menu.show()
 	lock_on.show()
@@ -5471,6 +5406,7 @@ func You_Win():
 	#-------------------------------------------------------------------------------
 	lock_on.hide()
 	myGAME_STATE = GAME_STATE.IN_WORLD
+	is_in_dialogue = false
 	player_interactable_by_action_collider.disabled = false
 #-------------------------------------------------------------------------------
 func You_Lose():
@@ -5572,6 +5508,7 @@ func Battle_Menu_Skill_Button_Submit(_user:Fighter_Node):
 	Battle_Skill_Menu_Set(_user)
 	battle_menu.hide()
 	dialogue_menu.hide()
+	Dialogue_Tween_Cancel()
 	skill_menu.show()
 #-------------------------------------------------------------------------------
 func Battle_Skill_Menu_Set(_user:Fighter_Node):
@@ -5621,6 +5558,7 @@ func Battle_Skill_Menu_Set(_user:Fighter_Node):
 func Battle_Menu_Skill_Button_Cancel():
 	battle_menu.show()
 	dialogue_menu.show()
+	Dialogue_Tween_Replay()
 	skill_menu.hide()
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 	singleton.Destroy_Button_Array(skill_menu_button_array)
@@ -5733,6 +5671,7 @@ func Do_Ally_Actions():
 		if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
 			await Do_Ally_Action_1(_alive_ally_party[_i])
 			await Seconds(pop_up_timer-0.3)
+			await await Kill_All_Fighter_Array_and_Reposition_1()
 		#-------------------------------------------------------------------------------
 		Set_Battle_State()
 	#-------------------------------------------------------------------------------
@@ -5814,12 +5753,18 @@ func Do_Ally_Action_0(_user:Fighter_Node):
 	#-------------------------------------------------------------------------------
 	match(_action_resource.myTARGET):
 		Action_Resource.TARGET.ENEMY_1:
+			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.opponent_party)
+			_user.target = Re_Target_Alive_Weakest_Fighter(_user.target, _target_array)
 			await Do_Repeat_Action_1(_user, _user.target)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_1:
+			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.ally_party)
+			_user.target = Re_Target_Alive_Weakest_Fighter(_user.target, _target_array)
 			await Do_Repeat_Action_1(_user, _user.target)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.USER:
+			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.ally_party)
+			_user.target = Re_Target_Alive_Weakest_Fighter(_user.target, _target_array)
 			await Do_Repeat_Action_1(_user, _user.target)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_DOWN_1:
@@ -5858,6 +5803,45 @@ func Do_Repeat_Action_1(_user:Fighter_Node, _target:Fighter_Node):
 		await Seconds(0.15)
 	#-------------------------------------------------------------------------------
 	await Seconds(_action_serializable.action_resource.animation_timer_2)
+#-------------------------------------------------------------------------------
+func Re_Target_Alive_Weakest_Fighter(_target:Fighter_Node, _target_party:Array[Fighter_Node]) -> Fighter_Node:
+	#-------------------------------------------------------------------------------
+	if(!Is_Fighter_Alive(_target, _target_party)):
+		_target = Find_Weakest_Target(_target_party)
+	#-------------------------------------------------------------------------------
+	return _target
+#-------------------------------------------------------------------------------
+func Find_Weakest_Target(_target_party:Array[Fighter_Node]) -> Fighter_Node:
+	var _weakest_target: Fighter_Node = _target_party[0]
+	#-------------------------------------------------------------------------------
+	for _i in _target_party.size():
+		#-------------------------------------------------------------------------------
+		if(_target_party[_i].fighter_serializable_in_battle.hp < _weakest_target.fighter_serializable_in_battle.hp):
+			_weakest_target = _target_party[_i]
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return _weakest_target
+#-------------------------------------------------------------------------------
+func Is_Fighter_Alive(_target:Fighter_Node, _target_party:Array[Fighter_Node]) -> bool:
+	#-------------------------------------------------------------------------------
+	if(_target != null):
+		#-------------------------------------------------------------------------------
+		if(_target_party.has(_target)):
+			#-------------------------------------------------------------------------------
+			if(_target.fighter_serializable_in_battle.hp > 0):
+				return true
+			#-------------------------------------------------------------------------------
+			else:
+				return false
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		else:
+			return false
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		return false
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Do_Repeat_Action_All(_user:Fighter_Node, _target_array:Array[Fighter_Node]):
 	var _action_serializable: Action_Serializable = _user.action_serializable
@@ -5931,7 +5915,7 @@ func B_Set_RPG_Calculation_3_Part_2(_user:Fighter_Node, _target:Fighter_Node, _v
 #-------------------------------------------------------------------------------
 func Flying_PopUp_Miss(_user:Fighter_Node):
 	Flying_PopUp(_user, "Miss")
-	Animation_StateMachine_Set(_user.animation_tree, state_machine_layer_1, "Miss")
+	AnimationTree_Transition_Set(_user.animation_tree, state_machine_layer_1, "Miss")
 	singleton.Play_SFX_Miss()
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _affinity:int, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _can_critic:bool, _remove_status_dictionary: Dictionary[StringName, int], _add_status_dictionary: Dictionary[StringName, int]):
@@ -6072,7 +6056,7 @@ func B_Set_RPG_Calculation_0_Damage(_target:Fighter_Node, _value:int):
 #-------------------------------------------------------------------------------
 func Change_Fighter_HP_by_Damage(_target:Fighter_Node, _value:int):
 	Change_Fighter_HP(_target, -_value)
-	Animation_StateMachine_Set(_target.animation_tree, state_machine_layer_1, "Hurt")
+	AnimationTree_Transition_Set(_target.animation_tree, state_machine_layer_1, "Hurt_2")
 	singleton.Play_SFX_Damage()
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_0_Heal(_user:Fighter_Node, _target:Fighter_Node, _value:int):
@@ -6200,6 +6184,69 @@ func Change_Fighter_HP(_target:Fighter_Node, _value:int):
 	_target.fighter_ui.hp_bar.max_value = _max_hp
 	Flying_PopUp_HP(_target, _value)
 #-------------------------------------------------------------------------------
+func Kill_All_Fighter_Array_and_Reposition_1():
+	await Kill_All_Fighter_Array_Common()
+	#-------------------------------------------------------------------------------
+	if(was_fighter_removed_from_battle):
+		await Set_All_Fighters_Position_1()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Kill_All_Fighter_Array_and_Reposition_2():
+	await Kill_All_Fighter_Array_Common()
+	#-------------------------------------------------------------------------------
+	if(was_fighter_removed_from_battle):
+		await Set_All_Fighters_Position_2()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Kill_All_Fighter_Array_Common():
+	was_status_effect_add_or_removed = false
+	was_fighter_removed_from_battle = false
+	await Kill_Fighter_Array(ally_fighter_party)
+	await Kill_Fighter_Array(enemy_fighter_party)
+	#-------------------------------------------------------------------------------
+	if(was_status_effect_add_or_removed):
+		await Seconds(pop_up_timer)
+	#-------------------------------------------------------------------------------
+	if(was_fighter_removed_from_battle):
+		await Set_All_Fighters_Position_1()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Kill_Fighter_Array(_fighter_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	for _i in range(_fighter_array.size()-1, -1, -1):
+		#-------------------------------------------------------------------------------
+		if(_fighter_array[_i].fighter_serializable_in_battle.hp <= 0):
+			Down_Effect(_fighter_array, _i)
+		#-------------------------------------------------------------------------------
+		else:
+			AnimationTree_Transition_Set(_fighter_array[_i].animation_tree, state_machine_layer_1, "Idle")
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Down_Effect(_fighter_array:Array[Fighter_Node], _index: int):
+	#-------------------------------------------------------------------------------
+	if(_fighter_array[_index].is_down):
+		return
+	#-------------------------------------------------------------------------------
+	_fighter_array[_index].is_down = true
+	_fighter_array[_index].fighter_serializable_in_battle.hp = 0
+	was_status_effect_add_or_removed = true
+	#-------------------------------------------------------------------------------
+	Flying_PopUp_Add_Down(_fighter_array[_index])
+	AnimationTree_Transition_Set(_fighter_array[_index].animation_tree, state_machine_layer_1, "Down")
+	await _fighter_array[_index].animation_tree.animation_finished
+	#-------------------------------------------------------------------------------
+	if(_fighter_array[_index].disapears_after_death):
+		was_fighter_removed_from_battle = true
+		_fighter_array[_index].hide()
+		_fighter_array[_index].fighter_ui.hide()
+		_fighter_array.remove_at(_index)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Flying_PopUp_Add_Down(_user: Fighter_Node):
+	Flying_PopUp(_user, "+ Down")
+	singleton.Play_SFX_Down()
+#-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
 func Show_Ally_Action(_fighter_node:Fighter_Node):
@@ -6284,6 +6331,7 @@ func Do_Enemy_Actions():
 	Set_and_Hide_Battle_Box()
 	Decrease_Item_Cooldown_by_1()
 	await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
+	await Kill_All_Fighter_Array_and_Reposition_2()
 	await Decrease_All_Status_Effect_Turn_by_1()
 	Decrease_Skill_Cooldown_by_1(ally_fighter_party)
 	Decrease_Skill_Cooldown_by_1(enemy_fighter_party)
@@ -6378,38 +6426,46 @@ func Apply_Fighter_TP_Recovery_Effect(_fighter_node_array:Array[Fighter_Node]):
 #-------------------------------------------------------------------------------
 func Decrease_All_Status_Effect_Turn_by_1():
 	was_status_effect_add_or_removed = false
-	await Decrease_Status_Effect_Turn_by_1(ally_fighter_party)
-	await Decrease_Status_Effect_Turn_by_1(enemy_fighter_party)
+	await Decrease_Party_Status_Effect_Turn_by_1(ally_fighter_party)
+	await Decrease_Party_Status_Effect_Turn_by_1(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	if(was_status_effect_add_or_removed):
 		#singleton.Play_SFX_Status_Remove()
 		await Seconds(pop_up_timer)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Decrease_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
+func Decrease_Party_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
-		var _b: bool = false
+		await Decrease_1_Fighter_Status_Effect_Turn_by_1(_fighter_node_array[_i])
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Decrease_1_Fighter_Status_Effect_Turn_by_1(_fighter_node:Fighter_Node):
+	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable_in_battle
+	#-------------------------------------------------------------------------------
+	if(_fighter_serializable.hp <= 0):
+		return
+	#-------------------------------------------------------------------------------
+	var _b: bool = false
+	#-------------------------------------------------------------------------------
+	var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
+	#-------------------------------------------------------------------------------
+	for _j in range(_status_serializable_array.size()-1,-1,-1):
 		#-------------------------------------------------------------------------------
-		var _status_serializable_array: Array[Status_Serializable] = _fighter_node_array[_i].fighter_serializable_in_battle.status_serializable_array
-		#-------------------------------------------------------------------------------
-		for _j in range(_status_serializable_array.size()-1,-1,-1):
+		if(!_status_serializable_array[_j].status_resource.is_infinite):
+			_status_serializable_array[_j].turns -= 1
 			#-------------------------------------------------------------------------------
-			if(!_status_serializable_array[_j].status_resource.is_infinite):
-				_status_serializable_array[_j].turns -= 1
-				#-------------------------------------------------------------------------------
-				if(_status_serializable_array[_j].turns <= 0):
-					Flying_PopUp_Remove_Status_1(_fighter_node_array[_i], _status_serializable_array[_j].status_resource)
-					_status_serializable_array.remove_at(_j)
-					_b = true
-					was_status_effect_add_or_removed = true
-				#-------------------------------------------------------------------------------
+			if(_status_serializable_array[_j].turns <= 0):
+				Flying_PopUp_Remove_Status_1(_fighter_node, _status_serializable_array[_j].status_resource)
+				_status_serializable_array.remove_at(_j)
+				_b = true
+				was_status_effect_add_or_removed = true
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-		if(_b):
-			singleton.Play_SFX_Status_Remove()
-			await Seconds(0.1)
-		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	if(_b):
+		singleton.Play_SFX_Status_Remove()
+		await Seconds(0.1)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Flying_PopUp_Add_Status_0(_user:Fighter_Node, _key:StringName):
@@ -6616,6 +6672,8 @@ func BattleMenu_Skill_Target_Set_Common(_action_serializable:Action_Serializable
 	item_menu.hide()
 	skill_menu.hide()
 	dialogue_menu.show()
+	Dialogue_Tween_Replay()
+	#-------------------------------------------------------------------------------
 	Set_Target_Button_Navigation_1(_fighter_node_array)
 	singleton.Move_to_Button_by_Submit(_fighter_node_array[0].fighter_ui.button)
 #-------------------------------------------------------------------------------
@@ -6720,6 +6778,7 @@ func BattleMenu_Item_Target_Set_Common(_action_serializable:Action_Serializable,
 	item_menu.hide()
 	skill_menu.hide()
 	dialogue_menu.show()
+	Dialogue_Tween_Replay()
 	Set_Target_Button_Navigation_1(_fighter_node_array)
 	singleton.Move_to_Button_by_Submit(_fighter_node_array[0].fighter_ui.button)
 #-------------------------------------------------------------------------------
@@ -6749,6 +6808,7 @@ func Battle_Menu_Item_Button_Submit(_user:Fighter_Node):
 	Battle_Item_Menu_Set(_user)
 	battle_menu.hide()
 	dialogue_menu.hide()
+	Dialogue_Tween_Cancel()
 	item_menu.show()
 #-------------------------------------------------------------------------------
 func Battle_Item_Menu_Set(_user:Fighter_Node):
@@ -6914,6 +6974,7 @@ func Battle_Item_Menu_Consumable_Button_Cancel():
 	#-------------------------------------------------------------------------------
 	battle_menu.show()
 	dialogue_menu.show()
+	Dialogue_Tween_Replay()
 	item_menu.hide()
 	singleton.Move_to_Button_by_Cancel(battle_menu_button_item)
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
@@ -6984,6 +7045,7 @@ func Set_Target_Button_Navigation_1(fighter_node_array:Array[Fighter_Node]):
 func Battle_Menu_Status_Target_Button_Submit(_fighter_serializable:Fighter_Serializable, _button:Button):
 	Hide_All_Targets()
 	dialogue_menu.hide()
+	Dialogue_Tween_Cancel()
 	status_menu.show()
 	var _cancel:Callable = func():Battle_Menu_Status_Menu_Button_Cancel(_button)
 	main_canvas_layer.nothing_cancel = _cancel
@@ -7000,6 +7062,7 @@ func Battle_Menu_Status_Menu_Button_Cancel(_button:Button):
 	singleton.Destroy_Button_Array(status_menu_button_array)
 	status_menu.hide()
 	dialogue_menu.show()
+	Dialogue_Tween_Replay()
 	Show_All_Targets()
 	main_canvas_layer.nothing_cancel = func():Battle_Menu_Status_Target_Button_Cancel()
 	singleton.Move_to_Button_by_Cancel(_button)
@@ -7034,6 +7097,7 @@ func Battle_Menu_Statistics_Button_Submit(_user:Fighter_Node):
 func Battle_Menu_Statistics_Target_Button_Submit(_fighter_node:Fighter_Node, _fighter_serializable:Fighter_Serializable, _button:Button):
 	Hide_All_Targets()
 	dialogue_menu.hide()
+	Dialogue_Tween_Cancel()
 	statistics_menu.show()
 	var _cancel:Callable = func():Battle_Menu_Statistics_Menu_Button_Cancel(_button)
 	main_canvas_layer.nothing_cancel = _cancel
@@ -7050,6 +7114,7 @@ func Battle_Menu_Statistics_Target_Button_Cancel():
 func Battle_Menu_Statistics_Menu_Button_Cancel(_button:Button):
 	statistics_menu.hide()
 	dialogue_menu.show()
+	Dialogue_Tween_Replay()
 	Show_All_Targets()
 	main_canvas_layer.nothing_cancel = func():Battle_Menu_Statistics_Target_Button_Cancel()
 	singleton.Move_to_Button_by_Cancel(_button)
@@ -7373,11 +7438,12 @@ func Set_Timer(_timer:int, _max_timer:int):
 func Hitbox_Movement():
 	var _run_flag: bool = Input.is_action_pressed("Input_Run")
 	input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var _dead_zone: float = 0.001
 	#-------------------------------------------------------------------------------
-	if(abs(input_dir.x) < dead_zone):
+	if(abs(input_dir.x) < _dead_zone):
 		input_dir.x = 0
 	#-------------------------------------------------------------------------------
-	if(abs(input_dir.y) < dead_zone):
+	if(abs(input_dir.y) < _dead_zone):
 		input_dir.y = 0
 	#-------------------------------------------------------------------------------
 	if(input_dir != Vector2.ZERO):

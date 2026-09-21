@@ -5,9 +5,9 @@ class_name Character_Node
 @export var animation_tree: AnimationTree
 @export var pivot: Node2D
 #-------------------------------------------------------------------------------
-var position_history: Array[Vector2]
+const base_statemachine: StringName = "base_StateMachine"
+const locomotion: StringName = base_statemachine+"/locomotion"
 #-------------------------------------------------------------------------------
-var is_facing_left: bool = false
-var is_moving: bool = false
-var is_running: bool = false
+var input_anim_idle: Vector2
+var input_anim_move: Vector2
 #-------------------------------------------------------------------------------

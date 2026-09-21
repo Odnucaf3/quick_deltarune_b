@@ -13,6 +13,47 @@ script = ExtResource("4_63hy0")
 fighter_resource = ExtResource("3_krjvs")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
+[sub_resource type="Animation" id="Animation_xtpjr"]
+resource_name = "Down"
+length = 1.0000067188210786
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/anchor/Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.7254903, 0.44936708)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/anchor/Sprite2D:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6666667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_x82ga"]
 resource_name = "Hurt"
 length = 0.6000066979594528
@@ -20,7 +61,7 @@ step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:position")
+tracks/0/path = NodePath("pivot/anchor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -38,7 +79,7 @@ step = 0.14285715
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:offset")
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +91,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/path = NodePath("pivot/anchor/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -62,14 +103,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("pivot/Sprite2D:scale")
+tracks/2/path = NodePath("pivot/anchor/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2857143, 0.5714286),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.4778481), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(1, 0.9566776), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_bf2d7"]
@@ -79,7 +120,7 @@ step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:position")
+tracks/0/path = NodePath("pivot/anchor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -94,7 +135,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:offset")
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -106,7 +147,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pivot/Sprite2D:position")
+tracks/1/path = NodePath("pivot/anchor/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -118,19 +159,19 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("pivot/Sprite2D:scale")
+tracks/2/path = NodePath("pivot/anchor/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.5, 0.5)]
+"values": [Vector2(1, 1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("pivot/Sprite2D:flip_h")
+tracks/3/path = NodePath("pivot/anchor/Sprite2D:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -139,16 +180,47 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pivot/anchor:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pivot/anchor/Sprite2D:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xtpjr"]
 _data = {
+&"Down": SubResource("Animation_xtpjr"),
 &"Hurt": SubResource("Animation_x82ga"),
 &"Idle": SubResource("Animation_4pwq6"),
 &"Miss": SubResource("Animation_bf2d7"),
 &"RESET": SubResource("Animation_jnkbr")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l17bb"]
+animation = &"Down"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8iapp"]
+animation = &"Hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7s701"]
 animation = &"Hurt"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jtjx0"]
@@ -167,14 +239,18 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_u32xy"]
 allow_transition_to_self = true
+states/Down/node = SubResource("AnimationNodeAnimation_l17bb")
+states/Down/position = Vector2(514, 100)
 states/Hurt/node = SubResource("AnimationNodeAnimation_8iapp")
 states/Hurt/position = Vector2(374, -1)
+states/Hurt_2/node = SubResource("AnimationNodeAnimation_7s701")
+states/Hurt_2/position = Vector2(514, -1)
 states/Idle/node = SubResource("AnimationNodeAnimation_jtjx0")
 states/Idle/position = Vector2(374, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_bhjae")
 states/Miss/position = Vector2(374, 204)
 transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_l17bb"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_7s701")]
-graph_offset = Vector2(-53, 26)
+graph_offset = Vector2(-68, -33)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
 graph_offset = Vector2(-50, 71)
@@ -191,8 +267,10 @@ pivot = NodePath("pivot")
 
 [node name="pivot" type="Node2D" parent="." unique_id=478944608]
 
-[node name="Sprite2D" type="Sprite2D" parent="pivot" unique_id=1982685399]
+[node name="anchor" type="Node2D" parent="pivot" unique_id=339655241]
 scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot/anchor" unique_id=1982685399]
 texture = ExtResource("6_krjvs")
 offset = Vector2(-24, -72)
 

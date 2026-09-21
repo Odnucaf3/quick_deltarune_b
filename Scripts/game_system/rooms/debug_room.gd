@@ -258,7 +258,7 @@ func After_Battle(_array_fighter_array:Array[Fighter_Node]):
 func You_Retry(_array_fighter_array:Array[Fighter_Node]):
 	singleton.game_system.lose_menu.hide()
 	singleton.Common_Submited()
-	await singleton.game_system.You_Retry()
+	await singleton.game_system.You_Retry(_array_fighter_array)
 	singleton.game_system.Dialogue_Override("* The Battle Began!")
 	await Loop_Battle(_array_fighter_array)
 #-------------------------------------------------------------------------------

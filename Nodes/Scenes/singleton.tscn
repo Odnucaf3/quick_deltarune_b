@@ -18,10 +18,11 @@
 [ext_resource type="AudioStream" uid="uid://beovpde5cbb7m" path="res://Assets/rpg_maker_mv/audio/se/Reflection.ogg" id="14_wi43q"]
 [ext_resource type="AudioStream" uid="uid://finxy4wj1vio" path="res://Assets/rpg_maker_mv/audio/se/Heal1.ogg" id="15_ab53b"]
 [ext_resource type="AudioStream" uid="uid://s4kq50vvmvlb" path="res://Assets/rpg_maker_mv/audio/se/Miss.ogg" id="15_wi43q"]
+[ext_resource type="AudioStream" uid="uid://b0bwpbw2a5opw" path="res://Assets/rpg_maker_mv/audio/se/Collapse1.ogg" id="16_ul50i"]
 [ext_resource type="AudioStream" uid="uid://bddcvromgp7pc" path="res://Assets/rpg_maker_mv/audio/se/Heal2.ogg" id="17_ab53b"]
 [ext_resource type="AudioStream" uid="uid://blip14d1u3u7e" path="res://Assets/rpg_maker_mv/audio/se/Down1.ogg" id="18_re85v"]
 
-[node name="Singleton" type="Node" unique_id=729221882 node_paths=PackedStringArray("audioStreamPlayer_selected", "audioStreamPlayer_submit", "audioStreamPlayer_cancel", "audioStreamPlayer_equip", "audioStreamPlayer_unequip", "audioStreamPlayer_shop", "audioStreamPlayer_enter_battle", "audioStreamPlayer_escape_battle", "audioStreamPlayer_damage", "audioStreamPlayer_reflect", "audioStreamPlayer_miss", "audioStreamPlayer_heal", "audioStreamPlayer_heal_tp", "audioStreamPlayer_status_remove", "audioStreamPlayer_bgm", "fps_label", "option_menu")]
+[node name="Singleton" type="Node" unique_id=729221882 node_paths=PackedStringArray("audioStreamPlayer_selected", "audioStreamPlayer_submit", "audioStreamPlayer_cancel", "audioStreamPlayer_equip", "audioStreamPlayer_unequip", "audioStreamPlayer_shop", "audioStreamPlayer_enter_battle", "audioStreamPlayer_escape_battle", "audioStreamPlayer_damage", "audioStreamPlayer_reflect", "audioStreamPlayer_miss", "audioStreamPlayer_down", "audioStreamPlayer_heal", "audioStreamPlayer_heal_tp", "audioStreamPlayer_status_remove", "audioStreamPlayer_bgm", "fps_label", "option_menu")]
 process_mode = 3
 script = ExtResource("1_72n7e")
 audioStreamPlayer_selected = NodePath("AudioStreamPlayer_Selected")
@@ -35,6 +36,7 @@ audioStreamPlayer_escape_battle = NodePath("AudioStreamPlayer_Escape_Battle")
 audioStreamPlayer_damage = NodePath("AudioStreamPlayer_Damage")
 audioStreamPlayer_reflect = NodePath("AudioStreamPlayer_Reflect")
 audioStreamPlayer_miss = NodePath("AudioStreamPlayer_Miss")
+audioStreamPlayer_down = NodePath("AudioStreamPlayer_Down")
 audioStreamPlayer_heal = NodePath("AudioStreamPlayer_Heal")
 audioStreamPlayer_heal_tp = NodePath("AudioStreamPlayer_Heal_TP")
 audioStreamPlayer_status_remove = NodePath("AudioStreamPlayer_Status_Remove")
@@ -87,6 +89,10 @@ bus = &"sfx"
 
 [node name="AudioStreamPlayer_Miss" type="AudioStreamPlayer" parent="." unique_id=256657807]
 stream = ExtResource("15_wi43q")
+bus = &"sfx"
+
+[node name="AudioStreamPlayer_Down" type="AudioStreamPlayer" parent="." unique_id=1675463183]
+stream = ExtResource("16_ul50i")
 bus = &"sfx"
 
 [node name="AudioStreamPlayer_Heal" type="AudioStreamPlayer" parent="." unique_id=1980910242]

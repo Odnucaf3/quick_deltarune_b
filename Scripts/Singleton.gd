@@ -17,6 +17,7 @@ const cancelInput: String = "ui_cancel"
 @export var audioStreamPlayer_damage: AudioStreamPlayer
 @export var audioStreamPlayer_reflect: AudioStreamPlayer
 @export var audioStreamPlayer_miss: AudioStreamPlayer
+@export var audioStreamPlayer_down: AudioStreamPlayer
 @export var audioStreamPlayer_heal: AudioStreamPlayer
 @export var audioStreamPlayer_heal_tp: AudioStreamPlayer
 @export var audioStreamPlayer_status_remove: AudioStreamPlayer
@@ -451,6 +452,9 @@ func Play_SFX_Reflect() -> void:
 #-------------------------------------------------------------------------------
 func Play_SFX_Miss() -> void:
 	audioStreamPlayer_miss.play()
+#-------------------------------------------------------------------------------
+func Play_SFX_Down() -> void:
+	audioStreamPlayer_down.play()
 #-------------------------------------------------------------------------------
 func Play_SFX_Heal() -> void:
 	audioStreamPlayer_heal.play()
