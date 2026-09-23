@@ -34,6 +34,40 @@ experience = 999999
 equip_serializable_array = Array[ExtResource("2_i2bd6")]([SubResource("Resource_0tgis"), SubResource("Resource_h02ql"), SubResource("Resource_hi72e"), SubResource("Resource_l6iag")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
+[sub_resource type="Animation" id="Animation_a84c5"]
+resource_name = "Cast"
+length = 0.5000125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [18, 19, 20, 19]
+}
+
+[sub_resource type="Animation" id="Animation_5a1rm"]
+resource_name = "Charge"
+length = 0.2000066770978272
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
 [sub_resource type="Animation" id="Animation_bouc1"]
 resource_name = "Down"
 length = 0.2000066770978272
@@ -49,6 +83,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [51, 52, 53]
+}
+
+[sub_resource type="Animation" id="Animation_rm1eu"]
+resource_name = "Guard"
+length = 0.06667333681061864
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [30]
 }
 
 [sub_resource type="Animation" id="Animation_akrjd"]
@@ -168,15 +219,27 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eqe4w"]
 _data = {
+&"Cast": SubResource("Animation_a84c5"),
+&"Charge": SubResource("Animation_5a1rm"),
 &"Down": SubResource("Animation_bouc1"),
+&"Guard": SubResource("Animation_rm1eu"),
 &"Hurt": SubResource("Animation_akrjd"),
 &"Idle": SubResource("Animation_dpjm2"),
 &"Miss": SubResource("Animation_13mhh"),
 &"RESET": SubResource("Animation_qarie")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_akrjd"]
+animation = &"Cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dpjm2"]
+animation = &"Charge"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a84c5"]
 animation = &"Down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_13mhh"]
+animation = &"Guard"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ghmbc"]
 animation = &"Hurt"
@@ -200,8 +263,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ii7r2"]
 allow_transition_to_self = true
+states/Cast/node = SubResource("AnimationNodeAnimation_akrjd")
+states/Cast/position = Vector2(656, 100)
+states/Charge/node = SubResource("AnimationNodeAnimation_dpjm2")
+states/Charge/position = Vector2(656, -10)
 states/Down/node = SubResource("AnimationNodeAnimation_a84c5")
 states/Down/position = Vector2(514, 100)
+states/Guard/node = SubResource("AnimationNodeAnimation_13mhh")
+states/Guard/position = Vector2(656, 210)
 states/Hurt/node = SubResource("AnimationNodeAnimation_ghmbc")
 states/Hurt/position = Vector2(379, -10)
 states/Hurt_2/node = SubResource("AnimationNodeAnimation_5a1rm")
@@ -211,7 +280,7 @@ states/Idle/position = Vector2(379, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_5tdnw")
 states/Miss/position = Vector2(379, 210)
 transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_vnoan"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_45muq")]
-graph_offset = Vector2(-26, -56)
+graph_offset = Vector2(-20, -4)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
 graph_offset = Vector2(-286, 41)

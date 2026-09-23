@@ -34,6 +34,41 @@ fighter_resource = ExtResource("7_ui50d")
 equip_serializable_array = Array[ExtResource("2_8ooxm")]([SubResource("Resource_hf3yd"), SubResource("Resource_ql07v"), SubResource("Resource_xkpdv"), SubResource("Resource_pclkw")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
+[sub_resource type="Animation" id="Animation_q5ji0"]
+resource_name = "Cast"
+length = 0.5000125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [18, 19, 20, 19]
+}
+
+[sub_resource type="Animation" id="Animation_tb10d"]
+resource_name = "Charge"
+length = 0.2000066770978272
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
 [sub_resource type="Animation" id="Animation_dnwrw"]
 resource_name = "Down"
 length = 0.2000066770978272
@@ -49,6 +84,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [51, 52, 53]
+}
+
+[sub_resource type="Animation" id="Animation_nyfek"]
+resource_name = "Guard"
+length = 0.06667333681061864
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [30]
 }
 
 [sub_resource type="Animation" id="Animation_j8mf4"]
@@ -168,15 +220,27 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4lull"]
 _data = {
+&"Cast": SubResource("Animation_q5ji0"),
+&"Charge": SubResource("Animation_tb10d"),
 &"Down": SubResource("Animation_dnwrw"),
+&"Guard": SubResource("Animation_nyfek"),
 &"Hurt": SubResource("Animation_j8mf4"),
 &"Idle": SubResource("Animation_yptn7"),
 &"Miss": SubResource("Animation_c1w8j"),
 &"RESET": SubResource("Animation_qbbkm")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tb10d"]
+animation = &"Cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nyfek"]
+animation = &"Charge"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dnwrw"]
 animation = &"Down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c1w8j"]
+animation = &"Guard"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k4s2r"]
 animation = &"Hurt"
@@ -200,8 +264,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_gfpqv"]
 allow_transition_to_self = true
+states/Cast/node = SubResource("AnimationNodeAnimation_tb10d")
+states/Cast/position = Vector2(625, 100)
+states/Charge/node = SubResource("AnimationNodeAnimation_nyfek")
+states/Charge/position = Vector2(625, 8)
 states/Down/node = SubResource("AnimationNodeAnimation_dnwrw")
 states/Down/position = Vector2(486, 100)
+states/Guard/node = SubResource("AnimationNodeAnimation_c1w8j")
+states/Guard/position = Vector2(625, 205)
 states/Hurt/node = SubResource("AnimationNodeAnimation_k4s2r")
 states/Hurt/position = Vector2(361, 8)
 states/Hurt_2/node = SubResource("AnimationNodeAnimation_q5ji0")
@@ -211,10 +281,10 @@ states/Idle/position = Vector2(361, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_yptn7")
 states/Miss/position = Vector2(361, 205)
 transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_c1w8j"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_qbbkm")]
-graph_offset = Vector2(-96, -45)
+graph_offset = Vector2(-95, 30)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aoydg"]
-graph_offset = Vector2(-143.47409, -48.67769)
+graph_offset = Vector2(-129.51694, -30.18708)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_gfpqv")
 nodes/base_StateMachine/position = Vector2(-120, 60)
 node_connections = [&"output", 0, &"base_StateMachine"]

@@ -11,6 +11,8 @@
 [resource]
 script = ExtResource("8_1qkvl")
 myFIGHTER_CLASS = 1
+tp_recovery = -2
+hp_recovery = -2
 thunder = Vector4i(100, 100, 0, 200)
 add_skill_resource_array = Array[ExtResource("1_k6by3")]([ExtResource("2_6evbv"), ExtResource("3_bectv"), ExtResource("4_8mmsb"), ExtResource("5_cxc3m"), ExtResource("6_as5qp")])
 metadata/_custom_type_script = "uid://nvm68ow83k0c"

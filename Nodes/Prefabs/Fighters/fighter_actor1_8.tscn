@@ -33,6 +33,41 @@ fighter_resource = ExtResource("3_cmy8s")
 equip_serializable_array = Array[ExtResource("2_pkj5u")]([SubResource("Resource_8wyqk"), SubResource("Resource_i77jc"), SubResource("Resource_kigc5"), SubResource("Resource_j7ao1")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
+[sub_resource type="Animation" id="Animation_wmwxv"]
+resource_name = "Cast"
+length = 0.5000125
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [18, 19, 20, 19]
+}
+
+[sub_resource type="Animation" id="Animation_qq0ja"]
+resource_name = "Charge"
+length = 0.2000066770978272
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
 [sub_resource type="Animation" id="Animation_n2vy2"]
 resource_name = "Down"
 length = 0.2000066770978272
@@ -48,6 +83,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [51, 52, 53]
+}
+
+[sub_resource type="Animation" id="Animation_du56h"]
+resource_name = "Guard"
+length = 0.06667333681061864
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [30]
 }
 
 [sub_resource type="Animation" id="Animation_nags1"]
@@ -167,15 +219,27 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d1xw0"]
 _data = {
+&"Cast": SubResource("Animation_wmwxv"),
+&"Charge": SubResource("Animation_qq0ja"),
 &"Down": SubResource("Animation_n2vy2"),
+&"Guard": SubResource("Animation_du56h"),
 &"Hurt": SubResource("Animation_nags1"),
 &"Idle": SubResource("Animation_in2tl"),
 &"Miss": SubResource("Animation_yt5n8"),
 &"RESET": SubResource("Animation_u503r")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n2vy2"]
+animation = &"Cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_du56h"]
+animation = &"Charge"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wmwxv"]
 animation = &"Down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nags1"]
+animation = &"Guard"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6n1uu"]
 animation = &"Hurt"
@@ -199,8 +263,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_tjhxd"]
 allow_transition_to_self = true
+states/Cast/node = SubResource("AnimationNodeAnimation_n2vy2")
+states/Cast/position = Vector2(639, 100)
+states/Charge/node = SubResource("AnimationNodeAnimation_du56h")
+states/Charge/position = Vector2(639, -11)
 states/Down/node = SubResource("AnimationNodeAnimation_wmwxv")
 states/Down/position = Vector2(504, 100)
+states/Guard/node = SubResource("AnimationNodeAnimation_nags1")
+states/Guard/position = Vector2(639, 210)
 states/Hurt/node = SubResource("AnimationNodeAnimation_6n1uu")
 states/Hurt/position = Vector2(365, -11)
 states/Hurt_2/node = SubResource("AnimationNodeAnimation_qq0ja")
@@ -210,7 +280,7 @@ states/Idle/position = Vector2(365, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_ffl1e")
 states/Miss/position = Vector2(365, 210)
 transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_or1ag"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_26gox")]
-graph_offset = Vector2(-82, -60)
+graph_offset = Vector2(-69, 21)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_tjhxd")

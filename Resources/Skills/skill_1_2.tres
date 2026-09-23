@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_1reo5")
+myANIMATION_BEFORE_ACTION = 2
 icon = ExtResource("1_jo610")
 max_cooldown = 3
 myTARGET = 5

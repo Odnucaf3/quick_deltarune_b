@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_rc8e5")
+myANIMATION_BEFORE_ACTION = 1
 icon = ExtResource("1_v6epm")
 tp_cost = 25
 value = 7

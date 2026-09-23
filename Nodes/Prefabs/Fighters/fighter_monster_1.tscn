@@ -214,8 +214,17 @@ _data = {
 &"RESET": SubResource("Animation_jnkbr")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x82ga"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4pwq6"]
+animation = &"Idle"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l17bb"]
 animation = &"Down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bf2d7"]
+animation = &"Idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8iapp"]
 animation = &"Hurt"
@@ -239,8 +248,14 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_u32xy"]
 allow_transition_to_self = true
+states/Cast/node = SubResource("AnimationNodeAnimation_x82ga")
+states/Cast/position = Vector2(650, 100)
+states/Charge/node = SubResource("AnimationNodeAnimation_4pwq6")
+states/Charge/position = Vector2(650, -1)
 states/Down/node = SubResource("AnimationNodeAnimation_l17bb")
 states/Down/position = Vector2(514, 100)
+states/Guard/node = SubResource("AnimationNodeAnimation_bf2d7")
+states/Guard/position = Vector2(650, 204)
 states/Hurt/node = SubResource("AnimationNodeAnimation_8iapp")
 states/Hurt/position = Vector2(374, -1)
 states/Hurt_2/node = SubResource("AnimationNodeAnimation_7s701")
@@ -268,7 +283,7 @@ pivot = NodePath("pivot")
 [node name="pivot" type="Node2D" parent="." unique_id=478944608]
 
 [node name="anchor" type="Node2D" parent="pivot" unique_id=339655241]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.4, 0.4)
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot/anchor" unique_id=1982685399]
 texture = ExtResource("6_krjvs")

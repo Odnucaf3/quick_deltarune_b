@@ -5149,7 +5149,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	#-------------------------------------------------------------------------------
 	for _i in ally_fighter_party.size():
 		Face_Fighter_Left(ally_fighter_party[_i], false)
-		AnimationTree_Transition_Set(ally_fighter_party[_i].animation_tree, state_machine_layer_1, "Idle")
+		#-------------------------------------------------------------------------------
 		ally_fighter_party[_i].z_index = battle_order
 		ally_fighter_party[_i].show()
 		#-------------------------------------------------------------------------------
@@ -5167,7 +5167,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	#-------------------------------------------------------------------------------
 	for _i in enemy_fighter_party.size():	
 		Face_Fighter_Left(enemy_fighter_party[_i], true)
-		AnimationTree_Transition_Set(enemy_fighter_party[_i].animation_tree, state_machine_layer_1, "Idle")
+		#-------------------------------------------------------------------------------
 		enemy_fighter_party[_i].z_index = battle_order
 		enemy_fighter_party[_i].show()
 		#-------------------------------------------------------------------------------
@@ -5181,6 +5181,59 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 		_tween.parallel().tween_property(enemy_fighter_party[_i].fighter_ui, "global_position", _final_position_ui, _timer)
 	#-------------------------------------------------------------------------------
 	await _tween.finished
+#-------------------------------------------------------------------------------
+func Set_All_Fighters_Animation_Depending_of_Situation():
+	#-------------------------------------------------------------------------------
+	for _i in ally_fighter_party.size():
+		Set_Fighter_Animation_Depending_of_Situation(ally_fighter_party[_i])
+	#-------------------------------------------------------------------------------
+	for _i in enemy_fighter_party.size():
+		Set_Fighter_Animation_Depending_of_Situation(enemy_fighter_party[_i])
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Fighter_Animation_Depending_of_Situation(_fighter_node:Fighter_Node):
+	#-------------------------------------------------------------------------------
+	if(!_fighter_node.is_down):
+		#-------------------------------------------------------------------------------
+		if(_fighter_node.action_serializable != null):
+			#-------------------------------------------------------------------------------
+			match(_fighter_node.action_serializable.action_resource.myANIMATION_BEFORE_ACTION):
+				Action_Resource.ANIMATION_BEFORE_ACTION.CHARGE:
+					Play_Fighter_Animation_Charge(_fighter_node)
+				#-------------------------------------------------------------------------------
+				Action_Resource.ANIMATION_BEFORE_ACTION.CAST:
+					Play_Fighter_Animation_Cast(_fighter_node)
+				#-------------------------------------------------------------------------------
+				Action_Resource.ANIMATION_BEFORE_ACTION.GUARD:
+					Play_Fighter_Animation_Guard(_fighter_node)
+				#-------------------------------------------------------------------------------
+				Action_Resource.ANIMATION_BEFORE_ACTION.NONE:
+					Play_Fighter_Animation_Idle(_fighter_node)
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		else:
+			Play_Fighter_Animation_Idle(_fighter_node)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		Play_Fighter_Animation_Down(_fighter_node)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Idle(_fighter_node:Fighter_Node):
+	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Idle")
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Charge(_fighter_node:Fighter_Node):
+	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Charge")
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Cast(_fighter_node:Fighter_Node):
+	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Cast")
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Guard(_fighter_node:Fighter_Node):
+	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Guard")
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Down(_fighter_node:Fighter_Node):
+	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Down")
 #-------------------------------------------------------------------------------
 func Create_All_Fighter_UI():
 	#-------------------------------------------------------------------------------
@@ -5250,6 +5303,7 @@ func BattleMenu_Cancel():
 	current_fighter_turn -= 1
 	#-------------------------------------------------------------------------------
 	if(current_fighter_turn < 0):
+		Set_All_Fighters_Animation_Depending_of_Situation()
 		lock_on.hide()
 		Set_Escape_Menu()
 	#-------------------------------------------------------------------------------
@@ -5258,6 +5312,7 @@ func BattleMenu_Cancel():
 		Set_TP_Bar(_tp)
 		Set_Lock_On_Position(_alive_ally_party[current_fighter_turn])
 		_alive_ally_party[current_fighter_turn].action_serializable = null
+		Set_All_Fighters_Animation_Depending_of_Situation()
 		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
 		singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
@@ -5354,6 +5409,7 @@ func Enter_and_Retry_Battle_Common_1():
 	Set_Fighter_Before_Battle(enemy_fighter_party)
 	Set_All_Fighters_its_Ally_and_Enemy_Parties()
 	#-------------------------------------------------------------------------------
+	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Set_All_Fighters_Position_1()
 	#-------------------------------------------------------------------------------
 	await Fade_In_Override()
@@ -5606,6 +5662,7 @@ func BattleMenu_Skill_Target_Submit(_user:Fighter_Node, _skill_serializable:Acti
 func After_Target_Select_Actions(_user:Fighter_Node, _action_serializable:Action_Serializable, _target:Fighter_Node):
 	_user.action_serializable = _action_serializable
 	_user.target = _target
+	Set_All_Fighters_Animation_Depending_of_Situation()
 	singleton.Common_Submited()
 	#-------------------------------------------------------------------------------
 	current_fighter_turn +=1
@@ -5670,8 +5727,9 @@ func Do_Ally_Actions():
 		#-------------------------------------------------------------------------------
 		if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
 			await Do_Ally_Action_1(_alive_ally_party[_i])
-			await Seconds(pop_up_timer-0.3)
-			await await Kill_All_Fighter_Array_and_Reposition_1()
+			await Seconds(pop_up_timer-0.15)
+			_alive_ally_party[_i].action_serializable = null
+			await Kill_All_Fighter_Array_and_Reposition_1()
 		#-------------------------------------------------------------------------------
 		Set_Battle_State()
 	#-------------------------------------------------------------------------------
@@ -5758,12 +5816,12 @@ func Do_Ally_Action_0(_user:Fighter_Node):
 			await Do_Repeat_Action_1(_user, _user.target)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.ALLY_1:
-			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.ally_party)
+			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.user_party)
 			_user.target = Re_Target_Alive_Weakest_Fighter(_user.target, _target_array)
 			await Do_Repeat_Action_1(_user, _user.target)
 		#-------------------------------------------------------------------------------
 		Action_Resource.TARGET.USER:
-			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.ally_party)
+			var _target_array: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(_user.user_party)
 			_user.target = Re_Target_Alive_Weakest_Fighter(_user.target, _target_array)
 			await Do_Repeat_Action_1(_user, _user.target)
 		#-------------------------------------------------------------------------------
@@ -6176,9 +6234,13 @@ func Get_Rate_100(_value:int) -> bool:
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Change_Fighter_HP(_target:Fighter_Node, _value:int):
-	_target.fighter_serializable_in_battle.hp += _value
-	var _max_hp: int = Get_Max_HP(_target.fighter_serializable_in_battle)
-	var _hp: int = _target.fighter_serializable_in_battle.hp
+	var _fighter_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+	#-------------------------------------------------------------------------------
+	_fighter_serializable.hp += _value
+	var _max_hp: int = Get_Max_HP(_fighter_serializable)
+	_fighter_serializable.hp = clampi(_fighter_serializable.hp, 0, _max_hp)
+	var _hp: int = _fighter_serializable.hp
+	#-------------------------------------------------------------------------------
 	_target.fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
 	_target.fighter_ui.hp_bar.value = _hp
 	_target.fighter_ui.hp_bar.max_value = _max_hp
@@ -6186,29 +6248,32 @@ func Change_Fighter_HP(_target:Fighter_Node, _value:int):
 #-------------------------------------------------------------------------------
 func Kill_All_Fighter_Array_and_Reposition_1():
 	await Kill_All_Fighter_Array_Common()
-	#-------------------------------------------------------------------------------
-	if(was_fighter_removed_from_battle):
-		await Set_All_Fighters_Position_1()
-	#-------------------------------------------------------------------------------
+	await Reposition_All_Fighters_1()
 #-------------------------------------------------------------------------------
 func Kill_All_Fighter_Array_and_Reposition_2():
 	await Kill_All_Fighter_Array_Common()
-	#-------------------------------------------------------------------------------
-	if(was_fighter_removed_from_battle):
-		await Set_All_Fighters_Position_2()
-	#-------------------------------------------------------------------------------
+	await Reposition_All_Fighters_2()
 #-------------------------------------------------------------------------------
 func Kill_All_Fighter_Array_Common():
 	was_status_effect_add_or_removed = false
 	was_fighter_removed_from_battle = false
+	#-------------------------------------------------------------------------------
+	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Kill_Fighter_Array(ally_fighter_party)
 	await Kill_Fighter_Array(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
-	if(was_status_effect_add_or_removed):
-		await Seconds(pop_up_timer)
+	await Seconds_for_Status_PopUp()
+#-------------------------------------------------------------------------------
+func Reposition_All_Fighters_1():
 	#-------------------------------------------------------------------------------
 	if(was_fighter_removed_from_battle):
 		await Set_All_Fighters_Position_1()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Reposition_All_Fighters_2():
+	#-------------------------------------------------------------------------------
+	if(was_fighter_removed_from_battle):
+		await Set_All_Fighters_Position_2()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Kill_Fighter_Array(_fighter_array:Array[Fighter_Node]):
@@ -6217,30 +6282,30 @@ func Kill_Fighter_Array(_fighter_array:Array[Fighter_Node]):
 		#-------------------------------------------------------------------------------
 		if(_fighter_array[_i].fighter_serializable_in_battle.hp <= 0):
 			Down_Effect(_fighter_array, _i)
-		#-------------------------------------------------------------------------------
-		else:
-			AnimationTree_Transition_Set(_fighter_array[_i].animation_tree, state_machine_layer_1, "Idle")
+			#await Seconds(0.15)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Down_Effect(_fighter_array:Array[Fighter_Node], _index: int):
+	var _fighter_node: Fighter_Node = _fighter_array[_index]
 	#-------------------------------------------------------------------------------
-	if(_fighter_array[_index].is_down):
+	if(_fighter_node.is_down):
 		return
 	#-------------------------------------------------------------------------------
-	_fighter_array[_index].is_down = true
-	_fighter_array[_index].fighter_serializable_in_battle.hp = 0
+	_fighter_node.is_down = true
+	_fighter_node.fighter_serializable_in_battle.hp = 0
 	was_status_effect_add_or_removed = true
 	#-------------------------------------------------------------------------------
-	Flying_PopUp_Add_Down(_fighter_array[_index])
-	AnimationTree_Transition_Set(_fighter_array[_index].animation_tree, state_machine_layer_1, "Down")
-	await _fighter_array[_index].animation_tree.animation_finished
+	Flying_PopUp_Add_Down(_fighter_node)
+	Play_Fighter_Animation_Down(_fighter_node)
 	#-------------------------------------------------------------------------------
-	if(_fighter_array[_index].disapears_after_death):
+	_fighter_node.fighter_ui.hide()
+	await _fighter_node.animation_tree.animation_finished
+	#-------------------------------------------------------------------------------
+	if(_fighter_node.disapears_after_death):
 		was_fighter_removed_from_battle = true
-		_fighter_array[_index].hide()
-		_fighter_array[_index].fighter_ui.hide()
-		_fighter_array.remove_at(_index)
+		_fighter_node.hide()
+		_fighter_array.erase(_fighter_node)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Flying_PopUp_Add_Down(_user: Fighter_Node):
@@ -6322,6 +6387,7 @@ func Do_Enemy_Actions():
 	#-------------------------------------------------------------------------------
 	dialogue_menu.hide()
 	Battle_Background_Dark_Fade_In()
+	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Set_All_Fighters_Position_2()
 	await Battle_Enemy_Dialogue_in_Bubbles()
 	#-------------------------------------------------------------------------------
@@ -6337,6 +6403,7 @@ func Do_Enemy_Actions():
 	Decrease_Skill_Cooldown_by_1(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	Battle_Background_Dark_Fade_Out()
+	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Set_All_Fighters_Position_1()
 	#-------------------------------------------------------------------------------
 	After_Enemy_Actions()
@@ -6368,104 +6435,154 @@ func Decrease_Skill_Cooldown_by_1(fighter_node_array:Array[Fighter_Node]):
 #-------------------------------------------------------------------------------
 func Apply_All_Fighter_HP_and_TP_Recovery_Effect():
 	was_status_effect_add_or_removed = false
-	await Apply_Fighter_HP_Recovery_Effect(ally_fighter_party)
-	await Apply_Fighter_HP_Recovery_Effect(enemy_fighter_party)
-	await Apply_Fighter_TP_Recovery_Effect(ally_fighter_party)
+	#-------------------------------------------------------------------------------
+	Set_All_Fighters_Animation_Depending_of_Situation()
+	await Apply_Fighter_HP_Recovery_Up(ally_fighter_party)
+	await Apply_Fighter_HP_Recovery_Up(enemy_fighter_party)
+	#-------------------------------------------------------------------------------
+	await Seconds_for_Status_PopUp()
+	#-------------------------------------------------------------------------------
+	Set_All_Fighters_Animation_Depending_of_Situation()
+	await Apply_Fighter_HP_Recovery_Down(ally_fighter_party)
+	await Apply_Fighter_HP_Recovery_Down(enemy_fighter_party)
+	#-------------------------------------------------------------------------------
+	await Seconds_for_Status_PopUp()
+	#-------------------------------------------------------------------------------
+	Set_All_Fighters_Animation_Depending_of_Situation()
+	await Apply_Fighter_TP_Recovery_Up(ally_fighter_party)
+	#-------------------------------------------------------------------------------
+	await Seconds_for_Status_PopUp()
+	#-------------------------------------------------------------------------------
+	Set_All_Fighters_Animation_Depending_of_Situation()
+	await Apply_Fighter_TP_Recovery_Down(ally_fighter_party)
+	#-------------------------------------------------------------------------------
+	await Seconds_for_Status_PopUp()
+#-------------------------------------------------------------------------------
+func Seconds_for_Status_PopUp():
 	#-------------------------------------------------------------------------------
 	if(was_status_effect_add_or_removed):
+		was_status_effect_add_or_removed = false
 		await Seconds(pop_up_timer)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Apply_Fighter_HP_Recovery_Effect(_fighter_node_array:Array[Fighter_Node]):
+func Apply_Fighter_HP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
-		var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 		#-------------------------------------------------------------------------------
-		if(_hp_recovery < 0):
-			singleton.Play_SFX_Damage()
-			Change_Fighter_HP_by_Damage(_fighter_node_array[_i], _hp_recovery)
-			was_status_effect_add_or_removed = true
-			await Seconds(0.1)
-		#-------------------------------------------------------------------------------
-		elif(_hp_recovery > 0):
-			Change_Fighter_HP_by_Heal(_fighter_node_array[_i], _hp_recovery)
-			singleton.Play_SFX_Heal()
-			was_status_effect_add_or_removed = true
-			await Seconds(0.1)
+		if(!_fighter_node_array[_i].is_down):
+			var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
+			#-------------------------------------------------------------------------------
+			if(_hp_recovery > 0):
+				var _value: int = Get_Absolute_Porcentual_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle, _hp_recovery)
+				Change_Fighter_HP_by_Heal(_fighter_node_array[_i], _value)
+				singleton.Play_SFX_Heal()
+				was_status_effect_add_or_removed = true
+				#await Seconds(0.15)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Apply_Fighter_TP_Recovery_Effect(_fighter_node_array:Array[Fighter_Node]):
-	var _final_value: int = 0
+func Apply_Fighter_HP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
-		var _tp_recovery: int = Get_TP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
-		_final_value += _tp_recovery
 		#-------------------------------------------------------------------------------
-		if(_tp_recovery < 0):
-			Flying_PopUp_TP(_fighter_node_array[_i], _tp_recovery)
-			was_status_effect_add_or_removed = true
-		#-------------------------------------------------------------------------------
-		elif(_tp_recovery > 0):
-			Flying_PopUp_TP(_fighter_node_array[_i], _tp_recovery)
-			was_status_effect_add_or_removed = true
+		if(!_fighter_node_array[_i].is_down):
+			var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
+			#-------------------------------------------------------------------------------
+			if(_hp_recovery < 0):
+				var _value: int = Get_Absolute_Porcentual_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle, _hp_recovery)
+				singleton.Play_SFX_Damage()
+				Change_Fighter_HP_by_Damage(_fighter_node_array[_i], _value)
+				was_status_effect_add_or_removed = true
+				#await Seconds(0.15)
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(_final_value < 0):
-		tp += _final_value
-		Set_TP_Bar(tp)
-		singleton.Play_SFX_Status_Remove()
-		await Seconds(0.3)
+#-------------------------------------------------------------------------------
+func Get_Absolute_Porcentual_Max_HP(_fighter_serializable:Fighter_Serializable, _hp_recovery:int) -> int:
+	var _max_hp: int = Get_Max_HP(_fighter_serializable)
+	var _porcentual_hp: int = int(float(_hp_recovery)*float(_max_hp)/100)
+	return abs(_porcentual_hp)
+#-------------------------------------------------------------------------------
+func Apply_Fighter_TP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
-	if(_final_value > 0):
-		tp += _final_value
-		Set_TP_Bar(tp)
-		singleton.Play_SFX_Heal_TP()
-		await Seconds(0.3)
+	for _i in _fighter_node_array.size():
+		#-------------------------------------------------------------------------------
+		if(!_fighter_node_array[_i].is_down):
+			var _tp_recovery: int = Get_TP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
+			#-------------------------------------------------------------------------------
+			if(_tp_recovery > 0):
+				var _value: int = Get_Porcentual_Max_TP(_tp_recovery)
+				singleton.Play_SFX_Heal_TP()
+				tp += _value
+				Set_TP_Bar(tp)
+				Flying_PopUp_TP(_fighter_node_array[_i], _value)
+				was_status_effect_add_or_removed = true
+				#await Seconds(0.15)
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Apply_Fighter_TP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	for _i in _fighter_node_array.size():
+		#-------------------------------------------------------------------------------
+		if(!_fighter_node_array[_i].is_down):
+			var _tp_recovery: int = Get_TP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
+			#-------------------------------------------------------------------------------
+			if(_tp_recovery < 0):
+				var _value: int = Get_Porcentual_Max_TP(_tp_recovery)
+				singleton.Play_SFX_Damage_TP()
+				tp += _value
+				Set_TP_Bar(tp)
+				Flying_PopUp_TP(_fighter_node_array[_i], _value)
+				was_status_effect_add_or_removed = true
+				#await Seconds(0.15)
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Get_Porcentual_Max_TP(_tp_recovery:int) -> int:
+	var _max_hp: int = Get_Max_Tp()
+	var _porcentual_tp: int = int(float(_tp_recovery)*float(_max_hp)/100)
+	return _porcentual_tp
 #-------------------------------------------------------------------------------
 func Decrease_All_Status_Effect_Turn_by_1():
 	was_status_effect_add_or_removed = false
+	#-------------------------------------------------------------------------------
 	await Decrease_Party_Status_Effect_Turn_by_1(ally_fighter_party)
 	await Decrease_Party_Status_Effect_Turn_by_1(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
-	if(was_status_effect_add_or_removed):
-		#singleton.Play_SFX_Status_Remove()
-		await Seconds(pop_up_timer)
-	#-------------------------------------------------------------------------------
+	await Seconds_for_Status_PopUp()
 #-------------------------------------------------------------------------------
 func Decrease_Party_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
-		await Decrease_1_Fighter_Status_Effect_Turn_by_1(_fighter_node_array[_i])
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func Decrease_1_Fighter_Status_Effect_Turn_by_1(_fighter_node:Fighter_Node):
-	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable_in_battle
-	#-------------------------------------------------------------------------------
-	if(_fighter_serializable.hp <= 0):
-		return
-	#-------------------------------------------------------------------------------
-	var _b: bool = false
-	#-------------------------------------------------------------------------------
-	var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
-	#-------------------------------------------------------------------------------
-	for _j in range(_status_serializable_array.size()-1,-1,-1):
 		#-------------------------------------------------------------------------------
-		if(!_status_serializable_array[_j].status_resource.is_infinite):
-			_status_serializable_array[_j].turns -= 1
+		if(!_fighter_node_array[_i].is_down):
+			var _fighter_serializable: Fighter_Serializable = _fighter_node_array[_i].fighter_serializable_in_battle
+			var _b: bool = false
 			#-------------------------------------------------------------------------------
-			if(_status_serializable_array[_j].turns <= 0):
-				Flying_PopUp_Remove_Status_1(_fighter_node, _status_serializable_array[_j].status_resource)
-				_status_serializable_array.remove_at(_j)
-				_b = true
-				was_status_effect_add_or_removed = true
+			var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
+			#-------------------------------------------------------------------------------
+			for _j in range(_status_serializable_array.size()-1,-1,-1):
+				#-------------------------------------------------------------------------------
+				if(!_status_serializable_array[_j].status_resource.is_infinite):
+					_status_serializable_array[_j].turns -= 1
+					#-------------------------------------------------------------------------------
+					if(_status_serializable_array[_j].turns <= 0):
+						Flying_PopUp_Remove_Status_1(_fighter_node_array[_i], _status_serializable_array[_j].status_resource)
+						_status_serializable_array.remove_at(_j)
+						_b = true
+						was_status_effect_add_or_removed = true
+					#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			if(_b):
+				singleton.Play_SFX_Status_Remove()
+				#await Seconds(0.15)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	if(_b):
-		singleton.Play_SFX_Status_Remove()
-		await Seconds(0.1)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Flying_PopUp_Add_Status_0(_user:Fighter_Node, _key:StringName):
