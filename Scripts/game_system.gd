@@ -5084,6 +5084,7 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 		var _fighter_serializable: Fighter_Serializable = _fighter_node_array[_i].fighter_serializable_in_battle
 		Set_Skill(_fighter_serializable)
 		#-------------------------------------------------------------------------------
+		_fighter_node_array[_i].action_serializable = null
 		_fighter_node_array[_i].is_down = false
 		#-------------------------------------------------------------------------------
 		var _max_hp: int = Get_Max_HP(_fighter_serializable)
@@ -5380,10 +5381,11 @@ func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
 #-------------------------------------------------------------------------------
 func You_Retry(_array_enemy_party:Array[Fighter_Node]):
 	myBATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
-	Add_Enemy_Party(_array_enemy_party)
-	Show_All_Fighters_UI()
 	#-------------------------------------------------------------------------------
 	await Fade_Out_Override()
+	#-------------------------------------------------------------------------------
+	Add_Enemy_Party(_array_enemy_party)
+	Show_All_Fighters_UI()
 	#-------------------------------------------------------------------------------
 	await Enter_and_Retry_Battle_Common_1()
 	await Enter_and_Retry_Battle_Common_2()
@@ -6110,10 +6112,24 @@ func B_Set_RPG_Calculation_0(_user:Fighter_Node, _target:Fighter_Node, _value:in
 	B_Set_RPG_Calculation_0_Status_Effect(_user, _target, _remove_status_dictionary, _add_status_dictionary)
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_0_Damage(_target:Fighter_Node, _value:int):
-	Change_Fighter_HP_by_Damage(_target, _value)
+	Change_Fighter_HP_by_Heal_or_Damage(_target, -_value)
+#-------------------------------------------------------------------------------
+func Change_Fighter_HP_by_Heal_or_Damage(_target:Fighter_Node, _value:int):
+	#-------------------------------------------------------------------------------
+	if(_value < 0):
+		Change_Fighter_HP_by_Damage(_target, _value)
+	#-------------------------------------------------------------------------------
+	elif(_value > 0):
+		Change_Fighter_HP_by_Heal(_target, _value)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Change_Fighter_HP_by_Heal(_target:Fighter_Node, _value:int):
+	Change_Fighter_HP(_target, _value)
+	#Need Healing Animation.
+	singleton.Play_SFX_Heal()
 #-------------------------------------------------------------------------------
 func Change_Fighter_HP_by_Damage(_target:Fighter_Node, _value:int):
-	Change_Fighter_HP(_target, -_value)
+	Change_Fighter_HP(_target, _value)
 	AnimationTree_Transition_Set(_target.animation_tree, state_machine_layer_1, "Hurt_2")
 	singleton.Play_SFX_Damage()
 #-------------------------------------------------------------------------------
@@ -6125,18 +6141,14 @@ func B_Set_RPG_Calculation_0_Heal(_user:Fighter_Node, _target:Fighter_Node, _val
 	var _user_pharmacology: int = Get_Recovery_Effect(_user_serializable)
 	var _final_value: int  = Get_RPG_Scaling(_value, _user_pharmacology, _target_recovery_effect)
 	#-------------------------------------------------------------------------------
-	Change_Fighter_HP_by_Heal(_target, _final_value)
-#-------------------------------------------------------------------------------
-func Change_Fighter_HP_by_Heal(_target:Fighter_Node, _value:int):
-	Change_Fighter_HP(_target, _value)
-	singleton.Play_SFX_Heal()
+	Change_Fighter_HP_by_Heal_or_Damage(_target, _final_value)
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_0_Drain(_user:Fighter_Node, _target:Fighter_Node, _value:int):
 	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
 	var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
 	#-------------------------------------------------------------------------------
-	Change_Fighter_HP_by_Heal(_user, _value)
-	Change_Fighter_HP_by_Damage(_target, _value)
+	Change_Fighter_HP_by_Heal_or_Damage(_user, _value)
+	Change_Fighter_HP_by_Heal_or_Damage(_target, -_value)
 #-------------------------------------------------------------------------------
 func Get_RPG_Scaling(_value:int, _power:int, _absorb:int) -> int:
 	var _final_value: int = int( float(_value) * float(_power)/100 * float(_absorb)/100 )
@@ -6473,9 +6485,8 @@ func Apply_Fighter_HP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 			var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 			#-------------------------------------------------------------------------------
 			if(_hp_recovery > 0):
-				var _value: int = Get_Absolute_Porcentual_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle, _hp_recovery)
+				var _value: int = Get_Porcentual_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle, _hp_recovery)
 				Change_Fighter_HP_by_Heal(_fighter_node_array[_i], _value)
-				singleton.Play_SFX_Heal()
 				was_status_effect_add_or_removed = true
 				#await Seconds(0.15)
 			#-------------------------------------------------------------------------------
@@ -6490,8 +6501,7 @@ func Apply_Fighter_HP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
 			var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 			#-------------------------------------------------------------------------------
 			if(_hp_recovery < 0):
-				var _value: int = Get_Absolute_Porcentual_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle, _hp_recovery)
-				singleton.Play_SFX_Damage()
+				var _value: int = Get_Porcentual_Max_HP(_fighter_node_array[_i].fighter_serializable_in_battle, _hp_recovery)
 				Change_Fighter_HP_by_Damage(_fighter_node_array[_i], _value)
 				was_status_effect_add_or_removed = true
 				#await Seconds(0.15)
@@ -6499,10 +6509,10 @@ func Apply_Fighter_HP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Get_Absolute_Porcentual_Max_HP(_fighter_serializable:Fighter_Serializable, _hp_recovery:int) -> int:
+func Get_Porcentual_Max_HP(_fighter_serializable:Fighter_Serializable, _hp_recovery:int) -> int:
 	var _max_hp: int = Get_Max_HP(_fighter_serializable)
 	var _porcentual_hp: int = int(float(_hp_recovery)*float(_max_hp)/100)
-	return abs(_porcentual_hp)
+	return _porcentual_hp
 #-------------------------------------------------------------------------------
 func Apply_Fighter_TP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
@@ -6513,10 +6523,7 @@ func Apply_Fighter_TP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 			#-------------------------------------------------------------------------------
 			if(_tp_recovery > 0):
 				var _value: int = Get_Porcentual_Max_TP(_tp_recovery)
-				singleton.Play_SFX_Heal_TP()
-				tp += _value
-				Set_TP_Bar(tp)
-				Flying_PopUp_TP(_fighter_node_array[_i], _value)
+				Change_TP_by_Heal(_fighter_node_array[_i], _value)
 				was_status_effect_add_or_removed = true
 				#await Seconds(0.15)
 			#-------------------------------------------------------------------------------
@@ -6532,15 +6539,35 @@ func Apply_Fighter_TP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
 			#-------------------------------------------------------------------------------
 			if(_tp_recovery < 0):
 				var _value: int = Get_Porcentual_Max_TP(_tp_recovery)
-				singleton.Play_SFX_Damage_TP()
-				tp += _value
-				Set_TP_Bar(tp)
-				Flying_PopUp_TP(_fighter_node_array[_i], _value)
+				Change_TP_by_Damage(_fighter_node_array[_i], _value)
 				was_status_effect_add_or_removed = true
 				#await Seconds(0.15)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Change_TP_by_Heal_or_Damage(_target:Fighter_Node, _value:int):
+	#-------------------------------------------------------------------------------
+	if(_value < 0):
+		Change_TP_by_Damage(_target, _value)
+	#-------------------------------------------------------------------------------
+	elif(_value > 0):
+		Change_TP_by_Heal(_target, _value)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Change_TP_by_Heal(_target:Fighter_Node, _value:int):
+	tp += _value
+	Set_TP_Bar(tp)
+	Flying_PopUp_TP(_target, _value)
+	#Need Healing Animation.
+	singleton.Play_SFX_Heal_TP()
+#-------------------------------------------------------------------------------
+func Change_TP_by_Damage(_target:Fighter_Node, _value:int):
+	tp += _value
+	Set_TP_Bar(tp)
+	Flying_PopUp_TP(_target, _value)
+	#Need Damage Animation.
+	singleton.Play_SFX_Damage_TP()
 #-------------------------------------------------------------------------------
 func Get_Porcentual_Max_TP(_tp_recovery:int) -> int:
 	var _max_hp: int = Get_Max_Tp()

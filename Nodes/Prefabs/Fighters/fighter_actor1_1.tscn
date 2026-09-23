@@ -284,7 +284,6 @@ transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(-95, 30)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aoydg"]
-graph_offset = Vector2(-129.51694, -30.18708)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_gfpqv")
 nodes/base_StateMachine/position = Vector2(-120, 60)
 node_connections = [&"output", 0, &"base_StateMachine"]
