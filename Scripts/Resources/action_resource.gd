@@ -2,7 +2,8 @@ extends Resource
 class_name Action_Resource
 #-------------------------------------------------------------------------------
 enum ATRIBUTE{NONE, PHYSICAL, MAGICAL}
-enum ANIMATION_BEFORE_ACTION{CHARGE, CAST, GUARD, NONE}
+enum ANIMATION_BEFORE_ACTION{NONE, CHARGE, CAST, GUARD}
+enum ANIMATION_DURING_ACTION{NONE, WEAPON, CAST}
 enum ELEMENT{NONE, NORMAL, WATER, FIRE, EARTH, WIND, ICE, THUNDER, LIGHT, DARK}
 enum EFFECT{NONE, DAMAGE, HEAL, DRAIN}
 enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USER, ALLY_DOWN_1, ALLY_DOWN_ALL}
@@ -10,6 +11,7 @@ enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USE
 @export_category("Action Animations")
 @export var animation_prefab: PackedScene
 @export var myANIMATION_BEFORE_ACTION: ANIMATION_BEFORE_ACTION
+@export var myANIMATION_DURING_ACTION: ANIMATION_DURING_ACTION
 @export var animation_timer_1: float = 0.7
 @export var animation_timer_2: float = 0
 #-------------------------------------------------------------------------------

@@ -130,7 +130,7 @@ _data = {
 &"RESET": SubResource("Animation_bcfib")
 }
 
-[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_docxg"]
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_xpq6h"]
 
 [node name="v_slash" type="Node2D" unique_id=1971366439 node_paths=PackedStringArray("animation_player")]
 script = ExtResource("1_xpq6h")
@@ -186,5 +186,5 @@ frame = 14
 libraries/ = SubResource("AnimationLibrary_e0kva")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1628465040]
-stream = SubResource("AudioStreamPolyphonic_docxg")
+stream = SubResource("AudioStreamPolyphonic_xpq6h")
 bus = &"sfx"

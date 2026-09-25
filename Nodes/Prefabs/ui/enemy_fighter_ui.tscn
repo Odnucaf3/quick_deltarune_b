@@ -3,9 +3,7 @@
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="1_x5jtt"]
 [ext_resource type="Script" uid="uid://bcrucc2wrc473" path="res://Scripts/Prefabs/fighter_ui.gd" id="2_1735b"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="3_48gh8"]
-[ext_resource type="Texture2D" uid="uid://brcg6yd4ucjv" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_3.png" id="4_bw1h1"]
-[ext_resource type="Texture2D" uid="uid://bewl0l0tdcrpk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_10.png" id="5_ydirw"]
-[ext_resource type="Texture2D" uid="uid://b35u0hbn3sq6i" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_8.png" id="6_px7xa"]
+[ext_resource type="PackedScene" uid="uid://3lwydgx7j24f" path="res://Nodes/Prefabs/ui/status_ui.tscn" id="4_48gh8"]
 [ext_resource type="Texture2D" uid="uid://bsvniy8bsjfm0" path="res://Assets/Sprites/triangle.png" id="7_ydirw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3em1u"]
@@ -13,7 +11,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 shadow_color = Color(0, 0, 0, 0.8039216)
 shadow_size = 12
 
-[node name="enemy_fighter_ui" type="Control" unique_id=116234824 node_paths=PackedStringArray("button_root", "button", "hp_bar", "hp_label", "dialogue_root")]
+[node name="enemy_fighter_ui" type="Control" unique_id=116234824 node_paths=PackedStringArray("button_root", "button", "hp_root", "hp_bar", "hp_label", "dialogue_root", "status_ui_container")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -26,9 +24,11 @@ theme = ExtResource("1_x5jtt")
 script = ExtResource("2_1735b")
 button_root = NodePath("button_root")
 button = NodePath("button_root/PanelContainer/Button")
+hp_root = NodePath("hp_root")
 hp_bar = NodePath("hp_root/VBoxContainer/ProgressBar")
-hp_label = NodePath("hp_root/VBoxContainer/Label")
+hp_label = NodePath("hp_root/VBoxContainer/ProgressBar/MarginContainer/Label")
 dialogue_root = NodePath("dialogue_root")
+status_ui_container = NodePath("hp_root/VBoxContainer/Control/status_ui_container")
 
 [node name="hp_root" type="Control" parent="." unique_id=1439823442]
 anchors_preset = 0
@@ -49,44 +49,48 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 2
 
-[node name="Label" type="Label" parent="hp_root/VBoxContainer" unique_id=763344982]
-layout_mode = 2
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 16
-text = "3.000 / 3.000 HP"
-horizontal_alignment = 2
-
 [node name="ProgressBar" type="ProgressBar" parent="hp_root/VBoxContainer" unique_id=387271048]
 layout_mode = 2
 theme = ExtResource("3_48gh8")
 value = 75.0
 show_percentage = false
 
+[node name="MarginContainer" type="MarginContainer" parent="hp_root/VBoxContainer/ProgressBar" unique_id=1734621440]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="hp_root/VBoxContainer/ProgressBar/MarginContainer" unique_id=763344982]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "3.000 / 3.000 HP"
+horizontal_alignment = 2
+
 [node name="Control" type="Control" parent="hp_root/VBoxContainer" unique_id=1852915024]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="hp_root/VBoxContainer/Control" unique_id=1404700511]
+[node name="status_ui_container" type="HBoxContainer" parent="hp_root/VBoxContainer/Control" unique_id=1404700511]
 layout_mode = 1
-offset_right = 128.0
-offset_bottom = 40.0
-scale = Vector2(0.5, 0.5)
 
-[node name="TextureRect" type="TextureRect" parent="hp_root/VBoxContainer/Control/HBoxContainer" unique_id=1873030601]
+[node name="status_ui" parent="hp_root/VBoxContainer/Control/status_ui_container" unique_id=626703648 instance=ExtResource("4_48gh8")]
 layout_mode = 2
-texture = ExtResource("4_bw1h1")
-expand_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="hp_root/VBoxContainer/Control/HBoxContainer" unique_id=1869468781]
+[node name="status_ui2" parent="hp_root/VBoxContainer/Control/status_ui_container" unique_id=1828442063 instance=ExtResource("4_48gh8")]
 layout_mode = 2
-texture = ExtResource("5_ydirw")
-expand_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="hp_root/VBoxContainer/Control/HBoxContainer" unique_id=38651505]
+[node name="status_ui3" parent="hp_root/VBoxContainer/Control/status_ui_container" unique_id=370299524 instance=ExtResource("4_48gh8")]
 layout_mode = 2
-texture = ExtResource("6_px7xa")
-expand_mode = 2
+
+[node name="status_ui4" parent="hp_root/VBoxContainer/Control/status_ui_container" unique_id=568547044 instance=ExtResource("4_48gh8")]
+layout_mode = 2
 
 [node name="dialogue_root" type="Control" parent="." unique_id=1527227983]
 visible = false

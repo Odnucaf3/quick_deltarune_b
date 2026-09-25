@@ -214,6 +214,12 @@ _data = {
 &"RESET": SubResource("Animation_jnkbr")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xtpjr"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jnkbr"]
+animation = &"Idle"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x82ga"]
 animation = &"Idle"
 
@@ -248,8 +254,12 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_u32xy"]
 allow_transition_to_self = true
-states/Cast/node = SubResource("AnimationNodeAnimation_x82ga")
-states/Cast/position = Vector2(650, 100)
+states/Attack_Hand/node = SubResource("AnimationNodeAnimation_xtpjr")
+states/Attack_Hand/position = Vector2(650, 414)
+states/Cast/node = SubResource("AnimationNodeAnimation_jnkbr")
+states/Cast/position = Vector2(650, 306)
+states/Casting/node = SubResource("AnimationNodeAnimation_x82ga")
+states/Casting/position = Vector2(650, 100)
 states/Charge/node = SubResource("AnimationNodeAnimation_4pwq6")
 states/Charge/position = Vector2(650, -1)
 states/Down/node = SubResource("AnimationNodeAnimation_l17bb")
@@ -265,10 +275,10 @@ states/Idle/position = Vector2(374, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_bhjae")
 states/Miss/position = Vector2(374, 204)
 transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_l17bb"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_7s701")]
-graph_offset = Vector2(-68, -33)
+graph_offset = Vector2(138, 257)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-graph_offset = Vector2(-50, 71)
+graph_offset = Vector2(-116, -16.676819)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_u32xy")
 nodes/base_StateMachine/position = Vector2(-40, 100)
 node_connections = [&"output", 0, &"base_StateMachine"]

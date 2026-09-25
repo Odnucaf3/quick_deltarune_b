@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://3lwydgx7j24f"]
+
+[ext_resource type="Texture2D" uid="uid://brcg6yd4ucjv" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_3.png" id="1_phjui"]
+[ext_resource type="Script" uid="uid://b37w1ombq35qs" path="res://Scripts/Prefabs/status_ui.gd" id="2_wr1fi"]
+
+[node name="status_ui" type="TextureRect" unique_id=626703648 node_paths=PackedStringArray("label")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_phjui")
+script = ExtResource("2_wr1fi")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=1697183140]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 2

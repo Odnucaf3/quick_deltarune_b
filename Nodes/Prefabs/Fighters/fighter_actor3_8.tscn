@@ -4,9 +4,9 @@
 [ext_resource type="Resource" uid="uid://cpbj78ksh3wst" path="res://Resources/Characters/character_0_3.tres" id="2_3bm2e"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_fnmow"]
 [ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_4_0.tres" id="7_apdi8"]
+[ext_resource type="Resource" uid="uid://ciiobno68j8fu" path="res://Resources/Status/status_4.tres" id="7_g07ib"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_urbvg"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_ih5rp"]
-[ext_resource type="Resource" uid="uid://cp3wtney3ld27" path="res://Resources/Status/status_7.tres" id="10_m5fk7"]
 [ext_resource type="Texture2D" uid="uid://cga282m3ycy4n" path="res://Assets/rpg_maker_mv/img/sv_actors/Actor3_8.png" id="11_6pgwn"]
 
 [sub_resource type="Resource" id="Resource_5dha6"]
@@ -30,7 +30,7 @@ metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_2i5i2"]
 script = ExtResource("9_ih5rp")
-status_resource = ExtResource("10_m5fk7")
+status_resource = ExtResource("7_g07ib")
 metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
 
 [sub_resource type="Resource" id="Resource_25p7l"]
@@ -40,8 +40,43 @@ equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_
 status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
-[sub_resource type="Animation" id="Animation_xh1jj"]
+[sub_resource type="Animation" id="Animation_m6xjl"]
+resource_name = "Attack_Hand"
+length = 0.5000125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_reqn5"]
 resource_name = "Cast"
+length = 0.5000125
+loop_mode = 2
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [39, 40, 41]
+}
+
+[sub_resource type="Animation" id="Animation_xh1jj"]
+resource_name = "Casting"
 length = 0.5000125
 loop_mode = 1
 step = 0.125
@@ -214,7 +249,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_reqn5"]
 _data = {
-&"Cast": SubResource("Animation_xh1jj"),
+&"Attack_Hand": SubResource("Animation_m6xjl"),
+&"Cast": SubResource("Animation_reqn5"),
+&"Casting": SubResource("Animation_xh1jj"),
 &"Charge": SubResource("Animation_rrkcv"),
 &"Down": SubResource("Animation_g07ib"),
 &"Guard": SubResource("Animation_6pgwn"),
@@ -224,8 +261,14 @@ _data = {
 &"RESET": SubResource("Animation_x2g7y")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g07ib"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hkdfg"]
+animation = &"Attack_Hand"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ou04t"]
 animation = &"Cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g07ib"]
+animation = &"Casting"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6pgwn"]
 animation = &"Charge"
@@ -258,8 +301,12 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0m7qj"]
 allow_transition_to_self = true
-states/Cast/node = SubResource("AnimationNodeAnimation_g07ib")
-states/Cast/position = Vector2(654, 100)
+states/Attack_Hand/node = SubResource("AnimationNodeAnimation_hkdfg")
+states/Attack_Hand/position = Vector2(654, 412)
+states/Cast/node = SubResource("AnimationNodeAnimation_ou04t")
+states/Cast/position = Vector2(654, 314)
+states/Casting/node = SubResource("AnimationNodeAnimation_g07ib")
+states/Casting/position = Vector2(654, 100)
 states/Charge/node = SubResource("AnimationNodeAnimation_6pgwn")
 states/Charge/position = Vector2(654, -12)
 states/Down/node = SubResource("AnimationNodeAnimation_xh1jj")
@@ -275,10 +322,10 @@ states/Idle/position = Vector2(359, 100)
 states/Miss/node = SubResource("AnimationNodeAnimation_i8v35")
 states/Miss/position = Vector2(359, 219)
 transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_ou04t"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_hkdfg")]
-graph_offset = Vector2(6, 39)
+graph_offset = Vector2(132, 187)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-graph_offset = Vector2(-318, 66)
+graph_offset = Vector2(-318, 57.32318)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_0m7qj")
 nodes/base_StateMachine/position = Vector2(-140, 100)
 node_connections = [&"output", 0, &"base_StateMachine"]

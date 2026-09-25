@@ -193,7 +193,7 @@ func NPC_4_Talk(_array_fighter_array:Array[Fighter_Node]):
 			#-------------------------------------------------------------------------------
 			await singleton.game_system.Dialogue_Close()
 			await singleton.game_system.Enter_Battle(_array_fighter_array)
-			singleton.game_system.Dialogue_Override("* The Battle Began!")
+			singleton.game_system.Dialogue_Override("* The Battle Began! Turn "+str(singleton.game_system.turn_counter)+".")
 			await Loop_Battle(_array_fighter_array)
 		#-------------------------------------------------------------------------------
 		1:
@@ -217,8 +217,15 @@ func Loop_Battle(_array_fighter_array:Array[Fighter_Node]):
 		await singleton.game_system.Re_Open_Battle_Menu()
 		await singleton.game_system.Do_Ally_Actions()
 		await singleton.game_system.Do_Enemy_Actions()
+		Battle_Dialogue_1()
 	#-------------------------------------------------------------------------------
 	await After_Battle(_array_fighter_array)
+#-------------------------------------------------------------------------------
+func Battle_Dialogue_1():
+	#-------------------------------------------------------------------------------
+	if(singleton.game_system.myBATTLE_STATE == Game_System.BATTLE_STATE.STILL_FIGHTING):
+		singleton.game_system.Dialogue_Override("* The Battle Continue. Turn "+str(singleton.game_system.turn_counter)+".")
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func After_Battle(_array_fighter_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------

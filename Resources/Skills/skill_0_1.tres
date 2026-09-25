@@ -7,6 +7,8 @@
 [resource]
 script = ExtResource("3_0i4t6")
 animation_prefab = ExtResource("1_rrwgi")
+myANIMATION_BEFORE_ACTION = 1
+myANIMATION_DURING_ACTION = 1
 icon = ExtResource("2_bblcg")
 speed = 1
 value = 15

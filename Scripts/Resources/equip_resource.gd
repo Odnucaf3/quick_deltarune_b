@@ -1,7 +1,7 @@
 extends Resource
 class_name Equip_Resource
 #-------------------------------------------------------------------------------
-enum EQUIP_TYPE{WEAPON, HEAD, BODY, RING}
+enum EQUIP_TYPE{WEAPON, SHIELD, ART, HEAD, BODY, RING}
 #-------------------------------------------------------------------------------
 @export_category("Equip Stats")
 @export var icon: Texture2D

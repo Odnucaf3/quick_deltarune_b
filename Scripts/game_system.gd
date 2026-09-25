@@ -28,16 +28,19 @@ var battle_box_limit_right: float
 @export var hitbox_root: Control
 @export var battle_ui: Control
 @export var black_screen_override: Panel
+var turn_counter: int = 0
 #-------------------------------------------------------------------------------
 @export_category("Prefabs & Resources")
 @export var attack_resource: Action_Resource
 @export var guard_resource: Action_Resource
 @export var death_status_resource: Status_Resource
+@export var guard_status_resource: Status_Resource
 @export var fighter_button_prefab: PackedScene
 @export var fighter_ally_ui_prefab: PackedScene
 @export var fighter_enemy_ui_prefab: PackedScene
 @export var ally_pop_up_prefab: PackedScene
 @export var enemy_pop_up_prefab: PackedScene
+@export var status_ui_prefab: PackedScene
 #-------------------------------------------------------------------------------
 @export_category("Inventory")
 @export var item_consumable_inventory: Array[Action_Serializable]
@@ -59,6 +62,8 @@ var myLOSE_STATE: LOSE_STATE = LOSE_STATE.YOU_RETRY
 var ally_button_array: Array[Fighter_Button]
 var current_fighter_turn: int = 0
 @export var lock_on: Control
+var lock_on_offset: Vector2 = Vector2(30, -15)
+@export var lock_on_animation_player: AnimationPlayer
 @export var enemy_fighter_party: Array[Fighter_Node]
 @export var player_characterbody2d: CharacterBody2D
 var player_starting_position: Vector2
@@ -311,6 +316,8 @@ var equip_menu_button_array: Array[Button]
 @export var statistics_menu_information_fighter_title: Label
 @export var statistics_menu_information_fighter_hp_value: Label
 @export var statistics_menu_information_fighter_hp_slider: ProgressBar
+@export var statistics_menu_information_status_ui_container: HBoxContainer
+var statistics_menu_information_status_ui_array: Array[Status_UI]
 @export var statistics_menu_information_level_title: Label
 @export var statistics_menu_information_level_value: Label
 #-------------------------------------------------------------------------------
@@ -459,7 +466,7 @@ func _ready() -> void:
 	escape_menu.hide()
 	lose_menu.hide()
 	win_menu.hide()
-	lock_on.hide()
+	Lock_Off_Hide()
 	battle_background_root.hide()
 	battle_menu.hide()
 	dialogue_menu.hide()
@@ -496,6 +503,7 @@ func _ready() -> void:
 	singleton.Destroy_Childrens(equip_menu_button_content)
 	singleton.Destroy_Childrens(status_menu_button_content)
 	singleton.Destroy_Childrens(pause_menu_fighter_button_content)
+	singleton.Destroy_Childrens(statistics_menu_information_status_ui_container)
 	#-------------------------------------------------------------------------------
 	singleton.Destroy_Childrens(item_menu_all_button_content)
 	singleton.Destroy_Childrens(item_menu_consumable_button_content)
@@ -509,7 +517,7 @@ func _ready() -> void:
 	Set_Fighter_0()
 	#-------------------------------------------------------------------------------
 	NormalMotion()
-	B_Dialogue_Test()
+	#B_Dialogue_Test()
 #-------------------------------------------------------------------------------
 func _physics_process(_delta: float) -> void:
 	tween_Array = get_tree().get_processed_tweens()
@@ -743,10 +751,13 @@ func Create_Fighter_Button(_fighter_node:Fighter_Node) -> Fighter_Button:
 	var _party_button: Fighter_Button = fighter_button_prefab.instantiate() as Fighter_Button
 	#-------------------------------------------------------------------------------
 	var _character_resource: Character_Resource = _fighter_node.character_resource
+	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable
 	#-------------------------------------------------------------------------------
 	_party_button.face.texture = _character_resource.face
-	Fighter_Button_Set_Information_and_Idiome(_party_button, _character_resource, _fighter_node.fighter_serializable)
-	Fighter_Button_Set_HP(_party_button, _fighter_node.fighter_serializable)
+	Fighter_Button_Set_Information_and_Idiome(_party_button, _character_resource, _fighter_serializable)
+	Fighter_Button_Set_HP(_party_button, _fighter_serializable)
+	singleton.Destroy_Childrens(_party_button.status_ui_container)
+	Delete_and_Create_Status_UI_Array(_party_button.status_ui_container, _party_button.status_ui_array, _fighter_serializable.status_serializable_array)
 	#-------------------------------------------------------------------------------
 	return _party_button
 #-------------------------------------------------------------------------------
@@ -875,7 +886,7 @@ func Pause_Menu_Statistics_Fighter_Button_Submit(_fighter_index:int):
 	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable
 	var _cancel:Callable = func():Pause_Statistics_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
-	Pause_Statistics_Menu_Set(_fighter_node, _fighter_serializable, _cancel)
+	Pause_Statistics_Menu_Set(_fighter_node.character_resource, _fighter_serializable, _cancel)
 	statistics_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
 func Pause_Menu_Statistics_Fighter_Button_Cancel():
@@ -1673,7 +1684,7 @@ func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	var _turns: int = clampi(_status_serializable.turns, 0, _status_resource.max_turns)
 	#-------------------------------------------------------------------------------
 	if(_status_resource.is_infinite):
-		status_menu_information_turns_value.text ="-"
+		status_menu_information_turns_value.text = "["+Get_Infite_String()+"]"
 	#-------------------------------------------------------------------------------
 	else:
 		status_menu_information_turns_value.text ="["+str(_turns)+"/"+str(_status_resource.max_turns)+"]"
@@ -2379,8 +2390,7 @@ func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serial
 	_label2.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	#-------------------------------------------------------------------------------
 	if(_status_serializable.status_resource.is_infinite):
-		#∞, ꝏ, Ꝏ
-		_label2.text = "[Ꝏ]  "
+		_label2.text = "["+Get_Infite_String()+"]  "
 	#-------------------------------------------------------------------------------
 	else:
 		var _turns: int = clampi(_status_serializable.turns, 0, _status_serializable.status_resource.max_turns)
@@ -2389,6 +2399,10 @@ func Create_StatusEffect_Serializable_Button(_status_serializable: Status_Serial
 	_button.add_child(_label2)
 	#-------------------------------------------------------------------------------
 	return _button
+#-------------------------------------------------------------------------------
+func Get_Infite_String() -> String:
+	#∞, ꝏ, Ꝏ
+	return "Ꝏ"
 #-------------------------------------------------------------------------------
 func Create_Empty_Button() -> Button:
 	var _button: Button = Button.new()
@@ -2413,7 +2427,7 @@ func Pause_Status_Menu_Status_Button_Cancel(_fighter_index:int):
 #-------------------------------------------------------------------------------
 #region PAUSE-STATISTICS MENU
 #-------------------------------------------------------------------------------
-func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializable: Fighter_Serializable, _cancel:Callable):
+func Pause_Statistics_Menu_Set(_character_resource: Character_Resource, _fighter_serializable: Fighter_Serializable, _cancel:Callable):
 	#-------------------------------------------------------------------------------
 	var _w: Callable = func(): singleton.ScrollContainer_Up(statistics_menu_information_root)
 	var _s: Callable = func(): singleton.ScrollContainer_Down(statistics_menu_information_root)
@@ -2424,7 +2438,6 @@ func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializabl
 	#-------------------------------------------------------------------------------
 	singleton.Set_Button_WS_Up_Down(statistics_menu_button_0, _selected, _submit, _w, _s)
 	#-------------------------------------------------------------------------------
-	var _character_resource: Character_Resource = _fighter_node.character_resource
 	statistics_menu_information_fighter_face.texture = _character_resource.face
 	#-------------------------------------------------------------------------------
 	statistics_menu_information_fighter_name.text = Get_Tr_Character_Name(_character_resource)
@@ -2438,7 +2451,9 @@ func Pause_Statistics_Menu_Set(_fighter_node: Fighter_Node, _fighter_serializabl
 	statistics_menu_information_fighter_hp_slider.max_value = _max_hp
 	statistics_menu_information_fighter_hp_slider.value = _max_hp
 	#-------------------------------------------------------------------------------
-	statistics_menu_information_level_value.text = Get_Tr_Fighter_Class_and_Gender(_fighter_serializable.fighter_resource.myFIGHTER_CLASS, _fighter_node.character_resource.myGENDER)+"\n"
+	Delete_and_Create_Status_UI_Array(statistics_menu_information_status_ui_container, statistics_menu_information_status_ui_array, _fighter_serializable.status_serializable_array)
+	#-------------------------------------------------------------------------------
+	statistics_menu_information_level_value.text = Get_Tr_Fighter_Class_and_Gender(_fighter_serializable.fighter_resource.myFIGHTER_CLASS, _character_resource.myGENDER)+"\n"
 	statistics_menu_information_level_value.text += str(_fighter_serializable.level)+"\n"
 	var _max_experience: int = Get_Max_Experience(_fighter_serializable)
 	var _experience: int = clampi(_fighter_serializable.experience, 0, _max_experience-1)
@@ -4165,6 +4180,7 @@ func Dialogue_Enter_and_Open():
 	Dialogue_Open()
 #-------------------------------------------------------------------------------
 func Dialogue_Close():
+	Dialogue_Tween_Cancel()
 	dialogue_menu.hide()
 	button_next.hide()
 #-------------------------------------------------------------------------------
@@ -4295,10 +4311,19 @@ func Dialogue_Loop_Logic():
 	#-------------------------------------------------------------------------------
 	match(dialogue_letter):
 		".":
-			dialogue_counter = 14
+			dialogue_counter = 12
+		#-------------------------------------------------------------------------------
+		"?":
+			dialogue_counter = 12
+		#-------------------------------------------------------------------------------
+		"!":
+			dialogue_counter = 12
+		#-------------------------------------------------------------------------------
+		";":
+			dialogue_counter = 9
 		#-------------------------------------------------------------------------------
 		",":
-			dialogue_counter = 7
+			dialogue_counter = 6
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(dialogue_index >= dialogue_whole_text.length()):
@@ -5085,17 +5110,19 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 		Set_Skill(_fighter_serializable)
 		#-------------------------------------------------------------------------------
 		_fighter_node_array[_i].action_serializable = null
-		_fighter_node_array[_i].is_down = false
 		#-------------------------------------------------------------------------------
 		var _max_hp: int = Get_Max_HP(_fighter_serializable)
 		var _hp: int = _max_hp
 		#-------------------------------------------------------------------------------
 		_fighter_serializable.hp = _max_hp
+		Remove_Status_Down(_fighter_serializable)
 		#-------------------------------------------------------------------------------
 		var _fighter_ui: Fighter_UI = _fighter_node_array[_i].fighter_ui
 		_fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
 		_fighter_ui.hp_bar.max_value = _max_hp
 		_fighter_ui.hp_bar.value = _hp
+		#-------------------------------------------------------------------------------
+		Set_Fighter_Status_UI_in_Battle(_fighter_node_array[_i])
 		#-------------------------------------------------------------------------------
 		_fighter_ui.global_position = Get_Position_in_Canvas_Layer(_fighter_node_array[_i].global_position)
 		#-------------------------------------------------------------------------------
@@ -5193,33 +5220,60 @@ func Set_All_Fighters_Animation_Depending_of_Situation():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Fighter_Animation_Depending_of_Situation(_fighter_node:Fighter_Node):
+	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable_in_battle
 	#-------------------------------------------------------------------------------
-	if(!_fighter_node.is_down):
+	if(!Has_Status_Down(_fighter_serializable)):
 		#-------------------------------------------------------------------------------
-		if(_fighter_node.action_serializable != null):
+		if(!Has_Status_Guard(_fighter_serializable)):
 			#-------------------------------------------------------------------------------
-			match(_fighter_node.action_serializable.action_resource.myANIMATION_BEFORE_ACTION):
-				Action_Resource.ANIMATION_BEFORE_ACTION.CHARGE:
-					Play_Fighter_Animation_Charge(_fighter_node)
+			if(_fighter_node.action_serializable != null):
 				#-------------------------------------------------------------------------------
-				Action_Resource.ANIMATION_BEFORE_ACTION.CAST:
-					Play_Fighter_Animation_Cast(_fighter_node)
+				match(_fighter_node.action_serializable.action_resource.myANIMATION_BEFORE_ACTION):
+					Action_Resource.ANIMATION_BEFORE_ACTION.CHARGE:
+						Play_Fighter_Animation_Charge(_fighter_node)
+					#-------------------------------------------------------------------------------
+					Action_Resource.ANIMATION_BEFORE_ACTION.CAST:
+						Play_Fighter_Animation_Casting(_fighter_node)
+					#-------------------------------------------------------------------------------
+					Action_Resource.ANIMATION_BEFORE_ACTION.GUARD:
+						Play_Fighter_Animation_Guard(_fighter_node)
+					#-------------------------------------------------------------------------------
+					Action_Resource.ANIMATION_BEFORE_ACTION.NONE:
+						Play_Fighter_Animation_Idle(_fighter_node)
+					#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
-				Action_Resource.ANIMATION_BEFORE_ACTION.GUARD:
-					Play_Fighter_Animation_Guard(_fighter_node)
-				#-------------------------------------------------------------------------------
-				Action_Resource.ANIMATION_BEFORE_ACTION.NONE:
-					Play_Fighter_Animation_Idle(_fighter_node)
-				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			else:
+				Play_Fighter_Animation_Idle(_fighter_node)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		else:
-			Play_Fighter_Animation_Idle(_fighter_node)
+			Play_Fighter_Animation_Guard(_fighter_node)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
 		Play_Fighter_Animation_Down(_fighter_node)
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Action(_fighter_node:Fighter_Node):
+	#-------------------------------------------------------------------------------
+	match(_fighter_node.action_serializable.action_resource.myANIMATION_DURING_ACTION):
+		Action_Resource.ANIMATION_DURING_ACTION.WEAPON:
+			await Play_Fighter_Animation_Attack_Weapon(_fighter_node)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ANIMATION_DURING_ACTION.CAST:
+			await Play_Fighter_Animation_Cast(_fighter_node)
+		#-------------------------------------------------------------------------------
+		Action_Resource.ANIMATION_DURING_ACTION.NONE:
+			pass
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Attack_Weapon(_fighter_node:Fighter_Node):
+	await AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Hand")
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Cast(_fighter_node:Fighter_Node):
+	await AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Cast")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Idle(_fighter_node:Fighter_Node):
 	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Idle")
@@ -5227,11 +5281,20 @@ func Play_Fighter_Animation_Idle(_fighter_node:Fighter_Node):
 func Play_Fighter_Animation_Charge(_fighter_node:Fighter_Node):
 	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Charge")
 #-------------------------------------------------------------------------------
-func Play_Fighter_Animation_Cast(_fighter_node:Fighter_Node):
-	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Cast")
+func Play_Fighter_Animation_Casting(_fighter_node:Fighter_Node):
+	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Casting")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Guard(_fighter_node:Fighter_Node):
 	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Guard")
+#-------------------------------------------------------------------------------
+func Play_Fighter_Animation_Hurt(_fighter_node:Fighter_Node):
+	#-------------------------------------------------------------------------------
+	if(Has_Status_Guard(_fighter_node.fighter_serializable_in_battle)):
+		AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Hurt_2")
+	#-------------------------------------------------------------------------------
+	else:
+		AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Hurt_2")
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Down(_fighter_node:Fighter_Node):
 	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Down")
@@ -5260,13 +5323,20 @@ func Show_All_Fighters_UI():
 	#-------------------------------------------------------------------------------
 	for _i in ally_fighter_party.size():
 		ally_fighter_party[_i].fighter_ui.show()
+		ally_fighter_party[_i].fighter_ui.hp_root.show()
+		ally_fighter_party[_i].fighter_ui.button_root.hide()
 	#-------------------------------------------------------------------------------
 	for _i in enemy_fighter_party.size():
 		enemy_fighter_party[_i].fighter_ui.show()
+		enemy_fighter_party[_i].fighter_ui.hp_root.show()
+		enemy_fighter_party[_i].fighter_ui.button_root.hide()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Create_Fighter_UI(_fighter_node:Fighter_Node, _fighter_ui_prefab:PackedScene):
 	var _fighter_ui: Fighter_UI = _fighter_ui_prefab.instantiate() as Fighter_UI
+	#-------------------------------------------------------------------------------
+	singleton.Destroy_Childrens(_fighter_ui.status_ui_container)
+	#-------------------------------------------------------------------------------
 	_fighter_node.fighter_ui = _fighter_ui
 	battle_ui.add_child(_fighter_ui)
 #-------------------------------------------------------------------------------
@@ -5300,21 +5370,20 @@ func BattleMenu_Set(_user:Fighter_Node):
 func BattleMenu_Cancel():
 	ally_fighter_party[current_fighter_turn].action_serializable = null
 	#-------------------------------------------------------------------------------
-	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
 	current_fighter_turn -= 1
 	#-------------------------------------------------------------------------------
 	if(current_fighter_turn < 0):
-		Set_All_Fighters_Animation_Depending_of_Situation()
-		lock_on.hide()
+		Lock_Off()
 		Set_Escape_Menu()
 	#-------------------------------------------------------------------------------
 	else:
 		var _tp: int = Get_Future_TP()
 		Set_TP_Bar(_tp)
-		Set_Lock_On_Position(_alive_ally_party[current_fighter_turn])
-		_alive_ally_party[current_fighter_turn].action_serializable = null
+		Lock_On(_alive_party[current_fighter_turn])
+		_alive_party[current_fighter_turn].action_serializable = null
 		Set_All_Fighters_Animation_Depending_of_Situation()
-		BattleMenu_Set(_alive_ally_party[current_fighter_turn])
+		BattleMenu_Set(_alive_party[current_fighter_turn])
 		singleton.Move_to_Button_by_Cancel(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -5353,9 +5422,8 @@ func Escape_Menu_No_Button_Common():
 	escape_menu.hide()
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 	current_fighter_turn = 0
-	lock_on.show()
 	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
-	Set_Lock_On_Position(_alive_party[current_fighter_turn])
+	Lock_On(_alive_party[current_fighter_turn])
 #-------------------------------------------------------------------------------
 #region BATTLE STATE-MACHINE
 #-------------------------------------------------------------------------------
@@ -5401,6 +5469,7 @@ func Add_Enemy_Party(_array_enemy_party:Array[Fighter_Node]):
 func Enter_and_Retry_Battle_Common_1():
 	await Fade_Out_Override()
 	#-------------------------------------------------------------------------------
+	turn_counter = 1
 	tp = 50
 	Set_TP_Bar(tp)
 	Dialogue_Null()
@@ -5418,15 +5487,14 @@ func Enter_and_Retry_Battle_Common_1():
 	await Seconds(0.1)
 #-------------------------------------------------------------------------------
 func Enter_and_Retry_Battle_Common_2():
-	await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
+	#await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
 	await Kill_All_Fighter_Array_and_Reposition_1()
 	#-------------------------------------------------------------------------------
 	battle_menu.show()
-	lock_on.show()
 	current_fighter_turn = 0
 	#-------------------------------------------------------------------------------
 	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
-	Set_Lock_On_Position(_alive_party[current_fighter_turn])
+	Lock_On(_alive_party[current_fighter_turn])
 	BattleMenu_Set(_alive_party[current_fighter_turn])
 	singleton.Move_to_Button(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
@@ -5456,13 +5524,13 @@ func You_Win():
 	Hide_Fighters(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	Set_Fighter_After_Battle(ally_fighter_party)
-	Set_Fighter_After_Battle(enemy_fighter_party)
+	#Set_Fighter_After_Battle(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Fade_In_Override()
 	await Seconds(0.1)
 	singleton.Play_BGM_Stage1()
 	#-------------------------------------------------------------------------------
-	lock_on.hide()
+	Lock_Off_Hide()
 	myGAME_STATE = GAME_STATE.IN_WORLD
 	is_in_dialogue = false
 	player_interactable_by_action_collider.disabled = false
@@ -5470,7 +5538,7 @@ func You_Win():
 func You_Lose():
 	lose_menu.show()
 	battle_menu.hide()
-	lock_on.hide()
+	Lock_Off_Hide()
 	dialogue_menu.show()
 	Dialogue_Null()
 	#-------------------------------------------------------------------------------
@@ -5526,7 +5594,7 @@ func Escape_Common():
 	battle_background_root.hide()
 	tp_bar.hide()
 	dialogue_menu.hide()
-	lock_on.hide()
+	Lock_Off_Hide()
 	#-------------------------------------------------------------------------------
 	#Set_Inventory_When_Exit_Battle()
 	Delete_All_Fighters_UI()
@@ -5678,7 +5746,7 @@ func After_Target_Select_Actions(_user:Fighter_Node, _action_serializable:Action
 	#-------------------------------------------------------------------------------
 	else:
 		BattleMenu_Set(_alive_party[current_fighter_turn])
-		Open_Battle_Menu(_alive_party[current_fighter_turn])
+		Open_Battle_Menu(_alive_party)
 		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -5719,7 +5787,7 @@ func Do_Ally_Actions():
 		return
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func():pass
-	lock_on.hide()
+	await Lock_Off()
 	await Seconds(1.0)
 	#-------------------------------------------------------------------------------
 	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
@@ -5728,9 +5796,14 @@ func Do_Ally_Actions():
 	for _i in _alive_ally_party.size():
 		#-------------------------------------------------------------------------------
 		if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
-			await Do_Ally_Action_1(_alive_ally_party[_i])
+			var _alive_user: Fighter_Node = _alive_ally_party[_i]
+			#-------------------------------------------------------------------------------
+			await Step_Foward(_alive_user)
+			await Play_Fighter_Animation_Action(_alive_user)
+			await Do_Ally_Action_1(_alive_user)
 			await Seconds(pop_up_timer-0.15)
-			_alive_ally_party[_i].action_serializable = null
+			_alive_user.action_serializable = null
+			await Step_Backward(_alive_user)
 			await Kill_All_Fighter_Array_and_Reposition_1()
 		#-------------------------------------------------------------------------------
 		Set_Battle_State()
@@ -5756,8 +5829,8 @@ func Do_Ally_Action_1(_user:Fighter_Node):
 		var _tp_cost: int = Get_Tp_Cost_of_Action(_user, _action_serializable)
 		#-------------------------------------------------------------------------------
 		if(tp >= _tp_cost):
-			await Show_Ally_Action(_user)
-			await Seconds(0.3)
+			Show_Ally_Action(_user)
+			await Seconds(0.6)
 			Set_TP_Bar_and_Action_Cost(_action_serializable, _tp_cost)
 			#-------------------------------------------------------------------------------
 			await Do_Ally_Action_0(_user)
@@ -5770,12 +5843,51 @@ func Do_Ally_Action_1(_user:Fighter_Node):
 		await Fail_Action_for_Lack_of_Action(_user)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Step_Foward(_user: Fighter_Node):
+	var _tween: Tween = create_tween()
+	Step_Forward_Tween(_tween, _user)
+	#-------------------------------------------------------------------------------
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Step_Backward(_user: Fighter_Node):
+	var _tween: Tween = create_tween()
+	Step_Backward_Tween(_tween, _user)
+	#-------------------------------------------------------------------------------
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Step_Forward_Tween(_tween:Tween, _user:Fighter_Node):
+	Step_Tween(_tween, _user, lock_on_offset.x)
+#-------------------------------------------------------------------------------
+func Step_Backward_Tween(_tween:Tween, _user:Fighter_Node):
+	Step_Tween(_tween, _user, 0)
+#-------------------------------------------------------------------------------
+func Step_Tween(_tween:Tween, _user:Fighter_Node, _offset_x:float):
+	var _timer: float = 0.15
+	#-------------------------------------------------------------------------------
+	var _final_position: Vector2 = Vector2(_offset_x, 0)
+	var _final_position_ui: Vector2 = Get_Position_in_Canvas_Layer(_user.global_position + _final_position)
+	#-------------------------------------------------------------------------------
+	_tween.parallel().tween_property(_user.pivot, "position", _final_position, _timer)
+	_tween.parallel().tween_property(_user.fighter_ui, "global_position", _final_position_ui, _timer)
+#-------------------------------------------------------------------------------
+func Step_Forward_Tween_2(_tween:Tween, _user:Fighter_Node):
+	Step_Tween_2(_tween, _user, Color(1.0, 1.0, 1.0, 1.0))
+#-------------------------------------------------------------------------------
+func Step_Backward_Tween_2(_tween:Tween, _user:Fighter_Node):
+	Step_Tween_2(_tween, _user, Color(0.608, 0.608, 0.608, 0.608))
+#-------------------------------------------------------------------------------
+func Step_Tween_2(_tween:Tween, _user:Fighter_Node, _color:Color):
+	var _timer: float = 0.1
+	#-------------------------------------------------------------------------------
+	_tween.parallel().tween_property(_user, "modulate", _color, _timer)
+	_tween.parallel().tween_property(_user.fighter_ui.hp_root, "modulate", _color, _timer)
+#-------------------------------------------------------------------------------
 func Play_Action_Animation(_action_resource:Action_Resource, _target:Fighter_Node):
 	#-------------------------------------------------------------------------------
 	if(_action_resource.animation_prefab != null):
 		var _animation_node: Animation_Node = _action_resource.animation_prefab.instantiate() as Animation_Node
 		world_2d.add_child(_animation_node)
-		_animation_node.global_position = _target.global_position
+		_animation_node.global_position = _target.pivot.global_position
 		_animation_node.z_index = battle_order + 1
 		_animation_node.animation_player.play("RESET")
 		await _animation_node.animation_player.animation_finished
@@ -6130,7 +6242,7 @@ func Change_Fighter_HP_by_Heal(_target:Fighter_Node, _value:int):
 #-------------------------------------------------------------------------------
 func Change_Fighter_HP_by_Damage(_target:Fighter_Node, _value:int):
 	Change_Fighter_HP(_target, _value)
-	AnimationTree_Transition_Set(_target.animation_tree, state_machine_layer_1, "Hurt_2")
+	Play_Fighter_Animation_Hurt(_target)
 	singleton.Play_SFX_Damage()
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_0_Heal(_user:Fighter_Node, _target:Fighter_Node, _value:int):
@@ -6170,6 +6282,7 @@ func B_Set_RPG_Calculation_0_Status_Effect(_user:Fighter_Node, _target:Fighter_N
 		#-------------------------------------------------------------------------------
 		Add_Status_with_Presition_Rate_and_Effect(_target, _key, _value)
 	#-------------------------------------------------------------------------------
+	Set_Fighter_Status_UI_in_Battle(_target)
 #-------------------------------------------------------------------------------
 func Remove_Status_with_Presition_Rate_and_Effect(_user:Fighter_Node, _key:StringName, _value:int):
 	var _status_serializable_array: Array[Status_Serializable] = _user.fighter_serializable_in_battle.status_serializable_array
@@ -6207,7 +6320,7 @@ func Add_Status_with_Presition_Rate_and_Effect(_user:Fighter_Node, _key:StringNa
 	#-------------------------------------------------------------------------------
 	return
 #-------------------------------------------------------------------------------
-func Add_Status(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource):
+func Add_Status_in_Battle(_user_serializable:Fighter_Serializable, _status_resource:Status_Resource):
 	var _status_serializable_array: Array[Status_Serializable] = _user_serializable.status_serializable_array
 	#-------------------------------------------------------------------------------
 	for _i in _status_serializable_array.size():
@@ -6300,18 +6413,21 @@ func Kill_Fighter_Array(_fighter_array:Array[Fighter_Node]):
 #-------------------------------------------------------------------------------
 func Down_Effect(_fighter_array:Array[Fighter_Node], _index: int):
 	var _fighter_node: Fighter_Node = _fighter_array[_index]
+	var _fighter_serializable: Fighter_Serializable = _fighter_node.fighter_serializable_in_battle
 	#-------------------------------------------------------------------------------
-	if(_fighter_node.is_down):
+	if(Has_Status_Down(_fighter_serializable)):
 		return
 	#-------------------------------------------------------------------------------
-	_fighter_node.is_down = true
-	_fighter_node.fighter_serializable_in_battle.hp = 0
+	Remove_All_Status_in_Battle(_fighter_serializable)
+	Add_Status_Down_in_Battle(_fighter_serializable)
+	Set_Fighter_Status_UI_in_Battle(_fighter_node)
 	was_status_effect_add_or_removed = true
+	_fighter_serializable.hp = 0
 	#-------------------------------------------------------------------------------
 	Flying_PopUp_Add_Down(_fighter_node)
 	Play_Fighter_Animation_Down(_fighter_node)
 	#-------------------------------------------------------------------------------
-	_fighter_node.fighter_ui.hide()
+	_fighter_node.fighter_ui.hp_root.hide()
 	await _fighter_node.animation_tree.animation_finished
 	#-------------------------------------------------------------------------------
 	if(_fighter_node.disapears_after_death):
@@ -6319,6 +6435,39 @@ func Down_Effect(_fighter_array:Array[Fighter_Node], _index: int):
 		_fighter_node.hide()
 		_fighter_array.erase(_fighter_node)
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Has_Status_Down(_fighter_serializable: Fighter_Serializable) -> bool:
+	var _b: bool = Has_Status(_fighter_serializable, death_status_resource)
+	return _b
+#-------------------------------------------------------------------------------
+func Add_Status_Down_in_Battle(_fighter_serializable: Fighter_Serializable):
+	Add_Status_in_Battle(_fighter_serializable, death_status_resource)
+#-------------------------------------------------------------------------------
+func Remove_Status_Down(_fighter_serializable: Fighter_Serializable):
+	Remove_Status(_fighter_serializable, death_status_resource)
+#-------------------------------------------------------------------------------
+func Remove_Status(_fighter_serializable:Fighter_Serializable, _status_Resource:Status_Resource):
+	var _status_serializable_array: Array[Status_Serializable] = _fighter_serializable.status_serializable_array
+	#-------------------------------------------------------------------------------
+	for _i in _status_serializable_array.size():
+		var _status_resource_name: StringName = singleton.get_resource_filename(_status_serializable_array[_i].status_resource)
+		#-------------------------------------------------------------------------------
+		if(_status_serializable_array[_i].status_resource == _status_Resource):
+			_status_serializable_array.remove_at(_i)
+			return
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Has_Status_Guard(_fighter_serializable: Fighter_Serializable) -> bool:
+	var _b: bool = Has_Status(_fighter_serializable, guard_status_resource)
+	return _b
+#-------------------------------------------------------------------------------
+func Remove_All_Status_in_Battle(_fighter_serializable: Fighter_Serializable):
+	#-------------------------------------------------------------------------------
+	for _i in range(_fighter_serializable.status_serializable_array.size()-1,-1,-1):
+		_fighter_serializable.status_serializable_array.remove_at(_i)
+	#-------------------------------------------------------------------------------
+	_fighter_serializable.status_serializable_array.clear()
 #-------------------------------------------------------------------------------
 func Flying_PopUp_Add_Down(_user: Fighter_Node):
 	Flying_PopUp(_user, "+ Down")
@@ -6418,6 +6567,7 @@ func Do_Enemy_Actions():
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Set_All_Fighters_Position_1()
 	#-------------------------------------------------------------------------------
+	Dialogue_Null()
 	After_Enemy_Actions()
 #-------------------------------------------------------------------------------
 func Decrease_Item_Cooldown_by_1():
@@ -6481,7 +6631,7 @@ func Apply_Fighter_HP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
-		if(!_fighter_node_array[_i].is_down):
+		if(!Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
 			var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 			#-------------------------------------------------------------------------------
 			if(_hp_recovery > 0):
@@ -6497,7 +6647,7 @@ func Apply_Fighter_HP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
-		if(!_fighter_node_array[_i].is_down):
+		if(!Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
 			var _hp_recovery: int = Get_HP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 			#-------------------------------------------------------------------------------
 			if(_hp_recovery < 0):
@@ -6518,7 +6668,7 @@ func Apply_Fighter_TP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
-		if(!_fighter_node_array[_i].is_down):
+		if(!Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
 			var _tp_recovery: int = Get_TP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 			#-------------------------------------------------------------------------------
 			if(_tp_recovery > 0):
@@ -6534,7 +6684,7 @@ func Apply_Fighter_TP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
-		if(!_fighter_node_array[_i].is_down):
+		if(!Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
 			var _tp_recovery: int = Get_TP_Recovery(_fighter_node_array[_i].fighter_serializable_in_battle)
 			#-------------------------------------------------------------------------------
 			if(_tp_recovery < 0):
@@ -6586,7 +6736,7 @@ func Decrease_Party_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_No
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
-		if(!_fighter_node_array[_i].is_down):
+		if(!Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
 			var _fighter_serializable: Fighter_Serializable = _fighter_node_array[_i].fighter_serializable_in_battle
 			var _b: bool = false
 			#-------------------------------------------------------------------------------
@@ -6604,6 +6754,8 @@ func Decrease_Party_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_No
 						was_status_effect_add_or_removed = true
 					#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			Set_Fighter_Status_UI_in_Battle(_fighter_node_array[_i])
 			#-------------------------------------------------------------------------------
 			if(_b):
 				singleton.Play_SFX_Status_Remove()
@@ -6660,16 +6812,19 @@ func After_Enemy_Actions():
 	if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
 		var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
 		current_fighter_turn = 0
+		turn_counter += 1
 		BattleMenu_Set(_alive_party[current_fighter_turn])
-		lock_on.show()
-		Open_Battle_Menu(_alive_party[current_fighter_turn])
+		Open_Battle_Menu(_alive_party)
 		singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Show_Enemy_Dialogue():
 	#-------------------------------------------------------------------------------
 	for _i in enemy_fighter_party.size():
-		enemy_fighter_party[_i].fighter_ui.dialogue_root.show()
+		#-------------------------------------------------------------------------------
+		if(!Has_Status_Down(enemy_fighter_party[_i].fighter_serializable_in_battle)):
+			enemy_fighter_party[_i].fighter_ui.dialogue_root.show()
+		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_and_Show_Battle_Box():
@@ -6689,8 +6844,8 @@ func Hide_Enemy_Dialogue():
 		enemy_fighter_party[_i].fighter_ui.dialogue_root.hide()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Open_Battle_Menu(_user:Fighter_Node):
-	Set_Lock_On_Position(_user)
+func Open_Battle_Menu(_alive_party: Array[Fighter_Node]):
+	Lock_On(_alive_party[current_fighter_turn])
 	battle_menu.show()
 	dialogue_menu.show()
 	Hide_All_Targets()
@@ -6942,7 +7097,7 @@ func Get_Dead_Fighter_Party_in_Battle(_fighter_node_array:Array[Fighter_Node]) -
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_node_array[_i].fighter_serializable_in_battle.hp <= 0):
+		if(Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
 			_dead_fighter_node_array.append(_fighter_node_array[_i])
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -7144,21 +7299,22 @@ func BattleMenu_Item_Target_Cancel(_button:Button):
 #-------------------------------------------------------------------------------
 func Battle_Menu_Status_Button_Submit(_user:Fighter_Node):
 	battle_menu.hide()
-	var _cancel:Callable = func():Battle_Menu_Status_Target_Button_Cancel()
+	Lock_Off()
+	var _cancel:Callable = func():Battle_Menu_Status_Target_Button_Cancel(_user)
 	var _selected:Callable = func():singleton.Common_Selected()
 	main_canvas_layer.nothing_cancel = _cancel
 	#-------------------------------------------------------------------------------
 	for _i in ally_fighter_party.size():
 		var _button_root: Control = ally_fighter_party[_i].fighter_ui.button_root
 		var _button: Button = ally_fighter_party[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(ally_fighter_party[_i].fighter_serializable_in_battle, _button)
+		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(_button, _user, ally_fighter_party[_i])
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
 	for _i in enemy_fighter_party.size():
 		var _button_root: Control = enemy_fighter_party[_i].fighter_ui.button_root
 		var _button: Button = enemy_fighter_party[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(enemy_fighter_party[_i].fighter_serializable_in_battle, _button)
+		var _submit:Callable = func():Battle_Menu_Status_Target_Button_Submit(_button, _user, enemy_fighter_party[_i])
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
@@ -7186,29 +7342,30 @@ func Set_Target_Button_Navigation_1(fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	singleton.Button_Array_Set_Vertical_Navigation(_button_array_1)
 #-------------------------------------------------------------------------------
-func Battle_Menu_Status_Target_Button_Submit(_fighter_serializable:Fighter_Serializable, _button:Button):
+func Battle_Menu_Status_Target_Button_Submit(_button:Button, _user:Fighter_Node, _target:Fighter_Node):
 	Hide_All_Targets()
 	dialogue_menu.hide()
 	Dialogue_Tween_Cancel()
 	status_menu.show()
-	var _cancel:Callable = func():Battle_Menu_Status_Menu_Button_Cancel(_button)
+	var _cancel:Callable = func():Battle_Menu_Status_Menu_Button_Cancel(_button, _user)
 	main_canvas_layer.nothing_cancel = _cancel
-	Pause_Status_Menu_Set(_fighter_serializable, _cancel)
+	Pause_Status_Menu_Set(_target.fighter_serializable_in_battle, _cancel)
 	status_menu_information_root.get_v_scroll_bar().value = 0
 #-------------------------------------------------------------------------------
-func Battle_Menu_Status_Target_Button_Cancel():
+func Battle_Menu_Status_Target_Button_Cancel(_user:Fighter_Node):
 	battle_menu.show()
+	Lock_On(_user)
 	Hide_All_Targets()
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 	singleton.Move_to_Button_by_Cancel(battle_menu_button_status)
 #-------------------------------------------------------------------------------
-func Battle_Menu_Status_Menu_Button_Cancel(_button:Button):
+func Battle_Menu_Status_Menu_Button_Cancel(_button:Button, _fighter_node:Fighter_Node):
 	singleton.Destroy_Button_Array(status_menu_button_array)
 	status_menu.hide()
 	dialogue_menu.show()
 	Dialogue_Tween_Replay()
 	Show_All_Targets()
-	main_canvas_layer.nothing_cancel = func():Battle_Menu_Status_Target_Button_Cancel()
+	main_canvas_layer.nothing_cancel = func():Battle_Menu_Status_Target_Button_Cancel(_fighter_node)
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 #endregion
@@ -7217,50 +7374,52 @@ func Battle_Menu_Status_Menu_Button_Cancel(_button:Button):
 #-------------------------------------------------------------------------------
 func Battle_Menu_Statistics_Button_Submit(_user:Fighter_Node):
 	battle_menu.hide()
-	var _cancel:Callable = func():Battle_Menu_Statistics_Target_Button_Cancel()
+	Lock_Off()
+	var _cancel:Callable = func():Battle_Menu_Statistics_Target_Button_Cancel(_user)
 	var _selected:Callable = func():singleton.Common_Selected()
 	main_canvas_layer.nothing_cancel = _cancel
 	#-------------------------------------------------------------------------------
 	for _i in ally_fighter_party.size():
 		var _button_root: Control = ally_fighter_party[_i].fighter_ui.button_root
 		var _button: Button = ally_fighter_party[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(ally_fighter_party[_i], ally_fighter_party[_i].fighter_serializable_in_battle, _button)
+		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(_button, _user, ally_fighter_party[_i])
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
 	for _i in enemy_fighter_party.size():
 		var _button_root: Control = enemy_fighter_party[_i].fighter_ui.button_root
 		var _button: Button = enemy_fighter_party[_i].fighter_ui.button
-		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(enemy_fighter_party[_i], enemy_fighter_party[_i].fighter_serializable_in_battle, _button)
+		var _submit:Callable = func():Battle_Menu_Statistics_Target_Button_Submit(_button, _user, enemy_fighter_party[_i])
 		singleton.Set_Button(_button, _selected, _submit)
 		_button_root.show()
 	#-------------------------------------------------------------------------------
 	Set_Target_Button_Navigation_2()
 	singleton.Move_to_Button_by_Submit(_user.fighter_ui.button)
 #-------------------------------------------------------------------------------
-func Battle_Menu_Statistics_Target_Button_Submit(_fighter_node:Fighter_Node, _fighter_serializable:Fighter_Serializable, _button:Button):
+func Battle_Menu_Statistics_Target_Button_Submit(_button:Button, _user:Fighter_Node, _target:Fighter_Node):
 	Hide_All_Targets()
 	dialogue_menu.hide()
 	Dialogue_Tween_Cancel()
 	statistics_menu.show()
-	var _cancel:Callable = func():Battle_Menu_Statistics_Menu_Button_Cancel(_button)
+	var _cancel:Callable = func():Battle_Menu_Statistics_Menu_Button_Cancel(_button, _user)
 	main_canvas_layer.nothing_cancel = _cancel
-	Pause_Statistics_Menu_Set(_fighter_node, _fighter_serializable, _cancel)
+	Pause_Statistics_Menu_Set(_target.character_resource, _target.fighter_serializable_in_battle, _cancel)
 	statistics_menu_information_root.get_v_scroll_bar().value = 0
 	singleton.Move_to_Button_by_Submit(statistics_menu_button_0)
 #-------------------------------------------------------------------------------
-func Battle_Menu_Statistics_Target_Button_Cancel():
+func Battle_Menu_Statistics_Target_Button_Cancel(_fighter_node:Fighter_Node):
 	battle_menu.show()
+	Lock_On(_fighter_node)
 	Hide_All_Targets()
 	main_canvas_layer.nothing_cancel = func():BattleMenu_Cancel()
 	singleton.Move_to_Button_by_Cancel(battle_menu_button_statistics)
 #-------------------------------------------------------------------------------
-func Battle_Menu_Statistics_Menu_Button_Cancel(_button:Button):
+func Battle_Menu_Statistics_Menu_Button_Cancel(_button:Button, _fighter_node:Fighter_Node):
 	statistics_menu.hide()
 	dialogue_menu.show()
 	Dialogue_Tween_Replay()
 	Show_All_Targets()
-	main_canvas_layer.nothing_cancel = func():Battle_Menu_Statistics_Target_Button_Cancel()
+	main_canvas_layer.nothing_cancel = func():Battle_Menu_Statistics_Target_Button_Cancel(_fighter_node)
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 #endregion
@@ -7321,9 +7480,37 @@ func Get_Position_in_Canvas_Layer(_global_position:Vector2) -> Vector2:
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
-func Set_Lock_On_Position(_fighter_node:Fighter_Node):
-	lock_on.global_position = _fighter_node.global_position
-	lock_on.global_position.y -= 20
+func Lock_On(_target: Fighter_Node):
+	lock_on.show()
+	lock_on_animation_player.play("Idle")
+	lock_on.global_position = _target.global_position + Vector2(0, lock_on_offset.y)
+	#-------------------------------------------------------------------------------
+	var _tween:Tween = create_tween()
+	#-------------------------------------------------------------------------------
+	for _i in ally_fighter_party.size():
+		#-------------------------------------------------------------------------------
+		if(ally_fighter_party[_i] == _target):
+			Step_Forward_Tween_2(_tween, ally_fighter_party[_i])
+		#-------------------------------------------------------------------------------
+		else:
+			Step_Backward_Tween_2(_tween, ally_fighter_party[_i])
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Lock_Off():
+	Lock_Off_Hide()
+	#-------------------------------------------------------------------------------
+	var _tween:Tween = create_tween()
+	#-------------------------------------------------------------------------------
+	for _i in ally_fighter_party.size():
+		Step_Forward_Tween_2(_tween, ally_fighter_party[_i])
+	#-------------------------------------------------------------------------------
+	await _tween.finished
+#-------------------------------------------------------------------------------
+func Lock_Off_Hide():
+	lock_on.hide()
+	lock_on_animation_player.stop()
 #-------------------------------------------------------------------------------
 func Re_Open_Battle_Menu():
 	#-------------------------------------------------------------------------------
@@ -7360,10 +7547,6 @@ func Get_Status_Serializable_Array(_fighter_serializable:Fighter_Serializable) -
 	var _status_serializable_array: Array[Status_Serializable]
 	#-------------------------------------------------------------------------------
 	_status_serializable_array.append_array(_fighter_serializable.status_serializable_array)
-	#-------------------------------------------------------------------------------
-	if(_fighter_serializable.hp <= 0):
-		var _death_serializable: Status_Serializable = Create_Status_Serializable(death_status_resource, 0)
-		_status_serializable_array.append(_death_serializable)
 	#-------------------------------------------------------------------------------
 	return _status_serializable_array
 #-------------------------------------------------------------------------------
@@ -7841,5 +8024,31 @@ func Hide_Fighters(_fighter_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_array.size():
 		_fighter_array[_i].hide()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Fighter_Status_UI_in_Battle(fighter_node:Fighter_Node):
+	var _status_serializable_array: Array[Status_Serializable] = fighter_node.fighter_serializable_in_battle.status_serializable_array
+	Sort_Status_by_ID(_status_serializable_array)
+	Delete_and_Create_Status_UI_Array(fighter_node.fighter_ui.status_ui_container, fighter_node.fighter_ui.status_ui_array, _status_serializable_array)
+#-------------------------------------------------------------------------------
+func Delete_and_Create_Status_UI_Array(hbox_container:HBoxContainer, _status_ui_array:Array[Status_UI], _status_serializable_array:Array[Status_Serializable]):
+	#-------------------------------------------------------------------------------
+	for _i in range(_status_ui_array.size()-1, -1, -1):
+		_status_ui_array[_i].queue_free()
+	#-------------------------------------------------------------------------------
+	_status_ui_array.clear()
+	#-------------------------------------------------------------------------------
+	for _i in _status_serializable_array.size():
+		var _status_ui_new: Status_UI = status_ui_prefab.instantiate() as Status_UI
+		#-------------------------------------------------------------------------------
+		_status_ui_new.texture = _status_serializable_array[_i].status_resource.icon
+		if(_status_serializable_array[_i].status_resource.is_infinite):
+			_status_ui_new.label.text = Get_Infite_String()
+		#-------------------------------------------------------------------------------
+		else:
+			_status_ui_new.label.text = str(_status_serializable_array[_i].turns)
+		#-------------------------------------------------------------------------------
+		hbox_container.add_child(_status_ui_new)
+		_status_ui_array.append(_status_ui_new)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------

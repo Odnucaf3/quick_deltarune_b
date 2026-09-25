@@ -7,7 +7,8 @@
 [resource]
 script = ExtResource("1_se5s8")
 animation_prefab = ExtResource("1_6qy25")
-myANIMATION_BEFORE_ACTION = 1
+myANIMATION_BEFORE_ACTION = 2
+myANIMATION_DURING_ACTION = 2
 icon = ExtResource("1_8x1rp")
 tp_cost = 25
 max_cooldown = 1

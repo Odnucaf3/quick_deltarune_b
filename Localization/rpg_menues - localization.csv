@@ -21,6 +21,8 @@ enum_EQUIP_TYPE_HEAD,Cabeza,Head
 enum_EQUIP_TYPE_NONE,-,-
 enum_EQUIP_TYPE_RING,Anillo,Ring
 enum_EQUIP_TYPE_WEAPON,Arma,Weapon
+enum_EQUIP_TYPE_SHIELD,Escudo,Shield
+enum_EQUIP_TYPE_ART,Arte,Art
 enum_FIGHTER_CLASS_HEROE_MALE,Heroe,Hero
 enum_FIGHTER_CLASS_HEROE_FEMALE,Heroina,Hero
 enum_FIGHTER_CLASS_HEROE_NONBINARY,Heroe,Hero
@@ -176,6 +178,12 @@ resource_status_4_a,Curación Lenta,Slow Healing
 resource_status_4_b,-,-
 resource_status_5_a,Congelado,Frostbitten
 resource_status_5_b,-,-
+resource_status_6_a,,
+resource_status_6_b,,
+resource_status_7_a,,
+resource_status_7_b,,
+resource_status_8_a,,
+resource_status_8_b,,
 text_absortion,Absorción,Absorption
 text_action,Acción,Action
 text_affinity,Afinidad,Affinity
