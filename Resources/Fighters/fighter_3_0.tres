@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://nvm68ow83k0c" path="res://Scripts/Resources/fighter_resource.gd" id="1_ofp85"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_hb14b"]
 [ext_resource type="Resource" uid="uid://crf420awv7t56" path="res://Resources/Skills/skill_0_0.tres" id="3_8b5t3"]
+[ext_resource type="Resource" uid="uid://br7bhrc02aqno" path="res://Resources/Skills/skill_2_2_0_0_0.tres" id="4_ab26f"]
 [ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/skill_1_0.tres" id="4_m1728"]
+[ext_resource type="Resource" uid="uid://br67x2a0qhj24" path="res://Resources/Skills/skill_2_2_0_0_1.tres" id="5_1rt34"]
 
 [resource]
 script = ExtResource("1_ofp85")
@@ -12,5 +14,5 @@ physical_presition_rate = -20
 magical_presition_rate = -20
 tp_recovery = -4
 hp_recovery = -4
-add_skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("3_8b5t3"), ExtResource("4_m1728")])
+add_skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("3_8b5t3"), ExtResource("4_m1728"), ExtResource("4_ab26f"), ExtResource("5_1rt34")])
 metadata/_custom_type_script = "uid://nvm68ow83k0c"

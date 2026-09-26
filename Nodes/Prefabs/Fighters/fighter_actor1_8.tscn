@@ -19,18 +19,38 @@ metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_kigc5"]
 script = ExtResource("2_pkj5u")
-myEQUIP_TYPE = 2
+myEQUIP_TYPE = 3
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_j7ao1"]
 script = ExtResource("2_pkj5u")
-myEQUIP_TYPE = 3
+myEQUIP_TYPE = 6
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_n2vy2"]
+script = ExtResource("2_pkj5u")
+myEQUIP_TYPE = 7
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_wmwxv"]
+script = ExtResource("2_pkj5u")
+myEQUIP_TYPE = 8
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_qq0ja"]
+script = ExtResource("2_pkj5u")
+myEQUIP_TYPE = 9
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
+
+[sub_resource type="Resource" id="Resource_du56h"]
+script = ExtResource("2_pkj5u")
+myEQUIP_TYPE = 5
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_3em1u"]
 script = ExtResource("4_wfkfi")
 fighter_resource = ExtResource("3_cmy8s")
-equip_serializable_array = Array[ExtResource("2_pkj5u")]([SubResource("Resource_8wyqk"), SubResource("Resource_i77jc"), SubResource("Resource_kigc5"), SubResource("Resource_j7ao1")])
+equip_serializable_array = Array[ExtResource("2_pkj5u")]([SubResource("Resource_8wyqk"), SubResource("Resource_i77jc"), SubResource("Resource_kigc5"), SubResource("Resource_j7ao1"), SubResource("Resource_n2vy2"), SubResource("Resource_wmwxv"), SubResource("Resource_qq0ja"), SubResource("Resource_du56h")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [sub_resource type="Animation" id="Animation_6n1uu"]
@@ -329,7 +349,6 @@ transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(155, 125)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-graph_offset = Vector2(-421.5079, -1.5980377)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_tjhxd")
 nodes/base_StateMachine/position = Vector2(-120, 140)
 node_connections = [&"output", 0, &"base_StateMachine"]

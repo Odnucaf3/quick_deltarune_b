@@ -1,6 +1,7 @@
 extends Control
 class_name Fighter_UI
 #-------------------------------------------------------------------------------
+@export var pivot: Control
 @export var button_root: Control
 @export var button: Button
 @export var hp_root: Control

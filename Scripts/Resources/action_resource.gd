@@ -9,6 +9,7 @@ enum EFFECT{NONE, DAMAGE, HEAL, DRAIN}
 enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USER, ALLY_DOWN_1, ALLY_DOWN_ALL}
 #-------------------------------------------------------------------------------
 @export_category("Action Animations")
+@export var icon: Texture2D
 @export var animation_prefab: PackedScene
 @export var myANIMATION_BEFORE_ACTION: ANIMATION_BEFORE_ACTION
 @export var myANIMATION_DURING_ACTION: ANIMATION_DURING_ACTION
@@ -16,7 +17,6 @@ enum TARGET{ENEMY_1, ENEMY_RANDOM, ENEMY_ALL, ALLY_1, ALLY_RANDOM, ALLY_ALL, USE
 @export var animation_timer_2: float = 0
 #-------------------------------------------------------------------------------
 @export_category("Action Stats")
-@export var icon: Texture2D
 @export var max_hold: int
 var max_stored: int = 99
 @export_range(0, 100) var tp_cost: int

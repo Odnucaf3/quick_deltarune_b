@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://br7bhrc02aqno"]
+
+[ext_resource type="Texture2D" uid="uid://b35u0hbn3sq6i" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_8.png" id="1_x5myo"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_u144g"]
+
+[resource]
+script = ExtResource("2_u144g")
+myANIMATION_DURING_ACTION = 2
+icon = ExtResource("1_x5myo")
+max_hold = 2
+value = 100
+myEFFECT = 2
+myTARGET = 3
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

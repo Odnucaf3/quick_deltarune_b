@@ -1,19 +1,14 @@
 [gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://c82bhq2um2yfn"]
 
+[ext_resource type="Texture2D" uid="uid://dyqnm54tl1jcn" path="res://Assets/freebies_mv_ready_ace_icons/Potions512/Potions512_1.png" id="1_djtgm"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_liqc5"]
-[ext_resource type="Texture2D" uid="uid://cduwj3pr5g2hb" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_179.png" id="1_qc23c"]
 
 [resource]
 script = ExtResource("1_liqc5")
-icon = ExtResource("1_qc23c")
+myANIMATION_DURING_ACTION = 2
+icon = ExtResource("1_djtgm")
 max_hold = 2
-tp_cost = 99
-max_cooldown = 2
-price = 15
-value = 10
+value = 100
 myEFFECT = 2
-myTARGET = 3
-status_dictionary = Dictionary[StringName, int]({
-&"status_heal_0": 100
-})
+myTARGET = 5
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

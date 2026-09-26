@@ -17,6 +17,10 @@ enum_ELEMENT_THUNDER,Electricidad,Thunder
 enum_ELEMENT_WATER,Agua,Water
 enum_ELEMENT_WIND,Aire,Wind
 enum_EQUIP_TYPE_BODY,Cuerpo,Body
+enum_EQUIP_TYPE_TOP,Torso,Top
+enum_EQUIP_TYPE_BOTTOM,Cintura,Bottom
+enum_EQUIP_TYPE_ARMS,Brazos,Arms
+enum_EQUIP_TYPE_LEGS,Piernas,Legs
 enum_EQUIP_TYPE_HEAD,Cabeza,Head
 enum_EQUIP_TYPE_NONE,-,-
 enum_EQUIP_TYPE_RING,Anillo,Ring
@@ -48,16 +52,16 @@ enum_TARGET_ENEMY_ALL,Todos los Enemigo,All Enemies
 enum_TARGET_ENEMY_RANDOM,1 Enemigo al Azar,1 Random Enemy
 enum_TARGET_USER,Usuario,User
 resource_character_0_0_a,Harold,Harold
-resource_character_0_0_b,-,-
+resource_character_0_0_b,El Super Heroe Legendario Salvador del Universo,-
 resource_character_0_0_c,-,-
 resource_character_0_1_a,Therese,Therese
-resource_character_0_1_b,-,-
+resource_character_0_1_b,La Fortaleza Viviente Protectora del Mundo.,-
 resource_character_0_1_c,-,-
 resource_character_0_2_a,Lucius,Lucius
-resource_character_0_2_b,-,-
+resource_character_0_2_b,La Personificación de Diós en la Tierra.,-
 resource_character_0_2_c,-,-
 resource_character_0_3_a,Marsha,Marsha
-resource_character_0_3_b,-,-
+resource_character_0_3_b,La Archi-Maga Más Poderosa de la Actualidad.,-
 resource_character_0_3_c,-,-
 resource_character_1_0_a,Murcielagón,Big Bat
 resource_character_1_0_b,-,-

@@ -159,6 +159,7 @@ var skill_menu_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var skill_menu_information_name: Label
 @export var skill_menu_information_icon: TextureRect
+@export var skill_menu_information_id: Label
 @export var skill_menu_information_hold_title: Label
 @export var skill_menu_information_hold_value: Label
 @export var skill_menu_information_tp_cost_title: Label
@@ -210,6 +211,7 @@ var item_menu_consumable_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var item_menu_consumable_information_name: Label
 @export var item_menu_consumable_information_icon: TextureRect
+@export var item_menu_consumable_information_id: Label
 @export var item_menu_consumable_information_hold_title: Label
 @export var item_menu_consumable_information_hold_value: Label
 @export var item_menu_consumable_information_stored_title: Label
@@ -247,6 +249,7 @@ var item_menu_equip_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var item_menu_equip_information_name: Label
 @export var item_menu_equip_information_icon: TextureRect
+@export var item_menu_equip_information_id: Label
 @export var item_menu_equip_information_stored_title: Label
 @export var item_menu_equip_information_stored_value: Label
 @export var item_menu_equip_information_level_title: Label
@@ -272,6 +275,7 @@ var item_menu_key_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var item_menu_key_information_name: Label
 @export var item_menu_key_information_icon: TextureRect
+@export var item_menu_key_information_id: Label
 @export var item_menu_key_information_stored_title: Label
 @export var item_menu_key_information_stored_value: Label
 @export var item_menu_key_information_description_title: Label
@@ -292,6 +296,7 @@ var equip_menu_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var equip_menu_information_name: Label
 @export var equip_menu_information_icon: TextureRect
+@export var equip_menu_information_id: Label
 @export var equip_menu_information_stored_title: Label
 @export var equip_menu_information_stored_value: Label
 @export var equip_menu_information_level_title: Label
@@ -318,6 +323,10 @@ var equip_menu_button_array: Array[Button]
 @export var statistics_menu_information_fighter_hp_slider: ProgressBar
 @export var statistics_menu_information_status_ui_container: HBoxContainer
 var statistics_menu_information_status_ui_array: Array[Status_UI]
+#-------------------------------------------------------------------------------
+@export var statistics_menu_information_fighter_id: Label
+@export var statistics_menu_information_character_id: Label
+#-------------------------------------------------------------------------------
 @export var statistics_menu_information_level_title: Label
 @export var statistics_menu_information_level_value: Label
 #-------------------------------------------------------------------------------
@@ -378,6 +387,7 @@ var status_menu_button_array: Array[Button]
 #-------------------------------------------------------------------------------
 @export var status_menu_information_name: Label
 @export var status_menu_information_icon: TextureRect
+@export var status_menu_information_id: Label
 @export var status_menu_information_turns_title: Label
 @export var status_menu_information_turns_value: Label
 @export var status_menu_information_statistics_title: Label
@@ -1034,6 +1044,7 @@ func Set_Skill_Information(_action_serializable:Action_Serializable):
 	#----------------------------------------------------------------------------
 	skill_menu_information_icon.texture = _action_serializable.action_resource.icon
 	skill_menu_information_name.text = Get_Tr_Skill_Name(_action_serializable.action_resource)
+	skill_menu_information_id.text = Get_Resource_ID_String(_action_serializable.action_resource)
 	#----------------------------------------------------------------------------
 	skill_menu_information_hold_value.text = _hold_text
 	#----------------------------------------------------------------------------
@@ -1498,6 +1509,7 @@ func Set_Item_Consumable_Information(_action_serializable:Action_Serializable):
 	#----------------------------------------------------------------------------
 	item_menu_consumable_information_icon.texture = _action_serializable.action_resource.icon
 	item_menu_consumable_information_name.text = Get_Tr_Consumable_Item_Name(_action_serializable.action_resource)
+	item_menu_consumable_information_id.text = Get_Resource_ID_String(_action_serializable.action_resource)
 	#----------------------------------------------------------------------------
 	item_menu_consumable_information_hold_value.text = _hold_text
 	item_menu_consumable_information_stored_value.text = _stored_text
@@ -1526,6 +1538,7 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_icon.texture = _equip_serializable.equip_resource.icon
 	item_menu_equip_information_name.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)
+	item_menu_equip_information_id.text = Get_Resource_ID_String(_equip_serializable.equip_resource)
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 	item_menu_equip_information_stored_value.text = "["+str(_equip_serializable.stored)+"]"
@@ -1601,6 +1614,7 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		#-------------------------------------------------------------------------------
 		equip_menu_information_icon.texture = _equip_resource.icon
 		equip_menu_information_name.text = Get_Tr_Equip_Item_Name(_equip_resource)
+		equip_menu_information_id.text = Get_Resource_ID_String(_equip_resource)
 		#-------------------------------------------------------------------------------
 		equip_menu_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_inventory, _equip_resource)
@@ -1680,6 +1694,7 @@ func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	#-------------------------------------------------------------------------------
 	status_menu_information_icon.texture = _status_resource.icon
 	status_menu_information_name.text = Get_Tr_Status_Effect_Name_1(_status_resource)
+	status_menu_information_id.text = Get_Resource_ID_String(_status_resource)
 	#-------------------------------------------------------------------------------
 	var _turns: int = clampi(_status_serializable.turns, 0, _status_resource.max_turns)
 	#-------------------------------------------------------------------------------
@@ -1902,6 +1917,7 @@ func Get_Number_with_Plus(_int:int) -> String:
 func Set_Item_Key_Information(_key_serializable:Key_Serializable):
 	item_menu_key_information_icon.texture = _key_serializable.key_resource.icon
 	item_menu_key_information_name.text = Get_Tr_Key_Item_Name(_key_serializable.key_resource)
+	item_menu_key_information_id.text = Get_Resource_ID_String(_key_serializable.key_resource)
 	#-------------------------------------------------------------------------------
 	item_menu_key_information_stored_value.text = "["+str(_key_serializable.stored)+"]"
 	item_menu_key_information_description_value.text = Get_Tr_Key_Item_Description(_key_serializable.key_resource)
@@ -2442,6 +2458,9 @@ func Pause_Statistics_Menu_Set(_character_resource: Character_Resource, _fighter
 	#-------------------------------------------------------------------------------
 	statistics_menu_information_fighter_name.text = Get_Tr_Character_Name(_character_resource)
 	statistics_menu_information_fighter_title.text = Get_Tr_Character_Title(_character_resource)
+	#-------------------------------------------------------------------------------
+	statistics_menu_information_character_id.text = Get_Resource_ID_String(_character_resource)
+	statistics_menu_information_fighter_id.text = Get_Resource_ID_String(_fighter_serializable.fighter_resource)
 	#-------------------------------------------------------------------------------
 	var _max_hp_base: int = Get_Max_HP_Base(_fighter_serializable)
 	var _max_hp_modifiers: int = Get_Max_HP_Modifiers(_fighter_serializable)
@@ -5770,13 +5789,17 @@ func Get_Battle_State() -> BATTLE_STATE:
 		return BATTLE_STATE.YOU_LOSE
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func BattleMenu_Skill_Target_Cancel(_button:Button):
+func BattleMenu_Skill_Target_Cancel(_button:Button, _user:Fighter_Node):
+	skill_menu.show()
+	main_canvas_layer.nothing_cancel = func():Battle_Menu_Skill_Button_Cancel()
+	BattleMenu_Skill_and_Item_Common_Target_Cancel(_button, _user)
+#-------------------------------------------------------------------------------
+func BattleMenu_Skill_and_Item_Common_Target_Cancel(_button:Button, _user:Fighter_Node):
 	var _tp: int = Get_Future_TP()
 	Set_TP_Bar(_tp)
 	dialogue_menu.hide()
-	skill_menu.show()
 	Hide_All_Targets()
-	main_canvas_layer.nothing_cancel = func():Battle_Menu_Skill_Button_Cancel()
+	Step_Forward_2(ally_fighter_party, _user)
 	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 #endregion
@@ -5798,7 +5821,7 @@ func Do_Ally_Actions():
 		if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
 			var _alive_user: Fighter_Node = _alive_ally_party[_i]
 			#-------------------------------------------------------------------------------
-			await Step_Foward(_alive_user)
+			await Step_Forward(_alive_user)
 			await Play_Fighter_Animation_Action(_alive_user)
 			await Do_Ally_Action_1(_alive_user)
 			await Seconds(pop_up_timer-0.15)
@@ -5843,32 +5866,24 @@ func Do_Ally_Action_1(_user:Fighter_Node):
 		await Fail_Action_for_Lack_of_Action(_user)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Step_Foward(_user: Fighter_Node):
-	var _tween: Tween = create_tween()
-	Step_Forward_Tween(_tween, _user)
-	#-------------------------------------------------------------------------------
-	await _tween.finished
+func Step_Forward(_user: Fighter_Node):
+	await Step_Forward_Common(_user, lock_on_offset.x)
 #-------------------------------------------------------------------------------
 func Step_Backward(_user: Fighter_Node):
-	var _tween: Tween = create_tween()
-	Step_Backward_Tween(_tween, _user)
-	#-------------------------------------------------------------------------------
-	await _tween.finished
+	await Step_Forward_Common(_user, 0)
 #-------------------------------------------------------------------------------
-func Step_Forward_Tween(_tween:Tween, _user:Fighter_Node):
-	Step_Tween(_tween, _user, lock_on_offset.x)
-#-------------------------------------------------------------------------------
-func Step_Backward_Tween(_tween:Tween, _user:Fighter_Node):
-	Step_Tween(_tween, _user, 0)
-#-------------------------------------------------------------------------------
-func Step_Tween(_tween:Tween, _user:Fighter_Node, _offset_x:float):
+func Step_Forward_Common(_user:Fighter_Node, _offset_x:float):
 	var _timer: float = 0.15
 	#-------------------------------------------------------------------------------
 	var _final_position: Vector2 = Vector2(_offset_x, 0)
-	var _final_position_ui: Vector2 = Get_Position_in_Canvas_Layer(_user.global_position + _final_position)
+	var _final_position_ui: Vector2 = _final_position * camera.zoom
+	#-------------------------------------------------------------------------------
+	var _tween: Tween = create_tween()
 	#-------------------------------------------------------------------------------
 	_tween.parallel().tween_property(_user.pivot, "position", _final_position, _timer)
-	_tween.parallel().tween_property(_user.fighter_ui, "global_position", _final_position_ui, _timer)
+	_tween.parallel().tween_property(_user.fighter_ui.pivot, "position", _final_position_ui, _timer)
+	#-------------------------------------------------------------------------------
+	await _tween.finished
 #-------------------------------------------------------------------------------
 func Step_Forward_Tween_2(_tween:Tween, _user:Fighter_Node):
 	Step_Tween_2(_tween, _user, Color(1.0, 1.0, 1.0, 1.0))
@@ -6932,7 +6947,7 @@ func BattleMenu_Skill_Target_Set(_button:Button, _user:Fighter_Node, _action_ser
 func BattleMenu_Skill_Target_Set_1(_button:Button, _user:Fighter_Node, _action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	if(_fighter_node_array.size()>0):
-		main_canvas_layer.nothing_cancel = func():BattleMenu_Skill_Target_Cancel(_button)
+		main_canvas_layer.nothing_cancel = func():BattleMenu_Skill_Target_Cancel(_button, _user)
 		#-------------------------------------------------------------------------------
 		for _i in _fighter_node_array.size():
 			var _selected:Callable = func():singleton.Common_Selected()
@@ -6949,7 +6964,7 @@ func BattleMenu_Skill_Target_Set_1(_button:Button, _user:Fighter_Node, _action_s
 func BattleMenu_Skill_Target_Set_All(_button:Button, _user:Fighter_Node, _action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	if(_fighter_node_array.size()>0):
-		main_canvas_layer.nothing_cancel = func():BattleMenu_Skill_Target_Cancel(_button)
+		main_canvas_layer.nothing_cancel = func():BattleMenu_Skill_Target_Cancel(_button, _user)
 		#-------------------------------------------------------------------------------
 		for _i in _fighter_node_array.size():
 			var _selected: Callable = func():pass
@@ -6964,12 +6979,15 @@ func BattleMenu_Skill_Target_Set_All(_button:Button, _user:Fighter_Node, _action
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func BattleMenu_Skill_Target_Set_Common(_action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
+	skill_menu.hide()
+	BattleMenu_Skill_and_Item_Common_Target_Set_Common(_action_serializable, _fighter_node_array)
+#-------------------------------------------------------------------------------
+func BattleMenu_Skill_and_Item_Common_Target_Set_Common(_action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
 	var _tp: int = Get_Future_TP()
 	_tp -= Get_Action_TP_Cost(_action_serializable)
 	Set_TP_Bar(_tp)
+	Step_Backward_2(_fighter_node_array)
 	#-------------------------------------------------------------------------------
-	item_menu.hide()
-	skill_menu.hide()
 	dialogue_menu.show()
 	Dialogue_Tween_Replay()
 	#-------------------------------------------------------------------------------
@@ -7020,7 +7038,7 @@ func BattleMenu_Item_Target_Set(_button:Button, _user:Fighter_Node, _action_seri
 func BattleMenu_Item_Target_Set_1(_button:Button, _user:Fighter_Node, _action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	if(_fighter_node_array.size()>0):
-		main_canvas_layer.nothing_cancel = func():BattleMenu_Item_Target_Cancel(_button)
+		main_canvas_layer.nothing_cancel = func():BattleMenu_Item_Target_Cancel(_button, _user)
 		#-------------------------------------------------------------------------------
 		for _i in _fighter_node_array.size():
 			var _selected:Callable = func():singleton.Common_Selected()
@@ -7037,7 +7055,7 @@ func BattleMenu_Item_Target_Set_1(_button:Button, _user:Fighter_Node, _action_se
 func BattleMenu_Item_Target_Set_All(_button:Button, _user:Fighter_Node, _action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	if(_fighter_node_array.size()>0):
-		main_canvas_layer.nothing_cancel = func():BattleMenu_Item_Target_Cancel(_button)
+		main_canvas_layer.nothing_cancel = func():BattleMenu_Item_Target_Cancel(_button, _user)
 		#-------------------------------------------------------------------------------
 		for _i in _fighter_node_array.size():
 			var _selected:Callable = func():pass
@@ -7070,16 +7088,8 @@ func Set_Target_Button_All(_fighter_node:Fighter_Node, _selected:Callable, _subm
 	_button_root.show()
 #-------------------------------------------------------------------------------
 func BattleMenu_Item_Target_Set_Common(_action_serializable:Action_Serializable, _fighter_node_array:Array[Fighter_Node]):
-	var _tp: int = Get_Future_TP()
-	_tp -= Get_Action_TP_Cost(_action_serializable)
-	Set_TP_Bar(_tp)
-	#-------------------------------------------------------------------------------
 	item_menu.hide()
-	skill_menu.hide()
-	dialogue_menu.show()
-	Dialogue_Tween_Replay()
-	Set_Target_Button_Navigation_1(_fighter_node_array)
-	singleton.Move_to_Button_by_Submit(_fighter_node_array[0].fighter_ui.button)
+	BattleMenu_Skill_and_Item_Common_Target_Set_Common(_action_serializable, _fighter_node_array)
 #-------------------------------------------------------------------------------
 func Get_Alive_Fighter_Party_in_Battle(_fighter_node_array:Array[Fighter_Node]) -> Array[Fighter_Node]:
 	var _alive_ally_party: Array[Fighter_Node]
@@ -7286,14 +7296,10 @@ func BattleMenu_Item_Target_Submit(_user:Fighter_Node, _item_serializable:Action
 	#-------------------------------------------------------------------------------
 	await After_Target_Select_Actions(_user, _item_serializable, _target)
 #-------------------------------------------------------------------------------
-func BattleMenu_Item_Target_Cancel(_button:Button):
-	var _tp: int = Get_Future_TP()
-	Set_TP_Bar(_tp)
+func BattleMenu_Item_Target_Cancel(_button:Button, _user:Fighter_Node):
 	item_menu.show()
-	dialogue_menu.hide()
-	Hide_All_Targets()
 	main_canvas_layer.nothing_cancel = func():Battle_Item_Menu_Consumable_Button_Cancel()
-	singleton.Move_to_Button_by_Cancel(_button)
+	BattleMenu_Skill_and_Item_Common_Target_Cancel(_button, _user)
 #-------------------------------------------------------------------------------
 #region BATTLE STATUS MENU
 #-------------------------------------------------------------------------------
@@ -7485,26 +7491,31 @@ func Lock_On(_target: Fighter_Node):
 	lock_on_animation_player.play("Idle")
 	lock_on.global_position = _target.global_position + Vector2(0, lock_on_offset.y)
 	#-------------------------------------------------------------------------------
+	await Step_Forward_2(ally_fighter_party, _target)
+#-------------------------------------------------------------------------------
+func Lock_Off():
+	Lock_Off_Hide()
+	await Step_Backward_2(ally_fighter_party)
+#-------------------------------------------------------------------------------
+func Step_Forward_2(_fighter_array:Array[Fighter_Node], _target:Fighter_Node):
 	var _tween:Tween = create_tween()
 	#-------------------------------------------------------------------------------
-	for _i in ally_fighter_party.size():
+	for _i in _fighter_array.size():
 		#-------------------------------------------------------------------------------
-		if(ally_fighter_party[_i] == _target):
-			Step_Forward_Tween_2(_tween, ally_fighter_party[_i])
+		if(_fighter_array[_i] == _target):
+			Step_Forward_Tween_2(_tween, _fighter_array[_i])
 		#-------------------------------------------------------------------------------
 		else:
-			Step_Backward_Tween_2(_tween, ally_fighter_party[_i])
+			Step_Backward_Tween_2(_tween, _fighter_array[_i])
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	await _tween.finished
 #-------------------------------------------------------------------------------
-func Lock_Off():
-	Lock_Off_Hide()
-	#-------------------------------------------------------------------------------
+func Step_Backward_2(_fighter_array:Array[Fighter_Node]):
 	var _tween:Tween = create_tween()
 	#-------------------------------------------------------------------------------
-	for _i in ally_fighter_party.size():
-		Step_Forward_Tween_2(_tween, ally_fighter_party[_i])
+	for _i in _fighter_array.size():
+		Step_Forward_Tween_2(_tween, _fighter_array[_i])
 	#-------------------------------------------------------------------------------
 	await _tween.finished
 #-------------------------------------------------------------------------------
@@ -7843,8 +7854,11 @@ func Get_Future_Cooldown(_action_serializable:Action_Serializable) -> int:
 func Get_Tr_Action_Name(_action_resource:Action_Resource) -> String:
 	return tr("resource_"+singleton.get_resource_filename(_action_resource)+"_a")
 #-------------------------------------------------------------------------------
+func Get_Resource_ID_String(_resource:Resource) -> String:
+	return "ID: [" + singleton.get_resource_filename(_resource) + "]"
+#-------------------------------------------------------------------------------
 func Get_Tr_Skill_Name(_skill_resource:Action_Resource) -> String:
-	return tr("resource_"+singleton.get_resource_filename(_skill_resource)+"_a")
+	return tr("resource_" + singleton.get_resource_filename(_skill_resource)+"_a")
 #-------------------------------------------------------------------------------
 func Get_Tr_Skill_Description(_skill_resource:Action_Resource) -> String:
 	return tr("resource_"+singleton.get_resource_filename(_skill_resource)+"_b")
@@ -7984,11 +7998,11 @@ func Spawn_Label_in_User_2(_user:Fighter_Node, _is_enemy:bool, _index:int) -> Po
 	else:
 		_popup = ally_pop_up_prefab.instantiate() as Pop_Up_Node
 	#-------------------------------------------------------------------------------
-	var _global_position: Vector2 = _user.global_position
+	var _global_position: Vector2 = _user.pivot.global_position
 	_popup.label.add_theme_font_size_override("font_size", 24)
 	_global_position.y -= 6.0 * camera.zoom.y * float(_index)
 	_popup.scale = Vector2.ONE/ camera.zoom
-	_user.add_child(_popup)
+	world_2d.add_child(_popup)
 	_popup.global_position = _global_position
 	return _popup
 #-------------------------------------------------------------------------------

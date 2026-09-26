@@ -12,10 +12,10 @@ offset_bottom = 126.0
 theme = ExtResource("1_auc1d")
 script = ExtResource("2_fofx7")
 face = NodePath("MarginContainer/HBoxContainer/TextureRect")
-name_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Label")
-title_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/Label")
-level_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Label3")
-class_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2/Label2")
+name_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Label")
+title_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/Label")
+level_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Label3")
+class_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Label2")
 hp_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/ProgressBar/Label3")
 status_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Label2")
 hp_bar = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/ProgressBar")
@@ -55,34 +55,41 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer" unique_id=499325298]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=651565699]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=932812166]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer" unique_id=651565699]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=436116244]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=436116244]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Nombre del Peleador"
 
-[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1968684427]
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1968684427]
 layout_mode = 2
 text = "[Guerrero]"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=898611603]
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=898611603]
 layout_mode = 2
 text = "[Nivel: 5]"
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=1506333158]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1506333158]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 12
 text = "Título del Peleador"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=782692336]
@@ -124,7 +131,6 @@ horizontal_alignment = 2
 
 [node name="Control" type="Control" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer" unique_id=576980482]
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="status_ui_container" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/Control" unique_id=1884249315]

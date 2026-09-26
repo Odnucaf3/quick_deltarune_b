@@ -71,6 +71,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_a84c5"]
 resource_name = "Casting"
 length = 0.5000125
+loop_mode = 1
 step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -329,7 +330,6 @@ transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(268, 160)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-graph_offset = Vector2(-322, 0)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_ii7r2")
 nodes/base_StateMachine/position = Vector2(-140, 100)
 node_connections = [&"output", 0, &"base_StateMachine"]
