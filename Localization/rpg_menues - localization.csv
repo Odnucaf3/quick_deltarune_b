@@ -122,8 +122,10 @@ resource_equip_4_0_6_a,Zapatillas de Marsha,Marsha's Shoes
 resource_equip_4_0_6_b,-,-
 resource_equip_4_0_7_a,Anillo de Marsha,Marsha's Ring
 resource_equip_4_0_7_b,-,-
-resource_item_1_0_0_0_a,Veneno Mortal,Deadly Poison
+resource_item_1_0_0_0_a,Veneno de la Auto-Derrota,Auto-Lose Potion
 resource_item_1_0_0_0_b,"Utilizalo, si quieren conocer lo que es la derrota.","Use it , if you want to know defeat."
+resource_item_1_0_0_1_a,Poción de la Auto-Victoria,Auto-Win Potion
+resource_item_1_0_0_1_b,Gata automáticamente cualquier Batalla en la que estés.,-
 resource_item_1_1_1_0_a,Dardo Venenoso,Poison Dartz
 resource_item_1_1_1_0_b,"Cuchillo arrojadizo de hueso animal afilado, con punta envenenada.
 Objeto fabricable.

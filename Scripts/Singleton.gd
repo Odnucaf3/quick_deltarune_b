@@ -22,6 +22,7 @@ const cancelInput: String = "ui_cancel"
 @export var audioStreamPlayer_heal_tp: AudioStreamPlayer
 @export var audioStreamPlayer_damage_tp: AudioStreamPlayer
 @export var audioStreamPlayer_status_remove: AudioStreamPlayer
+@export var audioStreamPlayer_graze: AudioStreamPlayer
 #-------------------------------------------------------------------------------
 @export_category("BGM")
 @export var audioStreamPlayer_bgm: AudioStreamPlayer

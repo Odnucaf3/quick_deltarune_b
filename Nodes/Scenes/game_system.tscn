@@ -16,10 +16,12 @@
 [ext_resource type="Resource" uid="uid://dhvbvytft23lh" path="res://Resources/Equips/equip_1_2_1.tres" id="12_bvfqi"]
 [ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_1_0.tres" id="12_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://dgojjdoocby4g" path="res://Assets/rpg_maker_mv/img/battlebacks2/Grassland.png" id="12_xm4vn"]
+[ext_resource type="PackedScene" uid="uid://fb5bwlpa1ppb" path="res://Nodes/Prefabs/bullet_node.tscn" id="12_xqrxi"]
 [ext_resource type="Resource" uid="uid://b6a7pbtv5mpci" path="res://Resources/Items/item_2_0_0_0.tres" id="13_brd8x"]
 [ext_resource type="Resource" uid="uid://c82bhq2um2yfn" path="res://Resources/Items/item_2_0_0_1.tres" id="14_ggk8j"]
 [ext_resource type="Theme" uid="uid://8b5mgh2noth3" path="res://Themes/main_theme.tres" id="16_0t8i2"]
 [ext_resource type="Script" uid="uid://dosow2j1xm5y3" path="res://Scripts/Resources/key_serializable.gd" id="16_ql07v"]
+[ext_resource type="Resource" uid="uid://u7uqcl2d4qy5" path="res://Resources/Items/item_1_0_0_1.tres" id="17_ebpaw"]
 [ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_1.tres" id="17_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
 [ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter_2_0.tres" id="19_8m6hh"]
@@ -35,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_actor2_7.tscn" id="26_jvut7"]
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="27_b6a3y"]
+[ext_resource type="Script" uid="uid://d3hprek0h2f38" path="res://Scripts/Prefabs/hitbox_node.gd" id="29_wunun"]
 [ext_resource type="Texture2D" uid="uid://bd8wsbia6rebq" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_B.png" id="30_p24l3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
 [ext_resource type="PackedScene" uid="uid://rj8wk0p7m1vh" path="res://Nodes/Prefabs/Fighters/fighter_actor1_8.tscn" id="32_acn20"]
@@ -117,6 +120,20 @@ action_resource = ExtResource("14_ggk8j")
 hold = 55
 metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 
+[sub_resource type="Resource" id="Resource_wunun"]
+script = ExtResource("54_brd8x")
+action_resource = ExtResource("55_ggk8j")
+hold = 3
+stored = 2
+metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+
+[sub_resource type="Resource" id="Resource_gusww"]
+script = ExtResource("54_brd8x")
+action_resource = ExtResource("17_ebpaw")
+hold = 1
+stored = 2
+metadata/_custom_type_script = "uid://ck6vbg7epahmp"
+
 [sub_resource type="Resource" id="Resource_pbmux"]
 script = ExtResource("27_b6a3y")
 equip_resource = ExtResource("11_gijw1")
@@ -188,6 +205,120 @@ shader_parameter/speed_y = 0.1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qeicn"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_ifc2b"]
+resource_name = "Graze"
+length = 0.2000066770978272
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("grazebox:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20000002),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xqrxi"]
+resource_name = "Hurt"
+length = 0.06667000347711147
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_wunun"]
+resource_name = "Normal"
+length = 0.03333666840530932
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ebpaw"]
+length = 0.06667333681061864
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("grazebox:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uml17"]
+_data = {
+&"Graze": SubResource("Animation_ifc2b"),
+&"Hurt": SubResource("Animation_xqrxi"),
+&"Normal": SubResource("Animation_wunun"),
+&"RESET": SubResource("Animation_ebpaw")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x7s5m"]
+animation = &"Graze"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_paw12"]
+mix_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wunun"]
+animation = &"Hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ebpaw"]
+animation = &"Normal"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_uml17"]
+states/Hurt/node = SubResource("AnimationNodeAnimation_wunun")
+states/Hurt/position = Vector2(545, 100)
+states/Normal/node = SubResource("AnimationNodeAnimation_ebpaw")
+states/Normal/position = Vector2(383, 100)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_qeicn"]
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_x7s5m")
+"nodes/Animation 3/position" = Vector2(-160, 340)
+nodes/Base_OneShot/node = SubResource("AnimationNodeOneShot_paw12")
+nodes/Base_OneShot/position = Vector2(60, 140)
+nodes/Base_StateMachine/node = SubResource("AnimationNodeStateMachine_uml17")
+nodes/Base_StateMachine/position = Vector2(-200, 20)
+node_connections = [&"output", 0, &"Base_OneShot", &"Base_OneShot", 0, &"Base_StateMachine", &"Base_OneShot", 1, &"Animation 3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3em1u"]
 size = Vector2(25, 14)
@@ -883,7 +1014,7 @@ bg_color = Color(0, 0, 0, 0)
 shadow_color = Color(0, 0, 0, 0.60784316)
 shadow_size = 35
 
-[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "timer_root", "timer_label", "battle_box", "hitbox_root", "battle_ui", "black_screen_override", "ally_fighter_party", "ally_character_party", "lock_on", "lock_on_animation_player", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_slider", "tp_bar_name", "tp_bar_value", "tp_bar_max_value", "battle_background_root", "battle_background_dark_panel", "battle_menu", "battle_menu_button_skill", "battle_menu_button_item", "battle_menu_button_status", "battle_menu_button_statistics", "escape_menu", "escape_menu_yes_button", "escape_menu_no_button", "win_menu", "lose_menu", "lose_menu_retry_button", "lose_menu_go_to_savepoint_button", "lose_menu_give_up_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_name", "skill_menu_information_icon", "skill_menu_information_id", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_critical_title", "skill_menu_information_critical_value", "skill_menu_information_affinity_title", "skill_menu_information_affinity_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_power_title", "skill_menu_information_power_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_name", "item_menu_consumable_information_icon", "item_menu_consumable_information_id", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_critical_title", "item_menu_consumable_information_critical_value", "item_menu_consumable_information_affinity_title", "item_menu_consumable_information_affinity_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_power_title", "item_menu_consumable_information_power_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_name", "item_menu_equip_information_icon", "item_menu_equip_information_id", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_name", "item_menu_key_information_icon", "item_menu_key_information_id", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_name", "equip_menu_information_icon", "equip_menu_information_id", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_status_ui_container", "statistics_menu_information_fighter_id", "statistics_menu_information_character_id", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_skill_cost_name", "statistics_menu_information_skill_cost_value", "statistics_menu_information_skill_wait_name", "statistics_menu_information_skill_wait_value", "statistics_menu_information_skill_uses_name", "statistics_menu_information_skill_uses_value", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_name", "status_menu_information_icon", "status_menu_information_id", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_item_icon", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
+[node name="game_system" type="Node" unique_id=585500137 node_paths=PackedStringArray("background_canvas_layer", "main_canvas_layer", "world_2d", "timer_root", "timer_label", "battle_box", "hitbox", "battle_ui", "black_screen_override", "ally_fighter_party", "ally_character_party", "lock_on", "lock_on_animation_player", "player_characterbody2d", "player_interactable_by_action_area2d", "player_interactable_by_action_collider", "camera", "current_room", "tp_bar", "tp_bar_slider", "tp_bar_name", "tp_bar_value", "tp_bar_max_value", "battle_background_root", "battle_background_dark_panel", "battle_menu", "battle_menu_button_skill", "battle_menu_button_item", "battle_menu_button_status", "battle_menu_button_statistics", "escape_menu", "escape_menu_yes_button", "escape_menu_no_button", "win_menu", "lose_menu", "lose_menu_retry_button", "lose_menu_go_to_savepoint_button", "lose_menu_give_up_button", "go_to_title_menu", "go_to_title_menu_button_yes", "go_to_title_menu_button_no", "pause_menu", "pause_menu_panel", "pause_menu_button_title", "pause_menu_button_skill", "pause_menu_button_item", "pause_menu_button_equip", "pause_menu_button_statistics", "pause_menu_button_status", "pause_menu_button_options", "pause_menu_button_quit", "pause_menu_money_label", "pause_menu_button_mouse_blocker", "pause_menu_fighter_button_title", "pause_menu_fighter_button_content", "pause_menu_fighter_button_mouse_blocker", "skill_menu", "skill_menu_button_0", "skill_menu_button_title", "skill_menu_button_content", "skill_menu_information_root", "skill_menu_information_title", "skill_menu_information_content", "skill_menu_information_name", "skill_menu_information_icon", "skill_menu_information_id", "skill_menu_information_hold_title", "skill_menu_information_hold_value", "skill_menu_information_tp_cost_title", "skill_menu_information_tp_cost_value", "skill_menu_information_cooldown_title", "skill_menu_information_cooldown_value", "skill_menu_information_speed_title", "skill_menu_information_speed_value", "skill_menu_information_critical_title", "skill_menu_information_critical_value", "skill_menu_information_affinity_title", "skill_menu_information_affinity_value", "skill_menu_information_presition_title", "skill_menu_information_presition_value", "skill_menu_information_power_title", "skill_menu_information_power_value", "skill_menu_information_target_title", "skill_menu_information_target_value", "skill_menu_information_status_title", "skill_menu_information_status_name", "skill_menu_information_status_value", "skill_menu_information_description_title", "skill_menu_information_description_value", "item_menu", "item_manu_information_title", "item_menu_all_button_0", "item_menu_consumable_button_0", "item_menu_equip_button_0", "item_menu_key_button_0", "item_menu_all_button_root", "item_menu_all_button_title", "item_menu_all_button_content", "item_menu_consumable_button_root", "item_menu_consumable_button_title", "item_menu_consumable_button_content", "item_menu_consumable_information_root", "item_menu_consumable_information_content", "item_menu_consumable_information_name", "item_menu_consumable_information_icon", "item_menu_consumable_information_id", "item_menu_consumable_information_hold_title", "item_menu_consumable_information_hold_value", "item_menu_consumable_information_stored_title", "item_menu_consumable_information_stored_value", "item_menu_consumable_information_tp_cost_title", "item_menu_consumable_information_tp_cost_value", "item_menu_consumable_information_cooldown_title", "item_menu_consumable_information_cooldown_value", "item_menu_consumable_information_speed_title", "item_menu_consumable_information_speed_value", "item_menu_consumable_information_critical_title", "item_menu_consumable_information_critical_value", "item_menu_consumable_information_affinity_title", "item_menu_consumable_information_affinity_value", "item_menu_consumable_information_presition_title", "item_menu_consumable_information_presition_value", "item_menu_consumable_information_power_title", "item_menu_consumable_information_power_value", "item_menu_consumable_information_target_title", "item_menu_consumable_information_target_value", "item_menu_consumable_information_status_title", "item_menu_consumable_information_status_name", "item_menu_consumable_information_status_value", "item_menu_consumable_information_description_title", "item_menu_consumable_information_description_value", "item_menu_equip_button_root", "item_menu_equip_button_title", "item_menu_equip_button_content", "item_menu_equip_information_root", "item_menu_equip_information_content", "item_menu_equip_information_name", "item_menu_equip_information_icon", "item_menu_equip_information_id", "item_menu_equip_information_stored_title", "item_menu_equip_information_stored_value", "item_menu_equip_information_level_title", "item_menu_equip_information_level_value", "item_menu_equip_information_type_title", "item_menu_equip_information_type_value", "item_menu_equip_information_class_title", "item_menu_equip_information_class_value", "item_menu_equip_information_statistics_title", "item_menu_equip_information_statistics_name", "item_menu_equip_information_statistics_value", "item_menu_equip_information_description_title", "item_menu_equip_information_description_value", "item_menu_key_button_root", "item_menu_key_button_title", "item_menu_key_button_content", "item_menu_key_information_root", "item_menu_key_information_content", "item_menu_key_information_name", "item_menu_key_information_icon", "item_menu_key_information_id", "item_menu_key_information_stored_title", "item_menu_key_information_stored_value", "item_menu_key_information_description_title", "item_menu_key_information_description_value", "equip_menu", "equip_menu_button_0", "equip_menu_button_title", "equip_menu_button_content", "equip_menu_button_type", "equip_menu_information_root", "equip_menu_information_title", "equip_menu_information_content", "equip_menu_information_name", "equip_menu_information_icon", "equip_menu_information_id", "equip_menu_information_stored_title", "equip_menu_information_stored_value", "equip_menu_information_level_title", "equip_menu_information_level_value", "equip_menu_information_type_title", "equip_menu_information_type_value", "equip_menu_information_class_type", "equip_menu_information_class_value", "equip_menu_information_statistics_title", "equip_menu_information_statistics_name", "equip_menu_information_statistics_value", "equip_menu_information_description_title", "equip_menu_information_description_value", "statistics_menu", "statistics_menu_button_0", "statistics_menu_information_root", "statistics_menu_information_fighter_face", "statistics_menu_information_fighter_name", "statistics_menu_information_fighter_title", "statistics_menu_information_fighter_hp_value", "statistics_menu_information_fighter_hp_slider", "statistics_menu_information_status_ui_container", "statistics_menu_information_fighter_id", "statistics_menu_information_character_id", "statistics_menu_information_level_title", "statistics_menu_information_level_value", "statistics_menu_information_base_stats_title", "statistics_menu_information_base_stats_name", "statistics_menu_information_base_stats_value", "statistics_menu_information_extra_stats_title", "statistics_menu_information_extra_stats_name", "statistics_menu_information_extra_stats_value", "statistics_menu_information_special_stats_title", "statistics_menu_information_special_stats_name", "statistics_menu_information_special_stats_value", "statistics_menu_information_equip_title", "statistics_menu_information_equip_type", "statistics_menu_information_equip_value", "statistics_menu_information_skill_title", "statistics_menu_information_skill_name", "statistics_menu_information_skill_cost_name", "statistics_menu_information_skill_cost_value", "statistics_menu_information_skill_wait_name", "statistics_menu_information_skill_wait_value", "statistics_menu_information_skill_uses_name", "statistics_menu_information_skill_uses_value", "statistics_menu_information_status_title", "statistics_menu_information_status_name", "statistics_menu_information_status_value", "statistics_menu_information_elemental_title", "statistics_menu_information_elemental_type_title", "statistics_menu_information_elemental_type_name", "statistics_menu_information_elemental_power_title", "statistics_menu_information_elemental_power_value", "statistics_menu_information_elemental_absorb_title", "statistics_menu_information_elemental_absorb_value", "statistics_menu_information_elemental_affinity_title", "statistics_menu_information_elemental_affinity_value", "statistics_menu_information_elemental_repulsion_title", "statistics_menu_information_elemental_repulsion_value", "statistics_menu_information_description_title", "statistics_menu_information_description_value", "status_menu", "status_menu_button_0", "status_menu_button_title", "status_menu_button_content", "status_menu_information_title", "status_menu_information_root", "status_menu_information_name", "status_menu_information_icon", "status_menu_information_id", "status_menu_information_turns_title", "status_menu_information_turns_value", "status_menu_information_statistics_title", "status_menu_information_statistics_name", "status_menu_information_statistics_value", "status_menu_information_description_title", "status_menu_information_description_value", "dialogue_menu", "dialogue_menu_face", "dialogue_menu_name", "dialogue_menu_value", "dialogue_menu_button_content", "dialogue_menu_audio", "button_next", "confirm_buy_menu", "confirm_buy_menu_item_name", "confirm_buy_menu_item_icon", "confirm_buy_menu_button", "confirm_buy_menu_item_price", "confirm_buy_menu_hold_value", "confirm_buy_menu_stored_value", "money_menu", "money_menu_label", "debug_label")]
 script = ExtResource("1_jvut7")
 background_canvas_layer = NodePath("World_Background")
 main_canvas_layer = NodePath("main_canvas_layer")
@@ -891,7 +1022,7 @@ world_2d = NodePath("World_2D")
 timer_root = NodePath("main_canvas_layer/timer_root")
 timer_label = NodePath("main_canvas_layer/timer_root/timer_label")
 battle_box = NodePath("World_2D/battle_box")
-hitbox_root = NodePath("World_2D/battle_box/hitbox_root")
+hitbox = NodePath("World_2D/battle_box/hitbox")
 battle_ui = NodePath("main_canvas_layer/battle_ui")
 black_screen_override = NodePath("main_canvas_layer/black_screen_override")
 attack_resource = ExtResource("2_pclkw")
@@ -904,7 +1035,8 @@ fighter_enemy_ui_prefab = ExtResource("6_xm4vn")
 ally_pop_up_prefab = ExtResource("8_5lr35")
 enemy_pop_up_prefab = ExtResource("9_8wyqk")
 status_ui_prefab = ExtResource("88_h1r7s")
-item_consumable_inventory = Array[ExtResource("54_brd8x")]([SubResource("Resource_uj0ak"), SubResource("Resource_h276b")])
+bullet_Prefab = ExtResource("12_xqrxi")
+item_consumable_inventory = Array[ExtResource("54_brd8x")]([SubResource("Resource_uj0ak"), SubResource("Resource_h276b"), SubResource("Resource_wunun"), SubResource("Resource_gusww")])
 item_equip_inventory = Array[ExtResource("27_b6a3y")]([SubResource("Resource_pbmux"), SubResource("Resource_8ld1n")])
 money_inventory = SubResource("Resource_hdd08")
 ally_fighter_party = [NodePath("World_2D/player_characterbody2d/fighter_actor1_1"), NodePath("World_2D/player_characterbody2d/fighter_actor1_8"), NodePath("World_2D/player_characterbody2d/fighter_actor2_7"), NodePath("World_2D/player_characterbody2d/fighter_actor3_8")]
@@ -1183,6 +1315,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -17.0
+offset_right = -73.0
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -1321,48 +1457,28 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 theme = ExtResource("16_0t8i2")
 
-[node name="hitbox_root" type="Control" parent="World_2D/battle_box" unique_id=1563630517]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect2" type="TextureRect" parent="World_2D/battle_box/hitbox_root" unique_id=681833552]
-self_modulate = Color(1, 1, 1, 0.4117647)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("18_ngqpa")
-expand_mode = 1
-
-[node name="TextureRect" type="TextureRect" parent="World_2D/battle_box/hitbox_root" unique_id=1699119715]
-z_index = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="hitbox" type="Sprite2D" parent="World_2D/battle_box" unique_id=1099174843 node_paths=PackedStringArray("grazebox", "animation_tree")]
+position = Vector2(46, -34)
 texture = ExtResource("9_8m6hh")
+script = ExtResource("29_wunun")
+grazebox = NodePath("grazebox")
+animation_tree = NodePath("AnimationTree")
+
+[node name="grazebox" type="Sprite2D" parent="World_2D/battle_box/hitbox" unique_id=1725031064]
+self_modulate = Color(1, 1, 1, 0)
+show_behind_parent = true
+scale = Vector2(0.31718746, 0.31718746)
+texture = ExtResource("18_ngqpa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/battle_box/hitbox" unique_id=125647666]
+libraries/ = SubResource("AnimationLibrary_uml17")
+
+[node name="AnimationTree" type="AnimationTree" parent="World_2D/battle_box/hitbox" unique_id=2090529426]
+tree_root = SubResource("AnimationNodeBlendTree_qeicn")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Base_OneShot/active = false
+parameters/Base_OneShot/internal_active = false
+parameters/Base_OneShot/request = 0
 
 [node name="player_characterbody2d" type="CharacterBody2D" parent="World_2D" unique_id=412323299]
 y_sort_enabled = true

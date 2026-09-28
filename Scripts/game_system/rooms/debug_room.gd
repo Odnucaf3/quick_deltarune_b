@@ -194,7 +194,6 @@ func NPC_4_Talk(_array_fighter_array:Array[Fighter_Node]):
 			#-------------------------------------------------------------------------------
 			await singleton.game_system.Dialogue_Close()
 			await singleton.game_system.Enter_Battle(_array_fighter_array)
-			singleton.game_system.Dialogue_Override("* The Battle Began! Turn "+str(singleton.game_system.turn_counter)+".")
 			await Loop_Battle(_array_fighter_array)
 		#-------------------------------------------------------------------------------
 		1:
@@ -213,72 +212,44 @@ func Interactable_Action():
 	await singleton.game_system.Dialogue_Close_and_Exit()
 #-------------------------------------------------------------------------------
 func Loop_Battle(_array_fighter_array:Array[Fighter_Node]):
+	await singleton.game_system.Do_Enemy_Actions()
 	#-------------------------------------------------------------------------------
 	while(singleton.game_system.myBATTLE_STATE == Game_System.BATTLE_STATE.STILL_FIGHTING):
-		await singleton.game_system.Re_Open_Battle_Menu()
-		await singleton.game_system.Do_Ally_Actions()
+		await singleton.game_system.Do_Ally_Actions("* The Battle Continue. Turn "+str(singleton.game_system.turn_counter)+".")
 		await singleton.game_system.Do_Enemy_Actions()
-		Battle_Dialogue_1()
 	#-------------------------------------------------------------------------------
 	await After_Battle(_array_fighter_array)
-#-------------------------------------------------------------------------------
-func Battle_Dialogue_1():
-	#-------------------------------------------------------------------------------
-	if(singleton.game_system.myBATTLE_STATE == Game_System.BATTLE_STATE.STILL_FIGHTING):
-		singleton.game_system.Dialogue_Override("* The Battle Continue. Turn "+str(singleton.game_system.turn_counter)+".")
-	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func After_Battle(_array_fighter_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 	match(singleton.game_system.myBATTLE_STATE):
 		Game_System.BATTLE_STATE.YOU_WIN:
-			await singleton.game_system.Win_Effect()
-			await singleton.game_system.You_Win()
-			await singleton.game_system.Dialogue_Close()
-			singleton.game_system.Enable_Pause_Input()
+			await singleton.game_system.You_Win_Fade_Out()
+			await singleton.game_system.You_Win_Fade_In()
 		#-------------------------------------------------------------------------------
 		Game_System.BATTLE_STATE.YOU_LOSE:
 			await singleton.game_system.You_Lose()
 			#-------------------------------------------------------------------------------
 			match(singleton.game_system.myLOSE_STATE):
 				Game_System.LOSE_STATE.YOU_RETRY:
-					await You_Retry(_array_fighter_array)
-					await singleton.game_system.Dialogue_Close()
+					await singleton.game_system.You_Retry(_array_fighter_array)
+					await Loop_Battle(_array_fighter_array)
 				#-------------------------------------------------------------------------------
 				Game_System.LOSE_STATE.YOU_ESCAPE_TO_SAVEPOINT:
-					await You_Escape_to_SavePoint()
-					await singleton.game_system.Dialogue_Close()
-					singleton.game_system.Enable_Pause_Input()
+					await singleton.game_system.You_Escape_Fade_Out()
+					await singleton.game_system.Move_Allies_and_Camera_to_Starting_Position()
+					await singleton.game_system.You_Escape_Fade_In()
 				#-------------------------------------------------------------------------------
 				Game_System.LOSE_STATE.YOU_GIVE_UP:
-					await You_Give_Up()
+					await singleton.game_system.You_Give_Up()
 				#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		Game_System.BATTLE_STATE.YOU_ESCAPE:
-			await singleton.game_system.Escape_Effect()
-			await singleton.game_system.You_Escape()
-			await singleton.game_system.Dialogue_Close()
-			singleton.game_system.Enable_Pause_Input()
+			await singleton.game_system.You_Escape_Fade_Out()
+			await singleton.game_system.You_Escape_Fade_In()
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-func You_Retry(_array_fighter_array:Array[Fighter_Node]):
-	singleton.game_system.lose_menu.hide()
-	singleton.Common_Submited()
-	await singleton.game_system.You_Retry(_array_fighter_array)
-	singleton.game_system.Dialogue_Override("* The Battle Began!")
-	await Loop_Battle(_array_fighter_array)
-#-------------------------------------------------------------------------------
-func You_Escape_to_SavePoint():
-	singleton.game_system.next_signal.emit()
-	singleton.game_system.lose_menu.hide()
-	singleton.Common_Submited()
-	await singleton.game_system.Escape_Effect()
-	await singleton.game_system.You_Escape_to_SavePoint()
-#-------------------------------------------------------------------------------
-func You_Give_Up():
-	singleton.game_system.You_Give_Up()
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------

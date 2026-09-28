@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://fb5bwlpa1ppb"]
+
+[ext_resource type="Texture2D" uid="uid://dw1062xd68vfo" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_88.png" id="1_b1rf6"]
+[ext_resource type="Script" uid="uid://b7u0msg1c4cwf" path="res://Scripts/Prefabs/bullet_node.gd" id="2_x3rws"]
+
+[node name="bullet_node" type="Sprite2D" unique_id=1845050578]
+texture = ExtResource("1_b1rf6")
+script = ExtResource("2_x3rws")

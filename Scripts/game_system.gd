@@ -19,16 +19,27 @@ var tp: int = 100
 var timer_value: int
 var max_timer_value: int
 var timer_tween: Tween
+var main_tween_Array: Array[Tween]
 #-------------------------------------------------------------------------------
 @export var battle_box: Control
 var battle_box_limit_up: float
 var battle_box_limit_down: float
 var battle_box_limit_left: float
 var battle_box_limit_right: float
-@export var hitbox_root: Control
+#-------------------------------------------------------------------------------
+var screen_limit_up: float
+var screen_limit_down: float
+var screen_limit_left: float
+var screen_limit_right: float
+#-------------------------------------------------------------------------------
+@export var hitbox: Hitbox_Node
+#-------------------------------------------------------------------------------
 @export var battle_ui: Control
 @export var black_screen_override: Panel
+var can_be_hit: bool = true
+var i_frames: int = 0
 var turn_counter: int = 0
+var canBeHit: bool = true
 #-------------------------------------------------------------------------------
 @export_category("Prefabs & Resources")
 @export var attack_resource: Action_Resource
@@ -41,6 +52,10 @@ var turn_counter: int = 0
 @export var ally_pop_up_prefab: PackedScene
 @export var enemy_pop_up_prefab: PackedScene
 @export var status_ui_prefab: PackedScene
+#-------------------------------------------------------------------------------
+@export var bullet_Prefab: PackedScene
+var enabled_enemy_bullets_array: Array[Bullet_Node]
+var disabled_enemy_bullets_array: Array[Bullet_Node]
 #-------------------------------------------------------------------------------
 @export_category("Inventory")
 @export var item_consumable_inventory: Array[Action_Serializable]
@@ -527,7 +542,10 @@ func _ready() -> void:
 	Set_Party_Equip_at_the_Start(ally_fighter_party)
 	Set_Fighter_0()
 	#-------------------------------------------------------------------------------
+	hitbox.grazebox.global_scale = Get_CircleSprite_Scale(hitbox.grazebox_radius) + Vector2(0.01, 0.01)
+	#-------------------------------------------------------------------------------
 	NormalMotion()
+	Create_EnemyBullets_Disabled(2000)
 	#B_Dialogue_Test()
 #-------------------------------------------------------------------------------
 func _physics_process(_delta: float) -> void:
@@ -553,6 +571,11 @@ func _physics_process(_delta: float) -> void:
 		#-------------------------------------------------------------------------------
 		GAME_STATE.IN_BATTLE:
 			Hitbox_Movement()
+			Hitbox_Damage()
+			#-------------------------------------------------------------------------------
+			for _i in range(enabled_enemy_bullets_array.size()-1,-1,-1):
+				enabled_enemy_bullets_array[_i].physics_update.call()
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -4130,15 +4153,15 @@ func AnimationTree_TimeSeek(_animation_tree:AnimationTree, _anim:String, _f:floa
 func AnimationTree_TimeScale(_animation_tree:AnimationTree, _anim:String, _f:float) -> void:
 	_animation_tree["parameters/"+_anim+"_TimeScale/scale"] = _f
 #-------------------------------------------------------------------------------
-func AnimationTree_Transition_Set(_animation_tree:AnimationTree, _state_machine:String, _anim:String):
+func AnimationTree_StateMachine_Set(_animation_tree:AnimationTree, _state_machine:String, _anim:String):
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
 	_playback.call_deferred("travel", _anim)
 #-------------------------------------------------------------------------------
-func AnimationTree_Transition_Get(_animation_tree:AnimationTree, _state_machine:String) -> StringName:
+func AnimationTree_StateMachine_Get(_animation_tree:AnimationTree, _state_machine:String) -> StringName:
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
 	return _playback.get_current_node()
 #-------------------------------------------------------------------------------
-func AnimationTree_Transition_Reply(_animation_tree:AnimationTree, _state_machine:String):
+func AnimationTree_StateMachine_Reply(_animation_tree:AnimationTree, _state_machine:String):
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
 	_playback.call_deferred("travel", _playback.get_current_node())
 #-------------------------------------------------------------------------------
@@ -4178,9 +4201,9 @@ func Debug_Information() -> void:
 	if(ally_fighter_party[0].fighter_serializable_in_battle != null):
 		_s += "evasion_rate: "+str(Get_Physical_Presition_Rate(ally_fighter_party[0].fighter_serializable_in_battle))+"\n"
 	_s += "-------------------------------------------------------\n"
-	#_s += "Enemy Bullets Enabled: " + str(enemyBullets_Enabled_Array.size())+"\n"
-	#_s += "Enemy Bullets Disabled: " + str(enemyBullets_Disabled_Array.size())+"\n"
-	#_s += "-------------------------------------------------------\n"
+	_s += "Enemy Bullets Enabled: " + str(enabled_enemy_bullets_array.size())+"\n"
+	_s += "Enemy Bullets Disabled: " + str(disabled_enemy_bullets_array.size())+"\n"
+	_s += "-------------------------------------------------------\n"
 	debug_label.text = _s
 #-------------------------------------------------------------------------------
 func Get_Alive_Fighter_and_Actions_Text(_name:String, _fighter_node_array:Array[Fighter_Node]) ->String:
@@ -5203,9 +5226,7 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 		Remove_Status_Down(_fighter_serializable)
 		#-------------------------------------------------------------------------------
 		var _fighter_ui: Fighter_UI = _fighter_node_array[_i].fighter_ui
-		_fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
-		_fighter_ui.hp_bar.max_value = _max_hp
-		_fighter_ui.hp_bar.value = _hp
+		Set_Fighte_HP_Bar_0(_fighter_node_array[_i].fighter_ui, _hp, _max_hp)
 		#-------------------------------------------------------------------------------
 		Set_Fighter_Status_UI_in_Battle(_fighter_node_array[_i])
 		#-------------------------------------------------------------------------------
@@ -5220,6 +5241,16 @@ func Set_Fighter_Before_Battle(_fighter_node_array:Array[Fighter_Node]):
 		_fighter_ui.button_root.hide()
 		_fighter_ui.dialogue_root.hide()
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Set_Fighte_HP_Bar_in_Battle(_fighter_node:Fighter_Node):
+	var _hp: int = _fighter_node.fighter_serializable_in_battle.hp
+	var _max_hp: int = Get_Max_HP(_fighter_node.fighter_serializable_in_battle)
+	Set_Fighte_HP_Bar_0(_fighter_node.fighter_ui, _hp, _max_hp)
+#-------------------------------------------------------------------------------
+func Set_Fighte_HP_Bar_0(_fighter_ui: Fighter_UI, _hp:int, _max_hp:int):
+	_fighter_ui.hp_label.text = Get_Fighter_Hp_Text(_hp, _max_hp)
+	_fighter_ui.hp_bar.max_value = _max_hp
+	_fighter_ui.hp_bar.value = _hp
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_its_Ally_and_Enemy_Parties():
 	#-------------------------------------------------------------------------------
@@ -5355,34 +5386,34 @@ func Play_Fighter_Animation_Action(_fighter_node:Fighter_Node):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Attack_Weapon(_fighter_node:Fighter_Node):
-	await AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Hand")
+	await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Hand")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Cast(_fighter_node:Fighter_Node):
-	await AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Cast")
+	await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Cast")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Idle(_fighter_node:Fighter_Node):
-	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Idle")
+	AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Idle")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Charge(_fighter_node:Fighter_Node):
-	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Charge")
+	AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Charge")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Casting(_fighter_node:Fighter_Node):
-	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Casting")
+	AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Casting")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Guard(_fighter_node:Fighter_Node):
-	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Guard")
+	AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Guard")
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Hurt(_fighter_node:Fighter_Node):
 	#-------------------------------------------------------------------------------
 	if(Has_Status_Guard(_fighter_node.fighter_serializable_in_battle)):
-		AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Hurt_2")
+		AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Hurt_2")
 	#-------------------------------------------------------------------------------
 	else:
-		AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Hurt_2")
+		AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Hurt_2")
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Down(_fighter_node:Fighter_Node):
-	AnimationTree_Transition_Set(_fighter_node.animation_tree, state_machine_layer_1, "Down")
+	AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Down")
 #-------------------------------------------------------------------------------
 func Create_All_Fighter_UI():
 	#-------------------------------------------------------------------------------
@@ -5523,8 +5554,8 @@ func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
 	await Fade_Out_Override()
 	#-------------------------------------------------------------------------------
 	Set_Battle_Background()
+	Set_Screen_Limits()
 	tp_bar.show()
-	dialogue_menu.show()
 	Add_Enemy_Party(_array_enemy_party)
 	Create_All_Fighter_UI()
 	#-------------------------------------------------------------------------------
@@ -5533,6 +5564,9 @@ func Enter_Battle(_array_enemy_party:Array[Fighter_Node]):
 	await Enter_and_Retry_Battle_Common_2()
 #-------------------------------------------------------------------------------
 func You_Retry(_array_enemy_party:Array[Fighter_Node]):
+	lose_menu.hide()
+	Dialogue_Close()
+	singleton.Common_Submited()
 	myBATTLE_STATE = BATTLE_STATE.STILL_FIGHTING
 	#-------------------------------------------------------------------------------
 	await Fade_Out_Override()
@@ -5574,16 +5608,8 @@ func Enter_and_Retry_Battle_Common_1():
 func Enter_and_Retry_Battle_Common_2():
 	#await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
 	await Kill_All_Fighter_Array_and_Reposition_1()
-	#-------------------------------------------------------------------------------
-	battle_menu.show()
-	current_fighter_turn = 0
-	#-------------------------------------------------------------------------------
-	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
-	Lock_On(_alive_party[current_fighter_turn])
-	BattleMenu_Set(_alive_party[current_fighter_turn])
-	singleton.Move_to_Button(battle_menu_button_skill)
 #-------------------------------------------------------------------------------
-func Win_Effect():
+func You_Win_Fade_Out():
 	myGAME_STATE = GAME_STATE.IN_MENU
 	#-------------------------------------------------------------------------------
 	win_menu.show()
@@ -5594,11 +5620,11 @@ func Win_Effect():
 	singleton.Play_SFX_Escape_Battle()
 	await Fade_Out_Override()
 #-------------------------------------------------------------------------------
-func You_Win():
+func You_Win_Fade_In():
 	#-------------------------------------------------------------------------------
 	battle_background_root.hide()
 	tp_bar.hide()
-	dialogue_menu.hide()
+	Dialogue_Close()
 	#-------------------------------------------------------------------------------
 	Set_Inventory_When_Exit_Battle()
 	Fill_the_ConsumableItems_Hold_from_Stored_and_Remove_Cooldown()
@@ -5619,6 +5645,7 @@ func You_Win():
 	myGAME_STATE = GAME_STATE.IN_WORLD
 	is_in_dialogue = false
 	player_interactable_by_action_collider.disabled = false
+	Enable_Pause_Input()
 #-------------------------------------------------------------------------------
 func You_Lose():
 	lose_menu.show()
@@ -5665,14 +5692,16 @@ func Lose_Menu_Give_Up_Button_Submit():
 func You_Give_Up():
 	Set_Go_to_Title_Menu_Yes_Button_Submit()
 #-------------------------------------------------------------------------------
-func You_Escape():
+func You_Escape_Fade_In():
 	await Escape_Common()
+	Dialogue_Close()
+	Enable_Pause_Input()
 #-------------------------------------------------------------------------------
-func You_Escape_to_SavePoint():
+func Move_Allies_and_Camera_to_Starting_Position():
 	Set_Ally_Party_Position(player_starting_position)
+	ally_character_party[0].input_anim_idle = Vector2(0, 0.5)
+	Set_Character_Anim_Idle(ally_character_party[0])
 	Camera_Set_Target_Position()
-	#-------------------------------------------------------------------------------
-	await Escape_Common()
 #-------------------------------------------------------------------------------
 func Escape_Common():
 	is_in_dialogue = false
@@ -5696,7 +5725,7 @@ func Escape_Common():
 	myGAME_STATE = GAME_STATE.IN_WORLD
 	player_interactable_by_action_collider.disabled = false
 #-------------------------------------------------------------------------------
-func Escape_Effect():
+func You_Escape_Fade_Out():
 	myGAME_STATE = GAME_STATE.IN_MENU
 	#-------------------------------------------------------------------------------
 	singleton.Stop_BGM()
@@ -5839,6 +5868,10 @@ func Set_Battle_State():
 	myBATTLE_STATE = Get_Battle_State()
 #-------------------------------------------------------------------------------
 func Get_Battle_State() -> BATTLE_STATE:
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE == BATTLE_STATE.YOU_ESCAPE):
+		return BATTLE_STATE.YOU_ESCAPE
+	#-------------------------------------------------------------------------------
 	var _alive_ally_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
 	var _alive_enemy_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
@@ -5870,7 +5903,12 @@ func BattleMenu_Skill_and_Item_Common_Target_Cancel(_button:Button, _user:Fighte
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
-func Do_Ally_Actions():
+func Do_Ally_Actions(_text:String):
+	await Re_Open_Battle_Menu(_text)
+	await Do_Ally_Actions_After_Battle_Menu()
+#-------------------------------------------------------------------------------
+func Do_Ally_Actions_After_Battle_Menu():
+	Set_Battle_State()
 	#-------------------------------------------------------------------------------
 	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
 		return
@@ -6168,7 +6206,7 @@ func B_Set_RPG_Calculation_3_Part_2(_user:Fighter_Node, _target:Fighter_Node, _v
 #-------------------------------------------------------------------------------
 func Flying_PopUp_Miss(_user:Fighter_Node):
 	Flying_PopUp(_user, "Miss")
-	AnimationTree_Transition_Set(_user.animation_tree, state_machine_layer_1, "Miss")
+	AnimationTree_StateMachine_Set(_user.animation_tree, state_machine_layer_1, "Miss")
 	singleton.Play_SFX_Miss()
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _affinity:int, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _can_critic:bool, _remove_status_dictionary: Dictionary[StringName, int], _add_status_dictionary: Dictionary[StringName, int]):
@@ -6623,6 +6661,7 @@ func Get_Target_Name(_target:Fighter_Node) -> String:
 	return _s
 #-------------------------------------------------------------------------------
 func Do_Enemy_Actions():
+	Set_Battle_State()
 	#-------------------------------------------------------------------------------
 	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
 		return
@@ -6634,7 +6673,8 @@ func Do_Enemy_Actions():
 	await Battle_Enemy_Dialogue_in_Bubbles()
 	#-------------------------------------------------------------------------------
 	Set_and_Show_Battle_Box()
-	await Start_Timer_Tween(4)
+	#-------------------------------------------------------------------------------
+	await SpellCard()
 	#-------------------------------------------------------------------------------
 	Set_and_Hide_Battle_Box()
 	Decrease_Item_Cooldown_by_1()
@@ -6650,6 +6690,10 @@ func Do_Enemy_Actions():
 	#-------------------------------------------------------------------------------
 	Dialogue_Null()
 	After_Enemy_Actions()
+#-------------------------------------------------------------------------------
+func SpellCard():
+	Stage1_Fire1()
+	await Start_Timer_Tween(10)
 #-------------------------------------------------------------------------------
 func Decrease_Item_Cooldown_by_1():
 	var _item_serializable_array: Array[Action_Serializable] = item_consumable_inventory_in_battle
@@ -6684,17 +6728,20 @@ func Apply_All_Fighter_HP_and_TP_Recovery_Effect():
 	await Apply_Fighter_HP_Recovery_Up(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Seconds_for_Status_PopUp()
+	#await Seconds(0.3)
 	#-------------------------------------------------------------------------------
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Apply_Fighter_HP_Recovery_Down(ally_fighter_party)
 	await Apply_Fighter_HP_Recovery_Down(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Seconds_for_Status_PopUp()
+	#await Seconds(0.3)
 	#-------------------------------------------------------------------------------
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Apply_Fighter_TP_Recovery_Up(ally_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Seconds_for_Status_PopUp()
+	#await Seconds(0.3)
 	#-------------------------------------------------------------------------------
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Apply_Fighter_TP_Recovery_Down(ally_fighter_party)
@@ -6910,10 +6957,11 @@ func Show_Enemy_Dialogue():
 #-------------------------------------------------------------------------------
 func Set_and_Show_Battle_Box():
 	battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
-	hitbox_root.position = battle_box.size * 0.5
+	hitbox.position = battle_box.size * 0.5
 	Set_Battle_Box_Limits()
 	myGAME_STATE = GAME_STATE.IN_BATTLE
 	battle_box.show()
+	Set_Hitbox_Normal()
 #-------------------------------------------------------------------------------
 func Set_and_Hide_Battle_Box():
 	battle_box.hide()
@@ -7589,13 +7637,20 @@ func Lock_Off_Hide():
 	lock_on.hide()
 	lock_on_animation_player.stop()
 #-------------------------------------------------------------------------------
-func Re_Open_Battle_Menu():
+func Re_Open_Battle_Menu(_text:String):
 	#-------------------------------------------------------------------------------
 	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
 		return
 	#-------------------------------------------------------------------------------
+	current_fighter_turn = 0
+	#-------------------------------------------------------------------------------
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	Lock_On(_alive_party[current_fighter_turn])
+	BattleMenu_Set(_alive_party[current_fighter_turn])
 	battle_menu.show()
 	singleton.Move_to_Button_by_Submit(battle_menu_button_skill)
+	dialogue_menu.show()
+	singleton.game_system.Dialogue_Override(_text)
 	await next_signal
 #-------------------------------------------------------------------------------
 #region FIGHTERS/INVENTORY MANAGEMENT WHEN ENTER/EXIT BATTLE
@@ -7820,7 +7875,7 @@ func Create_Timer_Tween():
 		timer_value -= 1
 		#-------------------------------------------------------------------------------
 		if(timer_value < 0):
-			Stop_Timer_Tween()
+			StopEverithing_and_Timer()
 		#-------------------------------------------------------------------------------
 		else:
 			Set_Timer(timer_value, max_timer_value)
@@ -7828,14 +7883,24 @@ func Create_Timer_Tween():
 	)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Stop_Timer_Tween():
+func Set_Timer(_timer:int, _max_timer:int):
+	timer_label.text = str(_timer)+"s"+" / "+str(_max_timer)+"s"
+#-------------------------------------------------------------------------------
+func StopEverithing_and_Timer():
+	StopEverithing()
 	timer_root.hide()
 	timer_tween.kill()
+	timer_tween.finished.emit()
 	#Acá pongo que mato todas las balas y sus tweens.
 	next_signal.emit()
 #-------------------------------------------------------------------------------
-func Set_Timer(_timer:int, _max_timer:int):
-	timer_label.text = str(_timer)+"s"+" / "+str(_max_timer)+"s"
+func StopEverithing():
+	#-------------------------------------------------------------------------------
+	KillTween_Array(main_tween_Array)
+	#-------------------------------------------------------------------------------
+	for _i in range(enabled_enemy_bullets_array.size()-1, -1, -1):
+		Destroy_EnemyBullet(enabled_enemy_bullets_array[_i])
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -7852,18 +7917,118 @@ func Hitbox_Movement():
 	#-------------------------------------------------------------------------------
 	if(input_dir != Vector2.ZERO):
 		input_dir_normal = input_dir.normalized()
-		var myPosition: Vector2 = hitbox_root.position
+		var myPosition: Vector2 = hitbox.position
 		#-------------------------------------------------------------------------------
 		if(_run_flag):
-			myPosition += input_dir_normal * 3 * deltaTimeScale
+			myPosition += input_dir_normal * 2.5 * deltaTimeScale
 		#-------------------------------------------------------------------------------
 		else:
-			myPosition += input_dir_normal * 9 * deltaTimeScale
+			myPosition += input_dir_normal * 6.5 * deltaTimeScale
 		#-------------------------------------------------------------------------------
 		myPosition.y = clampf(myPosition.y, battle_box_limit_up, battle_box_limit_down)
 		myPosition.x = clampf(myPosition.x, battle_box_limit_left, battle_box_limit_right)
-		hitbox_root.position = myPosition
+		hitbox.position = myPosition
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Hitbox_Damage():
+	if(can_be_hit):
+		#-------------------------------------------------------------------------------
+		for _i in range(enabled_enemy_bullets_array.size()-1, -1, -1):
+			#-------------------------------------------------------------------------------
+			if(myGAME_STATE == GAME_STATE.IN_BATTLE):
+				var _bullet: Bullet_Node = enabled_enemy_bullets_array[_i]
+				if(_bullet.global_position.distance_to(hitbox.global_position) < (_bullet.radius+hitbox.grazebox_radius) and !_bullet.isGrazed):
+					Bullet_Grazed_TP_Gain()
+					_bullet.isGrazed = true
+				#-------------------------------------------------------------------------------
+				if(_bullet.global_position.distance_to(hitbox.global_position) < (_bullet.radius+hitbox.hitbox_radius) and canBeHit):
+					Player_Shooted(_bullet)
+					Destroy_EnemyBullet(_bullet)
+					return
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		i_frames -= 1
+		#-------------------------------------------------------------------------------
+		if(i_frames < 0):
+			Set_Hitbox_Normal()
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func HitBox_Animation_Normal():
+	AnimationTree_StateMachine_Set(hitbox.animation_tree, "Base", "Normal")
+#-------------------------------------------------------------------------------
+func Set_Hitbox_Normal():
+	can_be_hit = true
+	HitBox_Animation_Normal()
+#-------------------------------------------------------------------------------
+func HitBox_Animation_Hurt():
+	AnimationTree_StateMachine_Set(hitbox.animation_tree, "Base", "Hurt")
+#-------------------------------------------------------------------------------
+func HitBox_Animation_Graze():
+	AnimationTree_OneShot_Set(hitbox.animation_tree, "Base", true)
+#-------------------------------------------------------------------------------
+func Bullet_Grazed_TP_Gain():
+	var _max_tp: int = Get_Max_Tp()
+	tp += 1
+	#-------------------------------------------------------------------------------
+	if(tp > _max_tp):
+		tp = _max_tp
+	#-------------------------------------------------------------------------------
+	else:
+		singleton.audioStreamPlayer_graze.play()
+		HitBox_Animation_Graze()
+		Set_TP_Bar(tp)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Player_Shooted(_bullet:Bullet_Node):
+	i_frames = 30
+	can_be_hit = false
+	HitBox_Animation_Hurt()
+	#-------------------------------------------------------------------------------
+	var _alive_fighter_array:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	#-------------------------------------------------------------------------------
+	if(_alive_fighter_array.size() > 0):
+		var _target: Fighter_Node = _alive_fighter_array.pick_random()
+		var _fighter_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+		#-------------------------------------------------------------------------------
+		Player_Recieve_Bullet_Damage(_target, _bullet)
+		#-------------------------------------------------------------------------------
+		if(_fighter_serializable.hp > 0):
+			#-------------------------------------------------------------------------------
+			if(Has_Status_Guard(_fighter_serializable)):
+				#Animation_StateMachine(_target.animation_tree, "", "Crouch_Hurt")
+				Play_Fighter_Animation_Hurt(_target)
+			#-------------------------------------------------------------------------------
+			else:
+				Play_Fighter_Animation_Hurt(_target)
+			#-------------------------------------------------------------------------------
+			var _hp: int = _fighter_serializable.hp
+			var _max_hp: int = Get_Max_HP(_fighter_serializable)
+			Set_Fighte_HP_Bar_in_Battle(_target)
+			singleton.Play_SFX_Damage()
+		#-------------------------------------------------------------------------------
+		else:
+			Add_Status_Down_in_Battle(_fighter_serializable)
+			Flying_PopUp_Add_Down(_target)
+			Play_Fighter_Animation_Down(_target)
+			#-------------------------------------------------------------------------------
+			_alive_fighter_array.erase(_target)
+			#-------------------------------------------------------------------------------
+			if(_alive_fighter_array.size() <= 0):
+				StopEverithing_and_Timer()
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	else:
+		StopEverithing_and_Timer()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Player_Recieve_Bullet_Damage(_target:Fighter_Node, _bullet:Bullet_Node):
+	var _calculation: int = -25
+	_target.fighter_serializable_in_battle.hp += _calculation
+	Flying_PopUp_HP(_target, _calculation)
 #-------------------------------------------------------------------------------
 func Set_Battle_Box_Limits():
 	var _offset: float = 16
@@ -7871,6 +8036,12 @@ func Set_Battle_Box_Limits():
 	battle_box_limit_down = battle_box.size.y - _offset
 	battle_box_limit_left = _offset
 	battle_box_limit_right = battle_box.size.x - _offset
+#-------------------------------------------------------------------------------
+func Set_Screen_Limits():
+	screen_limit_up = camera.global_position.y-camera_center.y
+	screen_limit_down = camera.global_position.y+camera_center.y
+	screen_limit_left = camera.global_position.x-camera_center.x
+	screen_limit_right = camera.global_position.x+camera_center.x
 #-------------------------------------------------------------------------------
 func Set_TP_Bar(_tp:int):
 	tp_bar_slider.value = _tp
@@ -8131,4 +8302,163 @@ func Delete_and_Create_Status_UI_Array(hbox_container:HBoxContainer, _status_ui_
 		hbox_container.add_child(_status_ui_new)
 		_status_ui_array.append(_status_ui_new)
 	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#region ENEMY BULLET FUNCTIONS
+#-------------------------------------------------------------------------------
+func Destroy_EnemyBullet(_bullet: Bullet_Node):
+	KillTween_Array(_bullet.tween_Array)
+	enabled_enemy_bullets_array.erase(_bullet)
+	disabled_enemy_bullets_array.append(_bullet)
+	_bullet.hide()
+#-------------------------------------------------------------------------------
+func Create_EnemyBullets_Disabled(_iMax:int):
+	#-------------------------------------------------------------------------------
+	for _i in _iMax:
+		var _bullet: Bullet_Node = bullet_Prefab.instantiate() as Bullet_Node
+		disabled_enemy_bullets_array.append(_bullet)
+		_bullet.hide()
+		#_bullet.physics_Update = func(): EnemyBullet_PhysicsUpdate(_bullet)
+		battle_box.add_child(_bullet)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Create_EnemyBullet_A(_x:float, _y:float, _v:float, _dir:float, _type:String, _can_Go_OffLimits:bool) ->Bullet_Node:
+	var _bullet: Bullet_Node = Create_EnemyBullet_Common(_x, _y, _type, _can_Go_OffLimits)
+	#-------------------------------------------------------------------------------
+	_bullet.vel = _v
+	_bullet.dir = _dir
+	_bullet.rotation_degrees = _bullet.dir
+	_bullet.physics_update = func(): EnemyBullet_PhysicsUpdate_A(_bullet)
+	#-------------------------------------------------------------------------------
+	return _bullet
+#-------------------------------------------------------------------------------
+func Create_EnemyBullet_Common(_x:float, _y:float, _type:String, _can_Go_OffLimits:bool) ->Bullet_Node:
+	var _bullet: Bullet_Node
+	#-------------------------------------------------------------------------------
+	if(disabled_enemy_bullets_array.size() > 0):
+		_bullet = disabled_enemy_bullets_array[0]
+		_bullet.show()
+		disabled_enemy_bullets_array.erase(_bullet)
+	#-------------------------------------------------------------------------------
+	else:
+		_bullet = bullet_Prefab.instantiate() as Bullet_Node
+		battle_box.add_child(_bullet)
+	#-------------------------------------------------------------------------------
+	enabled_enemy_bullets_array.append(_bullet)
+	#-------------------------------------------------------------------------------
+	#var _bulletResource: BulletResource = bulletDictionary.get(_type, "bullet1")
+	#_bullet.texture = _bulletResource.texture
+	#-------------------------------------------------------------------------------
+	#_bullet.radius = _bulletResource.radius
+	#-------------------------------------------------------------------------------
+	_bullet.global_position = Vector2(_x, _y)
+	_bullet.isGrazed = false
+	_bullet.can_Go_OffLimits = _can_Go_OffLimits
+	#-------------------------------------------------------------------------------
+	return _bullet
+#-------------------------------------------------------------------------------
+func EnemyBullet_PhysicsUpdate_A(_bullet: Bullet_Node):
+	if(_bullet.can_Go_OffLimits):
+		EnemyBullet_PhysicsUpdate_Limitless_A(_bullet)
+		return
+	#-------------------------------------------------------------------------------
+	if(_bullet.global_position.y > screen_limit_up and _bullet.global_position.y < screen_limit_down):
+		if(_bullet.global_position.x > screen_limit_left and _bullet.global_position.x < screen_limit_right):
+			EnemyBullet_PhysicsUpdate_Limitless_A(_bullet)
+		#-------------------------------------------------------------------------------
+		else:
+			Destroy_EnemyBullet(_bullet)
+			return
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		Destroy_EnemyBullet(_bullet)
+		return
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func EnemyBullet_PhysicsUpdate_Limitless_A(_bullet: Bullet_Node):
+	var _dir2: float = deg_to_rad(_bullet.dir)
+	_bullet.vel_X = _bullet.vel * cos(_dir2)
+	_bullet.vel_Y = _bullet.vel * sin(_dir2)
+	_bullet.rotation_degrees = _bullet.dir
+	#-------------------------------------------------------------------------------
+	_bullet.global_position.x += _bullet.vel_X * deltaTimeScale
+	_bullet.global_position.y += _bullet.vel_Y * deltaTimeScale
+	return
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
+#region ARRAY[TWEEN] FUNCTIONS
+func CreateTween_ArrayAppend(_tween_Array: Array[Tween]) -> Tween:
+	var _tween: Tween = create_tween()
+	_tween_Array.append(_tween)
+	_tween.finished.connect(func():_tween_Array.erase(_tween))
+	return _tween
+#-------------------------------------------------------------------------------
+func KillTween_Array(_tween_Array: Array[Tween]):
+	#-------------------------------------------------------------------------------
+	for _i in range(_tween_Array.size()-1, -1, -1):
+		_tween_Array[_i].kill()
+		_tween_Array[_i].finished.emit()
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#endregion
+#-------------------------------------------------------------------------------
+func Stage1_Fire1():
+	var _enemy_party_alive: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(enemy_fighter_party)
+	#-------------------------------------------------------------------------------
+	var _difficulty: float = 1
+	#var _difficulty: float = Set_Difficulty()
+	var _mirror = 1
+	#-------------------------------------------------------------------------------
+	var _tween: Tween = CreateTween_ArrayAppend(main_tween_Array)
+	_tween.set_loops()
+	#-------------------------------------------------------------------------------
+	for _j in 2:
+		#-------------------------------------------------------------------------------
+		for _i in _enemy_party_alive.size():
+			_tween.tween_callback(func():
+				#Animation_StateMachine(_enemy_party_alive[_i].animation_tree, "Base_StateMachine/", "Shot")
+				var _damage: int = 20
+				Stage1_Fire1_Bullet1(_enemy_party_alive[_i], _i, _damage, Action_Resource.ATRIBUTE.MAGICAL, Action_Resource.ELEMENT.EARTH, _mirror)
+			)
+			_tween.tween_interval(0.8+0.6*_difficulty)
+			_mirror *= -1
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Stage1_Fire1_Bullet1(_user:Fighter_Node, _shooter_id:int, _damage:int, _myATRIBUTE_TYPE:Action_Resource.ATRIBUTE, _myELEMENT_TYPE:Action_Resource.ELEMENT, _mirror:float):
+	#-------------------------------------------------------------------------------
+	var _difficulty: float = 1
+	#var _difficulty: float = Set_Difficulty()
+	#-------------------------------------------------------------------------------
+	var _max1: float = 10 + 5*_difficulty
+	var _max2: float = 5 + 2*_difficulty
+	#-------------------------------------------------------------------------------
+	var _x: float = camera.global_position.x+camera_center.x*0.25 * _mirror
+	var _y: float = camera.global_position.y-camera_center.y*0.65
+	#-------------------------------------------------------------------------------
+	var _vel1: float = 0.25
+	var _vel2: float = 1.5
+	var _vel_diferential: float = (_vel2-_vel1)/_max2
+	var _dir1: float = randf_range(0, 360)
+	#-------------------------------------------------------------------------------
+	var _dir2: float = 0
+	var _x2:float = _x + randf_range(-50, 50)
+	var _y2:float = _y + randf_range(-10, 10)
+	#-------------------------------------------------------------------------------
+	for _i in _max1:
+		var _vel: float = _vel1
+		#-------------------------------------------------------------------------------
+		for _j in _max2:
+			var _bullet: Bullet_Node = Create_EnemyBullet_A(_x2, _y2, _vel, _dir1+_dir2, "bullet2", false)
+			#Set_EnemyBullet_RPG_DamageValues(_bullet, _shooter_id, _damage, _myATRIBUTE_TYPE, _myELEMENT_TYPE)
+			_vel += _vel_diferential
+		#-------------------------------------------------------------------------------
+		_dir2 += 360/_max1
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Get_CircleSprite_Scale(_scale: float) -> Vector2:
+	_scale *= 0.75/95.0
+	var _v2: Vector2 = Vector2(_scale, _scale)
+	return _v2
 #-------------------------------------------------------------------------------
