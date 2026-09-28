@@ -46,39 +46,62 @@
 [ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/character_actor1_8.tscn" id="36_altm3"]
 [ext_resource type="TileSet" uid="uid://ci8hqmotb2vfk" path="res://TileSets/new_tile_set.tres" id="37_5668i"]
 [ext_resource type="PackedScene" uid="uid://coq254ffrmvdd" path="res://Nodes/Prefabs/Fighters/fighter_monster_1.tscn" id="37_altm3"]
-[ext_resource type="Resource" uid="uid://bjleqtsseo06b" path="res://Resources/Equips/equip_2_0_3.tres" id="37_ggk8j"]
 [ext_resource type="Texture2D" uid="uid://bs0gogac2glwr" path="res://Assets/tilesets_mv/Outside_A2_Godot_6.png" id="37_kthws"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
 [ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
 [ext_resource type="Texture2D" uid="uid://dnp7htyab2ryr" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_209.png" id="44_0t8i2"]
+[ext_resource type="Resource" uid="uid://bfeg07a1makid" path="res://Resources/Equips/equip_2_0_5.tres" id="44_ifc2b"]
 [ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="44_r4og7"]
+[ext_resource type="Resource" uid="uid://be6xoc2bpx7mg" path="res://Resources/Equips/equip_2_0_4.tres" id="45_xqrxi"]
 [ext_resource type="Texture2D" uid="uid://dcl7iyt5kjpwt" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_138.png" id="45_y1dyr"]
-[ext_resource type="Resource" uid="uid://c45wk5nerxj85" path="res://Resources/Equips/equip_4_0_1.tres" id="46_2hsyw"]
 [ext_resource type="Texture2D" uid="uid://b0ahrc6537fvk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_190.png" id="46_f8ljg"]
+[ext_resource type="Resource" uid="uid://bjleqtsseo06b" path="res://Resources/Equips/equip_2_0_3.tres" id="46_wunun"]
 [ext_resource type="Texture2D" uid="uid://cceadn16e18rp" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_242.png" id="47_8m6hh"]
-[ext_resource type="Resource" uid="uid://ky5lamr6qey3" path="res://Resources/Equips/equip_4_0_2.tres" id="47_g3we4"]
+[ext_resource type="Resource" uid="uid://cr7cjhk1jtbwx" path="res://Resources/Equips/equip_2_0_6.tres" id="47_ebpaw"]
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
-[ext_resource type="Resource" uid="uid://y42250lba52x" path="res://Resources/Equips/equip_4_0_3.tres" id="48_psock"]
+[ext_resource type="Resource" uid="uid://dvjjxsffcampt" path="res://Resources/Equips/equip_2_0_7.tres" id="48_uml17"]
 [ext_resource type="Texture2D" uid="uid://bbykhvbevkk6r" path="res://Assets/rpg_maker_mv/img/faces/Actor1_8.png" id="49_6yqg2"]
-[ext_resource type="Resource" uid="uid://d3kwq4dentkn8" path="res://Resources/Equips/equip_4_0_4.tres" id="49_l0fxk"]
+[ext_resource type="Resource" uid="uid://dn7qdqjd5v8x6" path="res://Resources/Equips/equip_2_0_2.tres" id="49_66201"]
+[ext_resource type="Resource" uid="uid://birmkdm54gbji" path="res://Resources/Equips/equip_1_0_5.tres" id="49_i77jc"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
+[ext_resource type="Resource" uid="uid://cbmsclimsrwh0" path="res://Resources/Equips/equip_1_0_4.tres" id="50_bc48j"]
+[ext_resource type="Resource" uid="uid://liedqs2kexn" path="res://Resources/Equips/equip_2_0_1.tres" id="50_x7s5m"]
+[ext_resource type="Resource" uid="uid://cn8nur5gah7nb" path="res://Resources/Equips/equip_1_0_3.tres" id="51_stbc4"]
 [ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_0_0.tres" id="52_biyce"]
+[ext_resource type="Resource" uid="uid://dxs5iar8g4kj3" path="res://Resources/Equips/equip_1_0_6.tres" id="52_bvfqi"]
+[ext_resource type="Resource" uid="uid://dsrrun10oiibk" path="res://Resources/Equips/equip_1_0_7.tres" id="53_h276b"]
+[ext_resource type="Resource" uid="uid://dcer8kesfg82e" path="res://Resources/Equips/equip_3_0_5.tres" id="53_hj75c"]
 [ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1.tscn" id="53_j7ao1"]
 [ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
 [ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="54_brd8x"]
 [ext_resource type="Resource" uid="uid://ciiobno68j8fu" path="res://Resources/Status/status_4.tres" id="54_ggk8j"]
+[ext_resource type="Resource" uid="uid://cpm8srwdm1g71" path="res://Resources/Equips/equip_1_0_2.tres" id="54_h1r7s"]
+[ext_resource type="Resource" uid="uid://driaspgavwmr3" path="res://Resources/Equips/equip_3_0_4.tres" id="54_paw12"]
 [ext_resource type="Resource" uid="uid://buw4urkkcygf1" path="res://Resources/Items/item_1_0_0_0.tres" id="55_ggk8j"]
 [ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
+[ext_resource type="Resource" uid="uid://cva8obeu5n41y" path="res://Resources/Equips/equip_3_0_3.tres" id="55_topjn"]
+[ext_resource type="Resource" uid="uid://cqwgiphrg5vfd" path="res://Resources/Equips/equip_1_0_1.tres" id="55_wdwx4"]
+[ext_resource type="Resource" uid="uid://nk5dkd3adr2b" path="res://Resources/Equips/equip_3_0_6.tres" id="56_afqp2"]
 [ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="56_shqvj"]
 [ext_resource type="Texture2D" uid="uid://bpf0lfby516un" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_177.png" id="57_hdd08"]
 [ext_resource type="Texture2D" uid="uid://0wrcrvu0t6hs" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_315.png" id="57_hklgd"]
+[ext_resource type="Resource" uid="uid://dejhnplk75yff" path="res://Resources/Equips/equip_3_0_7.tres" id="57_u8se8"]
 [ext_resource type="Texture2D" uid="uid://b6tg3m2ywr4bs" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_133.png" id="58_3i786"]
 [ext_resource type="Texture2D" uid="uid://dau8th2ohedye" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_82.png" id="58_kthws"]
+[ext_resource type="Resource" uid="uid://2r6p1baj0yeb" path="res://Resources/Equips/equip_3_0_2.tres" id="58_yhhmu"]
+[ext_resource type="Resource" uid="uid://bj3cirf4tf4de" path="res://Resources/Equips/equip_3_0_1.tres" id="59_2g6gd"]
 [ext_resource type="Texture2D" uid="uid://b816kdwjyshvw" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_196.png" id="59_bv80u"]
 [ext_resource type="Texture2D" uid="uid://c8odt7cxtvsph" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_76.png" id="59_otuwt"]
 [ext_resource type="Texture2D" uid="uid://fnxrokl8esje" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_2.png" id="60_b6a3y"]
+[ext_resource type="Resource" uid="uid://bffj3o5mr0f5b" path="res://Resources/Equips/equip_4_0_5.tres" id="62_yfd8v"]
+[ext_resource type="Resource" uid="uid://d3kwq4dentkn8" path="res://Resources/Equips/equip_4_0_4.tres" id="63_mb3vs"]
+[ext_resource type="Resource" uid="uid://y42250lba52x" path="res://Resources/Equips/equip_4_0_3.tres" id="64_ukt4q"]
+[ext_resource type="Resource" uid="uid://c6lya4l7u1qd4" path="res://Resources/Equips/equip_4_0_6.tres" id="65_s6hvh"]
 [ext_resource type="Texture2D" uid="uid://cifii7lxli87w" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_98.png" id="66_en4w2"]
+[ext_resource type="Resource" uid="uid://byrd4l8t57hx7" path="res://Resources/Equips/equip_4_0_7.tres" id="66_xg8b5"]
+[ext_resource type="Resource" uid="uid://ky5lamr6qey3" path="res://Resources/Equips/equip_4_0_2.tres" id="67_fafpn"]
+[ext_resource type="Resource" uid="uid://c45wk5nerxj85" path="res://Resources/Equips/equip_4_0_1.tres" id="68_34fb6"]
 [ext_resource type="AudioStream" uid="uid://dbvp7708tegam" path="res://Assets/ralsei-talk.mp3" id="69_ggk8j"]
 [ext_resource type="PackedScene" uid="uid://3lwydgx7j24f" path="res://Nodes/Prefabs/ui/status_ui.tscn" id="88_h1r7s"]
 
@@ -172,190 +195,42 @@ size = Vector2(25, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_aoydg"]
 radius = 8.0
 
-[sub_resource type="Resource" id="Resource_c1w8j"]
-script = ExtResource("27_b6a3y")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_yptn7"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_bvfqi"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_j8mf4"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_k4s2r"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 4
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_nyfek"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_tb10d"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_q5ji0"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_brd8x"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
 [sub_resource type="Resource" id="Resource_g3we4"]
 script = ExtResource("24_8wyqk")
 fighter_resource = ExtResource("12_hf3yd")
 level = 9
-equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_c1w8j"), SubResource("Resource_yptn7"), SubResource("Resource_bvfqi"), SubResource("Resource_j8mf4"), SubResource("Resource_k4s2r"), SubResource("Resource_nyfek"), SubResource("Resource_tb10d"), SubResource("Resource_q5ji0"), SubResource("Resource_brd8x")])
+equip_weapon = ExtResource("55_wdwx4")
+equip_shield = ExtResource("54_h1r7s")
+equip_head = ExtResource("51_stbc4")
+equip_body = ExtResource("50_bc48j")
+equip_arms = ExtResource("49_i77jc")
+equip_legs = ExtResource("52_bvfqi")
+equip_ring_1 = ExtResource("53_h276b")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_lefb6"]
-script = ExtResource("27_b6a3y")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_sbg61"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_t7nra"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("37_ggk8j")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_p64jt"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 4
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_2utfw"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 8
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_1fgcs"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 9
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_r07j3"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_pgv3t"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_p5yb7"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_3p3pb"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_i71nr"]
 script = ExtResource("24_8wyqk")
 fighter_resource = ExtResource("19_8m6hh")
-equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_lefb6"), SubResource("Resource_sbg61"), SubResource("Resource_t7nra"), SubResource("Resource_p64jt"), SubResource("Resource_2utfw"), SubResource("Resource_1fgcs"), SubResource("Resource_r07j3"), SubResource("Resource_pgv3t"), SubResource("Resource_p5yb7"), SubResource("Resource_3p3pb")])
+equip_weapon = ExtResource("50_x7s5m")
+equip_shield = ExtResource("49_66201")
+equip_head = ExtResource("46_wunun")
+equip_body = ExtResource("45_xqrxi")
+equip_arms = ExtResource("44_ifc2b")
+equip_legs = ExtResource("47_ebpaw")
+equip_ring_1 = ExtResource("48_uml17")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_aslt6"]
-script = ExtResource("27_b6a3y")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_xxy1d"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_jtgn0"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_j7ao1"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 6
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_kigc5"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 7
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_i77jc"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 8
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_bc48j"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 9
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_stbc4"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_psock"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_l0fxk"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_m4vmq"]
 script = ExtResource("24_8wyqk")
 fighter_resource = ExtResource("21_ngqpa")
-equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_aslt6"), SubResource("Resource_xxy1d"), SubResource("Resource_jtgn0"), SubResource("Resource_j7ao1"), SubResource("Resource_kigc5"), SubResource("Resource_i77jc"), SubResource("Resource_bc48j"), SubResource("Resource_stbc4"), SubResource("Resource_psock"), SubResource("Resource_l0fxk")])
+equip_weapon = ExtResource("59_2g6gd")
+equip_shield = ExtResource("58_yhhmu")
+equip_head = ExtResource("55_topjn")
+equip_body = ExtResource("54_paw12")
+equip_arms = ExtResource("53_hj75c")
+equip_legs = ExtResource("56_afqp2")
+equip_ring_1 = ExtResource("57_u8se8")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_syx63"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("46_2hsyw")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_i08r6"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("47_g3we4")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_2awy3"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("48_psock")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_b62cn"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("49_l0fxk")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_2i5i2"]
 script = ExtResource("25_j7ao1")
@@ -366,7 +241,13 @@ metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
 [sub_resource type="Resource" id="Resource_hmkdw"]
 script = ExtResource("24_8wyqk")
 fighter_resource = ExtResource("22_shqvj")
-equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_syx63"), SubResource("Resource_i08r6"), SubResource("Resource_2awy3"), SubResource("Resource_b62cn")])
+equip_weapon = ExtResource("68_34fb6")
+equip_shield = ExtResource("67_fafpn")
+equip_head = ExtResource("64_ukt4q")
+equip_body = ExtResource("63_mb3vs")
+equip_arms = ExtResource("62_yfd8v")
+equip_legs = ExtResource("65_s6hvh")
+equip_ring_1 = ExtResource("66_xg8b5")
 status_serializable_array = Array[ExtResource("25_j7ao1")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
@@ -890,55 +771,20 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
 radius = 16.0
 
-[sub_resource type="Resource" id="Resource_hf3yd"]
-script = ExtResource("27_b6a3y")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_ggk8j"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_ql07v"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_xkpdv"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_pclkw"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 4
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_h1r7s"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_wdwx4"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_6avol"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_tn53f"]
-script = ExtResource("27_b6a3y")
-myEQUIP_TYPE = 5
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
 [sub_resource type="Resource" id="Resource_2hsyw"]
 script = ExtResource("24_8wyqk")
 fighter_resource = ExtResource("12_hf3yd")
 level = 99
-equip_serializable_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_hf3yd"), SubResource("Resource_ggk8j"), SubResource("Resource_ql07v"), SubResource("Resource_xkpdv"), SubResource("Resource_pclkw"), SubResource("Resource_h1r7s"), SubResource("Resource_wdwx4"), SubResource("Resource_6avol"), SubResource("Resource_tn53f")])
+equip_weapon = ExtResource("55_wdwx4")
+equip_shield = ExtResource("54_h1r7s")
+equip_head = ExtResource("51_stbc4")
+equip_body = ExtResource("50_bc48j")
+equip_arms = ExtResource("49_i77jc")
+equip_legs = ExtResource("52_bvfqi")
+equip_ring_1 = ExtResource("53_h276b")
+equip_ring_2 = ExtResource("53_h276b")
+equip_ring_3 = ExtResource("11_gijw1")
+equip_ring_4 = ExtResource("53_h276b")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [sub_resource type="Resource" id="Resource_7q7q6"]
@@ -3822,17 +3668,17 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer" unique_id=1034797953]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_right = 15
 
 [node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer/MarginContainer" unique_id=1075110855]
 layout_mode = 2
+alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer/MarginContainer/HBoxContainer" unique_id=1633887329]
 layout_mode = 2
@@ -3843,14 +3689,16 @@ layout_mode = 2
 size_flags_vertical = 1
 theme_override_constants/line_spacing = 18
 theme_override_font_sizes/font_size = 20
-text = "* Arma # 1:  
-* Arma # 2:  
-* Cabeza:  
-* Cuerpo:  
-* Anillo #1:  
-* Anillo #2:  
-* Anillo #3:  
-* Anillo #4:  "
+text = "* Arma:
+* Escudo:
+* Cabeza:
+* Cuerpo:
+* Brazos:
+* Piernas:
+* Anillo 1:
+* Anillo 2:
+* Anillo 3:
+* Anillo 4:"
 
 [node name="equip_menu_button_content" type="VBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer/MarginContainer/HBoxContainer" unique_id=817114911]
 layout_mode = 2
@@ -3904,116 +3752,17 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "[Nulo]"
 
-[node name="test" type="VBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=1069911967]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="equip_menu_button_title" type="Label" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test" unique_id=233331867]
-layout_mode = 2
-theme = ExtResource("34_206if")
-text = "Equipamiento:"
-horizontal_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test" unique_id=748706887]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_right = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer" unique_id=1379271658]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer" unique_id=136024195]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer" unique_id=443252798]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/margin_top = 9
-
-[node name="equip_menu_button_type" type="Label" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer" unique_id=1500331131]
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_constants/line_spacing = 18
-theme_override_font_sizes/font_size = 20
-text = "* Arma:
-* Escudo:
-* Cabeza:
-* Cuerpo:
-* Brazos:
-* Piernas:
-* Anillo 1:
-* Anillo 2:
-* Anillo 3:
-* Anillo 4:"
-
-[node name="equip_menu_button_content" type="VBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1414143081]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-
-[node name="Button" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=571337732]
+[node name="Button9" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer/MarginContainer/HBoxContainer/equip_menu_button_content" unique_id=442939316]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
+text = "[Nulo]"
 
-[node name="Button2" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=1755593411]
+[node name="Button10" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer/MarginContainer/HBoxContainer/equip_menu_button_content" unique_id=694565821]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button3" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=1326327908]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button4" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=96248449]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button5" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=1963150851]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button6" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=2106079666]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button7" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=742362404]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button8" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=1531612742]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button9" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=996533459]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
-
-[node name="Button10" type="Button" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/test/MarginContainer/VBoxContainer/HBoxContainer/equip_menu_button_content" unique_id=428329047]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "[Vacio]"
+text = "[Nulo]"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=1741237720]
 layout_mode = 2

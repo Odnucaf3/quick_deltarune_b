@@ -17,16 +17,12 @@ enum_ELEMENT_THUNDER,Electricidad,Thunder
 enum_ELEMENT_WATER,Agua,Water
 enum_ELEMENT_WIND,Aire,Wind
 enum_EQUIP_TYPE_BODY,Cuerpo,Body
-enum_EQUIP_TYPE_TOP,Torso,Top
-enum_EQUIP_TYPE_BOTTOM,Cintura,Bottom
 enum_EQUIP_TYPE_ARMS,Brazos,Arms
 enum_EQUIP_TYPE_LEGS,Piernas,Legs
 enum_EQUIP_TYPE_HEAD,Cabeza,Head
-enum_EQUIP_TYPE_NONE,-,-
 enum_EQUIP_TYPE_RING,Anillo,Ring
 enum_EQUIP_TYPE_WEAPON,Arma,Weapon
 enum_EQUIP_TYPE_SHIELD,Escudo,Shield
-enum_EQUIP_TYPE_ART,Arte,Art
 enum_FIGHTER_CLASS_HEROE_MALE,Heroe,Hero
 enum_FIGHTER_CLASS_HEROE_FEMALE,Heroina,Hero
 enum_FIGHTER_CLASS_HEROE_NONBINARY,Heroe,Hero
@@ -52,7 +48,7 @@ enum_TARGET_ENEMY_ALL,Todos los Enemigo,All Enemies
 enum_TARGET_ENEMY_RANDOM,1 Enemigo al Azar,1 Random Enemy
 enum_TARGET_USER,Usuario,User
 resource_character_0_0_a,Harold,Harold
-resource_character_0_0_b,El Super Heroe Legendario Salvador del Universo,-
+resource_character_0_0_b,El Super Heroe Legendario Salvador del Universo.,-
 resource_character_0_0_c,-,-
 resource_character_0_1_a,Therese,Therese
 resource_character_0_1_b,La Fortaleza Viviente Protectora del Mundo.,-
@@ -64,44 +60,68 @@ resource_character_0_3_a,Marsha,Marsha
 resource_character_0_3_b,La Archi-Maga Más Poderosa de la Actualidad.,-
 resource_character_0_3_c,-,-
 resource_character_1_0_a,Murcielagón,Big Bat
-resource_character_1_0_b,-,-
+resource_character_1_0_b,El peor Monstruo de Todos.,-
 resource_character_1_0_c,-,-
 resource_equip_1_0_1_a,Espada de Harold,Harold's Sword
 resource_equip_1_0_1_b,-,-
-resource_equip_1_0_2_a,Casco de Harold,Harold's Helmet
+resource_equip_1_0_2_a,Escudo de Harold,Harol's Shield
 resource_equip_1_0_2_b,-,-
-resource_equip_1_0_3_a,Armadura de Harold,Harold's Armor
+resource_equip_1_0_3_a,Casco de Harold,Harold's Helmet
 resource_equip_1_0_3_b,-,-
-resource_equip_1_0_4_a,Anillo de Harold,Harlod's Ring
+resource_equip_1_0_4_a,Armadura de Harold,Harold's Armor
 resource_equip_1_0_4_b,-,-
+resource_equip_1_0_5_a,Guantes de Harold,Harold's Gloves
+resource_equip_1_0_5_b,-,-
+resource_equip_1_0_6_a,Botas de Harold,Harold's Boots
+resource_equip_1_0_6_b,-,-
+resource_equip_1_0_7_a,Anillo de Harold,Harlod's Ring
+resource_equip_1_0_7_b,-,-
 resource_equip_1_1_1_a,Shotel,Shotel
 resource_equip_1_1_1_b,-,-
 resource_equip_1_2_1_a,Espada Vampírica,Vampire Sword
 resource_equip_1_2_1_b,-,-
-resource_equip_2_0_1_a, Espada de Therese,Harold's Helmet
+resource_equip_2_0_1_a, Espada de Therese,Therese's Helmet
 resource_equip_2_0_1_b,-,-
-resource_equip_2_0_2_a,Casco de Therese,Therese's Helmet
-resource_equip_2_0_2_b,-,-
-resource_equip_2_0_3_a,Armadura de Therese,Therese's Armor
+resource_equip_2_0_2_a,Escudo de Therese,Therese's Shield
+resource_equip_2_0_2_b,,
+resource_equip_2_0_3_a,Casco de Therese,Therese's Helmet
 resource_equip_2_0_3_b,-,-
-resource_equip_2_0_4_a,Anillo de Therese,Therese's Ring
+resource_equip_2_0_4_a,Armadura de Therese,Therese's Armor
 resource_equip_2_0_4_b,-,-
+resource_equip_2_0_5_a,Guantes de Therese,Therese's Gloves
+resource_equip_2_0_5_b,-,-
+resource_equip_2_0_6_a,Botas de Therese,Therese's Boots
+resource_equip_2_0_6_b,-,-
+resource_equip_2_0_7_a,Anillo de Therese,Therese's Ring
+resource_equip_2_0_7_b,-,-
 resource_equip_3_0_1_a,Masa de Lucius,Lucius's Maze
 resource_equip_3_0_1_b,-,-
-resource_equip_3_0_2_a,Lentes de Lucius,Lucius's Glasses
+resource_equip_3_0_2_a,Biblia de Lucius,Lucius's Bible
 resource_equip_3_0_2_b,-,-
-resource_equip_3_0_3_a,Túnica de Lucius,Lucius's Robes
+resource_equip_3_0_3_a,Lentes de Lucius,Lucius's Glasses
 resource_equip_3_0_3_b,-,-
-resource_equip_3_0_4_a,Anillo de Lucius,Lucius's 's Ring
+resource_equip_3_0_4_a,Túnica de Lucius,Lucius's Robes
 resource_equip_3_0_4_b,-,-
+resource_equip_3_0_5_a,Guantes de Lucius,Lucius's Gloves
+resource_equip_3_0_5_b,-,-
+resource_equip_3_0_6_a,Zapatillas de Lucius,Lucius's Shoes
+resource_equip_3_0_6_b,-,-
+resource_equip_3_0_7_a,Anillo de Lucius,Lucius's 's Ring
+resource_equip_3_0_7_b,-,-
 resource_equip_4_0_1_a,Báculo de Marsha,Marsha's Wand 
 resource_equip_4_0_1_b,-,-
-resource_equip_4_0_2_a,Sombrero de Marsha,Marsha's Hat
+resource_equip_4_0_2_a,Grimorio de Marsha,Marsha's Grimoire
 resource_equip_4_0_2_b,-,-
-resource_equip_4_0_3_a,Túnica de Marsha,Marsha's Robes
+resource_equip_4_0_3_a,Sombrero de Marsha,Marsha's Hat
 resource_equip_4_0_3_b,-,-
-resource_equip_4_0_4_a,Anillo de Marsha,Marsha's Ring
+resource_equip_4_0_4_a,Túnica de Marsha,Marsha's Robes
 resource_equip_4_0_4_b,-,-
+resource_equip_4_0_5_a,Guantes de Marsha,Marsha's Gloves
+resource_equip_4_0_5_b,-,-
+resource_equip_4_0_6_a,Zapatillas de Marsha,Marsha's Shoes
+resource_equip_4_0_6_b,-,-
+resource_equip_4_0_7_a,Anillo de Marsha,Marsha's Ring
+resource_equip_4_0_7_b,-,-
 resource_item_1_0_0_0_a,Veneno Mortal,Deadly Poison
 resource_item_1_0_0_0_b,"Utilizalo, si quieren conocer lo que es la derrota.","Use it , if you want to know defeat."
 resource_item_1_1_1_0_a,Dardo Venenoso,Poison Dartz

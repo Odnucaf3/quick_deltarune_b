@@ -13,4 +13,6 @@ class_name Fighter_Button
 @export var hp_bar: ProgressBar
 @export var status_ui_container: HBoxContainer
 var status_ui_array: Array[Status_UI]
+@export var character_id_label: Label
+@export var fighter_id_label: Label
 #-------------------------------------------------------------------------------

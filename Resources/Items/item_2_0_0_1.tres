@@ -1,14 +1,17 @@
 [gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://c82bhq2um2yfn"]
 
-[ext_resource type="Texture2D" uid="uid://dyqnm54tl1jcn" path="res://Assets/freebies_mv_ready_ace_icons/Potions512/Potions512_1.png" id="1_djtgm"]
+[ext_resource type="Texture2D" uid="uid://b0gl1ukfhep84" path="res://Assets/freebies_mv_ready_ace_icons/Metals512/Metals512_37.png" id="1_djtgm"]
 [ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="1_liqc5"]
 
 [resource]
 script = ExtResource("1_liqc5")
-myANIMATION_DURING_ACTION = 2
 icon = ExtResource("1_djtgm")
+myANIMATION_DURING_ACTION = 2
 max_hold = 2
-value = 100
+value = 10
 myEFFECT = 2
 myTARGET = 5
+add_status_dictionary = Dictionary[StringName, int]({
+&"status_4": 100
+})
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

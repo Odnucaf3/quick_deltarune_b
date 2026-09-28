@@ -175,6 +175,7 @@ func NPC_3_Talk():
 	await singleton.game_system.Dialogue_Close_and_Exit()
 #-------------------------------------------------------------------------------
 func Set_Enemy(_imteractable_script:Interactable_Script, _array_fighter_array:Array[Fighter_Node]):
+	singleton.game_system.Set_Party_Equip_at_the_Start(_array_fighter_array)
 	_imteractable_script.interactable_by_action = func(): NPC_4_Talk(_array_fighter_array)
 #-------------------------------------------------------------------------------
 func NPC_4_Talk(_array_fighter_array:Array[Fighter_Node]):

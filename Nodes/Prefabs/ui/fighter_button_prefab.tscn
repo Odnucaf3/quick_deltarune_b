@@ -6,7 +6,7 @@
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="3_xjfi7"]
 [ext_resource type="PackedScene" uid="uid://3lwydgx7j24f" path="res://Nodes/Prefabs/ui/status_ui.tscn" id="5_v3bt6"]
 
-[node name="fighter_button_prefab" type="Button" unique_id=363646927 node_paths=PackedStringArray("face", "name_label", "title_label", "level_label", "class_label", "hp_label", "status_label", "hp_bar", "status_ui_container")]
+[node name="fighter_button_prefab" type="Button" unique_id=363646927 node_paths=PackedStringArray("face", "name_label", "title_label", "level_label", "class_label", "hp_label", "status_label", "hp_bar", "status_ui_container", "character_id_label", "fighter_id_label")]
 offset_right = 649.0
 offset_bottom = 126.0
 theme = ExtResource("1_auc1d")
@@ -20,6 +20,8 @@ hp_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxC
 status_label = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/HBoxContainer/Label2")
 hp_bar = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/ProgressBar")
 status_ui_container = NodePath("MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/Control/status_ui_container")
+character_id_label = NodePath("MarginContainer/HBoxContainer/Control/HBoxContainer2/Label")
+fighter_id_label = NodePath("MarginContainer/HBoxContainer/Control/HBoxContainer2/Label2")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1368421592]
 layout_mode = 1
@@ -171,3 +173,28 @@ layout_mode = 2
 
 [node name="status_ui12" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/Control/status_ui_container" unique_id=103304150 instance=ExtResource("5_v3bt6")]
 layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Control" unique_id=809334484]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Control/HBoxContainer2" unique_id=593102454]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 10
+text = "ID: [character_1_1]"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/Control/HBoxContainer2" unique_id=1839881016]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 10
+text = "ID: [fighter_1_1]"
+horizontal_alignment = 1

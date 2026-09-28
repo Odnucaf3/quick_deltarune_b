@@ -1,12 +1,12 @@
 extends Resource
 class_name Equip_Resource
 #-------------------------------------------------------------------------------
-enum EQUIP_TYPE{WEAPON, SHIELD, ART, HEAD, BODY, RING, TOP, BOTTOM, ARMS, LEGS}
+enum EQUIP_TYPE{WEAPON, SHIELD, HEAD, BODY, ARMS, LEGS, RING}
 #-------------------------------------------------------------------------------
 @export_category("Equip Stats")
 @export var icon: Texture2D
-@export var myEQUIP_TYPE: EQUIP_TYPE
 @export var myFIGHTER_CLASS: Fighter_Resource.FIGHTER_CLASS
+@export var myEQUIP_TYPE: EQUIP_TYPE
 @export var level_required: int
 var max_stored: int = 99
 @export var price: int
