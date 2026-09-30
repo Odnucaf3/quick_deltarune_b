@@ -2,31 +2,11 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_nbjdn"]
 [ext_resource type="Resource" uid="uid://cpbj78ksh3wst" path="res://Resources/Characters/character_0_3.tres" id="2_3bm2e"]
-[ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="2_fnmow"]
 [ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_4_0.tres" id="7_apdi8"]
 [ext_resource type="Resource" uid="uid://ciiobno68j8fu" path="res://Resources/Status/status_4.tres" id="7_g07ib"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_urbvg"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_ih5rp"]
 [ext_resource type="Texture2D" uid="uid://cga282m3ycy4n" path="res://Assets/rpg_maker_mv/img/sv_actors/Actor3_8.png" id="11_6pgwn"]
-
-[sub_resource type="Resource" id="Resource_5dha6"]
-script = ExtResource("2_fnmow")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_lb5xn"]
-script = ExtResource("2_fnmow")
-myEQUIP_TYPE = 1
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_8pkgd"]
-script = ExtResource("2_fnmow")
-myEQUIP_TYPE = 2
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="Resource" id="Resource_ph88x"]
-script = ExtResource("2_fnmow")
-myEQUIP_TYPE = 3
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_2i5i2"]
 script = ExtResource("9_ih5rp")
@@ -36,7 +16,6 @@ metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
 [sub_resource type="Resource" id="Resource_25p7l"]
 script = ExtResource("8_urbvg")
 fighter_resource = ExtResource("7_apdi8")
-equip_serializable_array = Array[ExtResource("2_fnmow")]([SubResource("Resource_5dha6"), SubResource("Resource_lb5xn"), SubResource("Resource_8pkgd"), SubResource("Resource_ph88x")])
 status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
@@ -60,7 +39,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_reqn5"]
 resource_name = "Cast"
 length = 0.5000125
-loop_mode = 2
 step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -325,7 +303,6 @@ transitions = ["Miss", "Idle", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(132, 187)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3em1u"]
-graph_offset = Vector2(-318, 57.32318)
 nodes/base_StateMachine/node = SubResource("AnimationNodeStateMachine_0m7qj")
 nodes/base_StateMachine/position = Vector2(-140, 100)
 node_connections = [&"output", 0, &"base_StateMachine"]

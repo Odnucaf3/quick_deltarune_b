@@ -36,7 +36,6 @@ var screen_limit_right: float
 #-------------------------------------------------------------------------------
 @export var battle_ui: Control
 @export var black_screen_override: Panel
-var can_be_hit: bool = true
 var i_frames: int = 0
 var turn_counter: int = 0
 var canBeHit: bool = true
@@ -5328,6 +5327,9 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 #-------------------------------------------------------------------------------
 func Set_All_Fighters_Animation_Depending_of_Situation():
 	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
+	#-------------------------------------------------------------------------------
 	for _i in ally_fighter_party.size():
 		Set_Fighter_Animation_Depending_of_Situation(ally_fighter_party[_i])
 	#-------------------------------------------------------------------------------
@@ -6353,6 +6355,13 @@ func Change_Fighter_HP_by_Heal_or_Damage(_target:Fighter_Node, _value:int):
 	elif(_value > 0):
 		Change_Fighter_HP_by_Heal(_target, _value)
 	#-------------------------------------------------------------------------------
+	else:
+		Flying_PopUp_Null(_target)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func Flying_PopUp_Null(_target:Fighter_Node):
+	Flying_PopUp_HP(_target, 0)
+	singleton.Play_SFX_Status_Remove()
 #-------------------------------------------------------------------------------
 func Change_Fighter_HP_by_Heal(_target:Fighter_Node, _value:int):
 	Change_Fighter_HP(_target, _value)
@@ -6676,6 +6685,7 @@ func Do_Enemy_Actions():
 	#-------------------------------------------------------------------------------
 	await SpellCard()
 	#-------------------------------------------------------------------------------
+	
 	Set_and_Hide_Battle_Box()
 	Decrease_Item_Cooldown_by_1()
 	await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
@@ -6684,6 +6694,7 @@ func Do_Enemy_Actions():
 	Decrease_Skill_Cooldown_by_1(ally_fighter_party)
 	Decrease_Skill_Cooldown_by_1(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
+	await Seconds_if_Win_or_Lose()
 	Battle_Background_Dark_Fade_Out()
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Set_All_Fighters_Position_1()
@@ -6691,11 +6702,21 @@ func Do_Enemy_Actions():
 	Dialogue_Null()
 	After_Enemy_Actions()
 #-------------------------------------------------------------------------------
+func Seconds_if_Win_or_Lose():
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE == BATTLE_STATE.YOU_WIN or myBATTLE_STATE == BATTLE_STATE.YOU_LOSE):
+		await Seconds(pop_up_timer)
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 func SpellCard():
 	Stage1_Fire1()
 	await Start_Timer_Tween(10)
 #-------------------------------------------------------------------------------
 func Decrease_Item_Cooldown_by_1():
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
+	#-------------------------------------------------------------------------------
 	var _item_serializable_array: Array[Action_Serializable] = item_consumable_inventory_in_battle
 	#-------------------------------------------------------------------------------
 	for _i in range(_item_serializable_array.size()-1, -1, -1):
@@ -6707,6 +6728,9 @@ func Decrease_Item_Cooldown_by_1():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Decrease_Skill_Cooldown_by_1(fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
 	#-------------------------------------------------------------------------------
 	for _i in fighter_node_array.size():
 		var _skill_serializable_array: Array[Action_Serializable] = Get_Skill(fighter_node_array[_i].fighter_serializable_in_battle)
@@ -6728,20 +6752,17 @@ func Apply_All_Fighter_HP_and_TP_Recovery_Effect():
 	await Apply_Fighter_HP_Recovery_Up(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Seconds_for_Status_PopUp()
-	#await Seconds(0.3)
 	#-------------------------------------------------------------------------------
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Apply_Fighter_HP_Recovery_Down(ally_fighter_party)
 	await Apply_Fighter_HP_Recovery_Down(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Seconds_for_Status_PopUp()
-	#await Seconds(0.3)
 	#-------------------------------------------------------------------------------
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Apply_Fighter_TP_Recovery_Up(ally_fighter_party)
 	#-------------------------------------------------------------------------------
 	await Seconds_for_Status_PopUp()
-	#await Seconds(0.3)
 	#-------------------------------------------------------------------------------
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Apply_Fighter_TP_Recovery_Down(ally_fighter_party)
@@ -6750,12 +6771,18 @@ func Apply_All_Fighter_HP_and_TP_Recovery_Effect():
 #-------------------------------------------------------------------------------
 func Seconds_for_Status_PopUp():
 	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
+	#-------------------------------------------------------------------------------
 	if(was_status_effect_add_or_removed):
 		was_status_effect_add_or_removed = false
 		await Seconds(pop_up_timer)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Apply_Fighter_HP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
@@ -6772,6 +6799,9 @@ func Apply_Fighter_HP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Apply_Fighter_HP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
@@ -6794,6 +6824,9 @@ func Get_Porcentual_Max_HP(_fighter_serializable:Fighter_Serializable, _hp_recov
 #-------------------------------------------------------------------------------
 func Apply_Fighter_TP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
+	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
 		if(!Has_Status_Down(_fighter_node_array[_i].fighter_serializable_in_battle)):
@@ -6809,6 +6842,9 @@ func Apply_Fighter_TP_Recovery_Up(_fighter_node_array:Array[Fighter_Node]):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Apply_Fighter_TP_Recovery_Down(_fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
@@ -6861,6 +6897,9 @@ func Decrease_All_Status_Effect_Turn_by_1():
 	await Seconds_for_Status_PopUp()
 #-------------------------------------------------------------------------------
 func Decrease_Party_Status_Effect_Turn_by_1(_fighter_node_array:Array[Fighter_Node]):
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+		return
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_node_array.size():
 		#-------------------------------------------------------------------------------
@@ -7931,7 +7970,7 @@ func Hitbox_Movement():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Hitbox_Damage():
-	if(can_be_hit):
+	if(hitbox.can_be_hit):
 		#-------------------------------------------------------------------------------
 		for _i in range(enabled_enemy_bullets_array.size()-1, -1, -1):
 			#-------------------------------------------------------------------------------
@@ -7961,7 +8000,7 @@ func HitBox_Animation_Normal():
 	AnimationTree_StateMachine_Set(hitbox.animation_tree, "Base", "Normal")
 #-------------------------------------------------------------------------------
 func Set_Hitbox_Normal():
-	can_be_hit = true
+	hitbox.can_be_hit = true
 	HitBox_Animation_Normal()
 #-------------------------------------------------------------------------------
 func HitBox_Animation_Hurt():
@@ -7985,12 +8024,13 @@ func Bullet_Grazed_TP_Gain():
 #-------------------------------------------------------------------------------
 func Player_Shooted(_bullet:Bullet_Node):
 	i_frames = 30
-	can_be_hit = false
+	hitbox.can_be_hit = false
 	HitBox_Animation_Hurt()
 	#-------------------------------------------------------------------------------
-	var _alive_fighter_array:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	Set_Battle_State()
 	#-------------------------------------------------------------------------------
-	if(_alive_fighter_array.size() > 0):
+	if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
+		var _alive_fighter_array:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
 		var _target: Fighter_Node = _alive_fighter_array.pick_random()
 		var _fighter_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
 		#-------------------------------------------------------------------------------
@@ -8006,27 +8046,33 @@ func Player_Shooted(_bullet:Bullet_Node):
 				Play_Fighter_Animation_Hurt(_target)
 			#-------------------------------------------------------------------------------
 			var _hp: int = _fighter_serializable.hp
-			var _max_hp: int = Get_Max_HP(_fighter_serializable)
 			Set_Fighte_HP_Bar_in_Battle(_target)
 			singleton.Play_SFX_Damage()
 		#-------------------------------------------------------------------------------
 		else:
+			_fighter_serializable.hp = 0
+			Set_Fighte_HP_Bar_in_Battle(_target)
+			#-------------------------------------------------------------------------------
+			Remove_All_Status_in_Battle(_fighter_serializable)
 			Add_Status_Down_in_Battle(_fighter_serializable)
+			Set_Fighter_Status_UI_in_Battle(_target)
+			_target.fighter_ui.hp_root.hide()
 			Flying_PopUp_Add_Down(_target)
 			Play_Fighter_Animation_Down(_target)
 			#-------------------------------------------------------------------------------
-			_alive_fighter_array.erase(_target)
+			Set_Battle_State()
 			#-------------------------------------------------------------------------------
-			if(_alive_fighter_array.size() <= 0):
+			if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
 				StopEverithing_and_Timer()
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	else:
 		StopEverithing_and_Timer()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Player_Recieve_Bullet_Damage(_target:Fighter_Node, _bullet:Bullet_Node):
-	var _calculation: int = -25
+	var _calculation: int = -80
 	_target.fighter_serializable_in_battle.hp += _calculation
 	Flying_PopUp_HP(_target, _calculation)
 #-------------------------------------------------------------------------------
