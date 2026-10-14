@@ -2,11 +2,13 @@ extends Resource
 class_name Equip_Resource
 #-------------------------------------------------------------------------------
 enum EQUIP_TYPE{WEAPON, SHIELD, HEAD, BODY, ARMS, LEGS, RING}
+enum WEAPON_TYPE{NONE, DAGGER, SWORD, FLAIL, AXE, WHIP, STAFF, BOW, CROSSBOW, FUN, CLAWS, FISTS, SPEAR, MAZE, WAND, CLUB, CHAIN, BLADE, PIPE, SLINGSHOT, SHORTGUN, RIFFLE, CHAINSAW, KI, TASSER, BOOK}
 #-------------------------------------------------------------------------------
 @export_category("Equip Stats")
 @export var icon: Texture2D
 @export var myFIGHTER_CLASS: Fighter_Resource.FIGHTER_CLASS
 @export var myEQUIP_TYPE: EQUIP_TYPE
+@export var myWEAPON_TYPE: WEAPON_TYPE
 @export var level_required: int
 var max_stored: int = 99
 @export var price: int
@@ -29,7 +31,8 @@ var max_stored: int = 99
 #-------------------------------------------------------------------------------
 @export_category("Special Stats")
 @export var target_rate: int = 0
-@export var guard_effect: int = 0
+@export var physical_damage_rate: int = 0
+@export var magical_damage_rate: int = 0
 @export var recovery_effect: int = 0
 @export var pharmacology: int = 0
 @export var tp_cost_rate: int = 0
@@ -52,8 +55,8 @@ var max_stored: int = 99
 @export var status_resistance_dictionary: Dictionary[StringName, int]
 #-------------------------------------------------------------------------------
 @export_category("Skills")
-@export var add_skill_resource_array: Array[Action_Resource]
 @export var remove_skill_resource_array: Array[Action_Resource]
+@export var add_skill_resource_array: Array[Action_Resource]
 @export var modifie_skill_resource_dictionary: Dictionary[Action_Resource, Vector3i]
 #-------------------------------------------------------------------------------
 func _init():

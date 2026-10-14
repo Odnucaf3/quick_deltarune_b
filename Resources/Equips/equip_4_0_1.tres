@@ -8,4 +8,5 @@
 script = ExtResource("2_wa1n2")
 icon = ExtResource("2_5jtlk")
 myFIGHTER_CLASS = 3
+myWEAPON_TYPE = 6
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

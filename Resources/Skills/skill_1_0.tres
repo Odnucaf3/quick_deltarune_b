@@ -6,9 +6,10 @@
 
 [resource]
 script = ExtResource("3_4hdmd")
+icon = ExtResource("2_ksmik")
+myACTION_TYPE = 1
 animation_prefab = ExtResource("1_pwm4v")
 myANIMATION_BEFORE_ACTION = 2
-icon = ExtResource("2_ksmik")
 speed = 1
 myTARGET = 6
 add_status_dictionary = Dictionary[StringName, int]({

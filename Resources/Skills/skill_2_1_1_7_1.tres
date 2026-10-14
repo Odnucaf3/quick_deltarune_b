@@ -6,12 +6,12 @@
 
 [resource]
 script = ExtResource("1_rc8e5")
+icon = ExtResource("1_v6epm")
 animation_prefab = ExtResource("1_md0eg")
 myANIMATION_BEFORE_ACTION = 2
 myANIMATION_DURING_ACTION = 2
-icon = ExtResource("1_v6epm")
 tp_cost = 25
-value = 7
+value = 25
 myEFFECT = 1
 myATRIBUTE = 1
 myELEMENT = 7

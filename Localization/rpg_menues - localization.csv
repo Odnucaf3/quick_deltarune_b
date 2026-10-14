@@ -16,27 +16,27 @@ enum_ELEMENT_NORMAL,Normal,Normal
 enum_ELEMENT_THUNDER,Electricidad,Thunder
 enum_ELEMENT_WATER,Agua,Water
 enum_ELEMENT_WIND,Aire,Wind
-enum_EQUIP_TYPE_BODY,Cuerpo,Body
 enum_EQUIP_TYPE_ARMS,Brazos,Arms
-enum_EQUIP_TYPE_LEGS,Piernas,Legs
+enum_EQUIP_TYPE_BODY,Cuerpo,Body
 enum_EQUIP_TYPE_HEAD,Cabeza,Head
+enum_EQUIP_TYPE_LEGS,Piernas,Legs
 enum_EQUIP_TYPE_RING,Anillo,Ring
-enum_EQUIP_TYPE_WEAPON,Arma,Weapon
 enum_EQUIP_TYPE_SHIELD,Escudo,Shield
-enum_FIGHTER_CLASS_HEROE_MALE,Heroe,Hero
+enum_EQUIP_TYPE_WEAPON,Arma,Weapon
 enum_FIGHTER_CLASS_HEROE_FEMALE,Heroina,Hero
+enum_FIGHTER_CLASS_HEROE_MALE,Heroe,Hero
 enum_FIGHTER_CLASS_HEROE_NONBINARY,Heroe,Hero
-enum_FIGHTER_CLASS_MAGICIAN_MALE,Mago,Mage
 enum_FIGHTER_CLASS_MAGICIAN_FEMALE,Maga,Mage
+enum_FIGHTER_CLASS_MAGICIAN_MALE,Mago,Mage
 enum_FIGHTER_CLASS_MAGICIAN_NONBINARY,Mage,Mage
-enum_FIGHTER_CLASS_NONE_MALE,-,-
 enum_FIGHTER_CLASS_NONE_FEMALE,-,-
+enum_FIGHTER_CLASS_NONE_MALE,-,-
 enum_FIGHTER_CLASS_NONE_NONBINARY,-,-
-enum_FIGHTER_CLASS_PRIEST_MALE,Sacerdote,Priest
 enum_FIGHTER_CLASS_PRIEST_FEMALE,Sacerdotisa,Priest
+enum_FIGHTER_CLASS_PRIEST_MALE,Sacerdote,Priest
 enum_FIGHTER_CLASS_PRIEST_NONBINARY,Sacerdote,Priest
-enum_FIGHTER_CLASS_WARRIOR_MALE,Guerrero,Warrior
 enum_FIGHTER_CLASS_WARRIOR_FEMALE,Guerrera,Warrior
+enum_FIGHTER_CLASS_WARRIOR_MALE,Guerrero,Warrior
 enum_FIGHTER_CLASS_WARRIOR_NONBINARY,Guerrere,Warrior
 enum_TARGET_ALLY_1,1 Aliado,1 Ally
 enum_TARGET_ALLY_ALL,Todos los Aliados,All Allies
@@ -192,6 +192,8 @@ resource_skill_2_1_1_7_2_a,Corte en Doble V,Double V-Slash
 resource_skill_2_1_1_7_2_b,-,-
 resource_skill_2_1_1_7_3_a,Corte en Triple Doble V,Triple Double V-Slash
 resource_skill_2_1_1_7_3_b,-,-
+resource_skill_2_2_0_0_2_a,Estrella Revividora,Revive Star
+resource_skill_2_2_0_0_2_b,-,-
 resource_status_0_a,Nockeado,Knokdown
 resource_status_0_b,-,-
 resource_status_1_a,Guardia,Guard
@@ -239,7 +241,8 @@ text_extra_stats,Estadísticas Extra,Extra Stats
 text_fullscreen,Pantalla Completa,Full Screen
 text_game_title,Título del Juego,Title of the Game
 text_go_to_title_menu,Ir al Título,Go to Title
-text_guard_effect,Efecto de Guardia,Guard Effect
+text_physical_damage_rate,Taza de Daño Físico,Physical Damage Rate
+text_magical_damage_rate,Taza de Daño Mágico,Magical Damage Rate
 text_hp,PV,HP
 text_hp_recovery,Recuperación de PV,HP Recovery
 text_idiome,Lenguaje,Language
@@ -280,9 +283,9 @@ text_speed,Velocidad,Speed
 text_start,Comenzar,Start
 text_statistics,Estadísticas,Statistics
 text_stats_rate,Estadísticas,Statistics
+text_status,Estado,Status
 text_status_effect_resistances,Resistencias a Estados Alterados,Status Effect Resistances
 text_status_effects,Estados Alterados,Status Effects
-text_status,Estado,Status
 text_status_effects_rate,Tasas de Estados Alterados,Status Effects Rate
 text_stored,Almacén,Stored
 text_target,Objetivo,Target

@@ -23,7 +23,8 @@ enum FIGHTER_CLASS{NONE, HEROE, WARRIOR, MAGICIAN, PRIEST}
 #-------------------------------------------------------------------------------
 @export_category("Special Stats")
 @export var target_rate: int = 0
-@export var guard_effect: int = 50
+@export var physical_damage_rate: int = 100
+@export var magical_damage_rate: int = 100
 @export var recovery_effect: int = 100
 @export var pharmacology: int = 100
 @export var tp_cost_rate: int = 100

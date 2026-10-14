@@ -6,8 +6,8 @@
 
 [resource]
 script = ExtResource("3_08vr3")
-animation_prefab = ExtResource("1_i77eh")
 icon = ExtResource("2_5sb27")
+animation_prefab = ExtResource("1_i77eh")
 value = 15
 myEFFECT = 1
 myATRIBUTE = 1

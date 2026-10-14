@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://br7bhrc02aqno" path="res://Resources/Skills/skill_2_2_0_0_0.tres" id="4_ab26f"]
 [ext_resource type="Resource" uid="uid://dd1tmcep1wheo" path="res://Resources/Skills/skill_1_0.tres" id="4_m1728"]
 [ext_resource type="Resource" uid="uid://br67x2a0qhj24" path="res://Resources/Skills/skill_2_2_0_0_1.tres" id="5_1rt34"]
+[ext_resource type="Resource" uid="uid://5dq5sfsvtjor" path="res://Resources/Skills/skill_2_2_0_0_2.tres" id="6_1rt34"]
 
 [resource]
 script = ExtResource("1_ofp85")
@@ -14,5 +15,5 @@ physical_presition_rate = -20
 magical_presition_rate = -20
 tp_recovery = -4
 hp_recovery = -4
-add_skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("3_8b5t3"), ExtResource("4_m1728"), ExtResource("4_ab26f"), ExtResource("5_1rt34")])
+add_skill_resource_array = Array[ExtResource("2_hb14b")]([ExtResource("3_8b5t3"), ExtResource("4_m1728"), ExtResource("4_ab26f"), ExtResource("5_1rt34"), ExtResource("6_1rt34")])
 metadata/_custom_type_script = "uid://nvm68ow83k0c"

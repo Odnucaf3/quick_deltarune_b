@@ -6,13 +6,14 @@
 
 [resource]
 script = ExtResource("1_4coga")
+icon = ExtResource("1_5435v")
+myACTION_TYPE = 1
 animation_prefab = ExtResource("1_qvivh")
 myANIMATION_BEFORE_ACTION = 1
 myANIMATION_DURING_ACTION = 1
-icon = ExtResource("1_5435v")
-value = 100
+can_critic = true
+value = 55
 myEFFECT = 1
 myATRIBUTE = 1
 myELEMENT = 1
-can_critic = true
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

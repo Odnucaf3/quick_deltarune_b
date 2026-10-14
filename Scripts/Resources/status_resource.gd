@@ -24,7 +24,9 @@ class_name Status_Resource
 #-------------------------------------------------------------------------------
 @export_category("Special Stats")
 @export var target_rate: int = 0
-@export var guard_effect: int = 0
+@export var physical_damage_rate: int = 0
+@export var magical_damage_rate: int = 0
+@export var guard_effect: bool = false
 @export var recovery_effect: int = 0
 @export var pharmacology: int = 0
 @export var tp_cost_rate: int = 0

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://r4513uqbld3f"]
+
+[ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_452ag"]
+[ext_resource type="Texture2D" uid="uid://cqhmn61pk0mjq" path="res://Assets/rpg_maker_mv/img/sv_enemies/Slime.png" id="2_2qu37"]
+[ext_resource type="Resource" uid="uid://buc4v5pr6bu4m" path="res://Resources/Characters/character_1_0.tres" id="2_tcux5"]
+[ext_resource type="AnimationLibrary" uid="uid://c2kbe7x44mru0" path="res://Animation Players/monster_animation_player.res" id="3_3n0b2"]
+[ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_0_0.tres" id="3_omaej"]
+[ext_resource type="AnimationNodeBlendTree" uid="uid://b74ntx4jwtv4i" path="res://Animation Trees/monster_animation_tree.tres" id="4_2lhva"]
+[ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="4_qkkov"]
+[ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="5_vgyra"]
+
+[sub_resource type="Resource" id="Resource_4pwq6"]
+script = ExtResource("4_qkkov")
+fighter_resource = ExtResource("3_omaej")
+metadata/_custom_type_script = "uid://cficx40bscg6i"
+
+[node name="fighter_monster_2" type="Node2D" unique_id=505694401 node_paths=PackedStringArray("animation_tree", "pivot")]
+script = ExtResource("1_452ag")
+character_resource = ExtResource("2_tcux5")
+fighter_serializable = SubResource("Resource_4pwq6")
+animation_tree = NodePath("AnimationTree")
+pivot = NodePath("pivot")
+
+[node name="pivot" type="Node2D" parent="." unique_id=1839688624]
+
+[node name="anchor" type="Node2D" parent="pivot" unique_id=1732636557]
+scale = Vector2(0.5, 0.5)
+
+[node name="actor" type="Sprite2D" parent="pivot/anchor" unique_id=1213328985]
+texture = ExtResource("2_2qu37")
+offset = Vector2(-7.500002, -34.374992)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=782735074]
+libraries/ = ExtResource("3_3n0b2")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1316440070]
+tree_root = ExtResource("4_2lhva")
+anim_player = NodePath("../AnimationPlayer")

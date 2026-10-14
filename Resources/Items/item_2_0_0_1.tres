@@ -9,6 +9,7 @@ icon = ExtResource("1_djtgm")
 myANIMATION_DURING_ACTION = 2
 max_hold = 2
 value = 10
+myVALUE_TYPE = 1
 myEFFECT = 2
 myTARGET = 5
 add_status_dictionary = Dictionary[StringName, int]({

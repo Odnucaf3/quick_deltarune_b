@@ -6,16 +6,17 @@
 
 [resource]
 script = ExtResource("1_se5s8")
+icon = ExtResource("1_8x1rp")
 animation_prefab = ExtResource("1_6qy25")
 myANIMATION_BEFORE_ACTION = 2
 myANIMATION_DURING_ACTION = 2
-icon = ExtResource("1_8x1rp")
 tp_cost = 25
 max_cooldown = 1
-value = 8
+speed = 25
+can_critic = true
+value = 25
 myEFFECT = 1
 myATRIBUTE = 1
 myELEMENT = 7
-can_critic = true
 repeat = 2
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

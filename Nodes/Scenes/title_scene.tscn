@@ -153,27 +153,13 @@ theme_override_constants/margin_right = 15
 [node name="credits_menu_richtext" type="RichTextLabel" parent="CanvasLayer2/credits_menu/VBoxContainer/Panel/MarginContainer/credits_menu_root/MarginContainer" unique_id=453127189]
 layout_mode = 2
 bbcode_enabled = true
-text = "* Recursos de RPG Maker MV (de Gotcha Gotcha Games, KADOKAWA y Yoji Ojima).
+text = "[center]* Recursos de RPG Maker MV (de Gotcha Gotcha Games, KADOKAWA y Yoji Ojima).
 ([url]https://rpgmakerofficial.com/en/support/rule/[/url])
+
+* MKII Shot Sheet (v1.0) (de Ryann1908)
+([url]https://ryann1908.itch.io/mkii-shot-sheet/[/url])
 
 *Programación y Diseño (a cargo de Facundo Flores).
 ([url]https://facuflores.itch.io/[/url])
-
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla Bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-Bla bla bla bla bla bla bla bla bla bla bla bla bla.
-[center]El fin[/center]"
+[/center]"
 fit_content = true

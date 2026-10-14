@@ -40,6 +40,6 @@ var tween_Array: Array[Tween] = []
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
-#func _draw() -> void:
-#	draw_circle(Vector2.ZERO, radius/global_scale.x, Color.RED, false)
+func _draw() -> void:
+	draw_circle(Vector2.ZERO, radius/global_scale.x, Color.RED, false)
 #-------------------------------------------------------------------------------

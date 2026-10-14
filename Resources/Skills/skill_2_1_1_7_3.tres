@@ -5,9 +5,10 @@
 
 [resource]
 script = ExtResource("2_t26jw")
-myANIMATION_BEFORE_ACTION = 1
 icon = ExtResource("1_hstdm")
-value = 200
+myANIMATION_BEFORE_ACTION = 1
+tp_cost = 54
+value = 25
 myEFFECT = 1
 myATRIBUTE = 1
 myELEMENT = 7

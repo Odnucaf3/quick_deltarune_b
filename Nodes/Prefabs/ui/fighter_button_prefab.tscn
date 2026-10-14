@@ -112,7 +112,6 @@ layout_mode = 2
 theme = ExtResource("3_xjfi7")
 step = 1.0
 value = 75.0
-fill_mode = 1
 show_percentage = false
 
 [node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/Control/MarginContainer/VBoxContainer/ProgressBar" unique_id=1929508869]

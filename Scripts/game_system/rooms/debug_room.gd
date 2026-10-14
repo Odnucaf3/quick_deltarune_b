@@ -212,11 +212,12 @@ func Interactable_Action():
 	await singleton.game_system.Dialogue_Close_and_Exit()
 #-------------------------------------------------------------------------------
 func Loop_Battle(_array_fighter_array:Array[Fighter_Node]):
-	await singleton.game_system.Do_Enemy_Actions()
+	var _spellcard: Callable = func(): singleton.game_system.SpellCard()
+	await singleton.game_system.Do_Enemy_Actions(_spellcard, 15)
 	#-------------------------------------------------------------------------------
 	while(singleton.game_system.myBATTLE_STATE == Game_System.BATTLE_STATE.STILL_FIGHTING):
 		await singleton.game_system.Do_Ally_Actions("* The Battle Continue. Turn "+str(singleton.game_system.turn_counter)+".")
-		await singleton.game_system.Do_Enemy_Actions()
+		await singleton.game_system.Do_Enemy_Actions(_spellcard, 15)
 	#-------------------------------------------------------------------------------
 	await After_Battle(_array_fighter_array)
 #-------------------------------------------------------------------------------

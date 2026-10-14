@@ -8,6 +8,7 @@
 script = ExtResource("2_4p6bh")
 icon = ExtResource("2_tfmtf")
 myFIGHTER_CLASS = 4
+myWEAPON_TYPE = 13
 status_resistance_dictionary = Dictionary[StringName, int]({
 &"status_1": 30
 })

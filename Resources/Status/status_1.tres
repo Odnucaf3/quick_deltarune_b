@@ -8,4 +8,6 @@
 script = ExtResource("1_8fguq")
 icon = ExtResource("1_2djm7")
 max_turns = 0
+physical_damage_rate = -50
+guard_effect = true
 metadata/_custom_type_script = "uid://bx2u75d4qixuu"

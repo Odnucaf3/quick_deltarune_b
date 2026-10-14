@@ -12,6 +12,9 @@ var key_dictionary: Dictionary[String, int]
 @export var background_canvas_layer: CanvasLayer
 @export var main_canvas_layer: Main_CanvasLayer
 @export var world_2d: Node2D
+@export var bullet_content: Node2D
+var battle_layer: int = 2
+var world_layer: int = 0
 #-------------------------------------------------------------------------------
 @export var timer_root: Control
 @export var timer_label: Label
@@ -36,13 +39,12 @@ var screen_limit_right: float
 #-------------------------------------------------------------------------------
 @export var battle_ui: Control
 @export var black_screen_override: Panel
-var i_frames: int = 0
+var i_frames: float = 0
 var turn_counter: int = 0
 var canBeHit: bool = true
 #-------------------------------------------------------------------------------
 @export_category("Prefabs & Resources")
-@export var attack_resource: Action_Resource
-@export var guard_resource: Action_Resource
+@export var guard_animation_prefab:PackedScene
 @export var death_status_resource: Status_Resource
 @export var guard_status_resource: Status_Resource
 @export var fighter_button_prefab: PackedScene
@@ -268,8 +270,6 @@ var item_menu_equip_button_array: Array[Button]
 @export var item_menu_equip_information_stored_value: Label
 @export var item_menu_equip_information_level_title: Label
 @export var item_menu_equip_information_level_value: Label
-@export var item_menu_equip_information_type_title: Label
-@export var item_menu_equip_information_type_value: Label
 @export var item_menu_equip_information_class_title: Label
 @export var item_menu_equip_information_class_value: Label
 @export var item_menu_equip_information_statistics_title: Label
@@ -315,8 +315,6 @@ var equip_menu_button_array: Array[Button]
 @export var equip_menu_information_stored_value: Label
 @export var equip_menu_information_level_title: Label
 @export var equip_menu_information_level_value: Label
-@export var equip_menu_information_type_title: Label
-@export var equip_menu_information_type_value: Label
 @export var equip_menu_information_class_type: Label
 @export var equip_menu_information_class_value: Label
 @export var equip_menu_information_statistics_title: Label
@@ -458,8 +456,6 @@ const hex_color_orange: String = "fb7927"
 #-------------------------------------------------------------------------------
 const button_array_minimum_size_y: int = 42
 const button_array_font_size: int = 20
-var battle_order: int = 2
-var world_order: int = 0
 var was_status_effect_add_or_removed: bool
 var was_fighter_removed_from_battle: bool
 #-------------------------------------------------------------------------------
@@ -480,6 +476,7 @@ func _ready() -> void:
 	#-------------------------------------------------------------------------------
 	black_screen_override.show()
 	battle_box.hide()
+	hitbox.hide()
 	timer_root.hide()
 	black_screen_override.self_modulate = Color.TRANSPARENT
 	Set_Camera_Parameters()
@@ -541,7 +538,7 @@ func _ready() -> void:
 	Set_Party_Equip_at_the_Start(ally_fighter_party)
 	Set_Fighter_0()
 	#-------------------------------------------------------------------------------
-	hitbox.grazebox.global_scale = Get_CircleSprite_Scale(hitbox.grazebox_radius) + Vector2(0.01, 0.01)
+	hitbox.grazebox.global_scale = Get_CircleSprite_Scale(hitbox.grazebox_radius)
 	#-------------------------------------------------------------------------------
 	NormalMotion()
 	Create_EnemyBullets_Disabled(2000)
@@ -1105,6 +1102,15 @@ func Get_Action_Effect_Text(_action_resource:Action_Resource) -> String:
 	if(_action_resource.myEFFECT != Action_Resource.EFFECT.NONE):
 		_s += Get_Tr_Action_Effect(_action_resource.myEFFECT) + " / "
 		_s += str(_action_resource.value)
+		#-------------------------------------------------------------------------------
+		match(_action_resource.myVALUE_TYPE):
+			Action_Resource.VALUE_TYPE.POINTS:
+				_s += " P"
+			#-------------------------------------------------------------------------------
+			Action_Resource.VALUE_TYPE.PERCENTAGE:
+				_s += "%"
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
 		_s = "- / -"
@@ -1567,8 +1573,7 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 	item_menu_equip_information_stored_value.text = "["+str(_equip_serializable.stored)+"]"
-	item_menu_equip_information_class_value.text = Get_Tr_Fighter_Class(_equip_resource.myFIGHTER_CLASS)
-	item_menu_equip_information_type_value.text = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
+	item_menu_equip_information_class_value.text = Get_Tr_Fighter_Class(_equip_resource.myFIGHTER_CLASS)+" / "+Get_Tr_Equip_and_Weapon_Type(_equip_resource)
 	#-------------------------------------------------------------------------------
 	item_menu_equip_information_statistics_name.text = ""
 	item_menu_equip_information_statistics_value.text = ""
@@ -1588,7 +1593,8 @@ func Set_Item_Equip_Information(_equip_serializable:Equip_Serializable):
 	Set_Item_Equip_Stat("text_critical_evasion_rate", _equip_resource.critical_evasion_rate, "%")
 	#-------------------------------------------------------------------------------
 	Set_Item_Equip_Stat("text_target_rate", _equip_resource.target_rate, "%")
-	Set_Item_Equip_Stat("text_guard_effect", _equip_resource.guard_effect, "%")
+	Set_Item_Equip_Stat("text_physical_damage_rate", _equip_resource.physical_damage_rate, "%")
+	Set_Item_Equip_Stat("text_magical_damage_rate", _equip_resource.magical_damage_rate, "%")
 	Set_Item_Equip_Stat("text_recovery_effect", _equip_resource.recovery_effect, "%")
 	Set_Item_Equip_Stat("text_pharmacology", _equip_resource.pharmacology, "%")
 	Set_Item_Equip_Stat("text_tp_cost_rate", _equip_resource.tp_cost_rate, "%")
@@ -1644,8 +1650,7 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		equip_menu_information_level_value.text = Get_Level_Required(_equip_resource.level_required)
 		var _stored: int = Get_Equip_Stored_in_Inventory(item_equip_inventory, _equip_resource)
 		equip_menu_information_stored_value.text = "["+str(_stored)+"]"
-		equip_menu_information_class_value.text = Get_Tr_Fighter_Class(_equip_resource.myFIGHTER_CLASS)
-		equip_menu_information_type_value.text = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
+		equip_menu_information_class_value.text = Get_Tr_Fighter_Class(_equip_resource.myFIGHTER_CLASS)+" / "+Get_Tr_Equip_and_Weapon_Type(_equip_resource)
 		#-------------------------------------------------------------------------------
 		equip_menu_information_statistics_name.text = ""
 		equip_menu_information_statistics_value.text = ""
@@ -1665,7 +1670,8 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		Set_User_Equip_Stat("text_critical_evasion_rate", _equip_resource.critical_evasion_rate, "%")
 		#-------------------------------------------------------------------------------
 		Set_User_Equip_Stat("text_target_rate", _equip_resource.target_rate, "%")
-		Set_User_Equip_Stat("text_guard_effect", _equip_resource.guard_effect, "%")
+		Set_User_Equip_Stat("text_physical_damage_rate", _equip_resource.physical_damage_rate, "%")
+		Set_User_Equip_Stat("text_magical_damage_rate", _equip_resource.magical_damage_rate, "%")
 		Set_User_Equip_Stat("text_recovery_effect", _equip_resource.recovery_effect, "%")
 		Set_User_Equip_Stat("text_pharmacology", _equip_resource.pharmacology, "%")
 		Set_User_Equip_Stat("text_tp_cost_rate", _equip_resource.tp_cost_rate, "%")
@@ -1747,7 +1753,8 @@ func Set_User_Status_Information(_status_serializable:Status_Serializable):
 	Set_User_Status_Stat("text_critical_evasion_rate", _status_resource.critical_evasion_rate, "%")
 	#-------------------------------------------------------------------------------
 	Set_User_Status_Stat("text_target_rate", _status_resource.target_rate, "%")
-	Set_User_Status_Stat("text_guard_effect", _status_resource.guard_effect, "%")
+	Set_User_Status_Stat("text_physical_damage_rate", _status_resource.physical_damage_rate, "%")
+	Set_User_Status_Stat("text_magical_damage_rate", _status_resource.magical_damage_rate, "%")
 	Set_User_Status_Stat("text_recovery_effect", _status_resource.recovery_effect, "%")
 	Set_User_Status_Stat("text_pharmacology", _status_resource.pharmacology, "%")
 	Set_User_Status_Stat("text_tp_cost_rate", _status_resource.tp_cost_rate, "%")
@@ -2513,10 +2520,11 @@ func Pause_Statistics_Menu_Set(_character_resource: Character_Resource, _fighter
 	var _max_hp_base: int = Get_Max_HP_Base(_fighter_serializable)
 	var _max_hp_modifiers: int = Get_Max_HP_Modifiers(_fighter_serializable)
 	var _max_hp: int = Get_Max_HP_2(_max_hp_modifiers, _max_hp_base)
+	var _hp: int = _fighter_serializable.hp
 	#-------------------------------------------------------------------------------
-	statistics_menu_information_fighter_hp_value.text = Get_Fighter_Hp_Text(_max_hp, _max_hp)
+	statistics_menu_information_fighter_hp_value.text = Get_Fighter_Hp_Text(_hp, _max_hp)
 	statistics_menu_information_fighter_hp_slider.max_value = _max_hp
-	statistics_menu_information_fighter_hp_slider.value = _max_hp
+	statistics_menu_information_fighter_hp_slider.value = _hp
 	#-------------------------------------------------------------------------------
 	Delete_and_Create_Status_UI_Array(statistics_menu_information_status_ui_container, statistics_menu_information_status_ui_array, _fighter_serializable.status_serializable_array)
 	#-------------------------------------------------------------------------------
@@ -2553,7 +2561,8 @@ func Pause_Statistics_Menu_Set(_character_resource: Character_Resource, _fighter
 	statistics_menu_information_special_stats_name.text = ""
 	statistics_menu_information_special_stats_value.text = ""
 	Set_Fighter_Special_Stat_2("text_target_rate", Get_Target_Rate_Modifiers(_fighter_serializable), Get_Target_Rate_Base(_fighter_serializable))
-	Set_Fighter_Special_Stat_2("text_guard_effect", Get_Guard_Effect_Modifiers(_fighter_serializable), Get_Guard_Effect_Base(_fighter_serializable))
+	Set_Fighter_Special_Stat_2("text_physical_damage_rate", Get_Physical_Damage_Rate_Modifiers(_fighter_serializable), Get_Physical_Damage_Rate_Base(_fighter_serializable))
+	Set_Fighter_Special_Stat_2("text_magical_damage_rate", Get_Magical_Damage_Rate_Modifiers(_fighter_serializable), Get_Magical_Damage_Rate_Base(_fighter_serializable))
 	Set_Fighter_Special_Stat_2("text_recovery_effect", Get_Recovery_Effect_Modifiers(_fighter_serializable), Get_Recovery_Effect_Base(_fighter_serializable))
 	Set_Fighter_Special_Stat_2("text_pharmacology", Get_Pharmacology_Modifiers(_fighter_serializable), Get_Pharmacology_Base(_fighter_serializable))
 	Set_Fighter_Special_Stat_2("text_tp_cost_rate", Get_TP_Cost_Rate_Modifiers(_fighter_serializable), Get_TP_Cost_Rate_Base(_fighter_serializable))
@@ -3200,28 +3209,51 @@ func Get_Target_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> in
 	#-------------------------------------------------------------------------------
 	return _target_rate
 #-------------------------------------------------------------------------------
-func Get_Guard_Effect(_fighter_serializable:Fighter_Serializable) -> int:
-	var _guard_effect: int = Get_Guard_Effect_Base(_fighter_serializable)
-	_guard_effect += Get_Guard_Effect_Modifiers(_fighter_serializable)
-	return _guard_effect
+func Get_Physical_Damage_Rate(_fighter_serializable:Fighter_Serializable) -> int:
+	var _physical_damage_rate: int = Get_Physical_Damage_Rate_Base(_fighter_serializable)
+	_physical_damage_rate += Get_Physical_Damage_Rate_Modifiers(_fighter_serializable)
+	return _physical_damage_rate
 #-------------------------------------------------------------------------------
-func Get_Guard_Effect_Base(_fighter_serializable:Fighter_Serializable) -> int:
-	var _guard_effect: int = _fighter_serializable.fighter_resource.guard_effect
-	return _guard_effect
+func Get_Physical_Damage_Rate_Base(_fighter_serializable:Fighter_Serializable) -> int:
+	var _physical_damage_rate: int = _fighter_serializable.fighter_resource.physical_damage_rate
+	return _physical_damage_rate
 #-------------------------------------------------------------------------------
-func Get_Guard_Effect_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
-	var _guard_effect: int = 0
+func Get_Physical_Damage_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
+	var _physical_damage_rate: int = 0
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.equip_serializable_array.size():
 		#-------------------------------------------------------------------------------
 		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_guard_effect += _fighter_serializable.equip_serializable_array[_i].equip_resource.guard_effect
+			_physical_damage_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.physical_damage_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
-		_guard_effect += _fighter_serializable.status_serializable_array[_i].status_resource.guard_effect
+		_physical_damage_rate += _fighter_serializable.status_serializable_array[_i].status_resource.physical_damage_rate
 	#-------------------------------------------------------------------------------
-	return _guard_effect
+	return _physical_damage_rate
+#-------------------------------------------------------------------------------
+func Get_Magical_Damage_Rate(_fighter_serializable:Fighter_Serializable) -> int:
+	var _magical_damage_rate: int = Get_Magical_Damage_Rate_Base(_fighter_serializable)
+	_magical_damage_rate += Get_Magical_Damage_Rate_Modifiers(_fighter_serializable)
+	return _magical_damage_rate
+#-------------------------------------------------------------------------------
+func Get_Magical_Damage_Rate_Base(_fighter_serializable:Fighter_Serializable) -> int:
+	var _magical_damage_rate: int = _fighter_serializable.fighter_resource.magical_damage_rate
+	return _magical_damage_rate
+#-------------------------------------------------------------------------------
+func Get_Magical_Damage_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
+	var _magical_damage_rate: int = 0
+	#-------------------------------------------------------------------------------
+	for _i in _fighter_serializable.equip_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
+			_magical_damage_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.magical_damage_rate
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	for _i in _fighter_serializable.status_serializable_array.size():
+		_magical_damage_rate += _fighter_serializable.status_serializable_array[_i].status_resource.magical_damage_rate
+	#-------------------------------------------------------------------------------
+	return _magical_damage_rate
 #-------------------------------------------------------------------------------
 func Get_Recovery_Effect(_fighter_serializable:Fighter_Serializable) -> int:
 	var _recovery_effect: int = Get_Recovery_Effect_Base(_fighter_serializable)
@@ -3588,12 +3620,6 @@ func Set_Equip_0(_fighter_serializable: Fighter_Serializable, _equip_resource: E
 func Set_Skill(_fighter_serializable: Fighter_Serializable):
 	#-------------------------------------------------------------------------------
 	_fighter_serializable.skill_serializable_array.clear()
-	#-------------------------------------------------------------------------------
-	#var _attack_serializable: Action_Serializable = Create_Skill_Serializable(attack_resource)
-	#_fighter_serializable.skill_serializable_array.append(_attack_serializable)
-	#-------------------------------------------------------------------------------
-	#var _guard_serializable: Action_Serializable = Create_Skill_Serializable(guard_resource)
-	#_fighter_serializable.skill_serializable_array.append(_guard_serializable)
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.fighter_resource.add_skill_resource_array.size():
 		var _skill_serializable: Action_Serializable = Create_Skill_Serializable(_fighter_serializable.fighter_resource.add_skill_resource_array[_i])
@@ -3972,13 +3998,9 @@ func Set_Idiome():
 	item_menu_equip_information_level_title.text = _level
 	equip_menu_information_level_title.text = _level
 	#-------------------------------------------------------------------------------
-	var _class: String = String_With_Asterisco_and_2_Points(tr("text_class"))
-	item_menu_equip_information_class_title.text = _class
-	equip_menu_information_class_type.text = _class
-	#-------------------------------------------------------------------------------
-	var _equip_type: String = String_With_Asterisco_and_2_Points(tr("text_type"))
-	item_menu_equip_information_type_title.text = _equip_type
-	equip_menu_information_type_title.text = _equip_type
+	var _class_and_type: String = String_With_Asterisco_and_2_Points(tr("text_class")+" / "+tr("text_type"))
+	item_menu_equip_information_class_title.text = _class_and_type
+	equip_menu_information_class_type.text = _class_and_type
 	#-------------------------------------------------------------------------------
 	var _hold: String = String_With_Asterisco_and_2_Points(tr("text_bag"))
 	item_menu_consumable_information_hold_title.text = _hold
@@ -5293,7 +5315,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	for _i in ally_fighter_party.size():
 		Face_Fighter_Left(ally_fighter_party[_i], false)
 		#-------------------------------------------------------------------------------
-		ally_fighter_party[_i].z_index = battle_order
+		ally_fighter_party[_i].z_index = battle_layer
 		ally_fighter_party[_i].show()
 		#-------------------------------------------------------------------------------
 		var _x: float = camera_size.x * (-_x1 - (_i+1) * _ally_dx)
@@ -5311,7 +5333,7 @@ func Set_All_Fighters_Position_Common(_x1:float, _x2:float, _y1:float, _y2:float
 	for _i in enemy_fighter_party.size():	
 		Face_Fighter_Left(enemy_fighter_party[_i], true)
 		#-------------------------------------------------------------------------------
-		enemy_fighter_party[_i].z_index = battle_order
+		enemy_fighter_party[_i].z_index = battle_layer
 		enemy_fighter_party[_i].show()
 		#-------------------------------------------------------------------------------
 		var _x: float = camera_size.x * (_x1 + (_i+1) * _enemy_dx)
@@ -5388,7 +5410,32 @@ func Play_Fighter_Animation_Action(_fighter_node:Fighter_Node):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Attack_Weapon(_fighter_node:Fighter_Node):
-	await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Hand")
+	var _weeapon: Equip_Resource = _fighter_node.fighter_serializable_in_battle.equip_serializable_array[0].equip_resource
+	#-------------------------------------------------------------------------------
+	if(_weeapon != null):
+		#-------------------------------------------------------------------------------
+		match(_weeapon.myWEAPON_TYPE):
+			#-------------------------------------------------------------------------------
+			Equip_Resource.WEAPON_TYPE.NONE:
+				await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Hand")
+			#-------------------------------------------------------------------------------
+			Equip_Resource.WEAPON_TYPE.DAGGER:
+				await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Dagger")
+			#-------------------------------------------------------------------------------
+			Equip_Resource.WEAPON_TYPE.SWORD:
+				await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Sword")
+			#-------------------------------------------------------------------------------
+			Equip_Resource.WEAPON_TYPE.MAZE:
+				await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Maze")
+			#-------------------------------------------------------------------------------
+			Equip_Resource.WEAPON_TYPE.STAFF:
+				await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Staff")
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Attack_Hand")
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Cast(_fighter_node:Fighter_Node):
 	await AnimationTree_StateMachine_Set(_fighter_node.animation_tree, state_machine_layer_1, "Cast")
@@ -5962,7 +6009,15 @@ func Do_Ally_Action_1(_user:Fighter_Node):
 			await Seconds(0.6)
 			Set_TP_Bar_and_Action_Cost(_action_serializable, _tp_cost)
 			#-------------------------------------------------------------------------------
-			await Do_Ally_Action_0(_user)
+			match(_action_serializable.action_resource.myACTION_TYPE):
+				Action_Resource.ACTION_TYPE.NORMAL:
+					await Do_Ally_Action_0(_user)
+				#-------------------------------------------------------------------------------
+				Action_Resource.ACTION_TYPE.CUSTOM:
+					var _action_id: StringName = singleton.get_resource_filename(_action_serializable.action_resource)
+					await call(_action_id, _user)
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		else:
 			await Fail_Action_for_Lack_of_TP(_user)
@@ -6003,13 +6058,13 @@ func Step_Tween_2(_tween:Tween, _user:Fighter_Node, _color:Color):
 	_tween.parallel().tween_property(_user, "modulate", _color, _timer)
 	_tween.parallel().tween_property(_user.fighter_ui.hp_root, "modulate", _color, _timer)
 #-------------------------------------------------------------------------------
-func Play_Action_Animation(_action_resource:Action_Resource, _target:Fighter_Node):
+func Play_Action_Animation(_animation_prefab:PackedScene, _target:Fighter_Node):
 	#-------------------------------------------------------------------------------
-	if(_action_resource.animation_prefab != null):
-		var _animation_node: Animation_Node = _action_resource.animation_prefab.instantiate() as Animation_Node
+	if(_animation_prefab != null):
+		var _animation_node: Animation_Node = _animation_prefab.instantiate() as Animation_Node
 		world_2d.add_child(_animation_node)
 		_animation_node.global_position = _target.pivot.global_position
-		_animation_node.z_index = battle_order + 1
+		_animation_node.z_index = battle_layer + 1
 		_animation_node.animation_player.play("RESET")
 		await _animation_node.animation_player.animation_finished
 		_animation_node.queue_free()
@@ -6088,11 +6143,11 @@ func Do_Ally_Action_0(_user:Fighter_Node):
 func Do_Repeat_Action_1(_user:Fighter_Node, _target:Fighter_Node):
 	var _action_serializable: Action_Serializable = _user.action_serializable
 	#-------------------------------------------------------------------------------
-	Play_Action_Animation(_action_serializable.action_resource, _target)
+	Play_Action_Animation(_action_serializable.action_resource.animation_prefab, _target)
 	await Seconds(_action_serializable.action_resource.animation_timer_1)
 	#-------------------------------------------------------------------------------
 	for _i in _action_serializable.action_resource.repeat:
-		B_Set_RPG_Calculation_4(_user, _target, _action_serializable.action_resource)
+		B_Set_RPG_Calculation_5(_user, _target, _action_serializable.action_resource)
 		await Seconds(0.15)
 	#-------------------------------------------------------------------------------
 	await Seconds(_action_serializable.action_resource.animation_timer_2)
@@ -6143,7 +6198,7 @@ func Do_Repeat_Action_All(_user:Fighter_Node, _target_array:Array[Fighter_Node])
 		#-------------------------------------------------------------------------------
 		for _i in _action_serializable.action_resource.repeat:
 			var _target: Fighter_Node = _target_array[_j]
-			B_Set_RPG_Calculation_4(_user, _target, _action_serializable.action_resource)
+			B_Set_RPG_Calculation_5(_user, _target, _action_serializable.action_resource)
 			await Seconds(0.15)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -6153,14 +6208,27 @@ func Do_Repeat_Action_Random(_user:Fighter_Node, _target_array:Array[Fighter_Nod
 	#-------------------------------------------------------------------------------
 	for _i in _action_serializable.action_resource.repeat:
 		var _target: Fighter_Node = _target_array.pick_random()
-		B_Set_RPG_Calculation_4(_user, _target, _action_serializable.action_resource)
+		B_Set_RPG_Calculation_5(_user, _target, _action_serializable.action_resource)
 		await Seconds(0.15)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #region CLASSIC RPG MATH FUNCTIONS
 #-------------------------------------------------------------------------------
-func B_Set_RPG_Calculation_4(_user:Fighter_Node, _target:Fighter_Node, _action:Action_Resource):
-	B_Set_RPG_Calculation_3(_user, _target, _action.value, _action.presition, _action.affinity, _action.myATRIBUTE, _action.myELEMENT, _action.myEFFECT, _action.can_critic, _action.remove_status_dictionary, _action.add_status_dictionary)
+func B_Set_RPG_Calculation_5(_user:Fighter_Node, _target:Fighter_Node, _action:Action_Resource):
+	B_Set_RPG_Calculation_4(_user, _target, _action.value, _action.myVALUE_TYPE, _action.presition, _action.affinity, _action.myATRIBUTE, _action.myELEMENT, _action.myEFFECT, _action.can_critic, _action.remove_status_dictionary, _action.add_status_dictionary)
+#-------------------------------------------------------------------------------
+func B_Set_RPG_Calculation_4(_user:Fighter_Node, _target:Fighter_Node, _value:int, _value_type:Action_Resource.VALUE_TYPE, _presition:int, _affinity:int, _atribute:Action_Resource.ATRIBUTE, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _can_critic:bool, _remove_status_dictionary: Dictionary[StringName, int], _add_status_dictionary: Dictionary[StringName, int]):
+	#-------------------------------------------------------------------------------
+	match(_value_type):
+		Action_Resource.VALUE_TYPE.POINTS:
+			B_Set_RPG_Calculation_3(_user, _target, _value, _presition, _affinity, _atribute, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
+		#-------------------------------------------------------------------------------
+		Action_Resource.VALUE_TYPE.PERCENTAGE:
+			var _target_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+			var _final_value: int = Get_Porcentual_Max_HP(_target_serializable, _value)
+			B_Set_RPG_Calculation_3(_user, _target, _final_value, _presition, _affinity, _atribute, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func B_Set_RPG_Calculation_3(_user:Fighter_Node, _target:Fighter_Node, _value:int, _presition:int, _affinity:int, _atribute:Action_Resource.ATRIBUTE, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _can_critic:bool, _remove_status_dictionary: Dictionary[StringName, int], _add_status_dictionary: Dictionary[StringName, int]):
 	var _user_serializable: Fighter_Serializable = _user.fighter_serializable_in_battle
@@ -6180,26 +6248,29 @@ func B_Set_RPG_Calculation_3(_user:Fighter_Node, _target:Fighter_Node, _value:in
 			var _user_presition_rate: int = Get_Physical_Presition_Rate(_user_serializable)
 			var _target_defense: int = Get_Physical_Defense(_user_serializable)
 			var _target_evasion_rate: int = Get_Physical_Evasion_Rate(_target_serializable)
+			var _value_rate: int = Get_Physical_Damage_Rate(_target_serializable)
 			#-------------------------------------------------------------------------------
-			B_Set_RPG_Calculation_3_Part_2(_user, _target, _value, _presition, _affinity, _user_attack, _user_presition_rate, _target_defense, _target_evasion_rate, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
+			B_Set_RPG_Calculation_3_Part_2(_user, _target, _value, _value_rate, _presition, _affinity, _user_attack, _user_presition_rate, _target_defense, _target_evasion_rate, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
 		#-------------------------------------------------------------------------------
 		Action_Resource.ATRIBUTE.MAGICAL:
 			var _user_attack: int = Get_Magical_Attack(_user_serializable)
 			var _user_presition_rate: int = Get_Magical_Presition_Rate(_user_serializable)
 			var _target_defense: int = Get_Magical_Defense(_user_serializable)
 			var _target_evasion_rate: int = Get_Magical_Evasion_Rate(_target_serializable)
+			var _value_rate: int = Get_Magical_Damage_Rate(_target_serializable)
 			#-------------------------------------------------------------------------------
-			B_Set_RPG_Calculation_3_Part_2(_user, _target, _value, _presition, _affinity, _user_attack, _user_presition_rate, _target_defense, _target_evasion_rate, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
+			B_Set_RPG_Calculation_3_Part_2(_user, _target, _value, _value_rate, _presition, _affinity, _user_attack, _user_presition_rate, _target_defense, _target_evasion_rate, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func B_Set_RPG_Calculation_3_Part_2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _presition:int, _affinity:int, _user_attack:int, _user_presition_rate:int, _target_defense:int, _target_evasion_rate:int, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _can_critic:bool, _remove_status_dictionary: Dictionary[StringName, int], _add_status_dictionary: Dictionary[StringName, int]):
+func B_Set_RPG_Calculation_3_Part_2(_user:Fighter_Node, _target:Fighter_Node, _value:int, _value_rate:int, _presition:int, _affinity:int, _user_attack:int, _user_presition_rate:int, _target_defense:int, _target_evasion_rate:int, _elemental:Action_Resource.ELEMENT, _effect:Action_Resource.EFFECT, _can_critic:bool, _remove_status_dictionary: Dictionary[StringName, int], _add_status_dictionary: Dictionary[StringName, int]):
 	var _atribute_presition_calculation: int = _presition + _user_presition_rate - _target_evasion_rate
 	#-------------------------------------------------------------------------------
 	if(Get_Rate_100(_atribute_presition_calculation)):
 		var _damage: float = (damage_scaling + float(_user_attack)) / damage_scaling
 		var _armor: float = armor_scaling / (armor_scaling + float(_target_defense))
-		var _final_value: int = int(float(_value) * _damage * _armor)
+		var _rate: float = float(_value_rate) / 100.0
+		var _final_value: int = int(float(_value) * _damage * _armor * _rate)
 		B_Set_RPG_Calculation_2(_user, _target, _final_value, _affinity, _elemental, _effect, _can_critic, _remove_status_dictionary, _add_status_dictionary)
 	#-------------------------------------------------------------------------------
 	else:
@@ -6555,12 +6626,13 @@ func Down_Effect(_fighter_array:Array[Fighter_Node], _index: int):
 	Flying_PopUp_Add_Down(_fighter_node)
 	Play_Fighter_Animation_Down(_fighter_node)
 	#-------------------------------------------------------------------------------
-	_fighter_node.fighter_ui.hp_root.hide()
+	#_fighter_node.fighter_ui.hp_root.hide()
 	await _fighter_node.animation_tree.animation_finished
 	#-------------------------------------------------------------------------------
 	if(_fighter_node.disapears_after_death):
 		was_fighter_removed_from_battle = true
 		_fighter_node.hide()
+		_fighter_node.fighter_ui.queue_free()
 		_fighter_array.erase(_fighter_node)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -6587,8 +6659,14 @@ func Remove_Status(_fighter_serializable:Fighter_Serializable, _status_Resource:
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Has_Status_Guard(_fighter_serializable: Fighter_Serializable) -> bool:
-	var _b: bool = Has_Status(_fighter_serializable, guard_status_resource)
-	return _b
+	#-------------------------------------------------------------------------------
+	for _i in _fighter_serializable.status_serializable_array.size():
+		#-------------------------------------------------------------------------------
+		if(_fighter_serializable.status_serializable_array[_i].status_resource.guard_effect):
+			return true
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return false
 #-------------------------------------------------------------------------------
 func Remove_All_Status_in_Battle(_fighter_serializable: Fighter_Serializable):
 	#-------------------------------------------------------------------------------
@@ -6669,7 +6747,7 @@ func Get_Target_Name(_target:Fighter_Node) -> String:
 	#-------------------------------------------------------------------------------
 	return _s
 #-------------------------------------------------------------------------------
-func Do_Enemy_Actions():
+func Do_Enemy_Actions(_callable:Callable, _timer:int):
 	Set_Battle_State()
 	#-------------------------------------------------------------------------------
 	if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
@@ -6683,10 +6761,10 @@ func Do_Enemy_Actions():
 	#-------------------------------------------------------------------------------
 	Set_and_Show_Battle_Box()
 	#-------------------------------------------------------------------------------
-	await SpellCard()
+	_callable.call()
+	await Start_Timer_Tween(_timer)
 	#-------------------------------------------------------------------------------
-	
-	Set_and_Hide_Battle_Box()
+	await Set_and_Hide_Battle_Box()
 	Decrease_Item_Cooldown_by_1()
 	await Apply_All_Fighter_HP_and_TP_Recovery_Effect()
 	await Kill_All_Fighter_Array_and_Reposition_2()
@@ -6694,7 +6772,6 @@ func Do_Enemy_Actions():
 	Decrease_Skill_Cooldown_by_1(ally_fighter_party)
 	Decrease_Skill_Cooldown_by_1(enemy_fighter_party)
 	#-------------------------------------------------------------------------------
-	await Seconds_if_Win_or_Lose()
 	Battle_Background_Dark_Fade_Out()
 	Set_All_Fighters_Animation_Depending_of_Situation()
 	await Set_All_Fighters_Position_1()
@@ -6702,15 +6779,8 @@ func Do_Enemy_Actions():
 	Dialogue_Null()
 	After_Enemy_Actions()
 #-------------------------------------------------------------------------------
-func Seconds_if_Win_or_Lose():
-	#-------------------------------------------------------------------------------
-	if(myBATTLE_STATE == BATTLE_STATE.YOU_WIN or myBATTLE_STATE == BATTLE_STATE.YOU_LOSE):
-		await Seconds(pop_up_timer)
-	#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 func SpellCard():
 	Stage1_Fire1()
-	await Start_Timer_Tween(10)
 #-------------------------------------------------------------------------------
 func Decrease_Item_Cooldown_by_1():
 	#-------------------------------------------------------------------------------
@@ -6995,16 +7065,23 @@ func Show_Enemy_Dialogue():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_and_Show_Battle_Box():
-	battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale*0.5
-	hitbox.position = battle_box.size * 0.5
+	battle_box.global_position = camera.global_position - battle_box.size * battle_box.scale * 0.5
+	hitbox.global_position = battle_box.global_position + battle_box.size * battle_box.scale * 0.5
 	Set_Battle_Box_Limits()
 	myGAME_STATE = GAME_STATE.IN_BATTLE
 	battle_box.show()
 	Set_Hitbox_Normal()
+	hitbox.show()
 #-------------------------------------------------------------------------------
 func Set_and_Hide_Battle_Box():
-	battle_box.hide()
 	myGAME_STATE = GAME_STATE.IN_MENU
+	#-------------------------------------------------------------------------------
+	if(myBATTLE_STATE == BATTLE_STATE.YOU_LOSE):
+		HitBox_Animation_Dead()
+		await Seconds(pop_up_timer)
+	#-------------------------------------------------------------------------------
+	battle_box.hide()
+	hitbox.hide()
 #-------------------------------------------------------------------------------
 func Hide_Enemy_Dialogue():
 	#-------------------------------------------------------------------------------
@@ -7296,15 +7373,17 @@ func Battle_Item_Menu_Set(_user:Fighter_Node):
 			var _hold: int = Get_Future_Hold(_consumable_serializable_array[_i])
 			var _cooldown: int = Get_Future_Cooldown(_consumable_serializable_array[_i])
 			#-------------------------------------------------------------------------------
-			var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+			if(_consumable_serializable_array[_i].hold > 0):
+				var _consumable_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
+				#-------------------------------------------------------------------------------
+				var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
+				var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_button, _user, _consumable_serializable_array[_i], _hold, _cooldown)
+				#-------------------------------------------------------------------------------
+				singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
+				item_menu_consumable_button_content.add_child(_consumable_button)
+				item_menu_consumable_button_array.append(_consumable_button)
+			#-------------------------------------------------------------------------------
 			var _all_button: Button = Create_ConsumableItem_Button(_consumable_serializable_array[_i], _hold, _cooldown)
-			#-------------------------------------------------------------------------------
-			var _consumable_select_1: Callable = func():button_consumable_select_1(_consumable_serializable_array[_i])
-			var _consumable_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_consumable_button, _user, _consumable_serializable_array[_i], _hold, _cooldown)
-			#-------------------------------------------------------------------------------
-			singleton.Set_Button_WSAD_Left_Right(_consumable_button, _consumable_select_1, _consumable_submit_1, button_consumable_w, button_consumable_s, button_consumable_a, button_consumable_d)
-			item_menu_consumable_button_content.add_child(_consumable_button)
-			item_menu_consumable_button_array.append(_consumable_button)
 			#-------------------------------------------------------------------------------
 			var _all_select_1: Callable = func():button_all_consumable_select_1(_consumable_serializable_array[_i])
 			var _all_submit_1: Callable = func():Battle_Item_Menu_Consumable_Button_Sumbit(_all_button, _user, _consumable_serializable_array[_i], _hold, _cooldown)
@@ -7763,7 +7842,6 @@ func Set_Inventory_When_Exit_Battle():
 	#-------------------------------------------------------------------------------
 	money_inventory = Duplicate_Key_Serializable(money_inventory_in_battle)
 #-------------------------------------------------------------------------------
-
 func Remove_Zero_Consumable_Item_in_Hold_and_Stored():
 	var _item_serializable_array: Array[Action_Serializable] = item_consumable_inventory_in_battle
 	#-------------------------------------------------------------------------------
@@ -7956,17 +8034,17 @@ func Hitbox_Movement():
 	#-------------------------------------------------------------------------------
 	if(input_dir != Vector2.ZERO):
 		input_dir_normal = input_dir.normalized()
-		var myPosition: Vector2 = hitbox.position
+		var _global_position: Vector2 = hitbox.global_position
 		#-------------------------------------------------------------------------------
 		if(_run_flag):
-			myPosition += input_dir_normal * 2.5 * deltaTimeScale
+			_global_position += input_dir_normal * 1 * deltaTimeScale
 		#-------------------------------------------------------------------------------
 		else:
-			myPosition += input_dir_normal * 6.5 * deltaTimeScale
+			_global_position += input_dir_normal * 3 * deltaTimeScale
 		#-------------------------------------------------------------------------------
-		myPosition.y = clampf(myPosition.y, battle_box_limit_up, battle_box_limit_down)
-		myPosition.x = clampf(myPosition.x, battle_box_limit_left, battle_box_limit_right)
-		hitbox.position = myPosition
+		_global_position.y = clampf(_global_position.y, battle_box_limit_up, battle_box_limit_down)
+		_global_position.x = clampf(_global_position.x, battle_box_limit_left, battle_box_limit_right)
+		hitbox.global_position = _global_position
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Hitbox_Damage():
@@ -7989,7 +8067,7 @@ func Hitbox_Damage():
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
-		i_frames -= 1
+		i_frames -= deltaTimeScale
 		#-------------------------------------------------------------------------------
 		if(i_frames < 0):
 			Set_Hitbox_Normal()
@@ -8005,6 +8083,9 @@ func Set_Hitbox_Normal():
 #-------------------------------------------------------------------------------
 func HitBox_Animation_Hurt():
 	AnimationTree_StateMachine_Set(hitbox.animation_tree, "Base", "Hurt")
+#-------------------------------------------------------------------------------
+func HitBox_Animation_Dead():
+	AnimationTree_StateMachine_Set(hitbox.animation_tree, "Base", "Dead")
 #-------------------------------------------------------------------------------
 func HitBox_Animation_Graze():
 	AnimationTree_OneShot_Set(hitbox.animation_tree, "Base", true)
@@ -8023,71 +8104,77 @@ func Bullet_Grazed_TP_Gain():
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Player_Shooted(_bullet:Bullet_Node):
-	i_frames = 30
-	hitbox.can_be_hit = false
-	HitBox_Animation_Hurt()
-	#-------------------------------------------------------------------------------
 	Set_Battle_State()
 	#-------------------------------------------------------------------------------
 	if(myBATTLE_STATE == BATTLE_STATE.STILL_FIGHTING):
-		var _alive_fighter_array:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
-		var _target: Fighter_Node = _alive_fighter_array.pick_random()
-		var _fighter_serializable: Fighter_Serializable = _target.fighter_serializable_in_battle
+		HitBox_Hurt()
 		#-------------------------------------------------------------------------------
-		Player_Recieve_Bullet_Damage(_target, _bullet)
+		var _alive_user_array:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(enemy_fighter_party)
+		var _user: Fighter_Node = _alive_user_array.pick_random()
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.hp > 0):
-			#-------------------------------------------------------------------------------
-			if(Has_Status_Guard(_fighter_serializable)):
-				#Animation_StateMachine(_target.animation_tree, "", "Crouch_Hurt")
-				Play_Fighter_Animation_Hurt(_target)
-			#-------------------------------------------------------------------------------
-			else:
-				Play_Fighter_Animation_Hurt(_target)
-			#-------------------------------------------------------------------------------
-			var _hp: int = _fighter_serializable.hp
-			Set_Fighte_HP_Bar_in_Battle(_target)
-			singleton.Play_SFX_Damage()
+		Player_Recieve_Bullet_Damage(_bullet, _user)
+		Set_Battle_State()
 		#-------------------------------------------------------------------------------
-		else:
-			_fighter_serializable.hp = 0
-			Set_Fighte_HP_Bar_in_Battle(_target)
-			#-------------------------------------------------------------------------------
-			Remove_All_Status_in_Battle(_fighter_serializable)
-			Add_Status_Down_in_Battle(_fighter_serializable)
-			Set_Fighter_Status_UI_in_Battle(_target)
-			_target.fighter_ui.hp_root.hide()
-			Flying_PopUp_Add_Down(_target)
-			Play_Fighter_Animation_Down(_target)
-			#-------------------------------------------------------------------------------
-			Set_Battle_State()
-			#-------------------------------------------------------------------------------
-			if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
-				StopEverithing_and_Timer()
-			#-------------------------------------------------------------------------------
+		if(myBATTLE_STATE != BATTLE_STATE.STILL_FIGHTING):
+			StopEverithing_and_Timer()
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
 		StopEverithing_and_Timer()
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Player_Recieve_Bullet_Damage(_target:Fighter_Node, _bullet:Bullet_Node):
-	var _calculation: int = -80
-	_target.fighter_serializable_in_battle.hp += _calculation
-	Flying_PopUp_HP(_target, _calculation)
+func HitBox_Hurt():
+	i_frames = 30
+	hitbox.can_be_hit = false
+	HitBox_Animation_Hurt()
+#-------------------------------------------------------------------------------
+func Player_Recieve_Bullet_Damage(_bullet:Bullet_Node, _user:Fighter_Node):
+	var _value: int = 80
+	var _value_type: Action_Resource.VALUE_TYPE = Action_Resource.VALUE_TYPE.POINTS
+	var _presition: int = 100
+	var _affinity: int = 100
+	var _atribute: Action_Resource.ATRIBUTE = Action_Resource.ATRIBUTE.PHYSICAL
+	var _element: Action_Resource.ELEMENT = Action_Resource.ELEMENT.NORMAL
+	var _effect: Action_Resource.EFFECT = Action_Resource.EFFECT.DAMAGE
+	var _critic: bool = true
+	var _remove_status: Dictionary[StringName, int] = {}
+	var _add_status: Dictionary[StringName, int] = {}
+	#-------------------------------------------------------------------------------
+	var _alive_target_array:Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	var _target_type: Action_Resource.TARGET = Action_Resource.TARGET.ENEMY_ALL
+	#-------------------------------------------------------------------------------
+	match(_target_type):
+		Action_Resource.TARGET.ENEMY_1:
+			var _target: Fighter_Node = Re_Target_Alive_Weakest_Fighter(_alive_target_array[0], _alive_target_array)
+			B_Set_RPG_Calculation_4(_user, _target, _value, _value_type, _presition, _affinity, _atribute, _element, _effect, _critic, _remove_status, _add_status)
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ENEMY_ALL:
+			#-------------------------------------------------------------------------------
+			for _i in _alive_target_array.size():
+				var _target: Fighter_Node = _alive_target_array[_i]
+				B_Set_RPG_Calculation_4(_user, _target, _value, _value_type, _presition, _affinity, _atribute, _element, _effect, _critic, _remove_status, _add_status)
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		Action_Resource.TARGET.ENEMY_RANDOM:
+			var _target: Fighter_Node = _alive_target_array.pick_random()
+			B_Set_RPG_Calculation_4(_user, _target, _value, _value_type, _presition, _affinity, _atribute, _element, _effect, _critic, _remove_status, _add_status)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	Kill_Fighter_Array(ally_fighter_party)
+	Kill_Fighter_Array(enemy_fighter_party)
 #-------------------------------------------------------------------------------
 func Set_Battle_Box_Limits():
 	var _offset: float = 16
-	battle_box_limit_up = _offset
-	battle_box_limit_down = battle_box.size.y - _offset
-	battle_box_limit_left = _offset
-	battle_box_limit_right = battle_box.size.x - _offset
+	battle_box_limit_up = battle_box.global_position.y + (_offset) * battle_box.scale.y
+	battle_box_limit_down = battle_box.global_position.y + (battle_box.size.y - _offset) * battle_box.scale.y
+	battle_box_limit_left = battle_box.global_position.x + _offset * battle_box.scale.x
+	battle_box_limit_right = battle_box.global_position.x + (battle_box.size.x - _offset) * battle_box.scale.x
 #-------------------------------------------------------------------------------
 func Set_Screen_Limits():
-	screen_limit_up = camera.global_position.y-camera_center.y
-	screen_limit_down = camera.global_position.y+camera_center.y
-	screen_limit_left = camera.global_position.x-camera_center.x
-	screen_limit_right = camera.global_position.x+camera_center.x
+	screen_limit_up = camera.global_position.y - camera_center.y
+	screen_limit_down = camera.global_position.y + camera_center.y
+	screen_limit_left = camera.global_position.x - camera_center.x
+	screen_limit_right = camera.global_position.x + camera_center.x
 #-------------------------------------------------------------------------------
 func Set_TP_Bar(_tp:int):
 	tp_bar_slider.value = _tp
@@ -8114,9 +8201,11 @@ func Get_Future_TP() -> int:
 func Get_Future_Hold(_action_serializable:Action_Serializable) -> int:
 	var _hold: int = _action_serializable.hold
 	#-------------------------------------------------------------------------------
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	#-------------------------------------------------------------------------------
 	for _j in current_fighter_turn:
 		#-------------------------------------------------------------------------------
-		if(_action_serializable.action_resource == ally_fighter_party[_j].action_serializable.action_resource):
+		if(_action_serializable.action_resource == _alive_party[_j].action_serializable.action_resource):
 			_hold -= 1
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -8125,9 +8214,11 @@ func Get_Future_Hold(_action_serializable:Action_Serializable) -> int:
 func Get_Future_Cooldown(_action_serializable:Action_Serializable) -> int:
 	var _cooldown: int = _action_serializable.cooldown
 	#-------------------------------------------------------------------------------
+	var _alive_party: Array[Fighter_Node] = Get_Alive_Fighter_Party_in_Battle(ally_fighter_party)
+	#-------------------------------------------------------------------------------
 	for _j in current_fighter_turn:
 		#-------------------------------------------------------------------------------
-		if(_action_serializable.action_resource == ally_fighter_party[_j].action_serializable.action_resource):
+		if(_action_serializable.action_resource == _alive_party[_j].action_serializable.action_resource):
 			_cooldown = _action_serializable.action_resource.max_cooldown
 			return _cooldown
 		#-------------------------------------------------------------------------------
@@ -8202,6 +8293,34 @@ func Get_Tr_HP() -> String:
 #-------------------------------------------------------------------------------
 func Get_Tr_CD() -> String:
 	return tr("text_cd")
+#-------------------------------------------------------------------------------
+func Get_Tr_Equip_and_Weapon_Type(equip_resource:Equip_Resource) -> String:
+	var _s: String = Get_Tr_Equip_Type(equip_resource.myEQUIP_TYPE)
+	#-------------------------------------------------------------------------------
+	match(equip_resource.myEQUIP_TYPE):
+		#-------------------------------------------------------------------------------
+		Equip_Resource.EQUIP_TYPE.WEAPON:
+			#-------------------------------------------------------------------------------
+			match(equip_resource.myWEAPON_TYPE):
+				Equip_Resource.WEAPON_TYPE.NONE:
+					_s += " (Puños)"
+				#-------------------------------------------------------------------------------
+				Equip_Resource.WEAPON_TYPE.DAGGER:
+					_s += " (Daga)"
+				#-------------------------------------------------------------------------------
+				Equip_Resource.WEAPON_TYPE.SWORD:
+					_s += " (Espada)"
+				#-------------------------------------------------------------------------------
+				Equip_Resource.WEAPON_TYPE.MAZE:
+					_s += " (Maza)"
+				#-------------------------------------------------------------------------------
+				Equip_Resource.WEAPON_TYPE.STAFF:
+					_s += " (Bastón)"
+				#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return _s
 #-------------------------------------------------------------------------------
 func Get_Tr_Equip_Type(myEQUIP_TYPE:Equip_Resource.EQUIP_TYPE) -> String:
 	var _key: String = Equip_Resource.EQUIP_TYPE.keys()[myEQUIP_TYPE]
@@ -8364,7 +8483,7 @@ func Create_EnemyBullets_Disabled(_iMax:int):
 		disabled_enemy_bullets_array.append(_bullet)
 		_bullet.hide()
 		#_bullet.physics_Update = func(): EnemyBullet_PhysicsUpdate(_bullet)
-		battle_box.add_child(_bullet)
+		bullet_content.add_child(_bullet)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Create_EnemyBullet_A(_x:float, _y:float, _v:float, _dir:float, _type:String, _can_Go_OffLimits:bool) ->Bullet_Node:
@@ -8387,7 +8506,7 @@ func Create_EnemyBullet_Common(_x:float, _y:float, _type:String, _can_Go_OffLimi
 	#-------------------------------------------------------------------------------
 	else:
 		_bullet = bullet_Prefab.instantiate() as Bullet_Node
-		battle_box.add_child(_bullet)
+		bullet_content.add_child(_bullet)
 	#-------------------------------------------------------------------------------
 	enabled_enemy_bullets_array.append(_bullet)
 	#-------------------------------------------------------------------------------
@@ -8425,7 +8544,7 @@ func EnemyBullet_PhysicsUpdate_Limitless_A(_bullet: Bullet_Node):
 	var _dir2: float = deg_to_rad(_bullet.dir)
 	_bullet.vel_X = _bullet.vel * cos(_dir2)
 	_bullet.vel_Y = _bullet.vel * sin(_dir2)
-	_bullet.rotation_degrees = _bullet.dir
+	_bullet.rotation_degrees = _bullet.dir+90
 	#-------------------------------------------------------------------------------
 	_bullet.global_position.x += _bullet.vel_X * deltaTimeScale
 	_bullet.global_position.y += _bullet.vel_Y * deltaTimeScale
@@ -8507,4 +8626,29 @@ func Get_CircleSprite_Scale(_scale: float) -> Vector2:
 	_scale *= 0.75/95.0
 	var _v2: Vector2 = Vector2(_scale, _scale)
 	return _v2
+#-------------------------------------------------------------------------------
+#region CUSTOM SKILL FUNCTIONS
+#-------------------------------------------------------------------------------
+func skill_0_0(_user:Fighter_Node):
+	tp += 5
+	Set_TP_Bar(tp)
+	await Do_Ally_Action_0(_user)
+#-------------------------------------------------------------------------------
+func skill_0_3(_user:Fighter_Node):
+	tp += 5
+	Set_TP_Bar(tp)
+	#-------------------------------------------------------------------------------
+	Play_Action_Animation(guard_animation_prefab, _user)
+	await Seconds(_user.action_serializable.action_resource.animation_timer_1)
+	Add_Status_with_Presition_Rate_and_Effect(_user, "status_1", 100)
+	Set_Fighter_Status_UI_in_Battle(_user)
+	#-------------------------------------------------------------------------------
+	await Do_Ally_Action_0(_user)
+#-------------------------------------------------------------------------------
+func skill_1_0(_user:Fighter_Node):
+	tp += 5
+	Set_TP_Bar(tp)
+	await Do_Ally_Action_0(_user)
+#-------------------------------------------------------------------------------
+#endregion
 #-------------------------------------------------------------------------------

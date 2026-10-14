@@ -5,10 +5,11 @@
 
 [resource]
 script = ExtResource("2_fs5rf")
-myANIMATION_DURING_ACTION = 2
 icon = ExtResource("1_hq7ks")
+myANIMATION_DURING_ACTION = 2
 max_hold = 2
-value = 100
+value = 50
+myVALUE_TYPE = 1
 myEFFECT = 2
 myTARGET = 5
 metadata/_custom_type_script = "uid://dskxsyqjtpy3c"

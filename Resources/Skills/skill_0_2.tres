@@ -6,9 +6,9 @@
 
 [resource]
 script = ExtResource("3_ifal4")
-animation_prefab = ExtResource("1_jyrp3")
 icon = ExtResource("2_8y2j5")
-value = 10
+animation_prefab = ExtResource("1_jyrp3")
+value = 15
 myEFFECT = 3
 myATRIBUTE = 1
 myELEMENT = 1

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Action_Resource" format=3 uid="uid://cb4faua8h0glq"]
+
+[ext_resource type="Texture2D" uid="uid://cupsa11xh6lrf" path="res://Assets/freebies_mv_ready_ace_icons/Potions512/Potions512_12.png" id="1_imtue"]
+[ext_resource type="Script" uid="uid://dskxsyqjtpy3c" path="res://Scripts/Resources/action_resource.gd" id="2_mn2l3"]
+
+[resource]
+script = ExtResource("2_mn2l3")
+icon = ExtResource("1_imtue")
+max_hold = 2
+max_cooldown = 1
+value = 50
+myVALUE_TYPE = 1
+myEFFECT = 2
+myTARGET = 7
+remove_status_dictionary = Dictionary[StringName, int]({
+&"status_0": 100
+})
+metadata/_custom_type_script = "uid://dskxsyqjtpy3c"
