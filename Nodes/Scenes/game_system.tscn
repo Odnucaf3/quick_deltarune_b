@@ -39,7 +39,6 @@
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="27_b6a3y"]
 [ext_resource type="Script" uid="uid://d3hprek0h2f38" path="res://Scripts/Prefabs/hitbox_node.gd" id="29_wunun"]
-[ext_resource type="Texture2D" uid="uid://bd8wsbia6rebq" path="res://Assets/rpg_maker_mv/img/tilesets/Outside_B.png" id="30_p24l3"]
 [ext_resource type="Script" uid="uid://crnvc8j6ghppf" path="res://Scripts/canvas_layer.gd" id="31_en4w2"]
 [ext_resource type="PackedScene" uid="uid://rj8wk0p7m1vh" path="res://Nodes/Prefabs/Fighters/fighter_actor1_8.tscn" id="32_acn20"]
 [ext_resource type="Theme" uid="uid://c1ddyx1takirn" path="res://Themes/hp_bar_theme.tres" id="32_gijw1"]
@@ -52,64 +51,44 @@
 [ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/character_actor1_8.tscn" id="36_altm3"]
 [ext_resource type="TileSet" uid="uid://ci8hqmotb2vfk" path="res://TileSets/new_tile_set.tres" id="37_5668i"]
 [ext_resource type="PackedScene" uid="uid://coq254ffrmvdd" path="res://Nodes/Prefabs/Fighters/fighter_monster_1.tscn" id="37_altm3"]
-[ext_resource type="Texture2D" uid="uid://bs0gogac2glwr" path="res://Assets/tilesets_mv/Outside_A2_Godot_6.png" id="37_kthws"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
 [ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
 [ext_resource type="Texture2D" uid="uid://dnp7htyab2ryr" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_209.png" id="44_0t8i2"]
-[ext_resource type="Resource" uid="uid://bfeg07a1makid" path="res://Resources/Equips/equip_2_0_5.tres" id="44_ifc2b"]
 [ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="44_r4og7"]
-[ext_resource type="Resource" uid="uid://be6xoc2bpx7mg" path="res://Resources/Equips/equip_2_0_4.tres" id="45_xqrxi"]
 [ext_resource type="Texture2D" uid="uid://dcl7iyt5kjpwt" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_138.png" id="45_y1dyr"]
 [ext_resource type="Texture2D" uid="uid://b0ahrc6537fvk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_190.png" id="46_f8ljg"]
-[ext_resource type="Resource" uid="uid://bjleqtsseo06b" path="res://Resources/Equips/equip_2_0_3.tres" id="46_wunun"]
 [ext_resource type="Texture2D" uid="uid://cceadn16e18rp" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_242.png" id="47_8m6hh"]
-[ext_resource type="Resource" uid="uid://cr7cjhk1jtbwx" path="res://Resources/Equips/equip_2_0_6.tres" id="47_ebpaw"]
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
-[ext_resource type="Resource" uid="uid://dvjjxsffcampt" path="res://Resources/Equips/equip_2_0_7.tres" id="48_uml17"]
 [ext_resource type="Texture2D" uid="uid://bbykhvbevkk6r" path="res://Assets/rpg_maker_mv/img/faces/Actor1_8.png" id="49_6yqg2"]
-[ext_resource type="Resource" uid="uid://dn7qdqjd5v8x6" path="res://Resources/Equips/equip_2_0_2.tres" id="49_66201"]
-[ext_resource type="Resource" uid="uid://birmkdm54gbji" path="res://Resources/Equips/equip_1_0_5.tres" id="49_i77jc"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
-[ext_resource type="Resource" uid="uid://cbmsclimsrwh0" path="res://Resources/Equips/equip_1_0_4.tres" id="50_bc48j"]
-[ext_resource type="Resource" uid="uid://liedqs2kexn" path="res://Resources/Equips/equip_2_0_1.tres" id="50_x7s5m"]
-[ext_resource type="Resource" uid="uid://cn8nur5gah7nb" path="res://Resources/Equips/equip_1_0_3.tres" id="51_stbc4"]
-[ext_resource type="Resource" uid="uid://dxs5iar8g4kj3" path="res://Resources/Equips/equip_1_0_6.tres" id="52_bvfqi"]
-[ext_resource type="Resource" uid="uid://dsrrun10oiibk" path="res://Resources/Equips/equip_1_0_7.tres" id="53_h276b"]
-[ext_resource type="Resource" uid="uid://dcer8kesfg82e" path="res://Resources/Equips/equip_3_0_5.tres" id="53_hj75c"]
 [ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1.tscn" id="53_j7ao1"]
 [ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
 [ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="54_brd8x"]
-[ext_resource type="Resource" uid="uid://ciiobno68j8fu" path="res://Resources/Status/status_4.tres" id="54_ggk8j"]
-[ext_resource type="Resource" uid="uid://cpm8srwdm1g71" path="res://Resources/Equips/equip_1_0_2.tres" id="54_h1r7s"]
-[ext_resource type="Resource" uid="uid://driaspgavwmr3" path="res://Resources/Equips/equip_3_0_4.tres" id="54_paw12"]
 [ext_resource type="Resource" uid="uid://buw4urkkcygf1" path="res://Resources/Items/item_1_0_0_0.tres" id="55_ggk8j"]
 [ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
-[ext_resource type="Resource" uid="uid://cva8obeu5n41y" path="res://Resources/Equips/equip_3_0_3.tres" id="55_topjn"]
 [ext_resource type="Resource" uid="uid://cqwgiphrg5vfd" path="res://Resources/Equips/equip_1_0_1.tres" id="55_wdwx4"]
-[ext_resource type="Resource" uid="uid://nk5dkd3adr2b" path="res://Resources/Equips/equip_3_0_6.tres" id="56_afqp2"]
 [ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="56_shqvj"]
 [ext_resource type="Texture2D" uid="uid://bpf0lfby516un" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_177.png" id="57_hdd08"]
 [ext_resource type="Texture2D" uid="uid://0wrcrvu0t6hs" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_315.png" id="57_hklgd"]
-[ext_resource type="Resource" uid="uid://dejhnplk75yff" path="res://Resources/Equips/equip_3_0_7.tres" id="57_u8se8"]
 [ext_resource type="Texture2D" uid="uid://b6tg3m2ywr4bs" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_133.png" id="58_3i786"]
+[ext_resource type="Texture2D" uid="uid://din6j1wdbpmh7" path="res://Assets/rpg_maker_mv/img/characters/!Chest_1.png" id="58_h1r7s"]
 [ext_resource type="Texture2D" uid="uid://dau8th2ohedye" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_82.png" id="58_kthws"]
-[ext_resource type="Resource" uid="uid://2r6p1baj0yeb" path="res://Resources/Equips/equip_3_0_2.tres" id="58_yhhmu"]
-[ext_resource type="Resource" uid="uid://bj3cirf4tf4de" path="res://Resources/Equips/equip_3_0_1.tres" id="59_2g6gd"]
 [ext_resource type="Texture2D" uid="uid://b816kdwjyshvw" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_196.png" id="59_bv80u"]
 [ext_resource type="Texture2D" uid="uid://c8odt7cxtvsph" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_76.png" id="59_otuwt"]
 [ext_resource type="Texture2D" uid="uid://fnxrokl8esje" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_2.png" id="60_b6a3y"]
-[ext_resource type="Resource" uid="uid://bffj3o5mr0f5b" path="res://Resources/Equips/equip_4_0_5.tres" id="62_yfd8v"]
-[ext_resource type="Resource" uid="uid://d3kwq4dentkn8" path="res://Resources/Equips/equip_4_0_4.tres" id="63_mb3vs"]
-[ext_resource type="Resource" uid="uid://y42250lba52x" path="res://Resources/Equips/equip_4_0_3.tres" id="64_ukt4q"]
-[ext_resource type="Resource" uid="uid://c6lya4l7u1qd4" path="res://Resources/Equips/equip_4_0_6.tres" id="65_s6hvh"]
+[ext_resource type="Texture2D" uid="uid://clw8yvw4eoael" path="res://Assets/rpg_maker_mv/img/characters/!Chest_3.png" id="60_wdwx4"]
+[ext_resource type="Texture2D" uid="uid://ct2texlbw2gnq" path="res://Assets/rpg_maker_mv/img/characters/!Chest_4.png" id="61_6avol"]
+[ext_resource type="Texture2D" uid="uid://dnxmngwgxch3c" path="res://Assets/rpg_maker_mv/img/characters/!Chest_5.png" id="62_tn53f"]
+[ext_resource type="Texture2D" uid="uid://qoue4tpwb1im" path="res://Assets/rpg_maker_mv/img/characters/!Chest_6.png" id="63_2hsyw"]
+[ext_resource type="Texture2D" uid="uid://bt5e7a5auuhfm" path="res://Assets/rpg_maker_mv/img/characters/!Chest_7.png" id="64_g3we4"]
+[ext_resource type="Texture2D" uid="uid://cwd40ugispala" path="res://Assets/rpg_maker_mv/img/characters/!Chest_8.png" id="65_psock"]
 [ext_resource type="Texture2D" uid="uid://cifii7lxli87w" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_98.png" id="66_en4w2"]
-[ext_resource type="Resource" uid="uid://byrd4l8t57hx7" path="res://Resources/Equips/equip_4_0_7.tres" id="66_xg8b5"]
-[ext_resource type="Resource" uid="uid://ky5lamr6qey3" path="res://Resources/Equips/equip_4_0_2.tres" id="67_fafpn"]
-[ext_resource type="Resource" uid="uid://c45wk5nerxj85" path="res://Resources/Equips/equip_4_0_1.tres" id="68_34fb6"]
 [ext_resource type="AudioStream" uid="uid://dbvp7708tegam" path="res://Assets/ralsei-talk.mp3" id="69_ggk8j"]
 [ext_resource type="PackedScene" uid="uid://r4513uqbld3f" path="res://Nodes/Prefabs/Fighters/fighter_monster_2.tscn" id="82_ebpaw"]
 [ext_resource type="PackedScene" uid="uid://c6sqqp2uklh3f" path="res://Nodes/Prefabs/Fighters/fighter_monster_3.tscn" id="83_uml17"]
+[ext_resource type="Texture2D" uid="uid://j13012x3vidr" path="res://Assets/rpg_maker_mv/img/characters/!Flame_7.png" id="86_paw12"]
+[ext_resource type="Texture2D" uid="uid://dqqn1o5pu6osc" path="res://Assets/rpg_maker_mv/img/characters/!Chest_2.png" id="87_paw12"]
 [ext_resource type="PackedScene" uid="uid://3lwydgx7j24f" path="res://Nodes/Prefabs/ui/status_ui.tscn" id="88_h1r7s"]
 
 [sub_resource type="Resource" id="Resource_uj0ak"]
@@ -158,6 +137,7 @@ metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 [sub_resource type="Resource" id="Resource_8ld1n"]
 script = ExtResource("27_b6a3y")
 equip_resource = ExtResource("12_bvfqi")
+stored = 40
 metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="Resource" id="Resource_hdd08"]
@@ -520,575 +500,20 @@ size = Vector2(25, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_aoydg"]
 radius = 8.0
 
-[sub_resource type="Resource" id="Resource_g3we4"]
-script = ExtResource("24_8wyqk")
-fighter_resource = ExtResource("12_hf3yd")
-level = 9
-equip_weapon = ExtResource("55_wdwx4")
-equip_shield = ExtResource("54_h1r7s")
-equip_head = ExtResource("51_stbc4")
-equip_body = ExtResource("50_bc48j")
-equip_arms = ExtResource("49_i77jc")
-equip_legs = ExtResource("52_bvfqi")
-equip_ring_1 = ExtResource("53_h276b")
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_i71nr"]
-script = ExtResource("24_8wyqk")
-fighter_resource = ExtResource("19_8m6hh")
-equip_weapon = ExtResource("50_x7s5m")
-equip_shield = ExtResource("49_66201")
-equip_head = ExtResource("46_wunun")
-equip_body = ExtResource("45_xqrxi")
-equip_arms = ExtResource("44_ifc2b")
-equip_legs = ExtResource("47_ebpaw")
-equip_ring_1 = ExtResource("48_uml17")
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_m4vmq"]
-script = ExtResource("24_8wyqk")
-fighter_resource = ExtResource("21_ngqpa")
-equip_weapon = ExtResource("59_2g6gd")
-equip_shield = ExtResource("58_yhhmu")
-equip_head = ExtResource("55_topjn")
-equip_body = ExtResource("54_paw12")
-equip_arms = ExtResource("53_hj75c")
-equip_legs = ExtResource("56_afqp2")
-equip_ring_1 = ExtResource("57_u8se8")
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_2i5i2"]
-script = ExtResource("25_j7ao1")
-status_resource = ExtResource("54_ggk8j")
-turns = 3
-metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
-
-[sub_resource type="Resource" id="Resource_hmkdw"]
-script = ExtResource("24_8wyqk")
-fighter_resource = ExtResource("22_shqvj")
-equip_weapon = ExtResource("68_34fb6")
-equip_shield = ExtResource("67_fafpn")
-equip_head = ExtResource("64_ukt4q")
-equip_body = ExtResource("63_mb3vs")
-equip_arms = ExtResource("62_yfd8v")
-equip_legs = ExtResource("65_s6hvh")
-equip_ring_1 = ExtResource("66_xg8b5")
-status_serializable_array = Array[ExtResource("25_j7ao1")]([SubResource("Resource_2i5i2")])
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
 [sub_resource type="Resource" id="Resource_3em1u"]
 script = ExtResource("54_brd8x")
 action_resource = ExtResource("55_ggk8j")
 metadata/_custom_type_script = "uid://ck6vbg7epahmp"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ei7os"]
-texture = ExtResource("37_kthws")
-texture_region_size = Vector2i(48, 48)
-1:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-10:0/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-8:1/0 = 0
-9:1/0 = 0
-11:1/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-10:2/0 = 0
-11:2/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-4:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-7:3/0 = 0
-8:3/0 = 0
-9:3/0 = 0
-10:3/0 = 0
-11:3/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-4:4/0 = 0
-5:4/0 = 0
-6:4/0 = 0
-7:4/0 = 0
-8:4/0 = 0
-9:4/0 = 0
-10:4/0 = 0
-11:4/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-4:5/0 = 0
-5:5/0 = 0
-6:5/0 = 0
-7:5/0 = 0
-8:5/0 = 0
-9:5/0 = 0
-11:5/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-4:6/0 = 0
-5:6/0 = 0
-6:6/0 = 0
-7:6/0 = 0
-8:6/0 = 0
-9:6/0 = 0
-10:6/0 = 0
-11:6/0 = 0
-1:7/0 = 0
-2:7/0 = 0
-4:7/0 = 0
-5:7/0 = 0
-6:7/0 = 0
-7:7/0 = 0
-8:7/0 = 0
-9:7/0 = 0
-10:7/0 = 0
-11:7/0 = 0
-1:8/0 = 0
-2:8/0 = 0
-4:8/0 = 0
-5:8/0 = 0
-6:8/0 = 0
-7:8/0 = 0
-8:8/0 = 0
-9:8/0 = 0
-10:8/0 = 0
-11:8/0 = 0
-1:9/0 = 0
-4:9/0 = 0
-5:9/0 = 0
-6:9/0 = 0
-7:9/0 = 0
-8:9/0 = 0
-9:9/0 = 0
-1:10/0 = 0
-2:10/0 = 0
-4:10/0 = 0
-5:10/0 = 0
-6:10/0 = 0
-7:10/0 = 0
-8:10/0 = 0
-9:10/0 = 0
-10:10/0 = 0
-11:10/0 = 0
-1:11/0 = 0
-2:11/0 = 0
-4:11/0 = 0
-5:11/0 = 0
-6:11/0 = 0
-7:11/0 = 0
-8:11/0 = 0
-9:11/0 = 0
-10:11/0 = 0
-11:11/0 = 0
-1:12/0 = 0
-4:12/0 = 0
-5:12/0 = 0
-6:12/0 = 0
-7:12/0 = 0
-8:12/0 = 0
-9:12/0 = 0
-10:12/0 = 0
-1:13/0 = 0
-2:13/0 = 0
-4:13/0 = 0
-5:13/0 = 0
-6:13/0 = 0
-7:13/0 = 0
-8:13/0 = 0
-9:13/0 = 0
-11:13/0 = 0
-1:14/0 = 0
-2:14/0 = 0
-4:14/0 = 0
-5:14/0 = 0
-6:14/0 = 0
-7:14/0 = 0
-8:14/0 = 0
-9:14/0 = 0
-10:14/0 = 0
-11:14/0 = 0
-1:15/0 = 0
-2:15/0 = 0
-4:15/0 = 0
-5:15/0 = 0
-6:15/0 = 0
-7:15/0 = 0
-8:15/0 = 0
-9:15/0 = 0
-10:15/0 = 0
-11:15/0 = 0
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-2:0/0 = 0
-3:0/0 = 0
-11:0/0 = 0
-0:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-3:2/0 = 0
-0:3/0 = 0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-3:3/0 = 0
-0:4/0 = 0
-3:4/0 = 0
-0:5/0 = 0
-3:5/0 = 0
-0:6/0 = 0
-3:6/0 = 0
-0:7/0 = 0
-3:7/0 = 0
-0:8/0 = 0
-3:8/0 = 0
-0:9/0 = 0
-2:9/0 = 0
-3:9/0 = 0
-11:9/0 = 0
-0:10/0 = 0
-3:10/0 = 0
-0:11/0 = 0
-3:11/0 = 0
-0:12/0 = 0
-2:12/0 = 0
-3:12/0 = 0
-11:12/0 = 0
-0:13/0 = 0
-3:13/0 = 0
-0:14/0 = 0
-3:14/0 = 0
-0:15/0 = 0
-3:15/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_3em1u"]
-tile_size = Vector2i(48, 48)
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_ei7os")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tk7i7"]
-texture = ExtResource("30_p24l3")
-texture_region_size = Vector2i(48, 48)
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-10:0/0 = 0
-11:0/0 = 0
-12:0/0 = 0
-13:0/0 = 0
-14:0/0 = 0
-15:0/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-8:1/0 = 0
-9:1/0 = 0
-10:1/0 = 0
-11:1/0 = 0
-12:1/0 = 0
-13:1/0 = 0
-14:1/0 = 0
-15:1/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-10:2/0 = 0
-11:2/0 = 0
-12:2/0 = 0
-13:2/0 = 0
-14:2/0 = 0
-15:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-7:3/0 = 0
-8:3/0 = 0
-9:3/0 = 0
-10:3/0 = 0
-11:3/0 = 0
-12:3/0 = 0
-13:3/0 = 0
-14:3/0 = 0
-15:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-4:4/0 = 0
-5:4/0 = 0
-6:4/0 = 0
-7:4/0 = 0
-8:4/0 = 0
-9:4/0 = 0
-10:4/0 = 0
-11:4/0 = 0
-12:4/0 = 0
-13:4/0 = 0
-14:4/0 = 0
-15:4/0 = 0
-0:5/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-3:5/0 = 0
-4:5/0 = 0
-5:5/0 = 0
-6:5/0 = 0
-7:5/0 = 0
-8:5/0 = 0
-9:5/0 = 0
-10:5/0 = 0
-11:5/0 = 0
-12:5/0 = 0
-13:5/0 = 0
-14:5/0 = 0
-15:5/0 = 0
-0:6/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-3:6/0 = 0
-4:6/0 = 0
-5:6/0 = 0
-6:6/0 = 0
-7:6/0 = 0
-8:6/0 = 0
-9:6/0 = 0
-10:6/0 = 0
-11:6/0 = 0
-12:6/0 = 0
-13:6/0 = 0
-14:6/0 = 0
-15:6/0 = 0
-0:7/0 = 0
-1:7/0 = 0
-2:7/0 = 0
-3:7/0 = 0
-4:7/0 = 0
-5:7/0 = 0
-6:7/0 = 0
-7:7/0 = 0
-8:7/0 = 0
-9:7/0 = 0
-10:7/0 = 0
-11:7/0 = 0
-12:7/0 = 0
-13:7/0 = 0
-14:7/0 = 0
-15:7/0 = 0
-0:8/0 = 0
-1:8/0 = 0
-2:8/0 = 0
-3:8/0 = 0
-4:8/0 = 0
-5:8/0 = 0
-6:8/0 = 0
-7:8/0 = 0
-8:8/0 = 0
-9:8/0 = 0
-10:8/0 = 0
-11:8/0 = 0
-12:8/0 = 0
-13:8/0 = 0
-14:8/0 = 0
-15:8/0 = 0
-0:9/0 = 0
-1:9/0 = 0
-1:9/0/y_sort_origin = 24
-1:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 12, 12, 12, 12, 24, -12, 24)
-2:9/0 = 0
-3:9/0 = 0
-3:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, 0, 24, 0, 24, 24, -24, 24)
-4:9/0 = 0
-5:9/0 = 0
-6:9/0 = 0
-7:9/0 = 0
-8:9/0 = 0
-9:9/0 = 0
-10:9/0 = 0
-11:9/0 = 0
-12:9/0 = 0
-13:9/0 = 0
-14:9/0 = 0
-15:9/0 = 0
-0:10/0 = 0
-1:10/0 = 0
-2:10/0 = 0
-3:10/0 = 0
-4:10/0 = 0
-5:10/0 = 0
-6:10/0 = 0
-7:10/0 = 0
-8:10/0 = 0
-8:10/0/y_sort_origin = 72
-9:10/0 = 0
-9:10/0/y_sort_origin = 72
-10:10/0 = 0
-10:10/0/y_sort_origin = 72
-11:10/0 = 0
-11:10/0/y_sort_origin = 96
-12:10/0 = 0
-13:10/0 = 0
-14:10/0 = 0
-15:10/0 = 0
-0:11/0 = 0
-1:11/0 = 0
-2:11/0 = 0
-3:11/0 = 0
-4:11/0 = 0
-10:11/0 = 0
-10:11/0/y_sort_origin = 24
-11:11/0 = 0
-11:11/0/y_sort_origin = 48
-12:11/0 = 0
-13:11/0 = 0
-14:11/0 = 0
-15:11/0 = 0
-0:12/0 = 0
-1:12/0 = 0
-2:12/0 = 0
-3:12/0 = 0
-4:12/0 = 0
-5:12/0 = 0
-6:12/0 = 0
-7:12/0 = 0
-8:12/0 = 0
-8:12/0/y_sort_origin = -24
-8:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-9:12/0 = 0
-9:12/0/y_sort_origin = -24
-9:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-10:12/0 = 0
-10:12/0/y_sort_origin = -24
-10:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-11:12/0 = 0
-11:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, 0, -16, 0, -16, 24, 16, 24)
-15:12/0 = 0
-0:13/0 = 0
-0:13/0/y_sort_origin = 24
-0:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 12, 12, 12, 12, 24, -12, 24)
-1:13/0 = 0
-2:13/0 = 0
-3:13/0 = 0
-3:13/0/z_index = -1
-4:13/0 = 0
-5:13/0 = 0
-6:13/0 = 0
-7:13/0 = 0
-8:13/0 = 0
-9:13/0 = 0
-10:13/0 = 0
-11:13/0 = 0
-12:13/0 = 0
-13:13/0 = 0
-14:13/0 = 0
-15:13/0 = 0
-0:14/0 = 0
-0:14/0/y_sort_origin = 72
-1:14/0 = 0
-1:14/0/y_sort_origin = 72
-2:14/0 = 0
-2:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-3:14/0 = 0
-3:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-4:14/0 = 0
-4:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-5:14/0 = 0
-5:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-6:14/0 = 0
-6:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-7:14/0 = 0
-7:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-8:14/0 = 0
-9:14/0 = 0
-10:14/0 = 0
-11:14/0 = 0
-12:14/0 = 0
-13:14/0 = 0
-14:14/0 = 0
-15:14/0 = 0
-0:15/0 = 0
-0:15/0/y_sort_origin = 24
-0:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(24, 0, 12, 0, 12, 24, 24, 24)
-1:15/0 = 0
-1:15/0/y_sort_origin = 24
-1:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, 0, -12, 0, -12, 24, -24, 24)
-2:15/0 = 0
-2:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-3:15/0 = 0
-3:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-4:15/0 = 0
-4:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-5:15/0 = 0
-5:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-6:15/0 = 0
-6:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-7:15/0 = 0
-7:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-8:15/0 = 0
-8:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-9:15/0 = 0
-9:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-10:15/0 = 0
-10:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
-11:15/0 = 0
-11:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, 0, -16, 0, -16, 24, 16, 24)
-12:15/0 = 0
-13:15/0 = 0
-14:15/0 = 0
-15:15/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-5:11/0 = 0
-6:11/0 = 0
-7:11/0 = 0
-8:11/0 = 0
-8:11/0/y_sort_origin = 24
-9:11/0 = 0
-9:11/0/y_sort_origin = 24
-12:12/0 = 0
-13:12/0 = 0
-14:12/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_5t6d6"]
-tile_size = Vector2i(48, 48)
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_tk7i7")
+[sub_resource type="Resource" id="Resource_yfd8v"]
+script = ExtResource("27_b6a3y")
+equip_resource = ExtResource("55_wdwx4")
+metadata/_custom_type_script = "uid://bcch2fq7bh15d"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcbh6"]
 radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rf75r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3em1u"]
 radius = 16.0
@@ -1100,16 +525,6 @@ radius = 16.0
 script = ExtResource("24_8wyqk")
 fighter_resource = ExtResource("12_hf3yd")
 level = 99
-equip_weapon = ExtResource("55_wdwx4")
-equip_shield = ExtResource("54_h1r7s")
-equip_head = ExtResource("51_stbc4")
-equip_body = ExtResource("50_bc48j")
-equip_arms = ExtResource("49_i77jc")
-equip_legs = ExtResource("52_bvfqi")
-equip_ring_1 = ExtResource("53_h276b")
-equip_ring_2 = ExtResource("53_h276b")
-equip_ring_3 = ExtResource("11_gijw1")
-equip_ring_4 = ExtResource("53_h276b")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [sub_resource type="Resource" id="Resource_4fhhk"]
@@ -1126,6 +541,7 @@ status_serializable_array = Array[ExtResource("25_j7ao1")]([SubResource("Resourc
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qeicn"]
+radius = 12.0415945
 
 [sub_resource type="Animation" id="Animation_ql07v"]
 resource_name = "Idle"
@@ -1135,26 +551,14 @@ step = 0.14285715
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.42857146),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.2857143, 0.5714286),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [Vector2(0, 0), Vector2(1.1920929e-07, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.42857146),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(0.05, 0.05), Vector2(0.06249999, 0.06249999)]
+"values": [0, 1, 2]
 }
 
 [sub_resource type="Animation" id="Animation_hf3yd"]
@@ -1162,26 +566,14 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.05, 0.05)]
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p24l3"]
@@ -1192,6 +584,18 @@ _data = {
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3em1u"]
 animation = &"Idle"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_va76y"]
+radius = 23.086792
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aoydg"]
+size = Vector2(36, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5cbct"]
+size = Vector2(33, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o53fc"]
+size = Vector2(29, 11)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x5jtt"]
 shader = ExtResource("54_8m6hh")
@@ -1372,8 +776,8 @@ item_menu_equip_information_icon = NodePath("main_canvas_layer/item_menu/VBoxCon
 item_menu_equip_information_id = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/VBoxContainer/item_menu_equip_information_id")
 item_menu_equip_information_stored_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/item_menu_equip_information_stored_title")
 item_menu_equip_information_stored_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/item_menu_equip_information_stored_title/item_menu_equip_information_stored_value")
-item_menu_equip_information_level_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/item_menu_equip_information_level_title")
-item_menu_equip_information_level_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/item_menu_equip_information_level_title/item_menu_equip_information_level_value")
+item_menu_equip_information_level_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/Control/item_menu_equip_information_level_title")
+item_menu_equip_information_level_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/Control/item_menu_equip_information_level_title/item_menu_equip_information_level_value")
 item_menu_equip_information_class_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/item_menu_equip_information_class_title")
 item_menu_equip_information_class_value = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/item_menu_equip_information_class_title/item_menu_equip_information_class_value")
 item_menu_equip_information_statistics_title = NodePath("main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/item_menu_equip_information_statistics_title")
@@ -1406,8 +810,8 @@ equip_menu_information_icon = NodePath("main_canvas_layer/equip_menu/VBoxContain
 equip_menu_information_id = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/VBoxContainer/equip_menu_information_id")
 equip_menu_information_stored_title = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/equip_menu_information_stored_title")
 equip_menu_information_stored_value = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/equip_menu_information_stored_title/equip_menu_information_stored_value")
-equip_menu_information_level_title = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/equip_menu_information_level_title")
-equip_menu_information_level_value = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/equip_menu_information_level_title/equip_menu_information_level_value")
+equip_menu_information_level_title = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/Control/equip_menu_information_level_title")
+equip_menu_information_level_value = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/Control/equip_menu_information_level_title/equip_menu_information_level_value")
 equip_menu_information_class_type = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/equip_menu_information_class_type")
 equip_menu_information_class_value = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/equip_menu_information_class_type/equip_menu_information_class_value")
 equip_menu_information_statistics_title = NodePath("main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/equip_menu_information_statistics_title")
@@ -1437,9 +841,9 @@ statistics_menu_information_extra_stats_value = NodePath("main_canvas_layer/stat
 statistics_menu_information_special_stats_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/special_stats/statistics_menu_information_special_stats_title")
 statistics_menu_information_special_stats_name = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/special_stats/statistics_menu_information_special_stats_name")
 statistics_menu_information_special_stats_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/special_stats/statistics_menu_information_special_stats_name/statistics_menu_information_special_stats_value")
-statistics_menu_information_equip_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/equipment/statistics_menu_information_equip_title")
-statistics_menu_information_equip_type = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/equipment/statistics_menu_information_equip_type")
-statistics_menu_information_equip_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/equipment/statistics_menu_information_equip_type/statistics_menu_information_equip_value")
+statistics_menu_information_equip_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/equipment/statistics_menu_information_equip_title")
+statistics_menu_information_equip_type = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/equipment/statistics_menu_information_equip_type")
+statistics_menu_information_equip_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/equipment/statistics_menu_information_equip_type/statistics_menu_information_equip_value")
 statistics_menu_information_skill_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/habilities/statistics_menu_information_skill_title")
 statistics_menu_information_skill_name = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/habilities/HBoxContainer4/VBoxContainer/statistics_menu_information_skill_name")
 statistics_menu_information_skill_cost_name = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/habilities/HBoxContainer4/habilities4/statistics_menu_information_skill_cost_name")
@@ -1462,8 +866,8 @@ statistics_menu_information_elemental_affinity_title = NodePath("main_canvas_lay
 statistics_menu_information_elemental_affinity_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/elemental_rate/HBoxContainer5/VBoxContainer4/statistics_menu_information_elemental_affinity_value")
 statistics_menu_information_elemental_repulsion_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/elemental_rate/HBoxContainer5/VBoxContainer5/statistics_menu_information_elemental_repulsion_title")
 statistics_menu_information_elemental_repulsion_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/elemental_rate/HBoxContainer5/VBoxContainer5/statistics_menu_information_elemental_repulsion_value")
-statistics_menu_information_description_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer/statistics_menu_information_description_title")
-statistics_menu_information_description_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer/statistics_menu_information_description_value")
+statistics_menu_information_description_title = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/description/statistics_menu_information_description_title")
+statistics_menu_information_description_value = NodePath("main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/description/statistics_menu_information_description_value")
 status_menu = NodePath("main_canvas_layer/status_menu")
 status_menu_button_0 = NodePath("main_canvas_layer/status_menu/VBoxContainer/HBoxContainer/status_menu_button_0")
 status_menu_button_title = NodePath("main_canvas_layer/status_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer/status_menu_button_title")
@@ -1510,6 +914,7 @@ z_index = 3
 y_sort_enabled = true
 
 [node name="lock_on" type="Control" parent="World_2D" unique_id=1817202298]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -1645,6 +1050,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qeicn")
 
 [node name="battle_box" type="Panel" parent="World_2D" unique_id=1091550278]
+visible = false
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1659,6 +1065,7 @@ scale = Vector2(0.5, 0.5)
 theme = ExtResource("16_0t8i2")
 
 [node name="hitbox" type="Node2D" parent="World_2D" unique_id=1868849884 node_paths=PackedStringArray("grazebox", "animation_tree")]
+visible = false
 z_index = 4
 position = Vector2(-39, -25)
 script = ExtResource("29_wunun")
@@ -1704,7 +1111,7 @@ parameters/Base_OneShot/request = 0
 
 [node name="player_characterbody2d" type="CharacterBody2D" parent="World_2D" unique_id=412323299]
 y_sort_enabled = true
-position = Vector2(64, -64)
+position = Vector2(23, -113)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d" unique_id=579708302]
 shape = SubResource("RectangleShape2D_3em1u")
@@ -1729,19 +1136,15 @@ visible = false
 
 [node name="fighter_actor1_1" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
 y_sort_enabled = true
-fighter_serializable = SubResource("Resource_g3we4")
 
 [node name="fighter_actor1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
 y_sort_enabled = true
-fighter_serializable = SubResource("Resource_i71nr")
 
 [node name="fighter_actor2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
 y_sort_enabled = true
-fighter_serializable = SubResource("Resource_m4vmq")
 
 [node name="fighter_actor3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
 y_sort_enabled = true
-fighter_serializable = SubResource("Resource_hmkdw")
 
 [node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "ally_3", "ally_3_character", "npc_3", "npc_3_character", "enemy_1", "enemy_1_fighter_array", "enemy_2", "enemy_2_fighter_array", "interactable", "room_limits")]
 y_sort_enabled = true
@@ -1766,6 +1169,7 @@ ally_3_fighter_prefab = ExtResource("22_5rrxs")
 npc_3 = NodePath("npc_3")
 npc_3_character = NodePath("npc_3/character_actor1_8")
 npc_3_item_consumable_array = Array[ExtResource("54_brd8x")]([SubResource("Resource_3em1u")])
+npc_3_item_equip_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_yfd8v")])
 enemy_1 = NodePath("npc_4")
 enemy_1_fighter_array = [NodePath("npc_4/fighter_actor1_1"), NodePath("npc_4/fighter_actor1_8"), NodePath("npc_4/fighter_actor2_7"), NodePath("npc_4/fighter_actor3_8")]
 enemy_2 = NodePath("npc_5")
@@ -1776,26 +1180,16 @@ room_limits = NodePath("room_limits")
 [node name="room_limits" type="Control" parent="World_2D/room_00" unique_id=1014785272]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -96.0
-offset_top = -1056.0
-offset_right = 672.0
-offset_bottom = 48.0
-
-[node name="TileMapLayer3" type="TileMapLayer" parent="World_2D/room_00" unique_id=246725051]
-visible = false
-tile_map_data = PackedByteArray("AAD9/+7/AAAAAAMAAAD9/+//AAAAAAMAAAD9//D/AAAAAAMAAAD9//H/AAAAAAMAAAD9//L/AAAAAAMAAAD9//P/AAAAAAMAAAD9//T/AAAAAAMAAAD9//X/AAAAAAMAAAD9//b/AAAAAAMAAAD9//f/AAAAAAMAAAD9//j/AAAAAAMAAAD9//n/AAAAAAMAAAD9//r/AAAAAAMAAAD9//v/AAAAAAMAAAD9//z/AAAAAAMAAAD9//3/AAAAAAMAAAD9//7/AAAAAAMAAAD9////AAAAAAMAAAD9/wAAAAAAAAMAAAD9/wEAAAAAAAMAAAD+/wEAAAAAAAMAAAD//wEAAAAAAAMAAAAAAAEAAAAAAAMAAAABAAEAAAAAAAMAAAACAAEAAAAAAAMAAAADAAEAAAAAAAMAAAAEAAEAAAAAAAMAAAAFAAEAAAAAAAMAAAAGAAEAAAAAAAMAAAAHAAEAAAAAAAMAAAAIAAEAAAAAAAMAAAAJAAEAAAAAAAMAAAAKAAEAAAAAAAMAAAALAAEAAAAAAAMAAAAMAAEAAAAAAAMAAAANAAEAAAAAAAMAAAAOAAEAAAAAAAMAAAAOAAAAAAAAAAMAAAAOAP//AAAAAAMAAAAOAP7/AAAAAAMAAAAOAP3/AAAAAAMAAAAOAPz/AAAAAAMAAAAOAPv/AAAAAAMAAAAOAPr/AAAAAAMAAAAOAPn/AAAAAAMAAAAOAPj/AAAAAAMAAAAOAPf/AAAAAAMAAAAOAPb/AAAAAAMAAAAOAPX/AAAAAAMAAAAOAPT/AAAAAAMAAAAOAPP/AAAAAAMAAAAOAPL/AAAAAAMAAAAOAPH/AAAAAAMAAAAOAPD/AAAAAAMAAAAOAO//AAAAAAMAAAAOAO7/AAAAAAMAAAAOAO3/AAAAAAMAAAANAO3/AAAAAAMAAAAMAO3/AAAAAAMAAAALAO3/AAAAAAMAAAAKAO3/AAAAAAMAAAAJAO3/AAAAAAMAAAAIAO3/AAAAAAMAAAAHAO3/AAAAAAMAAAAGAO3/AAAAAAMAAAAFAO3/AAAAAAMAAAAEAO3/AAAAAAMAAAADAO3/AAAAAAMAAAACAO3/AAAAAAMAAAABAO3/AAAAAAMAAAAAAO3/AAAAAAMAAAD//+3/AAAAAAMAAAD+/+3/AAAAAAMAAAD9/+3/AAAAAAMAAAA=")
-tile_set = SubResource("TileSet_3em1u")
+offset_left = -144.0
+offset_top = -288.0
+offset_right = 864.0
+offset_bottom = 336.0
 
 [node name="TileMapLayer" type="TileMapLayer" parent="World_2D/room_00" unique_id=1581131292]
 z_index = -1
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAACAP7/AAALAAIAAAACAP3/AAALAAEAAAACAPz/AAALAAIAAAACAPv/AAALAAAAAAABAP7/AAAJAAIAAAABAP3/AAAJAAIAAAABAPz/AAAJAAIAAAABAPv/AAAKAAAAAAAAAP7/AAAJAAIAAAAAAP3/AAAJAAIAAAAAAPz/AAAJAAIAAAAAAPv/AAAKAAAAAAAFAP3/AAACAAIAAAAEAP3/AAACAAMAAAADAP3/AAACAAMAAAAFAPz/AAAAAAEAAAAFAPv/AAAAAAEAAAAFAPr/AAAAAAEAAAAFAPn/AAAAAAEAAAAGAPf/AAALAAIAAAAGAPj/AAALAAMAAAAEAPj/AAAIAAMAAAAEAPn/AQALAAAAAAAGAPn/AQAAAAAAAAAGAPb/AAALAAIAAAAFAPj/AAAKAAMAAAAFAPf/AAAJAAIAAAAFAPb/AAAJAAIAAAAEAPf/AAAIAAEAAAAEAPb/AAAIAAEAAAAJAP3/AAACAAMAAAAIAP3/AAACAAMAAAAHAP3/AAACAAMAAAAGAP3/AAACAAMAAAAMAP7/AAALAAMAAAAMAP3/AAALAAIAAAAMAPz/AAALAAAAAAALAP7/AAAJAAMAAAALAP3/AAAJAAIAAAALAPz/AAAKAAAAAAAKAP7/AAAIAAMAAAAKAP3/AAAIAAIAAAAKAPz/AAAIAAAAAAACAP//AAALAAMAAAABAP//AAAJAAMAAAAAAP//AAAJAAMAAAD/////AAAIAAMAAAD///7/AAAIAAEAAAD///3/AAAIAAEAAAD///z/AAAIAAEAAAD///v/AAAIAAAAAAD+/wAAAQABAAIAAAD+////AQAAAAEAAAD+//7/AQAAAAEAAAD+//3/AQAAAAEAAAD+//z/AQAAAAEAAAD+//v/AQAAAAEAAAD+//r/AQAEAAIAAAD+//n/AQAIAAEAAAD+//j/AQAEAAEAAAD+//f/AQAAAAEAAAD+//b/AQAEAAIAAAANAPX/BAALAAAAAAAMAPX/BAAIAAAAAAALAPX/AQADAAAAAAAKAPX/AQACAAMAAAAJAPX/AQAGAAAAAAAIAPX/AQAKAAAAAAAHAPX/AQAIAAAAAAAGAPX/AAALAAAAAAAFAPX/AAAKAAAAAAAEAPX/AAAIAAAAAAANAAAAAQALAAMAAAANAP//AQAHAAEAAAANAP7/AQAAAAEAAAANAP3/AQAAAAEAAAANAPz/AQAAAAEAAAANAPv/AQADAAEAAAANAPr/AQAAAAEAAAANAPn/AQAAAAAAAAANAPj/BAALAAMAAAANAPf/BAALAAIAAAANAPb/BAALAAIAAAAMAAAAAQAJAAMAAAALAAAAAQAJAAMAAAAKAAAAAQAJAAMAAAAJAAAAAQAJAAMAAAAIAAAAAQAJAAMAAAAHAAAAAQAJAAMAAAAGAAAAAQAJAAMAAAAFAAAAAQAJAAMAAAAEAAAAAQAJAAMAAAADAAAAAQAFAAMAAAACAAAAAQACAAMAAAABAAAAAQACAAMAAAAAAAAAAQACAAMAAAD//wAAAQACAAMAAAAMAP//AQAKAAAAAAALAP//AQAKAAAAAAAKAP//AQAKAAAAAAAJAP//AQAGAAEAAAAJAP7/AQALAAAAAAAIAP//AQAJAAIAAAAIAP7/AQAKAAAAAAAHAP//AQAJAAIAAAAHAP7/AQAKAAAAAAAGAP//AQAJAAIAAAAGAP7/AQAKAAAAAAAFAP//AQAJAAIAAAAFAP7/AQAKAAAAAAAEAP//AQAJAAIAAAAEAP7/AQAKAAAAAAADAP//AQAIAAEAAAADAP7/AQAIAAAAAAAMAPv/AQACAAMAAAAMAPr/BAADAAIAAAAMAPn/BAAAAAEAAAAMAPj/BAAKAAMAAAAMAPf/BAAFAAEAAAAMAPb/BAAIAAEAAAALAPv/AQACAAMAAAALAPr/BAACAAMAAAALAPn/AQAAAAMAAAALAPj/BAAJAAMAAAALAPf/BAAKAAAAAAALAPb/AQAAAAIAAAAKAPv/AQACAAMAAAAKAPr/BAAGAAMAAAAKAPn/BAAHAAEAAAAKAPj/BAAEAAIAAAAKAPf/BAAHAAMAAAAKAPb/BAAAAAAAAAAJAPz/AQALAAMAAAAJAPv/AQAGAAAAAAAJAPr/BAAJAAMAAAAJAPn/BAAKAAAAAAAJAPj/AQAAAAMAAAAJAPf/BAABAAMAAAAJAPb/AQALAAMAAAAIAPz/AQAJAAMAAAAIAPv/AQAKAAAAAAAIAPr/BAAIAAMAAAAIAPn/BAAHAAMAAAAIAPj/BAAAAAAAAAAIAPf/AQALAAMAAAAIAPb/AQAGAAIAAAAHAPz/AQAJAAMAAAAHAPv/AQAGAAEAAAAHAPr/AQALAAAAAAAHAPn/BAABAAMAAAAHAPj/AQAAAAIAAAAHAPf/AQAEAAIAAAAHAPb/AQAIAAEAAAAGAPz/AQAIAAMAAAAGAPv/AQAIAAEAAAAGAPr/AQAEAAEAAAAEAPz/AQALAAMAAAAEAPv/AQALAAIAAAAEAPr/AQALAAIAAAADAPz/AQAIAAMAAAADAPv/AQAIAAEAAAADAPr/AQAFAAIAAAADAPn/AQAGAAEAAAADAPj/AQAHAAEAAAADAPf/AQAAAAEAAAADAPb/AQAHAAIAAAACAPr/AQAJAAMAAAACAPn/AQAFAAEAAAACAPj/AQAIAAAAAAACAPf/BAADAAMAAAACAPb/AQAIAAMAAAABAPr/AQAJAAMAAAABAPn/AQAKAAAAAAABAPj/BAALAAMAAAABAPf/BAALAAEAAAABAPb/BAALAAIAAAAAAPr/AQAJAAMAAAAAAPn/AQAKAAAAAAAAAPj/BAAIAAMAAAAAAPf/BAAIAAIAAAAAAPb/BAAIAAEAAAD///r/AQAJAAMAAAD///n/AQAGAAEAAAD///j/AQALAAAAAAD///f/BAABAAMAAAD///b/AQALAAMAAAD9/wEAAAAKAAEAAAD+/wEAAAAKAAEAAAD9/wAAAAAKAAEAAAD9////AAAKAAEAAAD9//7/AAAKAAEAAAD9//3/AAAKAAEAAAD9//z/AAAKAAEAAAD9//v/AAAKAAEAAAAGAPT/AgACAAMAAAAGAPP/AgACAAMAAAAFAPT/AgABAAMAAAAFAPP/AgABAAMAAAAEAPT/AgAAAAMAAAAEAPP/AgAAAAMAAAAJAPT/AgABAA8AAAAJAPP/AgABAA4AAAAIAPT/AgABAA8AAAAIAPP/AgABAA4AAAAHAPT/AgAAAA8AAAAHAPP/AgAAAA4AAAANAPT/AgACAA8AAAANAPP/AgACAA4AAAAMAPT/AgABAA8AAAAMAPP/AgABAA4AAAALAPT/AgABAA8AAAALAPP/AgABAA4AAAAKAPT/AgABAA8AAAAKAPP/AgABAA4AAAAIAPL/AgABAA0AAAAIAPH/BAACAAIAAAAIAPD/BAAAAAEAAAAIAO//BAACAAAAAAAIAO7/AQACAAMAAAAHAPL/AgABAA0AAAAHAPH/BAACAAMAAAAHAPD/AQAAAAMAAAAHAO//BAACAAMAAAAHAO7/AQACAAMAAAAGAPL/AQAAAAAAAAAGAPH/BAABAAIAAAAGAPD/BAAAAAEAAAAGAO//BAABAAAAAAAGAO7/AQACAAMAAAAFAPL/AQADAAIAAAAFAPH/AQAAAAEAAAAFAPD/AQAAAAEAAAAFAO//AQAAAAEAAAAFAO7/AQABAAAAAAAEAPL/AQABAAMAAAAEAPH/BAADAAIAAAAEAPD/BAAAAAEAAAAEAO//BAADAAEAAAAEAO7/BAAAAAEAAAADAPL/AgABAA0AAAADAPH/BAACAAMAAAADAPD/AQAAAAMAAAADAO//BAABAAMAAAADAO7/AQAAAAMAAAACAPL/AgABAA0AAAACAPH/BAACAAIAAAACAPD/BAAAAAAAAAACAO//AQAAAAMAAAACAO7/BAAAAAIAAAABAPL/BAALAAIAAAABAPH/BAAGAAAAAAABAPD/AQAAAAMAAAABAO//BAADAAMAAAABAO7/AQAAAAMAAAAAAPL/BAAIAAEAAAAAAPH/BAAHAAMAAAAAAPD/BAAAAAEAAAAAAO//BAACAAEAAAAAAO7/BAAAAAEAAAD///L/AgABAA0AAAD///H/BAACAAMAAAD///D/AQAAAAMAAAD//+//BAACAAMAAAD//+7/AQAAAAMAAAD+//L/AgABAA0AAAD+//H/BAABAAIAAAD+//D/BAAAAAEAAAD+/+//BAABAAEAAAD+/+7/BAAAAAEAAAANAPL/AgABAA0AAAANAPH/BAALAAMAAAANAPD/BAALAAIAAAANAO//BAALAAIAAAANAO7/BAALAAIAAAAMAPL/AgABAA0AAAAMAPH/BAAFAAMAAAAMAPD/BAAIAAEAAAAMAO//BAAIAAEAAAAMAO7/BAAIAAEAAAALAPL/AgABAA0AAAALAPH/BAACAAMAAAALAPD/AQAAAAIAAAALAO//AQAAAAEAAAALAO7/AQADAAAAAAAKAPL/AgABAA0AAAAKAPH/BAACAAIAAAAKAPD/BAAAAAEAAAAKAO//BAADAAAAAAAKAO7/AQACAAMAAAAJAPL/AgABAA0AAAAJAPH/BAACAAMAAAAJAPD/AQAAAAMAAAAJAO//BAACAAMAAAAJAO7/AQACAAMAAAANAO3/BAALAAAAAAAMAO3/BAAFAAAAAAALAO3/BAACAAMAAAAKAO3/BAACAAMAAAAJAO3/BAACAAMAAAAIAO3/BAACAAMAAAAHAO3/BAACAAMAAAAGAO3/BAACAAMAAAAFAO3/BAACAAMAAAAEAO3/BAACAAAAAAADAO3/BAACAAMAAAACAO3/BAACAAAAAAABAO3/BAACAAMAAAAAAO3/BAACAAAAAAD//+3/BAACAAMAAAD+/+3/BAABAAAAAAADAPX/AQALAAAAAAADAPT/AgACAA8AAAACAPX/AQAIAAAAAAACAPT/AgABAA8AAAABAPX/BAALAAIAAAABAPT/BQADAAAAAAAAAPX/BAAIAAEAAAAAAPT/BQACAAAAAAD///X/AQALAAAAAAD///T/AgABAA8AAAD+//X/AQAIAAAAAAD+//T/AgAAAA8AAAADAPP/AgACAA4AAAACAPP/AgABAA4AAAABAPP/BQADAAAAAAAAAPP/BQACAAAAAAD///P/AgABAA4AAAD+//P/AgAAAA4AAAA=")
+tile_map_data = PackedByteArray("AAACAP7/AAALAAIAAAACAP3/AAAGAAAAAAACAPz/BAAJAAMAAAACAPv/BAAJAAIAAAABAP7/AAAIAAEAAAABAP3/AAAFAAAAAAABAPz/BAAJAAMAAAABAPv/BAAJAAIAAAAAAP7/BAAAAAAAAAAAAP3/AAACAAMAAAAAAPz/BAAJAAMAAAAAAPv/BAAJAAIAAAAFAP3/AAAGAAAAAAAEAP3/AAAFAAAAAAADAP3/AAACAAMAAAAFAPz/BAAJAAMAAAAFAPv/BAAJAAIAAAAJAP3/AAACAAMAAAAIAP3/AAACAAMAAAAHAP3/AAACAAMAAAAGAP3/AAACAAMAAAAMAP7/BAAKAAAAAAAMAP3/AAACAAMAAAAMAPz/BAAJAAMAAAALAP7/BAAKAAAAAAALAP3/AAACAAMAAAALAPz/BAAJAAMAAAAKAP7/BAAKAAAAAAAKAP3/AAACAAMAAAAKAPz/BAAJAAMAAAACAP//AAALAAIAAAABAP//AAAIAAEAAAAAAP//BAAAAAEAAAD/////AAALAAIAAAD///7/AAALAAIAAAD///3/AAAGAAAAAAD///z/BAAJAAMAAAD+/wAAAAAIAAEAAAD+////AAAIAAEAAAD+//7/AAAIAAEAAAD+//3/AAAIAAAAAAD+//z/BAAJAAMAAAD+//v/BAAJAAIAAAANAAAABAAJAAIAAAANAP//BAAJAAIAAAANAP7/BAAKAAAAAAANAP3/AAACAAMAAAANAPz/BAAJAAMAAAANAPv/BAAJAAIAAAAMAAAABAAJAAIAAAALAAAABAAJAAIAAAAKAAAABAAJAAIAAAAJAAAABAAJAAIAAAAIAAAABAAJAAIAAAAHAAAABAAJAAIAAAAGAAAABAAJAAIAAAAFAAAABAAJAAIAAAAEAAAABAAJAAIAAAADAAAABAAIAAEAAAACAAAAAAALAAIAAAABAAAAAAAIAAEAAAAAAAAABAAAAAEAAAD//wAAAAALAAIAAAAMAP//BAAJAAIAAAALAP//BAAJAAIAAAAKAP//BAAJAAIAAAAJAP//BAAJAAIAAAAJAP7/BAAKAAAAAAAIAP//BAAJAAIAAAAIAP7/BAAKAAAAAAAHAP//BAAJAAIAAAAHAP7/BAAKAAAAAAAGAP//BAAFAAEAAAAGAP7/BAAIAAAAAAAFAP7/AAALAAMAAAAEAP7/AAAIAAMAAAADAP//BAAEAAEAAAADAP7/BAAAAAAAAAAMAPv/BAAJAAIAAAALAPv/BAAJAAIAAAAKAPv/BAAJAAIAAAAJAPz/BAAJAAMAAAAJAPv/BAAJAAIAAAAIAPz/BAAJAAMAAAAIAPv/BAAJAAIAAAAHAPz/BAAJAAMAAAAHAPv/BAAJAAIAAAAGAPz/BAAJAAMAAAAGAPv/BAAJAAIAAAAEAPz/BAAJAAMAAAAEAPv/BAAJAAIAAAADAPz/BAAJAAMAAAADAPv/BAAJAAIAAAD9/wAABAALAAIAAAD9////BAALAAIAAAD9//7/BAALAAIAAAD9//3/BAALAAIAAAD9//z/BAAGAAIAAAD9//v/BAAJAAIAAAD///v/BAAJAAIAAAAOAAAABAAGAAEAAAAOAP//BAALAAIAAAAOAP7/BAALAAAAAAAOAP3/AAACAAMAAAAOAPz/BAAJAAMAAAAOAPv/BAAJAAIAAAD8/wAABAAIAAEAAAD8////BAAIAAEAAAD8//7/BAAIAAEAAAD8//3/BAAIAAEAAAD8//z/BAAIAAEAAAD8//v/BAAIAAEAAAAPAP3/AAAFAAAAAAAQAP//AAALAAMAAAAQAP7/AAALAAIAAAAQAP3/AAALAAAAAAAPAP//AAAIAAMAAAAPAP7/AAAIAAEAAAARAAAABAAFAAEAAAAQAAAABAAKAAAAAAAPAAAABAAKAAAAAAARAP//BAAIAAEAAAARAP7/BAAIAAEAAAARAP3/BAAIAAEAAAARAPz/BAAFAAIAAAARAPv/BAAJAAIAAAAQAPz/BAAJAAMAAAAQAPv/BAAJAAIAAAAPAPz/BAAJAAMAAAAPAPv/BAAJAAIAAAARAPr/BAAJAAIAAAAQAPr/BAAJAAIAAAAPAPr/BAAJAAIAAAAOAPr/BAAJAAIAAAANAPr/BAAJAAIAAAAMAPr/BAAJAAIAAAALAPr/BAAJAAIAAAAKAPr/BAAJAAIAAAAJAPr/BAAJAAIAAAAIAPr/BAAJAAIAAAAHAPr/BAAJAAIAAAAGAPr/BAAJAAIAAAAFAPr/BAAJAAIAAAAEAPr/BAAJAAIAAAADAPr/BAAJAAIAAAACAPr/BAAJAAIAAAABAPr/BAAJAAIAAAAAAPr/BAAJAAIAAAD///r/BAAJAAIAAAD+//r/BAAJAAIAAAD9//r/BAAJAAIAAAD8//r/BAAIAAEAAAASAAAABAALAAIAAAASAP//BAALAAIAAAASAP7/BAALAAIAAAASAP3/BAALAAIAAAASAPz/BAALAAIAAAASAPv/BAALAAIAAAASAPr/BAALAAIAAAASAAEABAALAAIAAAARAAEABAAJAAIAAAAQAAEABAAJAAIAAAAPAAEABAAJAAIAAAAOAAEABAAJAAIAAAANAAEABAAJAAIAAAAMAAEABAAJAAIAAAALAAEABAAJAAIAAAAKAAEABAAJAAIAAAAJAAEABAAJAAIAAAAIAAEABAAJAAIAAAAHAAEABAAJAAIAAAAGAAEABAAJAAIAAAAFAAEABAAJAAIAAAAEAAEABAAJAAIAAAADAAEABAAIAAEAAAACAAEAAAALAAIAAAABAAEAAAAIAAEAAAAAAAEABAAAAAEAAAD//wEAAAALAAMAAAD+/wEAAAAIAAMAAAD9/wEABAALAAIAAAD8/wEABAAIAAEAAAAPAPn/BAAKAAAAAAAOAPn/BAAKAAAAAAANAPn/BAAKAAAAAAAMAPn/BAAKAAAAAAALAPn/BAAKAAAAAAAKAPn/BAAKAAAAAAAJAPn/BAAKAAAAAAAIAPn/BAAKAAAAAAAHAPn/BAAKAAAAAAAGAPn/BAAKAAAAAAAFAPn/BAAKAAAAAAAEAPn/BAAKAAAAAAADAPn/BAAKAAAAAAACAPn/BAAKAAAAAAABAPn/BAAKAAAAAAAAAPn/BAAKAAAAAAD///n/BAAKAAAAAAD+//n/BAAKAAAAAAD9//n/BAAKAAAAAAD8//n/BAAIAAAAAAASAPn/BAALAAAAAAARAPn/BAAKAAAAAAAQAPn/BAAKAAAAAAD8/wIABAAIAAEAAAD9/wIABAAGAAEAAAD+/wIABAAKAAAAAAD//wIABAAKAAAAAAAAAAIABAAHAAEAAAABAAIAAAAIAAEAAAADAAIABAAIAAEAAAACAAIAAAALAAIAAAAEAAIABAAJAAIAAAAFAAIABAAJAAIAAAAGAAIABAAJAAIAAAAHAAIABAAJAAIAAAAIAAIABAAJAAIAAAAJAAIABAAJAAIAAAAKAAIABAAJAAIAAAALAAIABAAJAAIAAAAMAAIABAAJAAIAAAANAAIABAAJAAIAAAAOAAIABAAJAAIAAAAPAAIABAAJAAIAAAAQAAIABAAJAAIAAAARAAIABAAJAAIAAAASAAIABAALAAIAAAD8/wMABAAIAAEAAAD9/wMABAAJAAIAAAD+/wMABAAJAAIAAAD//wMABAAJAAIAAAAAAAMABAALAAIAAAABAAMAAAAIAAEAAAACAAMAAAALAAIAAAADAAMABAAIAAEAAAAEAAMABAAJAAIAAAAFAAMABAAJAAIAAAAGAAMABAAJAAIAAAAHAAMABAAJAAIAAAAIAAMABAAJAAIAAAD8/wQABAAIAAEAAAD9/wQABAAJAAIAAAD+/wQABAAJAAIAAAD//wQABAAJAAIAAAAAAAQABAALAAIAAAACAAQAAAALAAIAAAABAAQAAAAIAAEAAAAEAAQABAAJAAIAAAADAAQABAAIAAEAAAAFAAQABAAJAAIAAAAHAAQABAAJAAIAAAAGAAQABAAJAAIAAAAIAAQABAAJAAIAAAAJAAQABAAJAAIAAAAKAAQABAAJAAIAAAALAAQABAAJAAIAAAAMAAQABAAJAAIAAAANAAQABAAJAAIAAAAOAAQABAAJAAIAAAAPAAQABAAJAAIAAAAQAAQABAAJAAIAAAARAAQABAAJAAIAAAASAAQABAALAAIAAAASAAMABAALAAIAAAARAAMABAAJAAIAAAAQAAMABAAJAAIAAAAPAAMABAAJAAIAAAAOAAMABAAJAAIAAAANAAMABAAJAAIAAAAKAAMABAAJAAIAAAAJAAMABAAJAAIAAAALAAMABAAJAAIAAAAMAAMABAAJAAIAAAABAAUAAAAIAAMAAAACAAUAAAALAAMAAAD8/wUABAAIAAEAAAD9/wUABAAJAAIAAAD+/wUABAAJAAIAAAD//wUABAAJAAIAAAAAAAUABAALAAIAAAAAAAYABAAGAAEAAAABAAYABAAKAAAAAAACAAYABAAKAAAAAAADAAYABAAFAAEAAAADAAUABAAIAAEAAAD8/wYABAAIAAEAAAD9/wYABAAJAAIAAAD+/wYABAAJAAIAAAD//wYABAAJAAIAAAD//wcABAAJAAMAAAAAAAcABAAJAAMAAAASAAcABAALAAMAAAASAAYABAALAAIAAAARAAcABAAJAAMAAAARAAYABAAJAAIAAAAQAAcABAAJAAMAAAAQAAYABAAJAAIAAAAPAAcABAAJAAMAAAAPAAYABAAJAAIAAAAOAAcABAAJAAMAAAAOAAYABAAJAAIAAAANAAcABAAJAAMAAAANAAYABAAJAAIAAAAMAAcABAAJAAMAAAAMAAYABAAJAAIAAAALAAcABAAJAAMAAAALAAYABAAJAAIAAAAKAAcABAAJAAMAAAAKAAYABAAJAAIAAAAJAAcABAAJAAMAAAAJAAYABAAJAAIAAAAIAAcABAAJAAMAAAAIAAYABAAJAAIAAAAHAAcABAAJAAMAAAAHAAYABAAJAAIAAAAGAAcABAAJAAMAAAAGAAYABAAJAAIAAAAFAAcABAAJAAMAAAAFAAYABAAJAAIAAAAEAAcABAAJAAMAAAAEAAYABAAJAAIAAAADAAcABAAJAAMAAAACAAcABAAJAAMAAAABAAcABAAJAAMAAAD+/wcABAAJAAMAAAD9/wcABAAJAAMAAAD8/wcABAAIAAMAAAASAAUABAALAAIAAAARAAUABAAJAAIAAAAQAAUABAAJAAIAAAAPAAUABAAJAAIAAAAOAAUABAAJAAIAAAANAAUABAAJAAIAAAAMAAUABAAJAAIAAAALAAUABAAJAAIAAAAKAAUABAAJAAIAAAAJAAUABAAJAAIAAAAIAAUABAAJAAIAAAAHAAUABAAJAAIAAAAGAAUABAAJAAIAAAAFAAUABAAJAAIAAAAEAAUABAAJAAIAAAAFAP//BAAKAAAAAAAEAP//BAAKAAAAAAA=")
 tile_set = ExtResource("37_5668i")
-
-[node name="TileMapLayer2" type="TileMapLayer" parent="World_2D/room_00" unique_id=1169982466]
-y_sort_enabled = true
-tile_map_data = PackedByteArray("AAADAPv/AAAAAA4AAAADAPz/AAAAAA8AAAAEAPv/AAABAA4AAAAEAPz/AAABAA8AAAAGAPv/AAAAAA4AAAAGAPz/AAAAAA8AAAAHAPv/AAABAA4AAAAHAPz/AAABAA8AAAAEAP3/AAAAAA4AAAAEAP7/AAAAAA8AAAAFAP3/AAABAA4AAAAFAP7/AAABAA8AAAAHAP3/AAAAAA4AAAAHAP7/AAAAAA8AAAAIAP3/AAABAA4AAAAIAP7/AAABAA8AAAAKAPn/AAAIAAoAAAAKAPr/AAAIAAsAAAAKAPv/AAAIAAwAAAALAPn/AAAJAAoAAAALAPr/AAAJAAsAAAALAPv/AAAJAAwAAAAMAPn/AAAKAAoAAAAMAPr/AAAKAAsAAAAMAPv/AAAKAAwAAAAJAPn/AAALAAoAAAAJAPr/AAALAAsAAAAJAPv/AAALAAwAAAANAPn/AAALAAoAAAANAPr/AAALAAsAAAANAPv/AAALAAwAAAAGAPj/AAADAA0AAAAEAPf/AAADAA0AAAAFAPf/AAADAA0AAAAFAPX/AAADAA0AAAAGAPX/AAADAA0AAAAKAP3/AAADAA0AAAAMAPz/AAADAA0AAAABAPz/AAADAA0AAAD///7/AAADAA0AAAACAP//AAADAA0AAAAHAPb/AAAAAA0AAAALAP3/AAADAAkAAAAEAPn/AAABAAkAAAA=")
-tile_set = SubResource("TileSet_5t6d6")
 
 [node name="Label" type="Label" parent="World_2D/room_00" unique_id=386820662]
 anchors_preset = 7
@@ -1803,10 +1197,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 24.000008
-offset_top = 47.999996
-offset_right = 356.0
-offset_bottom = 111.0
+offset_left = -95.99999
+offset_top = -191.99998
+offset_right = 236.0
+offset_bottom = -128.99998
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
@@ -1821,9 +1215,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 528.0
-offset_right = 685.0
-offset_bottom = 63.0
+offset_left = 215.99997
+offset_top = -191.99998
+offset_right = 372.99997
+offset_bottom = -128.99998
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
@@ -1838,10 +1233,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 215.99998
-offset_top = -336.0
-offset_right = 368.0
-offset_bottom = -273.0
+offset_left = 720.0
+offset_top = -192.0
+offset_right = 872.0
+offset_bottom = -129.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.286, 0.286)
@@ -1850,7 +1245,7 @@ theme_override_font_sizes/font_size = 45
 text = "Battles"
 
 [node name="ally_0" type="Area2D" parent="World_2D/room_00" unique_id=1227329894 node_paths=PackedStringArray("collider")]
-position = Vector2(-24, -216)
+position = Vector2(-48, -72)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1861,8 +1256,13 @@ shape = SubResource("CircleShape2D_lcbh6")
 
 [node name="character_actor1_1" parent="World_2D/room_00/ally_0" unique_id=1430752666 instance=ExtResource("27_0ol08")]
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_0" unique_id=135894709]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_0/StaticBody2D" unique_id=89377234]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=726168508 node_paths=PackedStringArray("collider")]
-position = Vector2(24, -216)
+position = Vector2(-48, -24)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1873,8 +1273,13 @@ shape = SubResource("CircleShape2D_lcbh6")
 
 [node name="character_actor1_8" parent="World_2D/room_00/ally_1" unique_id=850827256 instance=ExtResource("36_altm3")]
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_1" unique_id=818254887]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1/StaticBody2D" unique_id=947655824]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=899666073 node_paths=PackedStringArray("collider")]
-position = Vector2(72, -216)
+position = Vector2(-48, 24)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1885,8 +1290,13 @@ shape = SubResource("CircleShape2D_lcbh6")
 
 [node name="character_actor2_7" parent="World_2D/room_00/ally_2" unique_id=2083283084 instance=ExtResource("26_jvut7")]
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_2" unique_id=1975705002]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2/StaticBody2D" unique_id=1461162597]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="ally_3" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
-position = Vector2(120, -216)
+position = Vector2(-48, 72)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1897,8 +1307,13 @@ shape = SubResource("CircleShape2D_3em1u")
 
 [node name="character_actor3_8" parent="World_2D/room_00/ally_3" unique_id=950567357 instance=ExtResource("24_5rrxs")]
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_3" unique_id=746426266]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_3/StaticBody2D" unique_id=2101177893]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="npc_3" type="Area2D" parent="World_2D/room_00" unique_id=1896668672 node_paths=PackedStringArray("collider")]
-position = Vector2(552, -168)
+position = Vector2(240, -72)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1909,9 +1324,14 @@ shape = SubResource("CircleShape2D_5t6d6")
 
 [node name="character_actor1_8" parent="World_2D/room_00/npc_3" unique_id=970880866 instance=ExtResource("36_altm3")]
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/npc_3" unique_id=1560130429]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3/StaticBody2D" unique_id=1092018181]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="npc_4" type="Area2D" parent="World_2D/room_00" unique_id=303175137 node_paths=PackedStringArray("collider")]
 y_sort_enabled = true
-position = Vector2(264, -384)
+position = Vector2(768, -24)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1936,9 +1356,14 @@ visible = false
 [node name="fighter_actor3_8" parent="World_2D/room_00/npc_4" unique_id=1574684891 instance=ExtResource("22_5rrxs")]
 visible = false
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/npc_4" unique_id=390518323]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_4/StaticBody2D" unique_id=660459362]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="npc_5" type="Area2D" parent="World_2D/room_00" unique_id=447749122 node_paths=PackedStringArray("collider")]
 y_sort_enabled = true
-position = Vector2(264, -432)
+position = Vector2(768, -72)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
@@ -1961,20 +1386,27 @@ position = Vector2(0, -48)
 [node name="fighter_monster_3" parent="World_2D/room_00/npc_5" unique_id=817563202 instance=ExtResource("83_uml17")]
 visible = false
 
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/npc_5" unique_id=546196518]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_5/StaticBody2D" unique_id=1346600920]
+shape = SubResource("CircleShape2D_rf75r")
+
 [node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
-position = Vector2(-24, 24)
+position = Vector2(-72, -120)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("22_0ol08")
 collider = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/Interactable" unique_id=916547599]
+position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_qeicn")
 
 [node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/Interactable" unique_id=1155672549]
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("18_ngqpa")
-offset = Vector2(0, -128)
+texture = ExtResource("86_paw12")
+offset = Vector2(0, -6)
+hframes = 3
+vframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/room_00/Interactable" unique_id=1750575943]
 libraries/ = SubResource("AnimationLibrary_p24l3")
@@ -1982,6 +1414,158 @@ libraries/ = SubResource("AnimationLibrary_p24l3")
 [node name="AnimationTree" type="AnimationTree" parent="World_2D/room_00/Interactable" unique_id=2090549667]
 tree_root = SubResource("AnimationNodeAnimation_3em1u")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="chest" type="Area2D" parent="World_2D/room_00" unique_id=359834607]
+position = Vector2(96, -72)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest" unique_id=1857003094]
+texture = ExtResource("58_h1r7s")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest" unique_id=1283923339]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest" unique_id=1004519886]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest/StaticBody2D" unique_id=1707418932]
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_aoydg")
+
+[node name="chest2" type="Area2D" parent="World_2D/room_00" unique_id=1395661092]
+position = Vector2(96, -24)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest2" unique_id=1488611349]
+texture = ExtResource("87_paw12")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest2" unique_id=428111582]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest2" unique_id=814797993]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest2/StaticBody2D" unique_id=299886356]
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_aoydg")
+
+[node name="chest3" type="Area2D" parent="World_2D/room_00" unique_id=693365830]
+position = Vector2(96, 24)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest3" unique_id=1698319543]
+texture = ExtResource("60_wdwx4")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest3" unique_id=1709286045]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest3" unique_id=1121342575]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest3/StaticBody2D" unique_id=205359428]
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_aoydg")
+
+[node name="chest4" type="Area2D" parent="World_2D/room_00" unique_id=538756972]
+position = Vector2(96, 72)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest4" unique_id=997651915]
+texture = ExtResource("61_6avol")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest4" unique_id=1193841803]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest4" unique_id=684609690]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest4/StaticBody2D" unique_id=461344034]
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_aoydg")
+
+[node name="chest5" type="Area2D" parent="World_2D/room_00" unique_id=987397435]
+position = Vector2(96, 120)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest5" unique_id=1662696148]
+texture = ExtResource("62_tn53f")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest5" unique_id=1922375082]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest5" unique_id=1614352987]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest5/StaticBody2D" unique_id=1962766664]
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_aoydg")
+
+[node name="chest6" type="Area2D" parent="World_2D/room_00" unique_id=1154455625]
+position = Vector2(96, 168)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest6" unique_id=122289234]
+texture = ExtResource("63_2hsyw")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest6" unique_id=2062325486]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest6" unique_id=90587098]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest6/StaticBody2D" unique_id=1210883617]
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_aoydg")
+
+[node name="chest7" type="Area2D" parent="World_2D/room_00" unique_id=1439834936]
+position = Vector2(96, 216)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest7" unique_id=1322974757]
+texture = ExtResource("64_g3we4")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest7" unique_id=1188410441]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest7" unique_id=1684831751]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest7/StaticBody2D" unique_id=1526288054]
+position = Vector2(-0.5, -4.5)
+shape = SubResource("RectangleShape2D_5cbct")
+
+[node name="chest8" type="Area2D" parent="World_2D/room_00" unique_id=873295902]
+position = Vector2(96, 264)
+
+[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest8" unique_id=960123504]
+texture = ExtResource("65_psock")
+offset = Vector2(0, -6)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest8" unique_id=1705454339]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_va76y")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest8" unique_id=969596549]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest8/StaticBody2D" unique_id=1628977323]
+position = Vector2(0.5, -5.5)
+shape = SubResource("RectangleShape2D_o53fc")
 
 [node name="World_Background" type="CanvasLayer" parent="." unique_id=1741204116]
 layer = -1
@@ -2203,6 +1787,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3em1u")
 
 [node name="tp_bar" type="Control" parent="main_canvas_layer" unique_id=1379307174]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 60.0
@@ -3716,12 +3301,22 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="item_menu_equip_information_level_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer" unique_id=1080790979]
+[node name="Control" type="Control" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer" unique_id=1746275376]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="item_menu_equip_information_level_title" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/Control" unique_id=1080790979]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 text = "* Nivel:"
 
-[node name="item_menu_equip_information_level_value" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/item_menu_equip_information_level_title" unique_id=44236413]
+[node name="item_menu_equip_information_level_value" type="Label" parent="main_canvas_layer/item_menu/VBoxContainer/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer2/item_menu_equip_information_root/MarginContainer/item_menu_equip_information_content/HBoxContainer/Control/item_menu_equip_information_level_title" unique_id=44236413]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4142,12 +3737,22 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="equip_menu_information_level_title" type="Label" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer" unique_id=93236203]
+[node name="Control" type="Control" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer" unique_id=932302650]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="equip_menu_information_level_title" type="Label" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/Control" unique_id=93236203]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 text = "* Nivel Requerido:"
 
-[node name="equip_menu_information_level_value" type="Label" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/equip_menu_information_level_title" unique_id=1286560657]
+[node name="equip_menu_information_level_value" type="Label" parent="main_canvas_layer/equip_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/VBoxContainer2/equip_menu_information_root/MarginContainer/equip_menu_information_content/HBoxContainer/Control/equip_menu_information_level_title" unique_id=1286560657]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -4980,47 +4585,24 @@ horizontal_alignment = 2
 [node name="VSeparator" type="VSeparator" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=121515857]
 layout_mode = 2
 
-[node name="equipment" type="VBoxContainer" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=904854663]
+[node name="description" type="VBoxContainer" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=740303545]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 0
 
-[node name="statistics_menu_information_equip_title" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/equipment" unique_id=1367750274]
+[node name="statistics_menu_information_description_title" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/description" unique_id=1313738716]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Equipamiento"
+text = "Descripción"
 horizontal_alignment = 1
 
-[node name="statistics_menu_information_equip_type" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/equipment" unique_id=1250156851]
+[node name="statistics_menu_information_description_value" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/description" unique_id=885310182]
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "* Arma #1:
-* Arma #2:
-* Cabeza:
-* Cuerpo:
-* Anillo #1:
-* Anillo #2:
-* Anillo #3:
-* Anillo #4:"
-
-[node name="statistics_menu_information_equip_value" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer2/equipment/statistics_menu_information_equip_type" unique_id=1003246819]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 245.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-text = "Pistola Copada
-Pistola Copada
-[nulo]
-[nulo]
-[nulo]
-[nulo]
-[nulo]
-[nulo]"
-horizontal_alignment = 2
+text = "Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla."
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="HSeparator9" type="HSeparator" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer" unique_id=896139445]
 layout_mode = 2
@@ -5304,24 +4886,47 @@ horizontal_alignment = 2
 [node name="VSeparator" type="VSeparator" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=115152932]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=740303545]
+[node name="equipment" type="VBoxContainer" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=904854663]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
-[node name="statistics_menu_information_description_title" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer" unique_id=1313738716]
+[node name="statistics_menu_information_equip_title" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/equipment" unique_id=1367750274]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Descripción"
+text = "Equipamiento"
 horizontal_alignment = 1
 
-[node name="statistics_menu_information_description_value" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer" unique_id=885310182]
-custom_minimum_size = Vector2(0, 24)
+[node name="statistics_menu_information_equip_type" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/equipment" unique_id=1250156851]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla."
-horizontal_alignment = 1
-autowrap_mode = 2
+text = "* Arma #1:
+* Arma #2:
+* Cabeza:
+* Cuerpo:
+* Anillo #1:
+* Anillo #2:
+* Anillo #3:
+* Anillo #4:"
+
+[node name="statistics_menu_information_equip_value" type="Label" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer/HBoxContainer3/equipment/statistics_menu_information_equip_type" unique_id=1003246819]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 245.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Pistola Copada
+Pistola Copada
+[nulo]
+[nulo]
+[nulo]
+[nulo]
+[nulo]
+[nulo]"
+horizontal_alignment = 2
 
 [node name="HSeparator10" type="HSeparator" parent="main_canvas_layer/statistics_menu/VBoxContainer/Panel/MarginContainer/statistics_menu_information_root/MarginContainer/VBoxContainer" unique_id=132810874]
 layout_mode = 2

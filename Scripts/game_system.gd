@@ -460,6 +460,7 @@ var was_status_effect_add_or_removed: bool
 var was_fighter_removed_from_battle: bool
 #-------------------------------------------------------------------------------
 const pop_up_timer: float = 1.18
+const equip_auxiliar_string: Array[String] = ["","","","","",""," #1"," #2"," #3"," #4"]
 #-------------------------------------------------------------------------------
 #endregion
 #-------------------------------------------------------------------------------
@@ -1638,10 +1639,10 @@ func Get_Equip_Stored_in_Inventory(_equip_serializable_array:Array[Equip_Seriali
 	#-------------------------------------------------------------------------------
 	return 0
 #-------------------------------------------------------------------------------
-func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
+func Set_User_Equip_Information(_equip_slot_serializable:Equip_Slot_Serializable):
 	#-------------------------------------------------------------------------------
-	if(_equip_serializable.equip_resource != null):
-		var _equip_resource: Equip_Resource = _equip_serializable.equip_resource
+	if(_equip_slot_serializable.equip_resource != null):
+		var _equip_resource: Equip_Resource = _equip_slot_serializable.equip_resource
 		#-------------------------------------------------------------------------------
 		equip_menu_information_icon.texture = _equip_resource.icon
 		equip_menu_information_name.text = Get_Tr_Equip_Item_Name(_equip_resource)
@@ -1701,7 +1702,7 @@ func Set_User_Equip_Information(_equip_serializable:Equip_Serializable):
 		Show_Line_if_String_is_Empty(equip_menu_information_statistics_name)
 		Show_Line_if_String_is_Empty(equip_menu_information_statistics_value)
 		#-------------------------------------------------------------------------------
-		equip_menu_information_description_value.text = Get_Tr_Equip_Item_Description(_equip_serializable.equip_resource)
+		equip_menu_information_description_value.text = Get_Tr_Equip_Item_Description(_equip_resource)
 		equip_menu_information_description_value.text += Blablabla()
 		equip_menu_information_root.get_v_scroll_bar().value = 0
 		equip_menu_information_root.show()
@@ -2122,25 +2123,25 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 	main_canvas_layer.nothing_cancel = func():Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
 	var _fighter_serializable: Fighter_Serializable = ally_fighter_party[_fighter_index].fighter_serializable
-	var _equip_serializable_array: Array[Equip_Serializable] = _fighter_serializable.equip_serializable_array
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	if(_equip_serializable_array.size() > 0):
+	if(_equip_slot_serializable_array.size() > 0):
 		equip_menu_button_type.show()
 		equip_menu_button_type.text = ""
 		#-------------------------------------------------------------------------------
-		for _i in _equip_serializable_array.size():
-			var _button: Button = Create_EquipSlot_Button(_equip_serializable_array[_i])
+		for _i in _equip_slot_serializable_array.size():
+			var _button: Button = Create_EquipSlot_Button(_equip_slot_serializable_array[_i])
 			#-------------------------------------------------------------------------------
-			var _w: Callable = func():Pause_Equip_Menu_Button_W(_equip_serializable_array[_i])
-			var _s: Callable = func():Pause_Equip_Menu_Button_S(_equip_serializable_array[_i])
-			var _selected_1: Callable = func():Pause_Equip_Menu_Button_Selected(_equip_serializable_array[_i])
-			var _submit_1: Callable = func():Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index, _i)
+			var _w: Callable = func():Pause_Equip_Menu_Button_W(_equip_slot_serializable_array[_i])
+			var _s: Callable = func():Pause_Equip_Menu_Button_S(_equip_slot_serializable_array[_i])
+			var _selected_1: Callable = func():Pause_Equip_Menu_Button_Selected(_equip_slot_serializable_array[_i])
+			var _submit_1: Callable = func():Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index, _equip_slot_serializable_array[_i], _button)
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _w, _s)
 			equip_menu_button_content.add_child(_button)
 			equip_menu_button_array.append(_button)
 			#-------------------------------------------------------------------------------
-			Create_Equip_Type_Next_to_Button(_equip_serializable_array[_i].myEQUIP_TYPE, _i-5)
+			Create_Equip_Type_Next_to_Button(_equip_slot_serializable_array[_i].myEQUIPTYPE, equip_auxiliar_string[_i])
 		#-------------------------------------------------------------------------------
 		Remove_Last_Letter(equip_menu_button_type)
 		#-------------------------------------------------------------------------------
@@ -2164,33 +2165,28 @@ func Pause_Equip_Menu_Set(_fighter_index:int):
 	singleton.Button_Array_Set_Vertical_Navigation(equip_menu_button_array)
 	singleton.Move_to_Button_by_Submit(equip_menu_button_array[0])
 #-------------------------------------------------------------------------------
-func Create_Equip_Type_Next_to_Button(_equip_type:Equip_Resource.EQUIP_TYPE, _index:int):
+func Create_Equip_Type_Next_to_Button(_equip_type:Equip_Resource.EQUIP_TYPE, _string:String):
 	var _s: String = ""
-	_s += "* "+Get_Tr_Equip_Type(_equip_type)
-	#-------------------------------------------------------------------------------
-	if(_equip_type == Equip_Resource.EQUIP_TYPE.RING):
-		_s += " #"+str(_index)
-	#-------------------------------------------------------------------------------
-	_s += ":\n"
+	_s += "* "+Get_Tr_Equip_Type(_equip_type) + _string + ":\n"
 	equip_menu_button_type.text += _s
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Button_W(_equip_serializable:Equip_Serializable):
+func Pause_Equip_Menu_Button_W(_equip_slot_serializable:Equip_Slot_Serializable):
 	#-------------------------------------------------------------------------------
-	if(_equip_serializable.equip_resource != null):
+	if(_equip_slot_serializable.equip_resource != null):
 		singleton.ScrollContainer_Up(equip_menu_information_root)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Button_S(_equip_serializable:Equip_Serializable):
+func Pause_Equip_Menu_Button_S(_equip_slot_serializable:Equip_Slot_Serializable):
 	#-------------------------------------------------------------------------------
-	if(_equip_serializable.equip_resource != null):
+	if(_equip_slot_serializable.equip_resource != null):
 		singleton.ScrollContainer_Down(equip_menu_information_root)
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Button_Selected(_equip_serializable:Equip_Serializable):
-	Set_User_Equip_Information(_equip_serializable)
+func Pause_Equip_Menu_Button_Selected(_equip_slot_serializable:Equip_Slot_Serializable):
+	Set_User_Equip_Information(_equip_slot_serializable)
 	singleton.Common_Selected()
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
+func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_slot_serializable:Equip_Slot_Serializable, _equip_slot_button:Button):
 	equip_menu.hide()
 	item_menu.show()
 	#-------------------------------------------------------------------------------
@@ -2200,20 +2196,20 @@ func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 		item_menu_equip_information_root.hide()
 		singleton.Common_Selected()
 	#-------------------------------------------------------------------------------
-	var _submit_0: Callable = func():Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index, _equip_index)
-	main_canvas_layer.nothing_cancel = func():Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index, _equip_index)
+	var _submit_0: Callable = func():Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index, _equip_slot_serializable, _equip_slot_button)
+	main_canvas_layer.nothing_cancel = func():Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index, _equip_slot_button)
 	#-------------------------------------------------------------------------------
 	singleton.Set_Button(_empty_button, _selected_0, _submit_0)
 	item_menu_equip_button_content.add_child(_empty_button)
 	item_menu_equip_button_array.append(_empty_button)
 	#-------------------------------------------------------------------------------
 	var _current_Fighter: Fighter_Serializable = ally_fighter_party[_fighter_index].fighter_serializable
-	var _current_equip_slot: Equip_Serializable = _current_Fighter.equip_serializable_array[_equip_index]
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_current_Fighter)
 	#-------------------------------------------------------------------------------
 	Sort_Equip_by_ID(item_equip_inventory)
 	#-------------------------------------------------------------------------------
 	for _i in item_equip_inventory.size():
-		var _can_equip: bool = Is_Weapon_Avalible_to_be_Equipable(item_equip_inventory[_i].equip_resource, _current_equip_slot.myEQUIP_TYPE, _current_Fighter.fighter_resource.myFIGHTER_CLASS)
+		var _can_equip: bool = Is_Weapon_Avalible_to_be_Equipable(item_equip_inventory[_i].equip_resource, _equip_slot_serializable.myEQUIPTYPE, _current_Fighter.fighter_resource.myFIGHTER_CLASS)
 		#-------------------------------------------------------------------------------
 		if(_can_equip):
 			var _button: Button = Create_EquipItem_Button(item_equip_inventory[_i])
@@ -2226,7 +2222,7 @@ func Pause_Equip_Menu_Equip_Slot_Submit(_fighter_index:int, _equip_index:int):
 				item_menu_equip_information_root.show()
 				singleton.Common_Selected()
 			#-------------------------------------------------------------------------------
-			var _submit_1: Callable = func(): Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index, _equip_index, item_equip_inventory[_i])
+			var _submit_1: Callable = func(): Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index, _equip_slot_serializable, _equip_slot_button, item_equip_inventory[_i])
 			#-------------------------------------------------------------------------------
 			singleton.Set_Button_WS(_button, _selected_1, _submit_1, _w_1, _s_1)
 			item_menu_equip_button_content.add_child(_button)
@@ -2267,54 +2263,48 @@ func Is_Weapon_Avalible_to_be_Equipable(_equip_resource:Equip_Resource, _equip_t
 		return false
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index:int, _equip_index:int, _equip_serializable:Equip_Serializable):
+func Pause_Equip_Menu_Equip_Slot_Equip_Item_Submit(_fighter_index:int, _equip_slot_serializable:Equip_Slot_Serializable, _equip_slot_button:Button, _equip_serializable:Equip_Serializable):
 	item_menu.hide()
 	equip_menu.show()
 	singleton.Destroy_Button_Array(item_menu_equip_button_array)
 	#-------------------------------------------------------------------------------
-	var _equip_slot: Equip_Serializable = ally_fighter_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
-	#-------------------------------------------------------------------------------
-	if(_equip_slot.equip_resource != null):
-		Add_Equip_Item_To_Inventory(_equip_slot.equip_resource, 1)
+	if(_equip_slot_serializable.equip_resource != null):
+		Add_Equip_Item_To_Inventory(_equip_slot_serializable.equip_resource, 1)
 	#-------------------------------------------------------------------------------
 	Remove_Equip_Item_From_Inventory(_equip_serializable.equip_resource, 1)
-	Equip_Item_to_Fighter(_fighter_index, _equip_index, _equip_serializable)
+	Equip_Item_to_Fighter(_fighter_index, _equip_slot_serializable, _equip_slot_button, _equip_serializable)
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func(): Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
-	singleton.Move_to_Button_by_Equip(equip_menu_button_array[_equip_index])
+	singleton.Move_to_Button_by_Equip(_equip_slot_button)
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index:int, _equip_index:int):
+func Pause_Equip_Menu_Equip_Slot_Equip_Empty_Submit(_fighter_index:int, _equip_slot_serializable:Equip_Slot_Serializable, _equip_slot_button:Button):
 	item_menu.hide()
 	equip_menu.show()
 	singleton.Destroy_Button_Array(item_menu_equip_button_array)
 	#-------------------------------------------------------------------------------
-	var _current_equip_slot: Equip_Serializable = ally_fighter_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
+	if(_equip_slot_serializable.equip_resource != null):
+		Add_Equip_Item_To_Inventory(_equip_slot_serializable.equip_resource, 1)
 	#-------------------------------------------------------------------------------
-	if(_current_equip_slot.equip_resource != null):
-		Add_Equip_Item_To_Inventory(_current_equip_slot.equip_resource, 1)
-	#-------------------------------------------------------------------------------
-	Unequip_Item_to_Fighter(_fighter_index, _equip_index)
+	Unequip_Item_to_Fighter(_fighter_index, _equip_slot_serializable, _equip_slot_button)
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func(): Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
-	singleton.Move_to_Button_by_Unequip(equip_menu_button_array[_equip_index])
+	singleton.Move_to_Button_by_Unequip(_equip_slot_button)
 #-------------------------------------------------------------------------------
-func Equip_Item_to_Fighter(_fighter_index:int, _equip_index:int, _equip_serializable:Equip_Serializable):
-	var _equip_slot: Equip_Serializable = ally_fighter_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
-	_equip_slot.equip_resource = _equip_serializable.equip_resource
-	_equip_slot.stored = 1
-	equip_menu_button_array[_equip_index].icon = _equip_serializable.equip_resource.icon
-	equip_menu_button_array[_equip_index].alignment = HORIZONTAL_ALIGNMENT_LEFT
-	equip_menu_button_array[_equip_index].text = Get_Tr_Equip_Item_Name(_equip_slot.equip_resource)+"  "
+func Equip_Item_to_Fighter(_fighter_index:int, _equip_slot_serializable:Equip_Slot_Serializable, _equip_slot_button:Button, _equip_serializable:Equip_Serializable):
+	_equip_slot_serializable.equip_resource = _equip_serializable.equip_resource
+	#-------------------------------------------------------------------------------
+	_equip_slot_button.icon = _equip_serializable.equip_resource.icon
+	_equip_slot_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_equip_slot_button.text = Get_Tr_Equip_Item_Name(_equip_slot_serializable.equip_resource)+"  "
 #-------------------------------------------------------------------------------
-func Unequip_Item_to_Fighter(_fighter_index:int, _equip_index:int):
-	var _equip_slot: Equip_Serializable = ally_fighter_party[_fighter_index].fighter_serializable.equip_serializable_array[_equip_index]
-	_equip_slot.equip_resource = null
-	_equip_slot.stored = 0
-	equip_menu_button_array[_equip_index].icon = null
-	equip_menu_button_array[_equip_index].alignment = HORIZONTAL_ALIGNMENT_CENTER
-	equip_menu_button_array[_equip_index].text = "  ["+Get_Tr_Equip_Null_Name()+"]  "
+func Unequip_Item_to_Fighter(_fighter_index:int, _equip_slot_serializable:Equip_Slot_Serializable, _equip_slot_button:Button):
+	_equip_slot_serializable.equip_resource = null
+	#-------------------------------------------------------------------------------
+	_equip_slot_button.icon = null
+	_equip_slot_button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_equip_slot_button.text = "  ["+Get_Tr_Equip_Null_Name()+"]  "
 #-------------------------------------------------------------------------------
 func Remove_Equip_Item_From_Inventory(_equip_resource:Equip_Resource, _remove:int):
 	#-------------------------------------------------------------------------------
@@ -2341,20 +2331,19 @@ func Add_Equip_Item_To_Inventory(_equip_resource:Equip_Resource, _add:int):
 	#-------------------------------------------------------------------------------
 	var _equip_serializable: Equip_Serializable = Equip_Serializable.new()
 	_equip_serializable.equip_resource = _equip_resource
-	_equip_serializable.myEQUIP_TYPE = _equip_resource.myEQUIP_TYPE
 	_equip_serializable.stored = _add
 	#-------------------------------------------------------------------------------
 	item_equip_inventory.append(_equip_serializable)
 	return
 #-------------------------------------------------------------------------------
-func Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index:int, _equip_index:int):
+func Pause_Equip_Menu_Equip_Slot_Equip_Item_Cancel(_fighter_index:int, _button:Button):
 	item_menu.hide()
 	equip_menu.show()
 	#-------------------------------------------------------------------------------
 	main_canvas_layer.nothing_cancel = func(): Pause_Equip_Menu_Main_Button_Cancel(_fighter_index)
 	#-------------------------------------------------------------------------------
 	singleton.Destroy_Button_Array(item_menu_equip_button_array)
-	singleton.Move_to_Button_by_Cancel(equip_menu_button_array[_equip_index])
+	singleton.Move_to_Button_by_Cancel(_button)
 #-------------------------------------------------------------------------------
 func Pause_Equip_Menu_Main_Button_Cancel(_fighter_index:int):
 	singleton.Destroy_Button_Array(equip_menu_button_array)
@@ -2378,20 +2367,20 @@ func Create_EquipEmpty_Button() -> Button:
 	#-------------------------------------------------------------------------------
 	return _empty_button
 #-------------------------------------------------------------------------------
-func Create_EquipSlot_Button(_equip_serializable: Equip_Serializable) -> Button:
+func Create_EquipSlot_Button(_equip_slot_serializable: Equip_Slot_Serializable) -> Button:
 	var _button: Button
 	#-------------------------------------------------------------------------------
-	if(_equip_serializable.equip_resource == null):
+	if(_equip_slot_serializable.equip_resource == null):
 		_button = Create_EquipEmpty_Button()
 	#-------------------------------------------------------------------------------
 	else:
 		_button = Button.new()
 		#-------------------------------------------------------------------------------
-		_button.text = Get_Tr_Equip_Item_Name(_equip_serializable.equip_resource)+"  "
+		_button.text = Get_Tr_Equip_Item_Name(_equip_slot_serializable.equip_resource)+"  "
 		_button.add_theme_font_size_override("font_size", button_array_font_size)
 		_button.custom_minimum_size.y = button_array_minimum_size_y
 		_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		_button.icon = _equip_serializable.equip_resource.icon
+		_button.icon = _equip_slot_serializable.equip_resource.icon
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return _button
@@ -2572,7 +2561,7 @@ func Pause_Statistics_Menu_Set(_character_resource: Character_Resource, _fighter
 	Remove_Last_Letter(statistics_menu_information_special_stats_name)
 	Remove_Last_Letter(statistics_menu_information_special_stats_value)
 	#-------------------------------------------------------------------------------
-	Set_Fighter_Equip_Stats(_fighter_serializable.equip_serializable_array)
+	Set_Fighter_Equip_Stats(_fighter_serializable)
 	#-------------------------------------------------------------------------------
 	Set_Fighter_Skill_List(_fighter_serializable)
 	#-------------------------------------------------------------------------------
@@ -2625,21 +2614,23 @@ func Set_Fighter_Special_Stat_2(_name:String, _modifier:int, _base:int):
 	var _base_string: String = Get_Number_with_Plus(_base)+"%"
 	statistics_menu_information_special_stats_value.text += _modifier_string+_base_string+"\n"
 #-------------------------------------------------------------------------------
-func Set_Fighter_Equip_Stats(_equip_serializable_array:Array[Equip_Serializable]):
+func Set_Fighter_Equip_Stats(_fighter_serializable:Fighter_Serializable):
 	statistics_menu_information_equip_type.text = ""
 	statistics_menu_information_equip_value.text = ""
 	#-------------------------------------------------------------------------------
-	for _i in _equip_serializable_array.size():
-		var _name: String = Get_Tr_Equip_Type(_equip_serializable_array[_i].myEQUIP_TYPE)
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
+	#-------------------------------------------------------------------------------
+	for _i in _equip_slot_serializable_array.size():
+		var _name: String = Get_Tr_Equip_Type(_equip_slot_serializable_array[_i].myEQUIPTYPE)
 		var _value: String
 		#-------------------------------------------------------------------------------
-		if(_equip_serializable_array[_i].equip_resource != null): 
-			_value = Get_Tr_Equip_Item_Name(_equip_serializable_array[_i].equip_resource)
+		if(_equip_slot_serializable_array[_i].equip_resource != null): 
+			_value = Get_Tr_Equip_Item_Name(_equip_slot_serializable_array[_i].equip_resource)
 		#-------------------------------------------------------------------------------
 		else:
 			_value = "-"
 		#-------------------------------------------------------------------------------
-		statistics_menu_information_equip_type.text += "* "+_name+":"+"\n"
+		statistics_menu_information_equip_type.text += "* " + _name + equip_auxiliar_string[_i] + ":"  +"\n"
 		statistics_menu_information_equip_value.text += _value+"\n"
 	#-------------------------------------------------------------------------------
 	Remove_Last_Letter(statistics_menu_information_equip_type)
@@ -2912,11 +2903,12 @@ func Get_Scale_Stat_by_Level(_level:int, _base_stat:int, _scale:int) -> int:
 #-------------------------------------------------------------------------------
 func Get_Max_HP_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _max_hp: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_max_hp += _fighter_serializable.equip_serializable_array[_i].equip_resource.max_hp
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_max_hp += _equip_slot_serializable_array[_i].equip_resource.max_hp
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -2935,11 +2927,12 @@ func Get_Physical_Attack_Base(_fighter_serializable:Fighter_Serializable) -> int
 #-------------------------------------------------------------------------------
 func Get_Physical_Attack_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _physical_attack: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_physical_attack += _fighter_serializable.equip_serializable_array[_i].equip_resource.physical_attack
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_physical_attack += _equip_slot_serializable_array[_i].equip_resource.physical_attack
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -2958,11 +2951,12 @@ func Get_Physical_Defense_Base(_fighter_serializable:Fighter_Serializable) -> in
 #-------------------------------------------------------------------------------
 func Get_Physical_Defense_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _physical_defense: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_physical_defense += _fighter_serializable.equip_serializable_array[_i].equip_resource.physical_defense
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_physical_defense += _equip_slot_serializable_array[_i].equip_resource.physical_defense
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -2981,11 +2975,12 @@ func Get_Magical_Attack_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_Magical_Attack_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _magical_attack: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_magical_attack += _fighter_serializable.equip_serializable_array[_i].equip_resource.magical_attack
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_magical_attack += _equip_slot_serializable_array[_i].equip_resource.magical_attack
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3004,11 +2999,12 @@ func Get_Magical_Defense_Base(_fighter_serializable:Fighter_Serializable) -> int
 #-------------------------------------------------------------------------------
 func Get_Magical_Defense_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _magical_defense: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_magical_defense += _fighter_serializable.equip_serializable_array[_i].equip_resource.magical_defense
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_magical_defense += _equip_slot_serializable_array[_i].equip_resource.magical_defense
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3027,11 +3023,12 @@ func Get_Luck_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_Luck_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _luck: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_luck += _fighter_serializable.equip_serializable_array[_i].equip_resource.luck
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_luck += _equip_slot_serializable_array[_i].equip_resource.luck
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3055,11 +3052,12 @@ func Get_Physical_Presition_Rate_Base(_fighter_serializable:Fighter_Serializable
 #-------------------------------------------------------------------------------
 func Get_Physical_Presition_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _physical_presition_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_physical_presition_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.physical_presition_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_physical_presition_rate += _equip_slot_serializable_array[_i].equip_resource.physical_presition_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3078,11 +3076,12 @@ func Get_Physical_Evasion_Rate_Base(_fighter_serializable:Fighter_Serializable) 
 #-------------------------------------------------------------------------------
 func Get_Physical_Evasion_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _physical_evasion_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_physical_evasion_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.physical_evasion_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_physical_evasion_rate += _equip_slot_serializable_array[_i].equip_resource.physical_evasion_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3101,11 +3100,12 @@ func Get_Magical_Presition_Rate_Base(_fighter_serializable:Fighter_Serializable)
 #-------------------------------------------------------------------------------
 func Get_Magical_Presition_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _magical_presition_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_magical_presition_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.magical_presition_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_magical_presition_rate += _equip_slot_serializable_array[_i].equip_resource.magical_presition_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3124,11 +3124,12 @@ func Get_Magical_Evasion_Rate_Base(_fighter_serializable:Fighter_Serializable) -
 #-------------------------------------------------------------------------------
 func Get_Magical_Evasion_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _magical_evasion_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_magical_evasion_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.magical_evasion_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_magical_evasion_rate += _equip_slot_serializable_array[_i].equip_resource.magical_evasion_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3147,11 +3148,12 @@ func Get_Crítical_Presition_Rate_Base(_fighter_serializable:Fighter_Serializabl
 #-------------------------------------------------------------------------------
 func Get_Crítical_Presition_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _critical_presition_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_critical_presition_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.critical_presition_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_critical_presition_rate += _equip_slot_serializable_array[_i].equip_resource.critical_presition_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3170,11 +3172,12 @@ func Get_Crítical_Evasion_Rate_Base(_fighter_serializable:Fighter_Serializable)
 #-------------------------------------------------------------------------------
 func Get_Crítical_Evasion_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _critical_evasion_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_critical_evasion_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.critical_evasion_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_critical_evasion_rate += _equip_slot_serializable_array[_i].equip_resource.critical_evasion_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3197,11 +3200,12 @@ func Get_Target_Rate_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_Target_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _target_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_target_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.target_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_target_rate += _equip_slot_serializable_array[_i].equip_resource.target_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3220,11 +3224,12 @@ func Get_Physical_Damage_Rate_Base(_fighter_serializable:Fighter_Serializable) -
 #-------------------------------------------------------------------------------
 func Get_Physical_Damage_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _physical_damage_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_physical_damage_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.physical_damage_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_physical_damage_rate += _equip_slot_serializable_array[_i].equip_resource.physical_damage_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3243,11 +3248,12 @@ func Get_Magical_Damage_Rate_Base(_fighter_serializable:Fighter_Serializable) ->
 #-------------------------------------------------------------------------------
 func Get_Magical_Damage_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _magical_damage_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_magical_damage_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.magical_damage_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_magical_damage_rate += _equip_slot_serializable_array[_i].equip_resource.magical_damage_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3266,11 +3272,12 @@ func Get_Recovery_Effect_Base(_fighter_serializable:Fighter_Serializable) -> int
 #-------------------------------------------------------------------------------
 func Get_Recovery_Effect_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _recovery_effect: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_recovery_effect += _fighter_serializable.equip_serializable_array[_i].equip_resource.recovery_effect
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_recovery_effect += _equip_slot_serializable_array[_i].equip_resource.recovery_effect
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3289,11 +3296,12 @@ func Get_Pharmacology_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_Pharmacology_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _pharmacology: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_pharmacology += _fighter_serializable.equip_serializable_array[_i].equip_resource.pharmacology
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_pharmacology += _equip_slot_serializable_array[_i].equip_resource.pharmacology
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3312,11 +3320,12 @@ func Get_TP_Cost_Rate_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_TP_Cost_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _tp_cost_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_tp_cost_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.tp_cost_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_tp_cost_rate += _equip_slot_serializable_array[_i].equip_resource.tp_cost_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3326,11 +3335,12 @@ func Get_TP_Cost_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> i
 #-------------------------------------------------------------------------------
 func Get_Skill_Modifier(_fighter_serializable:Fighter_Serializable, _skill_resource:Action_Resource) -> Vector3i:
 	var _vector3i: Vector3i = Vector3i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			var _dictionary: Dictionary[Action_Resource, Vector3i] = _fighter_serializable.equip_serializable_array[_i].equip_resource.modifie_skill_resource_dictionary
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			var _dictionary: Dictionary[Action_Resource, Vector3i] = _equip_slot_serializable_array[_i].equip_resource.modifie_skill_resource_dictionary
 			#-------------------------------------------------------------------------------
 			for _j in _dictionary.size():
 				var _key: Action_Resource = _dictionary.keys()[_j]
@@ -3367,11 +3377,12 @@ func Get_TP_Charge_Rate_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_TP_Charge_Rate_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _tp_charge_rate: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_tp_charge_rate += _fighter_serializable.equip_serializable_array[_i].equip_resource.tp_charge_rate
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_tp_charge_rate += _equip_slot_serializable_array[_i].equip_resource.tp_charge_rate
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3390,11 +3401,12 @@ func Get_TP_Recovery_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_TP_Recovery_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _tp_recovery: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_tp_recovery += _fighter_serializable.equip_serializable_array[_i].equip_resource.tp_recovery
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_tp_recovery += _equip_slot_serializable_array[_i].equip_resource.tp_recovery
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3413,11 +3425,12 @@ func Get_HP_Recovery_Base(_fighter_serializable:Fighter_Serializable) -> int:
 #-------------------------------------------------------------------------------
 func Get_HP_Recovery_Modifiers(_fighter_serializable:Fighter_Serializable) -> int:
 	var _hp_recovery: int = 0
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_hp_recovery += _fighter_serializable.equip_serializable_array[_i].equip_resource.hp_recovery
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_hp_recovery += _equip_slot_serializable_array[_i].equip_resource.hp_recovery
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3441,12 +3454,12 @@ func Get_Skill_0(_fighter_serializable: Fighter_Serializable) -> Array[Action_Se
 	var _skill_array: Array[Action_Serializable]
 	#-------------------------------------------------------------------------------
 	_skill_array.append_array(_fighter_serializable.skill_serializable_array)
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
-		var _equip_serializable: Equip_Serializable = _fighter_serializable.equip_serializable_array[_i]
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_equip_serializable != null):
-			_skill_array.append_array(_equip_serializable.skill_serializable_array)
+		if(_equip_slot_serializable_array[_i] != null):
+			_skill_array.append_array(_equip_slot_serializable_array[_i].skill_serializable_array)
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3462,12 +3475,12 @@ func Remove_Skill(_skill_array: Array[Action_Serializable], _fighter_serializabl
 	return _skill_array
 #-------------------------------------------------------------------------------
 func Remove_Skill_0(_skill_array: Array[Action_Serializable], _index: int, _fighter_serializable: Fighter_Serializable):
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _j in _fighter_serializable.equip_serializable_array.size():
-		var _equip_serializable: Equip_Serializable = _fighter_serializable.equip_serializable_array[_j]
+	for _j in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_equip_serializable.equip_resource != null):
-			var _remove_skill_resource_array: Array[Action_Resource] = _equip_serializable.equip_resource.remove_skill_resource_array
+		if(_equip_slot_serializable_array[_j].equip_resource != null):
+			var _remove_skill_resource_array: Array[Action_Resource] = _equip_slot_serializable_array[_j].equip_resource.remove_skill_resource_array
 			#-------------------------------------------------------------------------------
 			for _k in _remove_skill_resource_array.size():
 				#-------------------------------------------------------------------------------
@@ -3588,34 +3601,56 @@ func Set_Party_Equip_at_the_Start(_fighter_serializable_array: Array[Fighter_Nod
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Set_Equip(_fighter_serializable: Fighter_Serializable):
-	_fighter_serializable.equip_serializable_array.clear()
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_weapon, Equip_Resource.EQUIP_TYPE.WEAPON)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_shield, Equip_Resource.EQUIP_TYPE.SHIELD)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_head, Equip_Resource.EQUIP_TYPE.HEAD)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_body, Equip_Resource.EQUIP_TYPE.BODY)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_arms, Equip_Resource.EQUIP_TYPE.ARMS)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_legs, Equip_Resource.EQUIP_TYPE.LEGS)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_ring_1, Equip_Resource.EQUIP_TYPE.RING)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_ring_2, Equip_Resource.EQUIP_TYPE.RING)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_ring_3, Equip_Resource.EQUIP_TYPE.RING)
-	Set_Equip_0(_fighter_serializable, _fighter_serializable.equip_ring_4, Equip_Resource.EQUIP_TYPE.RING)
+	var _fighter_class: Fighter_Resource.FIGHTER_CLASS = _fighter_serializable.fighter_resource.myFIGHTER_CLASS
+	_fighter_serializable.equip_weapon = Set_Equip_0(_fighter_serializable.equip_weapon, Equip_Resource.EQUIP_TYPE.WEAPON, _fighter_class)
+	_fighter_serializable.equip_shield = Set_Equip_0(_fighter_serializable.equip_shield, Equip_Resource.EQUIP_TYPE.SHIELD, _fighter_class)
+	_fighter_serializable.equip_head = Set_Equip_0(_fighter_serializable.equip_head, Equip_Resource.EQUIP_TYPE.HEAD, _fighter_class)
+	_fighter_serializable.equip_body = Set_Equip_0(_fighter_serializable.equip_body, Equip_Resource.EQUIP_TYPE.BODY, _fighter_class)
+	_fighter_serializable.equip_arms = Set_Equip_0(_fighter_serializable.equip_arms, Equip_Resource.EQUIP_TYPE.ARMS, _fighter_class)
+	_fighter_serializable.equip_legs = Set_Equip_0(_fighter_serializable.equip_legs, Equip_Resource.EQUIP_TYPE.LEGS, _fighter_class)
+	_fighter_serializable.equip_ring_1 = Set_Equip_0(_fighter_serializable.equip_ring_1, Equip_Resource.EQUIP_TYPE.RING, _fighter_class)
+	_fighter_serializable.equip_ring_2 = Set_Equip_0(_fighter_serializable.equip_ring_2, Equip_Resource.EQUIP_TYPE.RING, _fighter_class)
+	_fighter_serializable.equip_ring_3 = Set_Equip_0(_fighter_serializable.equip_ring_3, Equip_Resource.EQUIP_TYPE.RING, _fighter_class)
+	_fighter_serializable.equip_ring_4 = Set_Equip_0(_fighter_serializable.equip_ring_4, Equip_Resource.EQUIP_TYPE.RING, _fighter_class)
 #-------------------------------------------------------------------------------
-func Set_Equip_0(_fighter_serializable: Fighter_Serializable, _equip_resource: Equip_Resource, _equip_type: Equip_Resource.EQUIP_TYPE):
-	var _equip_serializable: Equip_Serializable = Equip_Serializable.new()
+func Set_Equip_0(_equip_slot_serializable: Equip_Slot_Serializable, _equip_type: Equip_Resource.EQUIP_TYPE, _fighter_class:Fighter_Resource.FIGHTER_CLASS) -> Equip_Slot_Serializable:
 	#-------------------------------------------------------------------------------
-	_equip_serializable.myEQUIP_TYPE = _equip_type
-	#-------------------------------------------------------------------------------
-	var _can_equip: bool = Is_Weapon_Avalible_to_be_Equipable(_equip_resource, _equip_type, _fighter_serializable.fighter_resource.myFIGHTER_CLASS)
-	#-------------------------------------------------------------------------------
-	if(_can_equip):
-		_equip_serializable.equip_resource = _equip_resource
-		_equip_serializable.stored = 1
+	if(_equip_slot_serializable != null):
+		#-------------------------------------------------------------------------------
+		if(Is_Weapon_Avalible_to_be_Equipable(_equip_slot_serializable.equip_resource, _equip_type, _fighter_class)):
+			#-------------------------------------------------------------------------------
+			if(_equip_slot_serializable.equip_resource.myEQUIP_TYPE == _equip_type):
+				_equip_slot_serializable.myEQUIPTYPE = _equip_type
+			#-------------------------------------------------------------------------------
+			else:
+				_equip_slot_serializable.equip_resource = null
+				_equip_slot_serializable.myEQUIPTYPE = _equip_type
+			#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		else:
+			_equip_slot_serializable.myEQUIPTYPE = _equip_type
+		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	else:
-		_equip_serializable.equip_resource = null
-		_equip_serializable.stored = 0
+		_equip_slot_serializable = Create_Equip_Slot_Serializable(null, _equip_type)
 	#-------------------------------------------------------------------------------
-	_fighter_serializable.equip_serializable_array.append(_equip_serializable)
+	return _equip_slot_serializable
+#-------------------------------------------------------------------------------
+func Get_Equip(_fighter_serializable: Fighter_Serializable) -> Array[Equip_Slot_Serializable]:
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = []
+	#-------------------------------------------------------------------------------
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_weapon)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_shield)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_head)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_body)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_arms)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_legs)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_ring_1)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_ring_2)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_ring_3)
+	_equip_slot_serializable_array.append(_fighter_serializable.equip_ring_4)
+	#-------------------------------------------------------------------------------
+	return _equip_slot_serializable_array
 #-------------------------------------------------------------------------------
 func Set_Skill(_fighter_serializable: Fighter_Serializable):
 	#-------------------------------------------------------------------------------
@@ -3625,15 +3660,17 @@ func Set_Skill(_fighter_serializable: Fighter_Serializable):
 		var _skill_serializable: Action_Serializable = Create_Skill_Serializable(_fighter_serializable.fighter_resource.add_skill_resource_array[_i])
 		_fighter_serializable.skill_serializable_array.append(_skill_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
-		var _equip_serializable: Equip_Serializable = _fighter_serializable.equip_serializable_array[_i]
-		_equip_serializable.skill_serializable_array.clear()
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
+	#-------------------------------------------------------------------------------
+	for _i in _equip_slot_serializable_array.size():
+		var _equip_slot_serializable: Equip_Slot_Serializable = _equip_slot_serializable_array[_i]
+		_equip_slot_serializable.skill_serializable_array.clear()
 		#-------------------------------------------------------------------------------
-		if(_equip_serializable.equip_resource != null):
+		if(_equip_slot_serializable.equip_resource != null):
 			#-------------------------------------------------------------------------------
-			for _j in _equip_serializable.equip_resource.add_skill_resource_array.size():
-				var _skill_serializable: Action_Serializable = Create_Skill_Serializable(_equip_serializable.equip_resource.add_skill_resource_array[_j])
-				_equip_serializable.skill_serializable_array.append(_skill_serializable)
+			for _j in _equip_slot_serializable.equip_resource.add_skill_resource_array.size():
+				var _skill_serializable: Action_Serializable = Create_Skill_Serializable(_equip_slot_serializable.equip_resource.add_skill_resource_array[_j])
+				_equip_slot_serializable.skill_serializable_array.append(_skill_serializable)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
@@ -3666,14 +3703,15 @@ func Get_Fighter_Status_Resistance_Dictionary_Base(_dictionary:Dictionary[String
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Get_Fighter_Status_Resistance_Dictionary_Modifiers(_dictionary:Dictionary[StringName, int], _fighter_serializable:Fighter_Serializable):
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
 			#-------------------------------------------------------------------------------
-			for _j in _fighter_serializable.equip_serializable_array[_i].equip_resource.status_resistance_dictionary.size():
-				var _key: StringName = _fighter_serializable.equip_serializable_array[_i].equip_resource.status_resistance_dictionary.keys()[_j]
-				var _value: int = _fighter_serializable.equip_serializable_array[_i].equip_resource.status_resistance_dictionary.values()[_j]
+			for _j in _equip_slot_serializable_array[_i].equip_resource.status_resistance_dictionary.size():
+				var _key: StringName = _equip_slot_serializable_array[_i].equip_resource.status_resistance_dictionary.keys()[_j]
+				var _value: int = _equip_slot_serializable_array[_i].equip_resource.status_resistance_dictionary.values()[_j]
 				_dictionary.set(_key, _dictionary.get(_key, 0) + _value)
 			#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -3702,11 +3740,12 @@ func Get_Fighter_Elemental_Stats_Normal_Base(_fighter_serializable:Fighter_Seria
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Normal_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _normal: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_normal += _fighter_serializable.equip_serializable_array[_i].equip_resource.normal
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_normal += _equip_slot_serializable_array[_i].equip_resource.normal
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3725,11 +3764,12 @@ func Get_Fighter_Elemental_Stats_Water_Base(_fighter_serializable:Fighter_Serial
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Water_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _water: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_water += _fighter_serializable.equip_serializable_array[_i].equip_resource.water
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_water += _equip_slot_serializable_array[_i].equip_resource.water
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3748,11 +3788,12 @@ func Get_Fighter_Elemental_Stats_Fire_Base(_fighter_serializable:Fighter_Seriali
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Fire_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _fire: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_fire += _fighter_serializable.equip_serializable_array[_i].equip_resource.fire
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_fire += _equip_slot_serializable_array[_i].equip_resource.fire
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3771,11 +3812,12 @@ func Get_Fighter_Elemental_Stats_Earth_Base(_fighter_serializable:Fighter_Serial
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Earth_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _earth: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_earth += _fighter_serializable.equip_serializable_array[_i].equip_resource.earth
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_earth += _equip_slot_serializable_array[_i].equip_resource.earth
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3794,11 +3836,12 @@ func Get_Fighter_Elemental_Stats_Wind_Base(_fighter_serializable:Fighter_Seriali
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Wind_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _wind: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_wind += _fighter_serializable.equip_serializable_array[_i].equip_resource.wind
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_wind += _equip_slot_serializable_array[_i].equip_resource.wind
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3817,11 +3860,12 @@ func Get_Fighter_Elemental_Stats_Ice_Base(_fighter_serializable:Fighter_Serializ
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Ice_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _ice: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_ice += _fighter_serializable.equip_serializable_array[_i].equip_resource.ice
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_ice += _equip_slot_serializable_array[_i].equip_resource.ice
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3840,11 +3884,12 @@ func Get_Fighter_Elemental_Stats_Thunder_Base(_fighter_serializable:Fighter_Seri
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Thunder_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _thunder: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_thunder += _fighter_serializable.equip_serializable_array[_i].equip_resource.thunder
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_thunder += _equip_slot_serializable_array[_i].equip_resource.thunder
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3863,11 +3908,12 @@ func Get_Fighter_Elemental_Stats_Light_Base(_fighter_serializable:Fighter_Serial
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Light_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _light: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_light += _fighter_serializable.equip_serializable_array[_i].equip_resource.light
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_light += _equip_slot_serializable_array[_i].equip_resource.light
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -3886,11 +3932,12 @@ func Get_Fighter_Elemental_Stats_Dark_Base(_fighter_serializable:Fighter_Seriali
 #-------------------------------------------------------------------------------
 func Get_Fighter_Elemental_Stats_Dark_Modifiers(_fighter_serializable:Fighter_Serializable) -> Vector4i:
 	var _dark: Vector4i = Vector4i.ZERO
+	var _equip_slot_serializable_array: Array[Equip_Slot_Serializable] = Get_Equip(_fighter_serializable)
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
+	for _i in _equip_slot_serializable_array.size():
 		#-------------------------------------------------------------------------------
-		if(_fighter_serializable.equip_serializable_array[_i].equip_resource != null):
-			_dark += _fighter_serializable.equip_serializable_array[_i].equip_resource.dark
+		if(_equip_slot_serializable_array[_i].equip_resource != null):
+			_dark += _equip_slot_serializable_array[_i].equip_resource.dark
 		#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	for _i in _fighter_serializable.status_serializable_array.size():
@@ -5410,7 +5457,7 @@ func Play_Fighter_Animation_Action(_fighter_node:Fighter_Node):
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func Play_Fighter_Animation_Attack_Weapon(_fighter_node:Fighter_Node):
-	var _weeapon: Equip_Resource = _fighter_node.fighter_serializable_in_battle.equip_serializable_array[0].equip_resource
+	var _weeapon: Equip_Resource = _fighter_node.fighter_serializable_in_battle.equip_weapon.equip_resource
 	#-------------------------------------------------------------------------------
 	if(_weeapon != null):
 		#-------------------------------------------------------------------------------
@@ -5641,6 +5688,7 @@ func Enter_and_Retry_Battle_Common_1():
 	tp = 50
 	Set_TP_Bar(tp)
 	Dialogue_Null()
+	dialogue_menu.show()
 	#-------------------------------------------------------------------------------
 	Set_Inventory_When_Enter_Battle()
 	#-------------------------------------------------------------------------------
@@ -7856,24 +7904,29 @@ func Remove_Zero_Consumable_Item_in_Hold_and_Stored():
 #-------------------------------------------------------------------------------
 #region CONSTRUCTOR FUNCTIONS
 #-------------------------------------------------------------------------------
-func Duplicate_Fighter_Serializable(_fighter_serializable:Fighter_Serializable) -> Fighter_Serializable:
+func Duplicate_Fighter_Serializable(_fighter_serializable_old:Fighter_Serializable) -> Fighter_Serializable:
 	var _fighter_serialziable_new: Fighter_Serializable = Fighter_Serializable.new()
 	#-------------------------------------------------------------------------------
-	_fighter_serialziable_new.fighter_resource = _fighter_serializable.fighter_resource
-	_fighter_serialziable_new.hp = _fighter_serializable.hp
-	_fighter_serialziable_new.level = _fighter_serializable.level
-	_fighter_serialziable_new.experience = _fighter_serializable.experience
+	_fighter_serialziable_new.fighter_resource = _fighter_serializable_old.fighter_resource
+	_fighter_serialziable_new.hp = _fighter_serializable_old.hp
+	_fighter_serialziable_new.level = _fighter_serializable_old.level
+	_fighter_serialziable_new.experience = _fighter_serializable_old.experience
 	#-------------------------------------------------------------------------------
-	_fighter_serialziable_new.equip_serializable_array.clear()
-	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.equip_serializable_array.size():
-		var _equip_serializable_new: Equip_Serializable = Duplicate_Equip_Serializable(_fighter_serializable.equip_serializable_array[_i])
-		_fighter_serialziable_new.equip_serializable_array.append(_equip_serializable_new)
+	_fighter_serialziable_new.equip_weapon = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_weapon)
+	_fighter_serialziable_new.equip_shield = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_shield)
+	_fighter_serialziable_new.equip_head = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_head)
+	_fighter_serialziable_new.equip_body = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_body)
+	_fighter_serialziable_new.equip_arms = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_arms)
+	_fighter_serialziable_new.equip_legs = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_legs)
+	_fighter_serialziable_new.equip_ring_1 = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_ring_1)
+	_fighter_serialziable_new.equip_ring_2 = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_ring_2)
+	_fighter_serialziable_new.equip_ring_3 = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_ring_3)
+	_fighter_serialziable_new.equip_ring_4 = Duplicate_Equip_Slot_Serializable(_fighter_serializable_old.equip_ring_4)
 	#-------------------------------------------------------------------------------
 	_fighter_serialziable_new.status_serializable_array.clear()
 	#-------------------------------------------------------------------------------
-	for _i in _fighter_serializable.status_serializable_array.size():
-		var _status_serializable_new: Status_Serializable = Duplicate_Status_Serializable(_fighter_serializable.status_serializable_array[_i])
+	for _i in _fighter_serializable_old.status_serializable_array.size():
+		var _status_serializable_new: Status_Serializable = Duplicate_Status_Serializable(_fighter_serializable_old.status_serializable_array[_i])
 		_fighter_serialziable_new.status_serializable_array.append(_status_serializable_new)
 	#-------------------------------------------------------------------------------
 	return _fighter_serialziable_new
@@ -7900,14 +7953,7 @@ func Create_Equip_Serializable(_equip_resource: Equip_Resource, _stored:int) -> 
 	var _equip_serializable_new: Equip_Serializable = Equip_Serializable.new()
 	#-------------------------------------------------------------------------------
 	_equip_serializable_new.equip_resource = _equip_resource
-	_equip_serializable_new.myEQUIP_TYPE = _equip_resource.myEQUIP_TYPE
 	_equip_serializable_new.stored = _stored
-	#-------------------------------------------------------------------------------
-	_equip_serializable_new.skill_serializable_array.clear()
-	#-------------------------------------------------------------------------------
-	for _i in _equip_resource.add_skill_resource_array.size():
-		var _skill_serializable: Action_Serializable = Create_Skill_Serializable(_equip_resource.add_skill_resource_array[_i])
-		_equip_serializable_new.skill_serializable_array.append(_skill_serializable)
 	#-------------------------------------------------------------------------------
 	return _equip_serializable_new
 #-------------------------------------------------------------------------------
@@ -7915,10 +7961,34 @@ func Duplicate_Equip_Serializable(_equip_serializable_old: Equip_Serializable) -
 	var _equip_serializable_new: Equip_Serializable = Equip_Serializable.new()
 	#-------------------------------------------------------------------------------
 	_equip_serializable_new.equip_resource = _equip_serializable_old.equip_resource
-	_equip_serializable_new.myEQUIP_TYPE = _equip_serializable_old.myEQUIP_TYPE
 	_equip_serializable_new.stored = _equip_serializable_old.stored
 	#-------------------------------------------------------------------------------
 	return _equip_serializable_new
+#-------------------------------------------------------------------------------
+func Create_Equip_Slot_Serializable(_equip_resource: Equip_Resource, _equip_type: Equip_Resource.EQUIP_TYPE) -> Equip_Slot_Serializable:
+	var _equip_slot_serializable_new: Equip_Slot_Serializable = Equip_Slot_Serializable.new()
+	#-------------------------------------------------------------------------------
+	_equip_slot_serializable_new.equip_resource = _equip_resource
+	_equip_slot_serializable_new.myEQUIPTYPE = _equip_type
+	#-------------------------------------------------------------------------------
+	_equip_slot_serializable_new.skill_serializable_array.clear()
+	#-------------------------------------------------------------------------------
+	if(_equip_resource != null):
+		#-------------------------------------------------------------------------------
+		for _i in _equip_resource.add_skill_resource_array.size():
+			var _skill_serializable: Action_Serializable = Create_Skill_Serializable(_equip_resource.add_skill_resource_array[_i])
+			_equip_slot_serializable_new.skill_serializable_array.append(_skill_serializable)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	return _equip_slot_serializable_new
+#-------------------------------------------------------------------------------
+func Duplicate_Equip_Slot_Serializable(_equip_slot_serializable_old: Equip_Slot_Serializable) -> Equip_Slot_Serializable:
+	var _equip_slot_serializable_new: Equip_Slot_Serializable = Equip_Slot_Serializable.new()
+	#-------------------------------------------------------------------------------
+	_equip_slot_serializable_new.equip_resource = _equip_slot_serializable_old.equip_resource
+	_equip_slot_serializable_new.myEQUIPTYPE = _equip_slot_serializable_old.myEQUIPTYPE
+	#-------------------------------------------------------------------------------
+	return _equip_slot_serializable_new
 #-------------------------------------------------------------------------------
 func Create_Key_Serializable(_key_resource:Key_Resource, _stored:int) -> Key_Serializable:
 	var _key_serializable_new: Key_Serializable = Key_Serializable.new()
@@ -8294,14 +8364,14 @@ func Get_Tr_HP() -> String:
 func Get_Tr_CD() -> String:
 	return tr("text_cd")
 #-------------------------------------------------------------------------------
-func Get_Tr_Equip_and_Weapon_Type(equip_resource:Equip_Resource) -> String:
-	var _s: String = Get_Tr_Equip_Type(equip_resource.myEQUIP_TYPE)
+func Get_Tr_Equip_and_Weapon_Type(_equip_resource:Equip_Resource) -> String:
+	var _s: String = Get_Tr_Equip_Type(_equip_resource.myEQUIP_TYPE)
 	#-------------------------------------------------------------------------------
-	match(equip_resource.myEQUIP_TYPE):
+	match(_equip_resource.myEQUIP_TYPE):
 		#-------------------------------------------------------------------------------
 		Equip_Resource.EQUIP_TYPE.WEAPON:
 			#-------------------------------------------------------------------------------
-			match(equip_resource.myWEAPON_TYPE):
+			match(_equip_resource.myWEAPON_TYPE):
 				Equip_Resource.WEAPON_TYPE.NONE:
 					_s += " (Puños)"
 				#-------------------------------------------------------------------------------
@@ -8322,8 +8392,8 @@ func Get_Tr_Equip_and_Weapon_Type(equip_resource:Equip_Resource) -> String:
 	#-------------------------------------------------------------------------------
 	return _s
 #-------------------------------------------------------------------------------
-func Get_Tr_Equip_Type(myEQUIP_TYPE:Equip_Resource.EQUIP_TYPE) -> String:
-	var _key: String = Equip_Resource.EQUIP_TYPE.keys()[myEQUIP_TYPE]
+func Get_Tr_Equip_Type(_equip_type:Equip_Resource.EQUIP_TYPE) -> String:
+	var _key: String = Equip_Resource.EQUIP_TYPE.keys()[_equip_type]
 	var _s: String = tr("enum_EQUIP_TYPE_"+_key)
 	return _s
 #-------------------------------------------------------------------------------

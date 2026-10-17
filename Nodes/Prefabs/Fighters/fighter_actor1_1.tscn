@@ -2,18 +2,82 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_3pmha"]
 [ext_resource type="Resource" uid="uid://3nxji4d0bf43" path="res://Resources/Characters/character_0_0.tres" id="2_j8mf4"]
+[ext_resource type="Resource" uid="uid://birmkdm54gbji" path="res://Resources/Equips/equip_1_0_5.tres" id="3_gfpqv"]
+[ext_resource type="Script" uid="uid://ble3iym87lt0x" path="res://Scripts/Resources/equip_slot_serializable.gd" id="4_k5wji"]
+[ext_resource type="Resource" uid="uid://cbmsclimsrwh0" path="res://Resources/Equips/equip_1_0_4.tres" id="5_cuuns"]
+[ext_resource type="Resource" uid="uid://cn8nur5gah7nb" path="res://Resources/Equips/equip_1_0_3.tres" id="6_mjyfp"]
+[ext_resource type="Resource" uid="uid://dxs5iar8g4kj3" path="res://Resources/Equips/equip_1_0_6.tres" id="7_64wuw"]
 [ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_1_0.tres" id="7_ui50d"]
-[ext_resource type="Texture2D" uid="uid://dul3heq2qo5n" path="res://Assets/rpg_maker_mv/img/characters/Actor1.png" id="8_dnwrw"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_l7osr"]
 [ext_resource type="Texture2D" uid="uid://djbkeitsvqbwi" path="res://Assets/rpg_maker_mv/img/system/Weapons1.png" id="8_q5ji0"]
+[ext_resource type="Resource" uid="uid://dsrrun10oiibk" path="res://Resources/Equips/equip_1_0_7.tres" id="8_v13wk"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_127ya"]
 [ext_resource type="AnimationLibrary" uid="uid://bcbebcim4avkv" path="res://Animation Players/actor_animation_player.res" id="9_tb10d"]
+[ext_resource type="Resource" uid="uid://cpm8srwdm1g71" path="res://Resources/Equips/equip_1_0_2.tres" id="9_x2ck3"]
+[ext_resource type="Resource" uid="uid://cqwgiphrg5vfd" path="res://Resources/Equips/equip_1_0_1.tres" id="10_ep6yt"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://cxbe8urskrxd5" path="res://Animation Trees/actor_animation_tree.tres" id="10_tb10d"]
 [ext_resource type="Texture2D" uid="uid://d5sa51137lad" path="res://Assets/rpg_maker_mv/img/sv_actors/Actor1_1.png" id="12_k4s2r"]
+
+[sub_resource type="Resource" id="Resource_brd8x"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("3_gfpqv")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_h276b"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("5_cuuns")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_bvfqi"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("6_mjyfp")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_ggk8j"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("7_64wuw")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_h1r7s"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("8_v13wk")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_tn53f"]
+script = ExtResource("4_k5wji")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_6avol"]
+script = ExtResource("4_k5wji")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_wdwx4"]
+script = ExtResource("4_k5wji")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_stbc4"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("9_x2ck3")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_bc48j"]
+script = ExtResource("4_k5wji")
+equip_resource = ExtResource("10_ep6yt")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
 
 [sub_resource type="Resource" id="Resource_1d3vm"]
 script = ExtResource("8_l7osr")
 fighter_resource = ExtResource("7_ui50d")
+equip_weapon = SubResource("Resource_bc48j")
+equip_shield = SubResource("Resource_stbc4")
+equip_head = SubResource("Resource_bvfqi")
+equip_body = SubResource("Resource_h276b")
+equip_arms = SubResource("Resource_brd8x")
+equip_legs = SubResource("Resource_ggk8j")
+equip_ring_1 = SubResource("Resource_h1r7s")
+equip_ring_2 = SubResource("Resource_tn53f")
+equip_ring_3 = SubResource("Resource_6avol")
+equip_ring_4 = SubResource("Resource_wdwx4")
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [node name="fighter_actor1_1" type="Node2D" unique_id=1625553253 node_paths=PackedStringArray("animation_tree", "pivot")]
@@ -44,14 +108,6 @@ texture = ExtResource("8_q5ji0")
 flip_h = true
 hframes = 6
 vframes = 6
-
-[node name="comparison sprite" type="Sprite2D" parent="pivot" unique_id=751766979]
-visible = false
-position = Vector2(-32, 0)
-texture = ExtResource("8_dnwrw")
-offset = Vector2(0, -24)
-hframes = 12
-vframes = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2020662977]
 libraries/ = ExtResource("9_tb10d")

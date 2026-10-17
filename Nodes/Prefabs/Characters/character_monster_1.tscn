@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bc8v771gubk7h"]
 
 [ext_resource type="Script" uid="uid://cll6ilrja3wgu" path="res://Scripts/Prefabs/character_node.gd" id="1_2hx55"]
-[ext_resource type="Texture2D" uid="uid://8u6ekhhtn877" path="res://Assets/rpg_maker_mv/img/characters/Monster.png" id="1_pjqlx"]
 [ext_resource type="Resource" uid="uid://buc4v5pr6bu4m" path="res://Resources/Characters/character_1_0.tres" id="2_2hx55"]
+[ext_resource type="Texture2D" uid="uid://btsianhgo6x37" path="res://Assets/rpg_maker_mv/img/characters/Monster_1.png" id="3_7fhoc"]
 
 [sub_resource type="Animation" id="Animation_c6toy"]
 resource_name = "Idle"
@@ -82,10 +82,10 @@ pivot = NodePath("pivot")
 [node name="pivot" type="Node2D" parent="." unique_id=1598121606]
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot" unique_id=283503566]
-texture = ExtResource("1_pjqlx")
+texture = ExtResource("3_7fhoc")
 offset = Vector2(0, -24)
-hframes = 12
-vframes = 8
+hframes = 3
+vframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1943573]
 root_node = NodePath("../..")

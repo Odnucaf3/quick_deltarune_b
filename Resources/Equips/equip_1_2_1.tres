@@ -9,8 +9,8 @@
 [resource]
 script = ExtResource("5_6yhrp")
 icon = ExtResource("3_t7egb")
-myFIGHTER_CLASS = 1
+myWEAPON_TYPE = 2
 physical_attack = 15
-add_skill_resource_array = Array[ExtResource("1_njg13")]([ExtResource("2_njg13")])
 remove_skill_resource_array = Array[ExtResource("1_njg13")]([ExtResource("4_78g35")])
+add_skill_resource_array = Array[ExtResource("1_njg13")]([ExtResource("2_njg13")])
 metadata/_custom_type_script = "uid://cs8s7xpq3y00s"

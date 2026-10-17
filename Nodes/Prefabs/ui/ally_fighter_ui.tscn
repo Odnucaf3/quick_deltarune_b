@@ -43,8 +43,8 @@ grow_vertical = 2
 
 [node name="hp_root" type="Control" parent="pivot" unique_id=1107437097]
 anchors_preset = 0
-offset_top = -130.0
-offset_bottom = -130.0
+offset_top = -120.0
+offset_bottom = -120.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="pivot/hp_root" unique_id=1845980260]
 layout_mode = 1

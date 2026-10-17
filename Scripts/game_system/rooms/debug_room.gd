@@ -93,6 +93,7 @@ func NPC_1_Talk(_imteractable_script:Interactable_Script, _character_node:Charac
 				var _fighter_ally_1: Fighter_Node = _fighter_prefab.instantiate() as Fighter_Node
 				singleton.game_system.player_characterbody2d.add_child(_fighter_ally_1)
 				singleton.game_system.ally_fighter_party.append(_fighter_ally_1)
+				singleton.game_system.Set_Equip(_fighter_ally_1.fighter_serializable)
 				_fighter_ally_1.hide()
 				singleton.game_system.Set_Fighter_0()
 				_character_node.modulate.a = 105.0/255.0

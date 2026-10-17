@@ -2,14 +2,69 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_nbjdn"]
 [ext_resource type="Resource" uid="uid://cpbj78ksh3wst" path="res://Resources/Characters/character_0_3.tres" id="2_3bm2e"]
+[ext_resource type="Resource" uid="uid://bffj3o5mr0f5b" path="res://Resources/Equips/equip_4_0_5.tres" id="3_fassy"]
+[ext_resource type="Script" uid="uid://ble3iym87lt0x" path="res://Scripts/Resources/equip_slot_serializable.gd" id="4_i8v35"]
+[ext_resource type="Resource" uid="uid://d3kwq4dentkn8" path="res://Resources/Equips/equip_4_0_4.tres" id="5_ou04t"]
+[ext_resource type="Resource" uid="uid://y42250lba52x" path="res://Resources/Equips/equip_4_0_3.tres" id="6_hkdfg"]
+[ext_resource type="Resource" uid="uid://c6lya4l7u1qd4" path="res://Resources/Equips/equip_4_0_6.tres" id="7_0m7qj"]
 [ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_4_0.tres" id="7_apdi8"]
 [ext_resource type="Resource" uid="uid://ciiobno68j8fu" path="res://Resources/Status/status_4.tres" id="7_g07ib"]
+[ext_resource type="Resource" uid="uid://byrd4l8t57hx7" path="res://Resources/Equips/equip_4_0_7.tres" id="8_4yd2u"]
 [ext_resource type="Texture2D" uid="uid://djbkeitsvqbwi" path="res://Assets/rpg_maker_mv/img/system/Weapons1.png" id="8_rrkcv"]
 [ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="8_urbvg"]
 [ext_resource type="AnimationLibrary" uid="uid://bcbebcim4avkv" path="res://Animation Players/actor_animation_player.res" id="8_xh1jj"]
 [ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="9_ih5rp"]
+[ext_resource type="Resource" uid="uid://ky5lamr6qey3" path="res://Resources/Equips/equip_4_0_2.tres" id="9_pumo6"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://cxbe8urskrxd5" path="res://Animation Trees/actor_animation_tree.tres" id="9_rrkcv"]
+[ext_resource type="Resource" uid="uid://c45wk5nerxj85" path="res://Resources/Equips/equip_4_0_1.tres" id="10_d3t1j"]
 [ext_resource type="Texture2D" uid="uid://cga282m3ycy4n" path="res://Assets/rpg_maker_mv/img/sv_actors/Actor3_8.png" id="11_6pgwn"]
+
+[sub_resource type="Resource" id="Resource_ssv8l"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("3_fassy")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_bom12"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("5_ou04t")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_4nfr0"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("6_hkdfg")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_jxpf6"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("7_0m7qj")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_j3umc"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("8_4yd2u")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_06hfq"]
+script = ExtResource("4_i8v35")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_3lvpv"]
+script = ExtResource("4_i8v35")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_6duke"]
+script = ExtResource("4_i8v35")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_li7la"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("9_pumo6")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
+
+[sub_resource type="Resource" id="Resource_63hms"]
+script = ExtResource("4_i8v35")
+equip_resource = ExtResource("10_d3t1j")
+metadata/_custom_type_script = "uid://ble3iym87lt0x"
 
 [sub_resource type="Resource" id="Resource_2i5i2"]
 script = ExtResource("9_ih5rp")
@@ -19,6 +74,16 @@ metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
 [sub_resource type="Resource" id="Resource_25p7l"]
 script = ExtResource("8_urbvg")
 fighter_resource = ExtResource("7_apdi8")
+equip_weapon = SubResource("Resource_63hms")
+equip_shield = SubResource("Resource_li7la")
+equip_head = SubResource("Resource_4nfr0")
+equip_body = SubResource("Resource_bom12")
+equip_arms = SubResource("Resource_ssv8l")
+equip_legs = SubResource("Resource_jxpf6")
+equip_ring_1 = SubResource("Resource_j3umc")
+equip_ring_2 = SubResource("Resource_06hfq")
+equip_ring_3 = SubResource("Resource_3lvpv")
+equip_ring_4 = SubResource("Resource_6duke")
 status_serializable_array = Array[ExtResource("9_ih5rp")]([SubResource("Resource_2i5i2")])
 metadata/_custom_type_script = "uid://cficx40bscg6i"
 
