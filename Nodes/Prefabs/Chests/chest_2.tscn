@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ojyd6on1eykw"]
+
+[ext_resource type="Script" uid="uid://dxpdsvasr11fr" path="res://Scripts/Prefabs/chest_node.gd" id="1_r8xrq"]
+[ext_resource type="Texture2D" uid="uid://dqqn1o5pu6osc" path="res://Assets/rpg_maker_mv/img/characters/!Chest_2.png" id="2_vly07"]
+[ext_resource type="AnimationLibrary" uid="uid://c5js6vymqfp7y" path="res://Animation Players/Chest.res" id="3_gi8py"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://diclun2k662hh" path="res://Animation Trees/Chest.tres" id="4_70hgw"]
+
+[node name="chest_2" type="Node2D" unique_id=1086276379 node_paths=PackedStringArray("animation_tree")]
+script = ExtResource("1_r8xrq")
+animation_tree = NodePath("AnimationTree")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1398346438]
+texture = ExtResource("2_vly07")
+offset = Vector2(0, -19)
+hframes = 3
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1301453587]
+libraries/ = ExtResource("3_gi8py")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1274889227]
+tree_root = ExtResource("4_70hgw")
+anim_player = NodePath("../AnimationPlayer")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bc8v771gubk7h"]
 
 [ext_resource type="Script" uid="uid://cll6ilrja3wgu" path="res://Scripts/Prefabs/character_node.gd" id="1_2hx55"]
-[ext_resource type="Resource" uid="uid://buc4v5pr6bu4m" path="res://Resources/Characters/character_1_0.tres" id="2_2hx55"]
+[ext_resource type="Resource" uid="uid://8ekf6ymleltr" path="res://Resources/Characters/character_monster_1.tres" id="2_7fhoc"]
 [ext_resource type="Texture2D" uid="uid://btsianhgo6x37" path="res://Assets/rpg_maker_mv/img/characters/Monster_1.png" id="3_7fhoc"]
 
 [sub_resource type="Animation" id="Animation_c6toy"]
@@ -75,7 +75,7 @@ node_connections = [&"output", 0, &"base_StateMachine"]
 
 [node name="character_monster_1" type="Node2D" unique_id=1394058482 node_paths=PackedStringArray("animation_tree", "pivot")]
 script = ExtResource("1_2hx55")
-character_resource = ExtResource("2_2hx55")
+character_resource = ExtResource("2_7fhoc")
 animation_tree = NodePath("AnimationTree")
 pivot = NodePath("pivot")
 

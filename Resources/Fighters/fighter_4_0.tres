@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_8pvx1")
-myFIGHTER_CLASS = 3
+myFIGHTER_CLASS = 4
 tp_recovery = 5
 hp_recovery = 5
 add_skill_resource_array = Array[ExtResource("2_lfkaq")]([ExtResource("3_5jep0"), ExtResource("4_i6txy")])

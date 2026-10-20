@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Dialogue_Resource" format=3 uid="uid://cbs5gm4xmvn0r"]
+
+[ext_resource type="Texture2D" uid="uid://crf4y4biav4f8" path="res://Assets/rpg_maker_mv/img/faces/Actor1_4.png" id="1_0f2c5"]
+[ext_resource type="Script" uid="uid://v7c7nnf2t01d" path="res://Scripts/Resources/dialogue_resource.gd" id="1_afumt"]
+[ext_resource type="AudioStream" uid="uid://dbvp7708tegam" path="res://Assets/ralsei-talk.mp3" id="3_1wnml"]
+
+[resource]
+script = ExtResource("1_afumt")
+face = ExtResource("1_0f2c5")
+voice = ExtResource("3_1wnml")
+myGENDER = 1
+metadata/_custom_type_script = "uid://v7c7nnf2t01d"

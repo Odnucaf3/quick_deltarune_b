@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Dialogue_Resource" format=3 uid="uid://hbc0kg5fsp3w"]
+
+[ext_resource type="Texture2D" uid="uid://b3j07bas1jq2h" path="res://Assets/rpg_maker_mv/img/faces/Monster_1.png" id="1_00a65"]
+[ext_resource type="Script" uid="uid://v7c7nnf2t01d" path="res://Scripts/Resources/dialogue_resource.gd" id="1_8f1s8"]
+[ext_resource type="AudioStream" uid="uid://drcekvmdat7fa" path="res://Assets/voice_sans.mp3" id="3_tumoa"]
+
+[resource]
+script = ExtResource("1_8f1s8")
+face = ExtResource("1_00a65")
+voice = ExtResource("3_tumoa")
+metadata/_custom_type_script = "uid://v7c7nnf2t01d"

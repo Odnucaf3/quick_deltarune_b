@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://d365limkkajta"]
+[gd_scene format=3 uid="uid://d365limkkajta"]
 
 [ext_resource type="Script" uid="uid://b2cd1gt8aev08" path="res://Scripts/game_system.gd" id="1_jvut7"]
 [ext_resource type="PackedScene" uid="uid://1nomtsf23yj7" path="res://Nodes/Prefabs/ui/fighter_button_prefab.tscn" id="2_0ol08"]
@@ -13,7 +13,6 @@
 [ext_resource type="Resource" uid="uid://c7j5fbttfegi6" path="res://Resources/Equips/equip_1_1_1.tres" id="11_gijw1"]
 [ext_resource type="Texture2D" uid="uid://ssbbdf2f4b61" path="res://Assets/rpg_maker_mv/img/battlebacks1/Grassland.png" id="11_r4og7"]
 [ext_resource type="Resource" uid="uid://dhvbvytft23lh" path="res://Resources/Equips/equip_1_2_1.tres" id="12_bvfqi"]
-[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_1_0.tres" id="12_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://dgojjdoocby4g" path="res://Assets/rpg_maker_mv/img/battlebacks2/Grassland.png" id="12_xm4vn"]
 [ext_resource type="PackedScene" uid="uid://fb5bwlpa1ppb" path="res://Nodes/Prefabs/bullet_node.tscn" id="12_xqrxi"]
 [ext_resource type="Resource" uid="uid://b6a7pbtv5mpci" path="res://Resources/Items/item_2_0_0_0.tres" id="13_brd8x"]
@@ -24,17 +23,10 @@
 [ext_resource type="Resource" uid="uid://colpsxoj4u4sw" path="res://Resources/Keys/key_1.tres" id="17_hf3yd"]
 [ext_resource type="Texture2D" uid="uid://cc1gf55xbmilc" path="res://Assets/Sprites/Magnet.png" id="18_ngqpa"]
 [ext_resource type="Resource" uid="uid://cb4faua8h0glq" path="res://Resources/Items/item_2_0_0_2.tres" id="18_x7s5m"]
-[ext_resource type="Resource" uid="uid://c0crks25mri6p" path="res://Resources/Fighters/fighter_2_0.tres" id="19_8m6hh"]
 [ext_resource type="Resource" uid="uid://dqi667p2wu05v" path="res://Resources/Items/item_2_0_0_3.tres" id="19_hj75c"]
-[ext_resource type="Script" uid="uid://b6atomspo0raj" path="res://Scripts/game_system/rooms/debug_room.gd" id="21_gijw1"]
-[ext_resource type="Resource" uid="uid://uy6dxv70r723" path="res://Resources/Fighters/fighter_3_0.tres" id="21_ngqpa"]
-[ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="22_0ol08"]
 [ext_resource type="PackedScene" uid="uid://blqgcpcafrvkc" path="res://Nodes/Prefabs/Fighters/fighter_actor3_8.tscn" id="22_5rrxs"]
-[ext_resource type="Resource" uid="uid://djstdnna2nb34" path="res://Resources/Fighters/fighter_4_0.tres" id="22_shqvj"]
 [ext_resource type="PackedScene" uid="uid://bjsor4g3goyfi" path="res://Nodes/Prefabs/Fighters/fighter_actor2_7.tscn" id="23_jvut7"]
 [ext_resource type="PackedScene" uid="uid://8iy8u3lpjxn6" path="res://Nodes/Prefabs/Characters/character_actor3_8.tscn" id="24_5rrxs"]
-[ext_resource type="Script" uid="uid://cficx40bscg6i" path="res://Scripts/Resources/fighter_serializable.gd" id="24_8wyqk"]
-[ext_resource type="Script" uid="uid://dgjc1ifai0l5f" path="res://Scripts/Resources/status_serializable.gd" id="25_j7ao1"]
 [ext_resource type="PackedScene" uid="uid://bfqheulypgfmg" path="res://Nodes/Prefabs/Characters/character_actor2_7.tscn" id="26_jvut7"]
 [ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="27_0ol08"]
 [ext_resource type="Script" uid="uid://bcch2fq7bh15d" path="res://Scripts/Resources/equip_serializable.gd" id="27_b6a3y"]
@@ -49,46 +41,31 @@
 [ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_actor1_1.tscn" id="35_n53vq"]
 [ext_resource type="Theme" uid="uid://dkaas12c836ew" path="res://Themes/tab_theme.tres" id="36_5668i"]
 [ext_resource type="PackedScene" uid="uid://dh35qte4xnkie" path="res://Nodes/Prefabs/Characters/character_actor1_8.tscn" id="36_altm3"]
-[ext_resource type="TileSet" uid="uid://ci8hqmotb2vfk" path="res://TileSets/new_tile_set.tres" id="37_5668i"]
-[ext_resource type="PackedScene" uid="uid://coq254ffrmvdd" path="res://Nodes/Prefabs/Fighters/fighter_monster_1.tscn" id="37_altm3"]
 [ext_resource type="Texture2D" uid="uid://cpunk4hlu1ht6" path="res://Assets/rpg_maker_mv/img/battlebacks1/Sand.png" id="37_seov8"]
 [ext_resource type="Texture2D" uid="uid://c48s8jigbshfq" path="res://Assets/rpg_maker_mv/img/parallaxes/BlueSky.png" id="40_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://irn8ptiey1uk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_77.png" id="43_acn20"]
+[ext_resource type="PackedScene" uid="uid://dkil7p5hd0ndd" path="res://Nodes/Prefabs/Rooms/room_debug.tscn" id="43_gijw1"]
 [ext_resource type="Texture2D" uid="uid://dnp7htyab2ryr" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_209.png" id="44_0t8i2"]
 [ext_resource type="Texture2D" uid="uid://diuaewi35xnit" path="res://Assets/rpg_maker_mv/img/faces/Actor1_1.png" id="44_r4og7"]
 [ext_resource type="Texture2D" uid="uid://dcl7iyt5kjpwt" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_138.png" id="45_y1dyr"]
 [ext_resource type="Texture2D" uid="uid://b0ahrc6537fvk" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_190.png" id="46_f8ljg"]
 [ext_resource type="Texture2D" uid="uid://cceadn16e18rp" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_242.png" id="47_8m6hh"]
 [ext_resource type="Texture2D" uid="uid://cy2ex3q1pidxn" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_84.png" id="48_ngqpa"]
-[ext_resource type="Texture2D" uid="uid://bbykhvbevkk6r" path="res://Assets/rpg_maker_mv/img/faces/Actor1_8.png" id="49_6yqg2"]
 [ext_resource type="Texture2D" uid="uid://w4815i87us3" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_83.png" id="49_shqvj"]
-[ext_resource type="PackedScene" uid="uid://bc8v771gubk7h" path="res://Nodes/Prefabs/Characters/character_monster_1.tscn" id="53_j7ao1"]
 [ext_resource type="Shader" uid="uid://dao1r10uw472b" path="res://Shaders/scroll_xy.gdshader" id="54_8m6hh"]
 [ext_resource type="Script" uid="uid://ck6vbg7epahmp" path="res://Scripts/Resources/action_serializable.gd" id="54_brd8x"]
 [ext_resource type="Resource" uid="uid://buw4urkkcygf1" path="res://Resources/Items/item_1_0_0_0.tres" id="55_ggk8j"]
 [ext_resource type="Texture2D" uid="uid://num46eticxbp" path="res://Assets/Sprites/pattern_0016.png" id="55_ngqpa"]
-[ext_resource type="Resource" uid="uid://cqwgiphrg5vfd" path="res://Resources/Equips/equip_1_0_1.tres" id="55_wdwx4"]
 [ext_resource type="Texture2D" uid="uid://b4x7kyokfchid" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_71.png" id="56_shqvj"]
 [ext_resource type="Texture2D" uid="uid://bpf0lfby516un" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_177.png" id="57_hdd08"]
 [ext_resource type="Texture2D" uid="uid://0wrcrvu0t6hs" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_315.png" id="57_hklgd"]
 [ext_resource type="Texture2D" uid="uid://b6tg3m2ywr4bs" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_133.png" id="58_3i786"]
-[ext_resource type="Texture2D" uid="uid://din6j1wdbpmh7" path="res://Assets/rpg_maker_mv/img/characters/!Chest_1.png" id="58_h1r7s"]
 [ext_resource type="Texture2D" uid="uid://dau8th2ohedye" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_82.png" id="58_kthws"]
 [ext_resource type="Texture2D" uid="uid://b816kdwjyshvw" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_196.png" id="59_bv80u"]
 [ext_resource type="Texture2D" uid="uid://c8odt7cxtvsph" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_76.png" id="59_otuwt"]
 [ext_resource type="Texture2D" uid="uid://fnxrokl8esje" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_2.png" id="60_b6a3y"]
-[ext_resource type="Texture2D" uid="uid://clw8yvw4eoael" path="res://Assets/rpg_maker_mv/img/characters/!Chest_3.png" id="60_wdwx4"]
-[ext_resource type="Texture2D" uid="uid://ct2texlbw2gnq" path="res://Assets/rpg_maker_mv/img/characters/!Chest_4.png" id="61_6avol"]
-[ext_resource type="Texture2D" uid="uid://dnxmngwgxch3c" path="res://Assets/rpg_maker_mv/img/characters/!Chest_5.png" id="62_tn53f"]
-[ext_resource type="Texture2D" uid="uid://qoue4tpwb1im" path="res://Assets/rpg_maker_mv/img/characters/!Chest_6.png" id="63_2hsyw"]
-[ext_resource type="Texture2D" uid="uid://bt5e7a5auuhfm" path="res://Assets/rpg_maker_mv/img/characters/!Chest_7.png" id="64_g3we4"]
-[ext_resource type="Texture2D" uid="uid://cwd40ugispala" path="res://Assets/rpg_maker_mv/img/characters/!Chest_8.png" id="65_psock"]
 [ext_resource type="Texture2D" uid="uid://cifii7lxli87w" path="res://Assets/freebies_mv_ready_ace_icons/IconSet/IconSet_98.png" id="66_en4w2"]
 [ext_resource type="AudioStream" uid="uid://dbvp7708tegam" path="res://Assets/ralsei-talk.mp3" id="69_ggk8j"]
-[ext_resource type="PackedScene" uid="uid://r4513uqbld3f" path="res://Nodes/Prefabs/Fighters/fighter_monster_2.tscn" id="82_ebpaw"]
-[ext_resource type="PackedScene" uid="uid://c6sqqp2uklh3f" path="res://Nodes/Prefabs/Fighters/fighter_monster_3.tscn" id="83_uml17"]
-[ext_resource type="Texture2D" uid="uid://j13012x3vidr" path="res://Assets/rpg_maker_mv/img/characters/!Flame_7.png" id="86_paw12"]
-[ext_resource type="Texture2D" uid="uid://dqqn1o5pu6osc" path="res://Assets/rpg_maker_mv/img/characters/!Chest_2.png" id="87_paw12"]
 [ext_resource type="PackedScene" uid="uid://3lwydgx7j24f" path="res://Nodes/Prefabs/ui/status_ui.tscn" id="88_h1r7s"]
 
 [sub_resource type="Resource" id="Resource_uj0ak"]
@@ -500,103 +477,6 @@ size = Vector2(25, 14)
 [sub_resource type="CircleShape2D" id="CircleShape2D_aoydg"]
 radius = 8.0
 
-[sub_resource type="Resource" id="Resource_3em1u"]
-script = ExtResource("54_brd8x")
-action_resource = ExtResource("55_ggk8j")
-metadata/_custom_type_script = "uid://ck6vbg7epahmp"
-
-[sub_resource type="Resource" id="Resource_yfd8v"]
-script = ExtResource("27_b6a3y")
-equip_resource = ExtResource("55_wdwx4")
-metadata/_custom_type_script = "uid://bcch2fq7bh15d"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_lcbh6"]
-radius = 16.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_rf75r"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3em1u"]
-radius = 16.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
-radius = 16.0
-
-[sub_resource type="Resource" id="Resource_2hsyw"]
-script = ExtResource("24_8wyqk")
-fighter_resource = ExtResource("12_hf3yd")
-level = 99
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="Resource" id="Resource_4fhhk"]
-script = ExtResource("25_j7ao1")
-status_resource = ExtResource("5_ggk8j")
-turns = 2
-metadata/_custom_type_script = "uid://dgjc1ifai0l5f"
-
-[sub_resource type="Resource" id="Resource_66201"]
-script = ExtResource("24_8wyqk")
-fighter_resource = ExtResource("19_8m6hh")
-equip_weapon = ExtResource("12_bvfqi")
-status_serializable_array = Array[ExtResource("25_j7ao1")]([SubResource("Resource_4fhhk")])
-metadata/_custom_type_script = "uid://cficx40bscg6i"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qeicn"]
-radius = 12.0415945
-
-[sub_resource type="Animation" id="Animation_ql07v"]
-resource_name = "Idle"
-length = 0.8571571811750531
-loop_mode = 1
-step = 0.14285715
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2857143, 0.5714286),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
-
-[sub_resource type="Animation" id="Animation_hf3yd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_p24l3"]
-_data = {
-&"Idle": SubResource("Animation_ql07v"),
-&"RESET": SubResource("Animation_hf3yd")
-}
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3em1u"]
-animation = &"Idle"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_va76y"]
-radius = 23.086792
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aoydg"]
-size = Vector2(36, 12)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5cbct"]
-size = Vector2(33, 13)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o53fc"]
-size = Vector2(29, 11)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x5jtt"]
 shader = ExtResource("54_8m6hh")
 shader_parameter/speed_x = 0.03
@@ -652,7 +532,7 @@ player_characterbody2d = NodePath("World_2D/player_characterbody2d")
 player_interactable_by_action_area2d = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d")
 player_interactable_by_action_collider = NodePath("World_2D/player_characterbody2d/player_interactable_by_action_area2d/CollisionShape2D")
 camera = NodePath("Camera2D")
-current_room = NodePath("World_2D/room_00")
+current_room = NodePath("World_2D/room_debug")
 tp_bar = NodePath("main_canvas_layer/tp_bar")
 tp_bar_slider = NodePath("main_canvas_layer/tp_bar/VBoxContainer/ProgressBar")
 tp_bar_name = NodePath("main_canvas_layer/tp_bar/VBoxContainer/tp_bar_name")
@@ -1113,16 +993,6 @@ parameters/Base_OneShot/request = 0
 y_sort_enabled = true
 position = Vector2(23, -113)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d" unique_id=579708302]
-shape = SubResource("RectangleShape2D_3em1u")
-
-[node name="player_interactable_by_action_area2d" type="Area2D" parent="World_2D/player_characterbody2d" unique_id=1318832158]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d/player_interactable_by_action_area2d" unique_id=1893623121]
-shape = SubResource("CircleShape2D_aoydg")
-
 [node name="character_actor1_1" parent="World_2D/player_characterbody2d" unique_id=1234637241 instance=ExtResource("27_0ol08")]
 
 [node name="character_actor1_8" parent="World_2D/player_characterbody2d" unique_id=1388025439 instance=ExtResource("36_altm3")]
@@ -1134,438 +1004,36 @@ visible = false
 [node name="character_actor3_8" parent="World_2D/player_characterbody2d" unique_id=957001427 instance=ExtResource("24_5rrxs")]
 visible = false
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d" unique_id=579708302]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_3em1u")
+
+[node name="player_interactable_by_action_area2d" type="Area2D" parent="World_2D/player_characterbody2d" unique_id=1318832158]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/player_characterbody2d/player_interactable_by_action_area2d" unique_id=1893623121]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_aoydg")
+
 [node name="fighter_actor1_1" parent="World_2D/player_characterbody2d" unique_id=1625553253 instance=ExtResource("35_n53vq")]
+visible = false
 y_sort_enabled = true
 
 [node name="fighter_actor1_8" parent="World_2D/player_characterbody2d" unique_id=1791539970 instance=ExtResource("32_acn20")]
+visible = false
 y_sort_enabled = true
 
 [node name="fighter_actor2_7" parent="World_2D/player_characterbody2d" unique_id=1413536528 instance=ExtResource("23_jvut7")]
+visible = false
 y_sort_enabled = true
 
 [node name="fighter_actor3_8" parent="World_2D/player_characterbody2d" unique_id=1861804174 instance=ExtResource("22_5rrxs")]
+visible = false
 y_sort_enabled = true
 
-[node name="room_00" type="Node2D" parent="World_2D" unique_id=1016966368 node_paths=PackedStringArray("ally_0", "ally_0_character", "ally_1", "ally_1_character", "ally_2", "ally_2_character", "ally_3", "ally_3_character", "npc_3", "npc_3_character", "enemy_1", "enemy_1_fighter_array", "enemy_2", "enemy_2_fighter_array", "interactable", "room_limits")]
-y_sort_enabled = true
+[node name="room_debug" parent="World_2D" unique_id=77464726 instance=ExtResource("43_gijw1")]
 position = Vector2(-1, 7)
-script = ExtResource("21_gijw1")
-ally_0 = NodePath("ally_0")
-ally_0_character = NodePath("ally_0/character_actor1_1")
-ally_0_fighter_resouce = ExtResource("12_hf3yd")
-ally_0_fighter_prefab = ExtResource("35_n53vq")
-ally_1 = NodePath("ally_1")
-ally_1_character = NodePath("ally_1/character_actor1_8")
-ally_1_fighter_resouce = ExtResource("19_8m6hh")
-ally_1_fighter_prefab = ExtResource("32_acn20")
-ally_2 = NodePath("ally_2")
-ally_2_character = NodePath("ally_2/character_actor2_7")
-ally_2_fighter_resouce = ExtResource("21_ngqpa")
-ally_2_fighter_prefab = ExtResource("23_jvut7")
-ally_3 = NodePath("ally_3")
-ally_3_character = NodePath("ally_3/character_actor3_8")
-ally_3_fighter_resouce = ExtResource("22_shqvj")
-ally_3_fighter_prefab = ExtResource("22_5rrxs")
-npc_3 = NodePath("npc_3")
-npc_3_character = NodePath("npc_3/character_actor1_8")
-npc_3_item_consumable_array = Array[ExtResource("54_brd8x")]([SubResource("Resource_3em1u")])
-npc_3_item_equip_array = Array[ExtResource("27_b6a3y")]([SubResource("Resource_yfd8v")])
-enemy_1 = NodePath("npc_4")
-enemy_1_fighter_array = [NodePath("npc_4/fighter_actor1_1"), NodePath("npc_4/fighter_actor1_8"), NodePath("npc_4/fighter_actor2_7"), NodePath("npc_4/fighter_actor3_8")]
-enemy_2 = NodePath("npc_5")
-enemy_2_fighter_array = [NodePath("npc_5/fighter_monster_3"), NodePath("npc_5/fighter_monster_2"), NodePath("npc_5/fighter_monster_1")]
-interactable = NodePath("Interactable")
-room_limits = NodePath("room_limits")
-
-[node name="room_limits" type="Control" parent="World_2D/room_00" unique_id=1014785272]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -144.0
-offset_top = -288.0
-offset_right = 864.0
-offset_bottom = 336.0
-
-[node name="TileMapLayer" type="TileMapLayer" parent="World_2D/room_00" unique_id=1581131292]
-z_index = -1
-y_sort_enabled = true
-tile_map_data = PackedByteArray("AAACAP7/AAALAAIAAAACAP3/AAAGAAAAAAACAPz/BAAJAAMAAAACAPv/BAAJAAIAAAABAP7/AAAIAAEAAAABAP3/AAAFAAAAAAABAPz/BAAJAAMAAAABAPv/BAAJAAIAAAAAAP7/BAAAAAAAAAAAAP3/AAACAAMAAAAAAPz/BAAJAAMAAAAAAPv/BAAJAAIAAAAFAP3/AAAGAAAAAAAEAP3/AAAFAAAAAAADAP3/AAACAAMAAAAFAPz/BAAJAAMAAAAFAPv/BAAJAAIAAAAJAP3/AAACAAMAAAAIAP3/AAACAAMAAAAHAP3/AAACAAMAAAAGAP3/AAACAAMAAAAMAP7/BAAKAAAAAAAMAP3/AAACAAMAAAAMAPz/BAAJAAMAAAALAP7/BAAKAAAAAAALAP3/AAACAAMAAAALAPz/BAAJAAMAAAAKAP7/BAAKAAAAAAAKAP3/AAACAAMAAAAKAPz/BAAJAAMAAAACAP//AAALAAIAAAABAP//AAAIAAEAAAAAAP//BAAAAAEAAAD/////AAALAAIAAAD///7/AAALAAIAAAD///3/AAAGAAAAAAD///z/BAAJAAMAAAD+/wAAAAAIAAEAAAD+////AAAIAAEAAAD+//7/AAAIAAEAAAD+//3/AAAIAAAAAAD+//z/BAAJAAMAAAD+//v/BAAJAAIAAAANAAAABAAJAAIAAAANAP//BAAJAAIAAAANAP7/BAAKAAAAAAANAP3/AAACAAMAAAANAPz/BAAJAAMAAAANAPv/BAAJAAIAAAAMAAAABAAJAAIAAAALAAAABAAJAAIAAAAKAAAABAAJAAIAAAAJAAAABAAJAAIAAAAIAAAABAAJAAIAAAAHAAAABAAJAAIAAAAGAAAABAAJAAIAAAAFAAAABAAJAAIAAAAEAAAABAAJAAIAAAADAAAABAAIAAEAAAACAAAAAAALAAIAAAABAAAAAAAIAAEAAAAAAAAABAAAAAEAAAD//wAAAAALAAIAAAAMAP//BAAJAAIAAAALAP//BAAJAAIAAAAKAP//BAAJAAIAAAAJAP//BAAJAAIAAAAJAP7/BAAKAAAAAAAIAP//BAAJAAIAAAAIAP7/BAAKAAAAAAAHAP//BAAJAAIAAAAHAP7/BAAKAAAAAAAGAP//BAAFAAEAAAAGAP7/BAAIAAAAAAAFAP7/AAALAAMAAAAEAP7/AAAIAAMAAAADAP//BAAEAAEAAAADAP7/BAAAAAAAAAAMAPv/BAAJAAIAAAALAPv/BAAJAAIAAAAKAPv/BAAJAAIAAAAJAPz/BAAJAAMAAAAJAPv/BAAJAAIAAAAIAPz/BAAJAAMAAAAIAPv/BAAJAAIAAAAHAPz/BAAJAAMAAAAHAPv/BAAJAAIAAAAGAPz/BAAJAAMAAAAGAPv/BAAJAAIAAAAEAPz/BAAJAAMAAAAEAPv/BAAJAAIAAAADAPz/BAAJAAMAAAADAPv/BAAJAAIAAAD9/wAABAALAAIAAAD9////BAALAAIAAAD9//7/BAALAAIAAAD9//3/BAALAAIAAAD9//z/BAAGAAIAAAD9//v/BAAJAAIAAAD///v/BAAJAAIAAAAOAAAABAAGAAEAAAAOAP//BAALAAIAAAAOAP7/BAALAAAAAAAOAP3/AAACAAMAAAAOAPz/BAAJAAMAAAAOAPv/BAAJAAIAAAD8/wAABAAIAAEAAAD8////BAAIAAEAAAD8//7/BAAIAAEAAAD8//3/BAAIAAEAAAD8//z/BAAIAAEAAAD8//v/BAAIAAEAAAAPAP3/AAAFAAAAAAAQAP//AAALAAMAAAAQAP7/AAALAAIAAAAQAP3/AAALAAAAAAAPAP//AAAIAAMAAAAPAP7/AAAIAAEAAAARAAAABAAFAAEAAAAQAAAABAAKAAAAAAAPAAAABAAKAAAAAAARAP//BAAIAAEAAAARAP7/BAAIAAEAAAARAP3/BAAIAAEAAAARAPz/BAAFAAIAAAARAPv/BAAJAAIAAAAQAPz/BAAJAAMAAAAQAPv/BAAJAAIAAAAPAPz/BAAJAAMAAAAPAPv/BAAJAAIAAAARAPr/BAAJAAIAAAAQAPr/BAAJAAIAAAAPAPr/BAAJAAIAAAAOAPr/BAAJAAIAAAANAPr/BAAJAAIAAAAMAPr/BAAJAAIAAAALAPr/BAAJAAIAAAAKAPr/BAAJAAIAAAAJAPr/BAAJAAIAAAAIAPr/BAAJAAIAAAAHAPr/BAAJAAIAAAAGAPr/BAAJAAIAAAAFAPr/BAAJAAIAAAAEAPr/BAAJAAIAAAADAPr/BAAJAAIAAAACAPr/BAAJAAIAAAABAPr/BAAJAAIAAAAAAPr/BAAJAAIAAAD///r/BAAJAAIAAAD+//r/BAAJAAIAAAD9//r/BAAJAAIAAAD8//r/BAAIAAEAAAASAAAABAALAAIAAAASAP//BAALAAIAAAASAP7/BAALAAIAAAASAP3/BAALAAIAAAASAPz/BAALAAIAAAASAPv/BAALAAIAAAASAPr/BAALAAIAAAASAAEABAALAAIAAAARAAEABAAJAAIAAAAQAAEABAAJAAIAAAAPAAEABAAJAAIAAAAOAAEABAAJAAIAAAANAAEABAAJAAIAAAAMAAEABAAJAAIAAAALAAEABAAJAAIAAAAKAAEABAAJAAIAAAAJAAEABAAJAAIAAAAIAAEABAAJAAIAAAAHAAEABAAJAAIAAAAGAAEABAAJAAIAAAAFAAEABAAJAAIAAAAEAAEABAAJAAIAAAADAAEABAAIAAEAAAACAAEAAAALAAIAAAABAAEAAAAIAAEAAAAAAAEABAAAAAEAAAD//wEAAAALAAMAAAD+/wEAAAAIAAMAAAD9/wEABAALAAIAAAD8/wEABAAIAAEAAAAPAPn/BAAKAAAAAAAOAPn/BAAKAAAAAAANAPn/BAAKAAAAAAAMAPn/BAAKAAAAAAALAPn/BAAKAAAAAAAKAPn/BAAKAAAAAAAJAPn/BAAKAAAAAAAIAPn/BAAKAAAAAAAHAPn/BAAKAAAAAAAGAPn/BAAKAAAAAAAFAPn/BAAKAAAAAAAEAPn/BAAKAAAAAAADAPn/BAAKAAAAAAACAPn/BAAKAAAAAAABAPn/BAAKAAAAAAAAAPn/BAAKAAAAAAD///n/BAAKAAAAAAD+//n/BAAKAAAAAAD9//n/BAAKAAAAAAD8//n/BAAIAAAAAAASAPn/BAALAAAAAAARAPn/BAAKAAAAAAAQAPn/BAAKAAAAAAD8/wIABAAIAAEAAAD9/wIABAAGAAEAAAD+/wIABAAKAAAAAAD//wIABAAKAAAAAAAAAAIABAAHAAEAAAABAAIAAAAIAAEAAAADAAIABAAIAAEAAAACAAIAAAALAAIAAAAEAAIABAAJAAIAAAAFAAIABAAJAAIAAAAGAAIABAAJAAIAAAAHAAIABAAJAAIAAAAIAAIABAAJAAIAAAAJAAIABAAJAAIAAAAKAAIABAAJAAIAAAALAAIABAAJAAIAAAAMAAIABAAJAAIAAAANAAIABAAJAAIAAAAOAAIABAAJAAIAAAAPAAIABAAJAAIAAAAQAAIABAAJAAIAAAARAAIABAAJAAIAAAASAAIABAALAAIAAAD8/wMABAAIAAEAAAD9/wMABAAJAAIAAAD+/wMABAAJAAIAAAD//wMABAAJAAIAAAAAAAMABAALAAIAAAABAAMAAAAIAAEAAAACAAMAAAALAAIAAAADAAMABAAIAAEAAAAEAAMABAAJAAIAAAAFAAMABAAJAAIAAAAGAAMABAAJAAIAAAAHAAMABAAJAAIAAAAIAAMABAAJAAIAAAD8/wQABAAIAAEAAAD9/wQABAAJAAIAAAD+/wQABAAJAAIAAAD//wQABAAJAAIAAAAAAAQABAALAAIAAAACAAQAAAALAAIAAAABAAQAAAAIAAEAAAAEAAQABAAJAAIAAAADAAQABAAIAAEAAAAFAAQABAAJAAIAAAAHAAQABAAJAAIAAAAGAAQABAAJAAIAAAAIAAQABAAJAAIAAAAJAAQABAAJAAIAAAAKAAQABAAJAAIAAAALAAQABAAJAAIAAAAMAAQABAAJAAIAAAANAAQABAAJAAIAAAAOAAQABAAJAAIAAAAPAAQABAAJAAIAAAAQAAQABAAJAAIAAAARAAQABAAJAAIAAAASAAQABAALAAIAAAASAAMABAALAAIAAAARAAMABAAJAAIAAAAQAAMABAAJAAIAAAAPAAMABAAJAAIAAAAOAAMABAAJAAIAAAANAAMABAAJAAIAAAAKAAMABAAJAAIAAAAJAAMABAAJAAIAAAALAAMABAAJAAIAAAAMAAMABAAJAAIAAAABAAUAAAAIAAMAAAACAAUAAAALAAMAAAD8/wUABAAIAAEAAAD9/wUABAAJAAIAAAD+/wUABAAJAAIAAAD//wUABAAJAAIAAAAAAAUABAALAAIAAAAAAAYABAAGAAEAAAABAAYABAAKAAAAAAACAAYABAAKAAAAAAADAAYABAAFAAEAAAADAAUABAAIAAEAAAD8/wYABAAIAAEAAAD9/wYABAAJAAIAAAD+/wYABAAJAAIAAAD//wYABAAJAAIAAAD//wcABAAJAAMAAAAAAAcABAAJAAMAAAASAAcABAALAAMAAAASAAYABAALAAIAAAARAAcABAAJAAMAAAARAAYABAAJAAIAAAAQAAcABAAJAAMAAAAQAAYABAAJAAIAAAAPAAcABAAJAAMAAAAPAAYABAAJAAIAAAAOAAcABAAJAAMAAAAOAAYABAAJAAIAAAANAAcABAAJAAMAAAANAAYABAAJAAIAAAAMAAcABAAJAAMAAAAMAAYABAAJAAIAAAALAAcABAAJAAMAAAALAAYABAAJAAIAAAAKAAcABAAJAAMAAAAKAAYABAAJAAIAAAAJAAcABAAJAAMAAAAJAAYABAAJAAIAAAAIAAcABAAJAAMAAAAIAAYABAAJAAIAAAAHAAcABAAJAAMAAAAHAAYABAAJAAIAAAAGAAcABAAJAAMAAAAGAAYABAAJAAIAAAAFAAcABAAJAAMAAAAFAAYABAAJAAIAAAAEAAcABAAJAAMAAAAEAAYABAAJAAIAAAADAAcABAAJAAMAAAACAAcABAAJAAMAAAABAAcABAAJAAMAAAD+/wcABAAJAAMAAAD9/wcABAAJAAMAAAD8/wcABAAIAAMAAAASAAUABAALAAIAAAARAAUABAAJAAIAAAAQAAUABAAJAAIAAAAPAAUABAAJAAIAAAAOAAUABAAJAAIAAAANAAUABAAJAAIAAAAMAAUABAAJAAIAAAALAAUABAAJAAIAAAAKAAUABAAJAAIAAAAJAAUABAAJAAIAAAAIAAUABAAJAAIAAAAHAAUABAAJAAIAAAAGAAUABAAJAAIAAAAFAAUABAAJAAIAAAAEAAUABAAJAAIAAAAFAP//BAAKAAAAAAAEAP//BAAKAAAAAAA=")
-tile_set = ExtResource("37_5668i")
-
-[node name="Label" type="Label" parent="World_2D/room_00" unique_id=386820662]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -95.99999
-offset_top = -191.99998
-offset_right = 236.0
-offset_bottom = -128.99998
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.286, 0.286)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 45
-text = "Party Members"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="World_2D/room_00" unique_id=1073696420]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 215.99997
-offset_top = -191.99998
-offset_right = 372.99997
-offset_bottom = -128.99998
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.286, 0.286)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 45
-text = "Market"
-horizontal_alignment = 1
-
-[node name="Label3" type="Label" parent="World_2D/room_00" unique_id=726497253]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 720.0
-offset_top = -192.0
-offset_right = 872.0
-offset_bottom = -129.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.286, 0.286)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 45
-text = "Battles"
-
-[node name="ally_0" type="Area2D" parent="World_2D/room_00" unique_id=1227329894 node_paths=PackedStringArray("collider")]
-position = Vector2(-48, -72)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_0" unique_id=1611377659]
-shape = SubResource("CircleShape2D_lcbh6")
-
-[node name="character_actor1_1" parent="World_2D/room_00/ally_0" unique_id=1430752666 instance=ExtResource("27_0ol08")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_0" unique_id=135894709]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_0/StaticBody2D" unique_id=89377234]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="ally_1" type="Area2D" parent="World_2D/room_00" unique_id=726168508 node_paths=PackedStringArray("collider")]
-position = Vector2(-48, -24)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1" unique_id=1352624756]
-shape = SubResource("CircleShape2D_lcbh6")
-
-[node name="character_actor1_8" parent="World_2D/room_00/ally_1" unique_id=850827256 instance=ExtResource("36_altm3")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_1" unique_id=818254887]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_1/StaticBody2D" unique_id=947655824]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="ally_2" type="Area2D" parent="World_2D/room_00" unique_id=899666073 node_paths=PackedStringArray("collider")]
-position = Vector2(-48, 24)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2" unique_id=257041145]
-shape = SubResource("CircleShape2D_lcbh6")
-
-[node name="character_actor2_7" parent="World_2D/room_00/ally_2" unique_id=2083283084 instance=ExtResource("26_jvut7")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_2" unique_id=1975705002]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_2/StaticBody2D" unique_id=1461162597]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="ally_3" type="Area2D" parent="World_2D/room_00" unique_id=683919453 node_paths=PackedStringArray("collider")]
-position = Vector2(-48, 72)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_3" unique_id=451903423]
-shape = SubResource("CircleShape2D_3em1u")
-
-[node name="character_actor3_8" parent="World_2D/room_00/ally_3" unique_id=950567357 instance=ExtResource("24_5rrxs")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/ally_3" unique_id=746426266]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/ally_3/StaticBody2D" unique_id=2101177893]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="npc_3" type="Area2D" parent="World_2D/room_00" unique_id=1896668672 node_paths=PackedStringArray("collider")]
-position = Vector2(240, -72)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3" unique_id=839204334]
-shape = SubResource("CircleShape2D_5t6d6")
-
-[node name="character_actor1_8" parent="World_2D/room_00/npc_3" unique_id=970880866 instance=ExtResource("36_altm3")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/npc_3" unique_id=1560130429]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_3/StaticBody2D" unique_id=1092018181]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="npc_4" type="Area2D" parent="World_2D/room_00" unique_id=303175137 node_paths=PackedStringArray("collider")]
-y_sort_enabled = true
-position = Vector2(768, -24)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_4" unique_id=849842313]
-shape = SubResource("CircleShape2D_5t6d6")
-
-[node name="character_actor1_1" parent="World_2D/room_00/npc_4" unique_id=595102049 instance=ExtResource("27_0ol08")]
-
-[node name="fighter_actor1_1" parent="World_2D/room_00/npc_4" unique_id=1443822142 instance=ExtResource("35_n53vq")]
-visible = false
-fighter_serializable = SubResource("Resource_2hsyw")
-
-[node name="fighter_actor1_8" parent="World_2D/room_00/npc_4" unique_id=372561511 instance=ExtResource("32_acn20")]
-visible = false
-fighter_serializable = SubResource("Resource_66201")
-
-[node name="fighter_actor2_7" parent="World_2D/room_00/npc_4" unique_id=559100147 instance=ExtResource("23_jvut7")]
-visible = false
-
-[node name="fighter_actor3_8" parent="World_2D/room_00/npc_4" unique_id=1574684891 instance=ExtResource("22_5rrxs")]
-visible = false
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/npc_4" unique_id=390518323]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_4/StaticBody2D" unique_id=660459362]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="npc_5" type="Area2D" parent="World_2D/room_00" unique_id=447749122 node_paths=PackedStringArray("collider")]
-y_sort_enabled = true
-position = Vector2(768, -72)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_5" unique_id=1765939678]
-shape = SubResource("CircleShape2D_5t6d6")
-
-[node name="character_monster_1" parent="World_2D/room_00/npc_5" unique_id=1394058482 instance=ExtResource("53_j7ao1")]
-
-[node name="fighter_monster_1" parent="World_2D/room_00/npc_5" unique_id=1761640521 instance=ExtResource("37_altm3")]
-visible = false
-y_sort_enabled = true
-position = Vector2(-48, -48)
-
-[node name="fighter_monster_2" parent="World_2D/room_00/npc_5" unique_id=505694401 instance=ExtResource("82_ebpaw")]
-visible = false
-position = Vector2(0, -48)
-
-[node name="fighter_monster_3" parent="World_2D/room_00/npc_5" unique_id=817563202 instance=ExtResource("83_uml17")]
-visible = false
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/npc_5" unique_id=546196518]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/npc_5/StaticBody2D" unique_id=1346600920]
-shape = SubResource("CircleShape2D_rf75r")
-
-[node name="Interactable" type="Area2D" parent="World_2D/room_00" unique_id=687999019 node_paths=PackedStringArray("collider")]
-position = Vector2(-72, -120)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("22_0ol08")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/Interactable" unique_id=916547599]
-position = Vector2(0, -6)
-shape = SubResource("CircleShape2D_qeicn")
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/Interactable" unique_id=1155672549]
-texture = ExtResource("86_paw12")
-offset = Vector2(0, -6)
-hframes = 3
-vframes = 4
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="World_2D/room_00/Interactable" unique_id=1750575943]
-libraries/ = SubResource("AnimationLibrary_p24l3")
-
-[node name="AnimationTree" type="AnimationTree" parent="World_2D/room_00/Interactable" unique_id=2090549667]
-tree_root = SubResource("AnimationNodeAnimation_3em1u")
-anim_player = NodePath("../AnimationPlayer")
-
-[node name="chest" type="Area2D" parent="World_2D/room_00" unique_id=359834607]
-position = Vector2(96, -72)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest" unique_id=1857003094]
-texture = ExtResource("58_h1r7s")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest" unique_id=1283923339]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest" unique_id=1004519886]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest/StaticBody2D" unique_id=1707418932]
-position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_aoydg")
-
-[node name="chest2" type="Area2D" parent="World_2D/room_00" unique_id=1395661092]
-position = Vector2(96, -24)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest2" unique_id=1488611349]
-texture = ExtResource("87_paw12")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest2" unique_id=428111582]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest2" unique_id=814797993]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest2/StaticBody2D" unique_id=299886356]
-position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_aoydg")
-
-[node name="chest3" type="Area2D" parent="World_2D/room_00" unique_id=693365830]
-position = Vector2(96, 24)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest3" unique_id=1698319543]
-texture = ExtResource("60_wdwx4")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest3" unique_id=1709286045]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest3" unique_id=1121342575]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest3/StaticBody2D" unique_id=205359428]
-position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_aoydg")
-
-[node name="chest4" type="Area2D" parent="World_2D/room_00" unique_id=538756972]
-position = Vector2(96, 72)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest4" unique_id=997651915]
-texture = ExtResource("61_6avol")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest4" unique_id=1193841803]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest4" unique_id=684609690]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest4/StaticBody2D" unique_id=461344034]
-position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_aoydg")
-
-[node name="chest5" type="Area2D" parent="World_2D/room_00" unique_id=987397435]
-position = Vector2(96, 120)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest5" unique_id=1662696148]
-texture = ExtResource("62_tn53f")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest5" unique_id=1922375082]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest5" unique_id=1614352987]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest5/StaticBody2D" unique_id=1962766664]
-position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_aoydg")
-
-[node name="chest6" type="Area2D" parent="World_2D/room_00" unique_id=1154455625]
-position = Vector2(96, 168)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest6" unique_id=122289234]
-texture = ExtResource("63_2hsyw")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest6" unique_id=2062325486]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest6" unique_id=90587098]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest6/StaticBody2D" unique_id=1210883617]
-position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_aoydg")
-
-[node name="chest7" type="Area2D" parent="World_2D/room_00" unique_id=1439834936]
-position = Vector2(96, 216)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest7" unique_id=1322974757]
-texture = ExtResource("64_g3we4")
-offset = Vector2(0, -19)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest7" unique_id=1188410441]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest7" unique_id=1684831751]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest7/StaticBody2D" unique_id=1526288054]
-position = Vector2(-0.5, -4.5)
-shape = SubResource("RectangleShape2D_5cbct")
-
-[node name="chest8" type="Area2D" parent="World_2D/room_00" unique_id=873295902]
-position = Vector2(96, 264)
-
-[node name="Sprite2D" type="Sprite2D" parent="World_2D/room_00/chest8" unique_id=960123504]
-texture = ExtResource("65_psock")
-offset = Vector2(0, -6)
-hframes = 3
-vframes = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest8" unique_id=1705454339]
-position = Vector2(0, -15)
-shape = SubResource("CircleShape2D_va76y")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World_2D/room_00/chest8" unique_id=969596549]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World_2D/room_00/chest8/StaticBody2D" unique_id=1628977323]
-position = Vector2(0.5, -5.5)
-shape = SubResource("RectangleShape2D_o53fc")
 
 [node name="World_Background" type="CanvasLayer" parent="." unique_id=1741204116]
 layer = -1
@@ -1662,7 +1130,6 @@ theme = ExtResource("16_0t8i2")
 text = "asdsad"
 
 [node name="dialogue_menu" type="MarginContainer" parent="main_canvas_layer" unique_id=226866622]
-visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1739,8 +1206,9 @@ layout_mode = 2
 
 [node name="dialogue_menu_face" type="TextureRect" parent="main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=690196325]
 layout_mode = 2
-texture = ExtResource("49_6yqg2")
+texture = ExtResource("44_r4og7")
 expand_mode = 2
+stretch_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer" unique_id=1706126499]
 layout_mode = 2
@@ -1758,7 +1226,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "[Name of the Speaker]"
+text = "Name of the Speaker"
 fit_content = true
 
 [node name="dialogue_menu_value" type="RichTextLabel" parent="main_canvas_layer/dialogue_menu/VBoxContainer/Panel/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=717406984]

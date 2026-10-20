@@ -600,6 +600,23 @@ func Player_Movement():
 		Set_Character_Anim_Idle(ally_character_party[0])
 	#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+func Player_Movement_2():
+	var _run_flag: bool = Input.is_action_pressed("Input_Run")
+	input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	#-------------------------------------------------------------------------------
+	if(input_dir.length() > 0.5):
+		#-------------------------------------------------------------------------------
+		if(_run_flag):
+			Set_Dir_Anim_Move(ally_character_party[0], 2.0, 250)
+		#-------------------------------------------------------------------------------
+		else:
+			Set_Dir_Anim_Move(ally_character_party[0], 1.0, 100)
+		#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	else:
+		Set_Character_Anim_Idle(ally_character_party[0])
+	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 func Set_Character_Anim_Idle(_character_node:Character_Node):
 	AnimationTree_BlendSpace2D_Set(_character_node.animation_tree, _character_node.locomotion, _character_node.input_anim_idle)
 #-------------------------------------------------------------------------------
@@ -4223,6 +4240,10 @@ func AnimationTree_TimeScale(_animation_tree:AnimationTree, _anim:String, _f:flo
 #-------------------------------------------------------------------------------
 func AnimationTree_StateMachine_Set(_animation_tree:AnimationTree, _state_machine:String, _anim:String):
 	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/"+_state_machine+"_StateMachine/playback")
+	_playback.call_deferred("travel", _anim)
+#-------------------------------------------------------------------------------
+func AnimationTree_StateMachine_Set_2(_animation_tree:AnimationTree, _anim:String):
+	var _playback: AnimationNodeStateMachinePlayback = _animation_tree.get("parameters/playback")
 	_playback.call_deferred("travel", _anim)
 #-------------------------------------------------------------------------------
 func AnimationTree_StateMachine_Get(_animation_tree:AnimationTree, _state_machine:String) -> StringName:
@@ -8338,8 +8359,19 @@ func Get_Tr_Status_Effect_Name_0(_key:StringName) -> String:
 func Get_Tr_Status_Effect_Description(_status_resource:Status_Resource) -> String:
 	return tr("resource_"+singleton.get_resource_filename(_status_resource)+"_b")
 #-------------------------------------------------------------------------------
-func Get_Tr_Character_Name(_character:Character_Resource) -> String:
-	return tr("resource_"+singleton.get_resource_filename(_character)+"_a")
+func Get_Tr_Character_Name(_character:Character_Resource) -> String:	#IMPORTANTE: Por alguna razón, cuando no encuentra el id del resource en tr(), el juego se congela, hay que usar esta función para que eso no pase.
+	#-------------------------------------------------------------------------------
+	if _character == null:
+		return ""
+	#-------------------------------------------------------------------------------
+	var filename: String = _character.resource_path.get_file().trim_suffix(".tres")
+	var key: String = "resource_" + filename + "_a"
+	var translated: String = tr(key)
+	#-------------------------------------------------------------------------------
+	if(translated == key):
+		return filename
+	#-------------------------------------------------------------------------------
+	return translated
 #-------------------------------------------------------------------------------
 func Get_Tr_Character_Title(_character:Character_Resource) -> String:
 	return tr("resource_"+singleton.get_resource_filename(_character)+"_b")

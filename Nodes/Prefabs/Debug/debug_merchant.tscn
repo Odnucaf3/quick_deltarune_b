@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://diq3sgx0bcxot"]
+
+[ext_resource type="Script" uid="uid://b8qfgtifb8gaq" path="res://Scripts/Prefabs/debug_merchant.gd" id="1_y2xyx"]
+[ext_resource type="PackedScene" uid="uid://dww54cprv41qi" path="res://Nodes/Prefabs/Characters/character_actor1_4.tscn" id="2_y2xyx"]
+[ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="3_gnyw8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5t6d6"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rf75r"]
+
+[node name="debug_merchant" type="Node2D" unique_id=1455778858 node_paths=PackedStringArray("interactable", "character_node")]
+y_sort_enabled = true
+script = ExtResource("1_y2xyx")
+interactable = NodePath("Interactable_Script")
+character_node = NodePath("character_actor1_4b")
+item_consumable_array = null
+item_equip_array = null
+item_key_array = null
+
+[node name="character_actor1_4b" parent="." unique_id=2025575306 instance=ExtResource("2_y2xyx")]
+
+[node name="Interactable_Script" type="Area2D" parent="." unique_id=1976988114 node_paths=PackedStringArray("collider")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_gnyw8")
+collider = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://owqve1pkfu5l"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable_Script" unique_id=783816039]
+shape = SubResource("CircleShape2D_5t6d6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1569719675]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=834403851]
+shape = SubResource("CircleShape2D_rf75r")

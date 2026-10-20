@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_1v3lc"]
 [ext_resource type="Texture2D" uid="uid://diahmet7vqh8h" path="res://Assets/rpg_maker_mv/img/sv_enemies/Orc.png" id="1_a6jel"]
-[ext_resource type="Resource" uid="uid://3nxji4d0bf43" path="res://Resources/Characters/character_0_0.tres" id="2_gxclh"]
+[ext_resource type="Resource" uid="uid://8ekf6ymleltr" path="res://Resources/Characters/character_monster_1.tres" id="2_1v3lc"]
 [ext_resource type="AnimationLibrary" uid="uid://c2kbe7x44mru0" path="res://Animation Players/monster_animation_player.res" id="2_nctg2"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://b74ntx4jwtv4i" path="res://Animation Trees/monster_animation_tree.tres" id="3_eguv4"]
 [ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_0_0.tres" id="3_s5cca"]
@@ -16,7 +16,7 @@ metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [node name="fighter_monster_3" type="Node2D" unique_id=817563202 node_paths=PackedStringArray("animation_tree", "pivot")]
 script = ExtResource("1_1v3lc")
-character_resource = ExtResource("2_gxclh")
+character_resource = ExtResource("2_1v3lc")
 fighter_serializable = SubResource("Resource_3em1u")
 animation_tree = NodePath("AnimationTree")
 pivot = NodePath("pivot")

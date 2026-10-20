@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://blqgcpcafrvkc"]
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_nbjdn"]
-[ext_resource type="Resource" uid="uid://cpbj78ksh3wst" path="res://Resources/Characters/character_0_3.tres" id="2_3bm2e"]
+[ext_resource type="Resource" uid="uid://cikl7828mrli8" path="res://Resources/Characters/character_actor3_8.tres" id="2_fassy"]
 [ext_resource type="Resource" uid="uid://bffj3o5mr0f5b" path="res://Resources/Equips/equip_4_0_5.tres" id="3_fassy"]
 [ext_resource type="Script" uid="uid://ble3iym87lt0x" path="res://Scripts/Resources/equip_slot_serializable.gd" id="4_i8v35"]
 [ext_resource type="Resource" uid="uid://d3kwq4dentkn8" path="res://Resources/Equips/equip_4_0_4.tres" id="5_ou04t"]
@@ -89,7 +89,7 @@ metadata/_custom_type_script = "uid://cficx40bscg6i"
 
 [node name="fighter_actor3_8" type="Node2D" unique_id=1861804174 node_paths=PackedStringArray("animation_tree", "pivot")]
 script = ExtResource("1_nbjdn")
-character_resource = ExtResource("2_3bm2e")
+character_resource = ExtResource("2_fassy")
 fighter_serializable = SubResource("Resource_25p7l")
 animation_tree = NodePath("AnimationTree")
 pivot = NodePath("pivot")

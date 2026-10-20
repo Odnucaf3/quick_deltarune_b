@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1wb7ijwddv6c" path="res://Scripts/Prefabs/fighter_node.gd" id="1_452ag"]
 [ext_resource type="Texture2D" uid="uid://cqhmn61pk0mjq" path="res://Assets/rpg_maker_mv/img/sv_enemies/Slime.png" id="2_2qu37"]
-[ext_resource type="Resource" uid="uid://buc4v5pr6bu4m" path="res://Resources/Characters/character_1_0.tres" id="2_tcux5"]
+[ext_resource type="Resource" uid="uid://8ekf6ymleltr" path="res://Resources/Characters/character_monster_1.tres" id="2_tcux5"]
 [ext_resource type="AnimationLibrary" uid="uid://c2kbe7x44mru0" path="res://Animation Players/monster_animation_player.res" id="3_3n0b2"]
 [ext_resource type="Resource" uid="uid://bjqm63d3ctcaa" path="res://Resources/Fighters/fighter_0_0.tres" id="3_omaej"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://b74ntx4jwtv4i" path="res://Animation Trees/monster_animation_tree.tres" id="4_2lhva"]

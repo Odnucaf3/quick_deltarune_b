@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://dh35qte4xnkie"]
 
 [ext_resource type="Script" uid="uid://cll6ilrja3wgu" path="res://Scripts/Prefabs/character_node.gd" id="1_nknv5"]
-[ext_resource type="Resource" uid="uid://da42l3ohlicnw" path="res://Resources/Characters/character_0_1.tres" id="2_bof5o"]
+[ext_resource type="Resource" uid="uid://bocdvkjkfumg7" path="res://Resources/Characters/character_actor1_8.tres" id="2_vc4m1"]
 [ext_resource type="Texture2D" uid="uid://b68r06x7einp1" path="res://Assets/rpg_maker_mv/img/characters/Actor1_8.png" id="3_vc4m1"]
 [ext_resource type="AnimationLibrary" uid="uid://r3f3d7dp0g40" path="res://Animation Players/character_0_animation_player.res" id="4_va2v6"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://ctq50mofvnv8d" path="res://Animation Trees/character_0_animation_tree.tres" id="5_uu1hq"]
 
 [node name="character_actor1_8" type="Node2D" unique_id=1388025439 node_paths=PackedStringArray("animation_tree", "pivot")]
 script = ExtResource("1_nknv5")
-character_resource = ExtResource("2_bof5o")
+character_resource = ExtResource("2_vc4m1")
 animation_tree = NodePath("AnimationTree")
 pivot = NodePath("pivot")
 

@@ -1,0 +1,34 @@
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://diclun2k662hh"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y7wws"]
+animation = &"Close"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oqhrw"]
+animation = &"Closed"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0654s"]
+animation = &"Open"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t7wg3"]
+animation = &"Opened"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mtqd3"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ydket"]
+switch_mode = 2
+advance_mode = 2
+
+[resource]
+allow_transition_to_self = true
+states/Close/node = SubResource("AnimationNodeAnimation_y7wws")
+states/Close/position = Vector2(538, 3)
+states/Closed/node = SubResource("AnimationNodeAnimation_oqhrw")
+states/Closed/position = Vector2(538, 100)
+states/Open/node = SubResource("AnimationNodeAnimation_0654s")
+states/Open/position = Vector2(369, 3)
+states/Opened/node = SubResource("AnimationNodeAnimation_t7wg3")
+states/Opened/position = Vector2(369, 100)
+transitions = ["Open", "Opened", SubResource("AnimationNodeStateMachineTransition_mtqd3"), "Close", "Closed", SubResource("AnimationNodeStateMachineTransition_ydket")]
+graph_offset = Vector2(31, -56)

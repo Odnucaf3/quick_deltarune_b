@@ -1,305 +1,295 @@
 key,es-AR,en-US
-enum_ACTION_DAMAGE,Daño,Damage
-enum_ACTION_DRAIN,Drenado,Drain
-enum_ACTION_HEAL,Curación,Healing
-enum_ACTION_NONE,-,-
-enum_ATTRIBUTE_MAGICAL,Mágico,Magical
-enum_ATTRIBUTE_NONE,-,-
-enum_ATTRIBUTE_PHYSICAL,Físico,Physical
-enum_ELEMENT_DARK,Oscuridad,Dark
-enum_ELEMENT_EARTH,Tierra,Earth
-enum_ELEMENT_FIRE,Fuego,Fire
-enum_ELEMENT_ICE,Hielo,Ice
-enum_ELEMENT_LIGHT,Luz,Light
-enum_ELEMENT_NONE,-,-
-enum_ELEMENT_NORMAL,Normal,Normal
-enum_ELEMENT_THUNDER,Electricidad,Thunder
-enum_ELEMENT_WATER,Agua,Water
-enum_ELEMENT_WIND,Aire,Wind
-enum_EQUIP_TYPE_ARMS,Brazos,Arms
-enum_EQUIP_TYPE_BODY,Cuerpo,Body
-enum_EQUIP_TYPE_HEAD,Cabeza,Head
-enum_EQUIP_TYPE_LEGS,Piernas,Legs
-enum_EQUIP_TYPE_RING,Anillo,Ring
-enum_EQUIP_TYPE_SHIELD,Escudo,Shield
-enum_EQUIP_TYPE_WEAPON,Arma,Weapon
-enum_FIGHTER_CLASS_HEROE_FEMALE,Heroina,Hero
-enum_FIGHTER_CLASS_HEROE_MALE,Heroe,Hero
-enum_FIGHTER_CLASS_HEROE_NONBINARY,Heroe,Hero
-enum_FIGHTER_CLASS_MAGICIAN_FEMALE,Maga,Mage
-enum_FIGHTER_CLASS_MAGICIAN_MALE,Mago,Mage
-enum_FIGHTER_CLASS_MAGICIAN_NONBINARY,Mage,Mage
-enum_FIGHTER_CLASS_NONE_FEMALE,-,-
-enum_FIGHTER_CLASS_NONE_MALE,-,-
-enum_FIGHTER_CLASS_NONE_NONBINARY,-,-
-enum_FIGHTER_CLASS_PRIEST_FEMALE,Sacerdotisa,Priest
-enum_FIGHTER_CLASS_PRIEST_MALE,Sacerdote,Priest
-enum_FIGHTER_CLASS_PRIEST_NONBINARY,Sacerdote,Priest
-enum_FIGHTER_CLASS_WARRIOR_FEMALE,Guerrera,Warrior
-enum_FIGHTER_CLASS_WARRIOR_MALE,Guerrero,Warrior
-enum_FIGHTER_CLASS_WARRIOR_NONBINARY,Guerrere,Warrior
-enum_TARGET_ALLY_1,1 Aliado,1 Ally
-enum_TARGET_ALLY_ALL,Todos los Aliados,All Allies
-enum_TARGET_ALLY_DOWN_1,1 Aliado Caido,1 Fallen Ally
-enum_TARGET_ALLY_DOWN_ALL,Todos los Aliados Caidos,All Fallen Allies
-enum_TARGET_ALLY_RANDOM,1 Aliado al Azar,1 Random Ally
-enum_TARGET_ENEMY_1,1 Enemigo,1 Enemy
-enum_TARGET_ENEMY_ALL,Todos los Enemigo,All Enemies
-enum_TARGET_ENEMY_RANDOM,1 Enemigo al Azar,1 Random Enemy
-enum_TARGET_USER,Usuario,User
-resource_character_0_0_a,Harold,Harold
-resource_character_0_0_b,El Super Heroe Legendario Salvador del Universo.,-
-resource_character_0_0_c,-,-
-resource_character_0_1_a,Therese,Therese
-resource_character_0_1_b,La Fortaleza Viviente Protectora del Mundo.,-
-resource_character_0_1_c,-,-
-resource_character_0_2_a,Lucius,Lucius
-resource_character_0_2_b,La Personificación de Diós en la Tierra.,-
-resource_character_0_2_c,-,-
-resource_character_0_3_a,Marsha,Marsha
-resource_character_0_3_b,La Archi-Maga Más Poderosa de la Actualidad.,-
-resource_character_0_3_c,-,-
-resource_character_1_0_a,Murcielagón,Big Bat
-resource_character_1_0_b,El peor Monstruo de Todos.,-
-resource_character_1_0_c,-,-
-resource_equip_1_0_1_a,Daga de Harold,Harold's Dagger
-resource_equip_1_0_1_b,-,-
-resource_equip_1_0_2_a,Escudo de Harold,Harol's Shield
-resource_equip_1_0_2_b,-,-
-resource_equip_1_0_3_a,Casco de Harold,Harold's Helmet
-resource_equip_1_0_3_b,-,-
-resource_equip_1_0_4_a,Armadura de Harold,Harold's Armor
-resource_equip_1_0_4_b,-,-
-resource_equip_1_0_5_a,Guantes de Harold,Harold's Gloves
-resource_equip_1_0_5_b,-,-
-resource_equip_1_0_6_a,Botas de Harold,Harold's Boots
-resource_equip_1_0_6_b,-,-
-resource_equip_1_0_7_a,Anillo de Harold,Harlod's Ring
-resource_equip_1_0_7_b,-,-
-resource_equip_1_1_1_a,Shotel,Shotel
-resource_equip_1_1_1_b,-,-
-resource_equip_1_2_1_a,Espada Vampírica,Vampire Sword
-resource_equip_1_2_1_b,-,-
-resource_equip_2_0_1_a,Espada de Therese,Therese's Sword
-resource_equip_2_0_1_b,-,-
-resource_equip_2_0_2_a,Escudo de Therese,Therese's Shield
+enum_ACTION_DAMAGE,Daño,lol
+enum_ACTION_DRAIN,Drenado,
+enum_ACTION_HEAL,Curación,
+enum_ACTION_NONE,-,
+enum_ATTRIBUTE_MAGICAL,Mágico,
+enum_ATTRIBUTE_NONE,-,
+enum_ATTRIBUTE_PHYSICAL,Físico,
+enum_ELEMENT_DARK,Oscuridad,
+enum_ELEMENT_EARTH,Tierra,
+enum_ELEMENT_FIRE,Fuego,
+enum_ELEMENT_ICE,Hielo,
+enum_ELEMENT_LIGHT,Luz,
+enum_ELEMENT_NONE,-,
+enum_ELEMENT_NORMAL,Normal,
+enum_ELEMENT_THUNDER,Electricidad,
+enum_ELEMENT_WATER,Agua,
+enum_ELEMENT_WIND,Aire,
+enum_EQUIP_TYPE_ARMS,Brazos,
+enum_EQUIP_TYPE_BODY,Cuerpo,
+enum_EQUIP_TYPE_HEAD,Cabeza,
+enum_EQUIP_TYPE_LEGS,Piernas,
+enum_EQUIP_TYPE_RING,Anillo,
+enum_EQUIP_TYPE_SHIELD,Escudo,
+enum_EQUIP_TYPE_WEAPON,Arma,
+enum_FIGHTER_CLASS_HEROE_FEMALE,Heroina,
+enum_FIGHTER_CLASS_HEROE_MALE,Heroe,
+enum_FIGHTER_CLASS_HEROE_NONBINARY,Heroe,
+enum_FIGHTER_CLASS_MAGICIAN_FEMALE,Maga,
+enum_FIGHTER_CLASS_MAGICIAN_MALE,Mago,
+enum_FIGHTER_CLASS_MAGICIAN_NONBINARY,Mage,
+enum_FIGHTER_CLASS_NONE_FEMALE,-,
+enum_FIGHTER_CLASS_NONE_MALE,-,
+enum_FIGHTER_CLASS_NONE_NONBINARY,-,
+enum_FIGHTER_CLASS_PRIEST_FEMALE,Sacerdotisa,
+enum_FIGHTER_CLASS_PRIEST_MALE,Sacerdote,
+enum_FIGHTER_CLASS_PRIEST_NONBINARY,Sacerdote,
+enum_FIGHTER_CLASS_WARRIOR_FEMALE,Guerrera,
+enum_FIGHTER_CLASS_WARRIOR_MALE,Guerrero,
+enum_FIGHTER_CLASS_WARRIOR_NONBINARY,Guerrere,
+enum_TARGET_ALLY_1,1 Aliado,
+enum_TARGET_ALLY_ALL,Todos los Aliados,
+enum_TARGET_ALLY_DOWN_1,1 Aliado Caido,
+enum_TARGET_ALLY_DOWN_ALL,Todos los Aliados Caidos,
+enum_TARGET_ALLY_RANDOM,1 Aliado al Azar,
+enum_TARGET_ENEMY_1,1 Enemigo,
+enum_TARGET_ENEMY_ALL,Todos los Enemigo,
+enum_TARGET_ENEMY_RANDOM,1 Enemigo al Azar,
+enum_TARGET_USER,Usuario,
+resource_character_actor1_1_a,Harold,
+resource_character_actor1_1_b,El Super Heroe Legendario Salvador del Universo.,
+resource_character_actor1_1_c,-,
+resource_character_actor1_4_a,Wanda,
+resource_character_actor1_4_b,,
+resource_character_actor1_4_c,,
+resource_character_actor1_8_a,Therese,
+resource_character_actor1_8_b,La Fortaleza Viviente Protectora del Mundo.,
+resource_character_actor1_8_c,-,
+resource_character_actor2_7_a,Lucius,
+resource_character_actor2_7_b,La Personificación de Diós en la Tierra.,
+resource_character_actor2_7_c,-,
+resource_character_actor3_8_a,Marsha,
+resource_character_actor3_8_b,La Archi-Maga Más Poderosa de la Actualidad.,
+resource_character_actor3_8_c,-,
+resource_character_monster_1_a,Murcielagón,
+resource_character_monster_1_b,El peor Monstruo de Todos.,
+resource_character_monster_1_c,-,
+resource_equip_1_0_1_a,Daga de Harold,
+resource_equip_1_0_1_b,-,
+resource_equip_1_0_2_a,Escudo de Harold,
+resource_equip_1_0_2_b,-,
+resource_equip_1_0_3_a,Casco de Harold,
+resource_equip_1_0_3_b,-,
+resource_equip_1_0_4_a,Armadura de Harold,
+resource_equip_1_0_4_b,-,
+resource_equip_1_0_5_a,Guantes de Harold,
+resource_equip_1_0_5_b,-,
+resource_equip_1_0_6_a,Botas de Harold,
+resource_equip_1_0_6_b,-,
+resource_equip_1_0_7_a,Anillo de Harold,
+resource_equip_1_0_7_b,-,
+resource_equip_1_1_1_a,Shotel,
+resource_equip_1_1_1_b,-,
+resource_equip_1_2_1_a,Espada Vampírica,
+resource_equip_1_2_1_b,-,
+resource_equip_2_0_1_a,Espada de Therese,
+resource_equip_2_0_1_b,-,
+resource_equip_2_0_2_a,Escudo de Therese,
 resource_equip_2_0_2_b,,
-resource_equip_2_0_3_a,Casco de Therese,Therese's Helmet
-resource_equip_2_0_3_b,-,-
-resource_equip_2_0_4_a,Armadura de Therese,Therese's Armor
-resource_equip_2_0_4_b,-,-
-resource_equip_2_0_5_a,Guantes de Therese,Therese's Gloves
-resource_equip_2_0_5_b,-,-
-resource_equip_2_0_6_a,Botas de Therese,Therese's Boots
-resource_equip_2_0_6_b,-,-
-resource_equip_2_0_7_a,Anillo de Therese,Therese's Ring
-resource_equip_2_0_7_b,-,-
-resource_equip_3_0_1_a,Masa de Lucius,Lucius's Maze
-resource_equip_3_0_1_b,-,-
-resource_equip_3_0_2_a,Biblia de Lucius,Lucius's Bible
-resource_equip_3_0_2_b,-,-
-resource_equip_3_0_3_a,Lentes de Lucius,Lucius's Glasses
-resource_equip_3_0_3_b,-,-
-resource_equip_3_0_4_a,Túnica de Lucius,Lucius's Robes
-resource_equip_3_0_4_b,-,-
-resource_equip_3_0_5_a,Guantes de Lucius,Lucius's Gloves
-resource_equip_3_0_5_b,-,-
-resource_equip_3_0_6_a,Zapatillas de Lucius,Lucius's Shoes
-resource_equip_3_0_6_b,-,-
-resource_equip_3_0_7_a,Anillo de Lucius,Lucius's 's Ring
-resource_equip_3_0_7_b,-,-
-resource_equip_4_0_1_a,Báculo de Marsha,Marsha's Wand 
-resource_equip_4_0_1_b,-,-
-resource_equip_4_0_2_a,Grimorio de Marsha,Marsha's Grimoire
-resource_equip_4_0_2_b,-,-
-resource_equip_4_0_3_a,Sombrero de Marsha,Marsha's Hat
-resource_equip_4_0_3_b,-,-
-resource_equip_4_0_4_a,Túnica de Marsha,Marsha's Robes
-resource_equip_4_0_4_b,-,-
-resource_equip_4_0_5_a,Guantes de Marsha,Marsha's Gloves
-resource_equip_4_0_5_b,-,-
-resource_equip_4_0_6_a,Zapatillas de Marsha,Marsha's Shoes
-resource_equip_4_0_6_b,-,-
-resource_equip_4_0_7_a,Anillo de Marsha,Marsha's Ring
-resource_equip_4_0_7_b,-,-
-resource_item_1_0_0_0_a,Veneno de la Auto-Derrota,Auto-Lose Potion
-resource_item_1_0_0_0_b,"Utilizalo, si quieren conocer lo que es la derrota.","Use it , if you want to know defeat."
-resource_item_1_0_0_1_a,Poción de la Auto-Victoria,Auto-Win Potion
-resource_item_1_0_0_1_b,Gata automáticamente cualquier Batalla en la que estés.,-
-resource_item_1_1_1_0_a,Dardo Venenoso,Poison Dartz
+resource_equip_2_0_3_a,Casco de Therese,
+resource_equip_2_0_3_b,-,
+resource_equip_2_0_4_a,Armadura de Therese,
+resource_equip_2_0_4_b,-,
+resource_equip_2_0_5_a,Guantes de Therese,
+resource_equip_2_0_5_b,-,
+resource_equip_2_0_6_a,Botas de Therese,
+resource_equip_2_0_6_b,-,
+resource_equip_2_0_7_a,Anillo de Therese,
+resource_equip_2_0_7_b,-,
+resource_equip_3_0_1_a,Masa de Lucius,
+resource_equip_3_0_1_b,-,
+resource_equip_3_0_2_a,Biblia de Lucius,
+resource_equip_3_0_2_b,-,
+resource_equip_3_0_3_a,Lentes de Lucius,
+resource_equip_3_0_3_b,-,
+resource_equip_3_0_4_a,Túnica de Lucius,
+resource_equip_3_0_4_b,-,
+resource_equip_3_0_5_a,Guantes de Lucius,
+resource_equip_3_0_5_b,-,
+resource_equip_3_0_6_a,Zapatillas de Lucius,
+resource_equip_3_0_6_b,-,
+resource_equip_3_0_7_a,Anillo de Lucius,
+resource_equip_3_0_7_b,-,
+resource_equip_4_0_1_a,Báculo de Marsha,
+resource_equip_4_0_1_b,-,
+resource_equip_4_0_2_a,Grimorio de Marsha,
+resource_equip_4_0_2_b,-,
+resource_equip_4_0_3_a,Sombrero de Marsha,
+resource_equip_4_0_3_b,-,
+resource_equip_4_0_4_a,Túnica de Marsha,
+resource_equip_4_0_4_b,-,
+resource_equip_4_0_5_a,Guantes de Marsha,
+resource_equip_4_0_5_b,-,
+resource_equip_4_0_6_a,Zapatillas de Marsha,
+resource_equip_4_0_6_b,-,
+resource_equip_4_0_7_a,Anillo de Marsha,
+resource_equip_4_0_7_b,-,
+resource_item_1_0_0_0_a,Veneno de la Auto-Derrota,
+resource_item_1_0_0_0_b,"Utilizalo, si quieren conocer lo que es la derrota.",
+resource_item_1_0_0_1_a,Poción de la Auto-Victoria,
+resource_item_1_0_0_1_b,Gata automáticamente cualquier Batalla en la que estés.,
+resource_item_1_1_1_0_a,Dardo Venenoso,
 resource_item_1_1_1_0_b,"Cuchillo arrojadizo de hueso animal afilado, con punta envenenada.
 Objeto fabricable.
-Lánzalo a los enemigos para infligir daño y acumular veneno.","Animal bone sharpened into a knife for throwing, with a poison-laced tip.
-Craftable item.
-Throw at enemies to inflict damage and build up poison."
-resource_item_1_1_3_0_a,Cóctel molotov,Molotov Cocktail
+Lánzalo a los enemigos para infligir daño y acumular veneno.",
+resource_item_1_1_3_0_a,Cóctel molotov,
 resource_item_1_1_3_0_b,"Explota en llamas al ser arrojada contra un objeto. Es una de las herramientas de caza más antiguas disponibles en el taller.
 Desde la tragedia que asoló Old Yharnam, el fuego se ha convertido en un elemento fundamental en la caza de bestias y se cree que purifica.
-Ciertos tipos de bestias tienen un miedo irracional al fuego.","Explodes in raging flames when thrown against an object. One of the oldest hunter tools available in the workshop.
-Since the tragedy that struck Old Yharnam, fire has become a staple in beast hunts, and is thought to cleanse impurity.
-Certain types of beasts have an abnormal fear of flame."
-resource_item_1_1_7_0_a,Boogaloo Eléctrico,Electric Boogaloo
+Ciertos tipos de bestias tienen un miedo irracional al fuego.",
+resource_item_1_1_7_0_a,Boogaloo Eléctrico,
 resource_item_1_1_7_0_b,"Objeto fabricable preparado con una vasija agrietada.
 En su interior contiene un cóctel de materiales fulminantes.
-Lánzalo a los enemigos para infligir daño eléctrico.","Craftable item prepared using a cracked pot.
-A cocktail of fulminating materials is sealed inside.
-Throw at enemies to inflict lightning damage."
-resource_item_2_0_0_0_a,Frasco de Lágrimas Carmesí,Flask of Crimson Tears
+Lánzalo a los enemigos para infligir daño eléctrico.",
+resource_item_2_0_0_0_a,Frasco de Lágrimas Carmesí,
 resource_item_2_0_0_0_b,"Un frasco sagrado inspirado en un cáliz sagrado dorado que una vez estuvo adornado con una lágrima de vida.
 Lleno de lágrimas carmesí, este matraz restaura HP con el uso.
 Descanse en un sitio de gracia para reponer fuerzas.
 El que fue arrastrado hasta la tumba seguramente moriría, hasta que este frasco
-ofreció su regalo de rejuvenecimiento. Para buscar el Anillo de Elden.","A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.
-Filled with crimson tears, this flask restores HP with use.
-Rest at a site of grace to replenish.
-The one washed up on the gravesite was sure to die, until this flask
-offered its gift of rejuvenation. To seek the Elden Ring."
-resource_item_2_0_0_1_a,Gema de Vida,Life Gem
+ofreció su regalo de rejuvenecimiento. Para buscar el Anillo de Elden.",
+resource_item_2_0_0_1_a,Gema de Vida,
 resource_item_2_0_0_1_b,"Pequeña piedra compuesta de almas cristalizadas. Restaura gradualmente una pequeña cantidad de puntos de vida.
-Se encuentra a menudo cerca de cadáveres abandonados, como si fuera lo que queda del alma.","Small stone made up of crystallized souls. Gradually restores a small amount of HP.
-Often found near abandoned corpses, as if it were what remains of the soul."
-resource_item_2_0_0_3_a,Vendición Divina,Divine Blessing
+Se encuentra a menudo cerca de cadáveres abandonados, como si fuera lo que queda del alma.",
+resource_item_2_0_0_3_a,Vendición Divina,
 resource_item_2_0_0_3_b,"Agua bendita con una bendición divina. Cura los estados alterados y restaura completamente los PV.
 Agua bendecida por una antigua diosa. Su nombre ha caído en el olvido, y la Academia de Magia de Melfia niega incluso su existencia.
-En cualquier época, siempre hay quienes se niegan a ver la razón. Su intromisión distorsiona la verdad.","Holy water endowed with a divine blessing. Cures status effects and fully restores HP.
-Water blessed by an ancient goddess. Her name is long forgotten, and the Magic Academy of Melfia denies even her existence.
-In any age, there are those who refuse to see reason. It is their meddling that distorts the truth."
-resource_key_0_a,Monedas,Coins
-resource_key_0_b,-,-
-resource_key_1_a,Llave de Mazmorra,Dungeon Key
-resource_key_1_b,-,-
-resource_skill_0_0_a,Ataque,Attack
-resource_skill_0_0_b,-,-
-resource_skill_0_1_a,Ataque Curvo,Curve Attack
-resource_skill_0_1_b,-,-
-resource_skill_0_2_a,Ataque Drenador,Drain Attack
-resource_skill_0_2_b,-,-
-resource_skill_0_3_a,Ataque Guardia,Guard Attack
-resource_skill_0_3_b,-,-
-resource_skill_0_4_a,Ataque Real,Royal Attack
-resource_skill_0_4_b,-,-
-resource_skill_0_5_a,Ataque Doble,Double Attack
-resource_skill_0_5_b,-,-
-resource_skill_1_0_a,Guardia,Guard
-resource_skill_1_0_b,-,-
-resource_skill_1_1_a,Guardia Real,Royal Guard
+En cualquier época, siempre hay quienes se niegan a ver la razón. Su intromisión distorsiona la verdad.",
+resource_key_0_a,Monedas,
+resource_key_0_b,-,
+resource_key_1_a,Llave de Mazmorra,
+resource_key_1_b,-,
+resource_skill_0_0_a,Ataque,
+resource_skill_0_0_b,-,
+resource_skill_0_1_a,Ataque Curvo,
+resource_skill_0_1_b,-,
+resource_skill_0_2_a,Ataque Drenador,
+resource_skill_0_2_b,-,
+resource_skill_0_3_a,Ataque Guardia,
+resource_skill_0_3_b,-,
+resource_skill_0_4_a,Ataque Real,
+resource_skill_0_4_b,-,
+resource_skill_0_5_a,Ataque Doble,
+resource_skill_0_5_b,-,
+resource_skill_1_0_a,Guardia,
+resource_skill_1_0_b,-,
+resource_skill_1_1_a,Guardia Real,
 resource_skill_1_1_b,,
-resource_skill_2_0_0_0_0_a,Rodar,Roll Over
-resource_skill_2_0_0_0_0_b,-,-
-resource_skill_2_1_1_7_1_a,Corte en V,V-Slash
-resource_skill_2_1_1_7_1_b,-,-
-resource_skill_2_1_1_7_2_a,Corte en Doble V,Double V-Slash
-resource_skill_2_1_1_7_2_b,-,-
-resource_skill_2_1_1_7_3_a,Corte en Triple Doble V,Triple Double V-Slash
-resource_skill_2_1_1_7_3_b,-,-
-resource_skill_2_2_0_0_2_a,Estrella Revividora,Revive Star
-resource_skill_2_2_0_0_2_b,-,-
-resource_status_0_a,Nockeado,Knokdown
-resource_status_0_b,-,-
-resource_status_1_a,Guardia,Guard
-resource_status_1_b,-,-
-resource_status_2_a,Quemado,Burned
+resource_skill_2_0_0_0_0_a,Rodar,
+resource_skill_2_0_0_0_0_b,-,
+resource_skill_2_1_1_7_1_a,Corte en V,
+resource_skill_2_1_1_7_1_b,-,
+resource_skill_2_1_1_7_2_a,Corte en Doble V,
+resource_skill_2_1_1_7_2_b,-,
+resource_skill_2_1_1_7_3_a,Corte en Triple Doble V,
+resource_skill_2_1_1_7_3_b,-,
+resource_skill_2_2_0_0_2_a,Estrella Revividora,
+resource_skill_2_2_0_0_2_b,-,
+resource_status_0_a,Nockeado,
+resource_status_0_b,-,
+resource_status_1_a,Guardia,
+resource_status_1_b,-,
+resource_status_2_a,Quemado,
 resource_status_2_b,-,
-resource_status_3_a,Electrocutado,Electrified
+resource_status_3_a,Electrocutado,
 resource_status_3_b,-,
-resource_status_4_a,Curación Lenta,Slow Healing
-resource_status_4_b,-,-
-resource_status_5_a,Congelado,Frostbitten
-resource_status_5_b,-,-
+resource_status_4_a,Curación Lenta,
+resource_status_4_b,-,
+resource_status_5_a,Congelado,
+resource_status_5_b,-,
 resource_status_6_a,,
 resource_status_6_b,,
 resource_status_7_a,,
 resource_status_7_b,,
 resource_status_8_a,,
 resource_status_8_b,,
-text_absortion,Absorción,Absorption
-text_action,Acción,Action
-text_affinity,Afinidad,Affinity
-text_all_items,Todos los Artículos,All Items
-text_attribute,Atributo,Attribute
-text_back,Volver,Back
-text_bag,Bolsa,Hold
-text_base_stats,Estadísticas Base,Base Stats
-text_borderless,Pantalla Sin Bordes,Borderless Window
-text_cd,CD,CD
-text_class,Clase,Class
-text_consumable_items,Artículos Consumibles,Consumable Items
-text_cooldown,Espera,Wait
-text_cost,Costo,Cost
-text_credits,Crétidos,Credits
-text_critical,Crítico,Critical
-text_critical_evasion_rate,Tasa de Evasión Crítica,Critical Presition Rate
-text_critical_presition_rate,Tasa de Precisión Crítica,Critical Evasion Rate
-text_description,Descripción,Description
-text_element,Elemento,Element
-text_elemental_rate,Tasas Elementales,Elemental Rates
-text_empty,Vacio,Empty
-text_equip_items,Artículos Equipables,Equipable Items
-text_equipment,Equipamiento,Equipment
-text_experience,Experiencia,Experience
-text_extra_stats,Estadísticas Extra,Extra Stats
-text_fullscreen,Pantalla Completa,Full Screen
-text_game_title,Título del Juego,Title of the Game
-text_go_to_title_menu,Ir al Título,Go to Title
-text_physical_damage_rate,Taza de Daño Físico,Physical Damage Rate
-text_magical_damage_rate,Taza de Daño Mágico,Magical Damage Rate
-text_hp,PV,HP
-text_hp_recovery,Recuperación de PV,HP Recovery
-text_idiome,Lenguaje,Language
-text_information,Información,Information
-text_inventory,Inventario,Inventory
-text_key_items,Artículos Clave,Key Items
-text_level,Nivel,Level
-text_luck,Suerte,Luck
-text_magical_attack,Ataque Mágico,Magical Attack
-text_magical_defense,Defensa Mágica,Magical Defense
-text_magical_evasion_rate,Tasa de Evasión Mágica,Magical Evasion Rate
-text_magical_presition_rate,Tasa de Precisión Mágica,Magical Presition Rate
-text_max_hp,PV Máximo,Maximum HP
-text_next,Siguente,Next
-text_no,No,No
-text_option_menu,Menú de Opciones,Option Menu
-text_options,Opciones,Options
-text_options,Opciones,Options
-text_party_members,Miembros del Grupo,Party Members
-text_pause_menu,Menú de Pause,Pause Menu
-text_pharmacology,Farmacología,Pharmacology
-text_physical_attack,Ataque Físico,Physical Attack
-text_physical_defense,Defensa Física,Physical Defense
-text_physical_evasion_rate,Tasa de Evasión Física,Physical Evasion Rate
-text_physical_presition_rate,Tasa de Precisión Física,Physical Presition Rate
-text_power,Poder,Power
-text_presition,Precisión,Presition
-text_properties,Propiedades,Properties
-text_quit_game,Salir del Juego,Quit Game
-text_recovery_effect,Efecto de Recuperación,Recovery Effect
-text_repulsion,Repulsión,Repulsion
-text_resistance,Resistencia,Resistance
-text_resolution,Resolución,Resolution
-text_skill,Habilidad,Skill
-text_skills,Habilidades,Habilities
-text_special_stats,Estadísticas Especiales,Special Stats
-text_speed,Velocidad,Speed
-text_start,Comenzar,Start
-text_statistics,Estadísticas,Statistics
-text_stats_rate,Estadísticas,Statistics
-text_status,Estado,Status
-text_status_effect_resistances,Resistencias a Estados Alterados,Status Effect Resistances
-text_status_effects,Estados Alterados,Status Effects
-text_status_effects_rate,Tasas de Estados Alterados,Status Effects Rate
-text_stored,Almacén,Stored
-text_target,Objetivo,Target
-text_target_rate,Tasa de Objetico,Target Rate
-text_tp,PT,TP
-text_tp_charge_rate,Tasa de Carga de PT,TP Charge Rate
-text_tp_cost_rate,Tasa de Costo de PT,TP Cost Rate
-text_tp_recovery,Recuperación de PT,TP Recovery
-text_turns,Turnos,Turns
-text_type,Tipo,Type
-text_uses,Usos,Uses
-text_value,Valor,value
-text_volume_bgm,Volumen de Música de Fondo,Background Music Volume
-text_volume_master,Volumen Maestro,Master Volumen
-text_volume_sfx,Volumen de Efectos de Sonido,Sound Effects Volume
-text_vsync,Sincronización Vertical,Vertical Synchronization
-text_yes,Si,Yes
+text_absortion,Absorción,
+text_action,Acción,
+text_affinity,Afinidad,
+text_all_items,Todos los Artículos,
+text_attribute,Atributo,
+text_back,Volver,
+text_bag,Bolsa,
+text_base_stats,Estadísticas Base,
+text_borderless,Pantalla Sin Bordes,
+text_cd,CD,
+text_class,Clase,
+text_consumable_items,Artículos Consumibles,
+text_cooldown,Espera,
+text_cost,Costo,
+text_credits,Crétidos,
+text_critical,Crítico,
+text_critical_evasion_rate,Tasa de Evasión Crítica,
+text_critical_presition_rate,Tasa de Precisión Crítica,
+text_description,Descripción,
+text_element,Elemento,
+text_elemental_rate,Tasas Elementales,
+text_empty,Vacio,
+text_equip_items,Artículos Equipables,
+text_equipment,Equipamiento,
+text_experience,Experiencia,
+text_extra_stats,Estadísticas Extra,
+text_fullscreen,Pantalla Completa,
+text_game_title,Título del Juego,
+text_go_to_title_menu,Ir al Título,
+text_physical_damage_rate,Taza de Daño Físico,
+text_magical_damage_rate,Taza de Daño Mágico,
+text_hp,PV,
+text_hp_recovery,Recuperación de PV,
+text_idiome,Lenguaje,
+text_information,Información,
+text_inventory,Inventario,
+text_key_items,Artículos Clave,
+text_level,Nivel,
+text_luck,Suerte,
+text_magical_attack,Ataque Mágico,
+text_magical_defense,Defensa Mágica,
+text_magical_evasion_rate,Tasa de Evasión Mágica,
+text_magical_presition_rate,Tasa de Precisión Mágica,
+text_max_hp,PV Máximo,
+text_next,Siguente,
+text_no,No,
+text_option_menu,Menú de Opciones,
+text_options,Opciones,
+text_options,Opciones,
+text_party_members,Miembros del Grupo,
+text_pause_menu,Menú de Pause,
+text_pharmacology,Farmacología,
+text_physical_attack,Ataque Físico,
+text_physical_defense,Defensa Física,
+text_physical_evasion_rate,Tasa de Evasión Física,
+text_physical_presition_rate,Tasa de Precisión Física,
+text_power,Poder,
+text_presition,Precisión,
+text_properties,Propiedades,
+text_quit_game,Salir del Juego,
+text_recovery_effect,Efecto de Recuperación,
+text_repulsion,Repulsión,
+text_resistance,Resistencia,
+text_resolution,Resolución,
+text_skill,Habilidad,
+text_skills,Habilidades,
+text_special_stats,Estadísticas Especiales,
+text_speed,Velocidad,
+text_start,Comenzar,
+text_statistics,Estadísticas,
+text_stats_rate,Estadísticas,
+text_status,Estado,
+text_status_effect_resistances,Resistencias a Estados Alterados,
+text_status_effects,Estados Alterados,
+text_status_effects_rate,Tasas de Estados Alterados,
+text_stored,Almacén,
+text_target,Objetivo,
+text_target_rate,Tasa de Objetico,
+text_tp,PT,
+text_tp_charge_rate,Tasa de Carga de PT,
+text_tp_cost_rate,Tasa de Costo de PT,
+text_tp_recovery,Recuperación de PT,
+text_turns,Turnos,
+text_type,Tipo,
+text_uses,Usos,
+text_value,Valor,
+text_volume_bgm,Volumen de Música de Fondo,
+text_volume_master,Volumen Maestro,
+text_volume_sfx,Volumen de Efectos de Sonido,
+text_vsync,Sincronización Vertical,
+text_yes,Si,

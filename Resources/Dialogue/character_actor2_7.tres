@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Dialogue_Resource" format=3 uid="uid://k0xpgpqtqcm8"]
+
+[ext_resource type="Texture2D" uid="uid://c8i7npb5k3vq7" path="res://Assets/rpg_maker_mv/img/faces/Actor2_7.png" id="1_80o40"]
+[ext_resource type="Script" uid="uid://v7c7nnf2t01d" path="res://Scripts/Resources/dialogue_resource.gd" id="1_kwu6v"]
+[ext_resource type="AudioStream" uid="uid://b4ue3f4pyqenv" path="res://Assets/voice_asgore.mp3" id="3_pnh4k"]
+
+[resource]
+script = ExtResource("1_kwu6v")
+face = ExtResource("1_80o40")
+voice = ExtResource("3_pnh4k")
+metadata/_custom_type_script = "uid://v7c7nnf2t01d"

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ck162fxiamb8a"]
+
+[ext_resource type="Script" uid="uid://bsq22guu7ohfn" path="res://Scripts/Prefabs/debug_npc_ally.gd" id="1_jtkvt"]
+[ext_resource type="Resource" uid="uid://blupr0mvegsco" path="res://Resources/Fighters/fighter_1_0.tres" id="2_swgio"]
+[ext_resource type="PackedScene" uid="uid://tqfhaixo2dwx" path="res://Nodes/Prefabs/Fighters/fighter_actor1_1.tscn" id="3_knfaw"]
+[ext_resource type="PackedScene" uid="uid://bdygb23nu78k5" path="res://Nodes/Prefabs/Characters/character_actor1_1.tscn" id="4_a3w1s"]
+[ext_resource type="Script" uid="uid://owqve1pkfu5l" path="res://Scripts/interactable_script.gd" id="5_2i3lk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcbh6"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rf75r"]
+
+[node name="debug_npc_ally_1" type="Node2D" unique_id=1182988866 node_paths=PackedStringArray("interactable", "character_node")]
+y_sort_enabled = true
+script = ExtResource("1_jtkvt")
+fighter_resouce = ExtResource("2_swgio")
+fighter_prefab = ExtResource("3_knfaw")
+interactable = NodePath("Interactable_Script")
+character_node = NodePath("character_actor1_1")
+
+[node name="character_actor1_1" parent="." unique_id=1234637241 instance=ExtResource("4_a3w1s")]
+
+[node name="Interactable_Script" type="Area2D" parent="." unique_id=2005381074 node_paths=PackedStringArray("collider")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("5_2i3lk")
+collider = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://owqve1pkfu5l"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable_Script" unique_id=1472446543]
+shape = SubResource("CircleShape2D_lcbh6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1072438642]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=604205104]
+shape = SubResource("CircleShape2D_rf75r")
